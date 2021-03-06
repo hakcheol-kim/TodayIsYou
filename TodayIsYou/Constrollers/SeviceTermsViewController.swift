@@ -8,5 +8,9 @@
 import UIKit
 
 class SeviceTermsViewController: BaseViewController {
-
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        CNavigationBar.drawTitle(self, nil, nil)
+        
+    }
 }

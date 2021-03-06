@@ -8,10 +8,15 @@
 import UIKit
 
 class VideoColCell: UICollectionViewCell {
-
+    @IBOutlet weak var btnHartCnt: UIButton!
+    @IBOutlet weak var btnAvailableVideo: CButton!
+    @IBOutlet weak var lbTitle: UILabel!
+    @IBOutlet weak var lbName: UILabel!
+    @IBOutlet weak var lbAge: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
 
 }

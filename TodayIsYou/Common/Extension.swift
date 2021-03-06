@@ -101,6 +101,26 @@ extension UIViewController {
             }
         }
     }
+    
+    func myAddChildViewController(superView:UIView, childViewController:UIViewController) {
+        addChild(childViewController)
+        childViewController.beginAppearanceTransition(true, animated: true)
+        superView.addSubview(childViewController.view)
+        childViewController.view.translatesAutoresizingMaskIntoConstraints = false
+        childViewController.view.leadingAnchor.constraint(equalTo: superView.leadingAnchor, constant: 0).isActive = true
+        childViewController.view.topAnchor.constraint(equalTo: superView.topAnchor, constant: 0).isActive = true
+        childViewController.view.bottomAnchor.constraint(equalTo: superView.bottomAnchor, constant: 0).isActive = true
+        childViewController.view.trailingAnchor.constraint(equalTo: superView.trailingAnchor, constant: 0).isActive = true
+        childViewController.endAppearanceTransition()
+        childViewController.didMove(toParent: self)
+    }
+    
+    func myRemoveChildViewController(childViewController:UIViewController) {
+        childViewController.beginAppearanceTransition(false, animated: true)
+        childViewController.view.removeFromSuperview()
+        childViewController.endAppearanceTransition()
+    }
+
 }
 //FIXME:: UIView
 extension UIView {
@@ -214,7 +234,6 @@ extension UIColor {
 }
 //FIXME:: UIImage
 extension UIImage {
-    
     class func image(from color: UIColor?) -> UIImage? {
         let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
         UIGraphicsBeginImageContext(rect.size)

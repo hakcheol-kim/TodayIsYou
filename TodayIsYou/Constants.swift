@@ -18,16 +18,34 @@ public func RGB(_ r: CGFloat, _ g: CGFloat, _ b: CGFloat) -> UIColor {
 public func RGBA(_ r: CGFloat, _ g: CGFloat, _ b: CGFloat, _ a: CGFloat) -> UIColor {
     UIColor(red: r / 255.0, green: g / 255.0, blue: b / 255.0, alpha: a / 1.0)
 }
-
-let ColorAppDefault = RGB(139, 0, 255)
-let ColorBorderDefault = RGB(221, 221, 221)
+struct AppColor {
+    static let defaultRed = RGB(230, 50, 70)
+    static let borderGray = RGB(221, 221, 221)
+}
 
 let IsShowTutorial = "IsShowTutorial"
 let kPushSetting = "PushSetting"
 let kPushUserData = "PushUserData"
 
-let kMemId = "MemId"
-let kMemJoinType = "MemJoinType"
-let kMemUserId = "MemUserId"
-let kMemUserName = "MemUserName"
-let kMemNickName = "MemNickName"
+enum SortedType: String {
+    case total = "total"
+    case femail = "femail"
+    case mail = "mail"
+    
+
+    func displayName() -> String {
+        if self == .mail {
+            return "남성"
+        }
+        else if self == .femail {
+            return "여성"
+        }
+        else {
+            return "전체"
+        }
+    }
+}
+enum ListType: String {
+    case table = "table"
+    case collection = "collection"
+}
