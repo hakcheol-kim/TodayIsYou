@@ -18,7 +18,7 @@ class MainViewController: BaseViewController {
     var oldSelIndex: Int = -1
     var selectedVc: UIViewController?
     var videoSortType: SortedType = .total
-    var videoListType: ListType = .collection
+    var videoListType: ListType = .table
     
     var selIndex:Int = 0 {
         didSet {
@@ -76,7 +76,7 @@ class MainViewController: BaseViewController {
                     self.selectedVc = vc
                     break
                 case 4:
-                    let vc = storyboard?.instantiateViewController(identifier: "NoteListViewController") as! NoteListViewController
+                    let vc = storyboard?.instantiateViewController(identifier: "MssageListViewController") as! MssageListViewController
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     
                     self.selectedVc = vc

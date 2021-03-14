@@ -8,10 +8,14 @@ target 'TodayIsYou' do
 use_frameworks!
 pod 'Alamofire', '~> 5.2'
 pod 'AlamofireImage', '~> 4.1'
+pod 'SwiftyJSON', '~> 4.0'
 
-pod 'Firebase/Analytics'
 pod 'Firebase/Auth'
 pod 'Firebase/Crashlytics'
 pod 'Firebase/Messaging'
+
+pod 'NVActivityIndicatorView'
+pod 'CRRefresh'
+pod 'UIImageViewAlignedSwift'
 
 end

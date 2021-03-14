@@ -41,7 +41,7 @@ class CustomColFlowLayout: UICollectionViewFlowLayout {
         }
         
         let targetAttribute = attributes[targetIdx]
-//        print(targetAttribute)
+
         lastPoint = CGPoint(x: targetAttribute.center.x - (self.collectionView?.bounds.size.width)!/2, y: proposedContentOffset.y)
         delegate?.didEndDecelatedFloawLayout(targetAttribute.indexPath, lastPoint)
         

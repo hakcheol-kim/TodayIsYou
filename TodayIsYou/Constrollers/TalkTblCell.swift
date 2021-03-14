@@ -34,48 +34,81 @@ class TalkTblCell: UITableViewCell {
             return
         }
         
-        let all_user_cnt = data["all_user_cnt"].intValue //  = 4858;
-        let contents = data["contents"].stringValue // = "\Uc5f0\Uc0c1\Uc774 \Uc88b\Uc544\Uc694";
-        let days = data["days"].intValue // = 0;
-        let file_name = data["file_name"].stringValue //  = "";
-        let first_order = data["first_order"].intValue //  = 8;
-        let good_cnt = data["good_cnt"].intValue //  = 0;
-        let img_view = data["img_view"].stringValue //  = N;
-        let inapp_cnt = data["inapp_cnt"].intValue //  = 0;
-        let locale = data["locale"].stringValue // = "";
-        let mod_date = data["mod_date"].stringValue //  = 1615347384627;
-        let seq = data["seq"].stringValue // = 5574;
-        let status = data["status"].stringValue // = N;
-        let times = data["times"].stringValue // = "00:44:20";
-        let user_age = data["user_age"].stringValue //  = "50\Ub300";
-        let user_area = data["user_area"].stringValue //  = "\Uc11c\Uc6b8";
-        let user_id = data["user_id"].stringValue //  = 314de2f3d751cfb129c93649008cf576;
-        let user_image = data["user_image"].stringValue //  = "";
-        let user_name = data["user_name"].stringValue //  = "\Ub8e8\Ud321";
-        let user_sex = data["user_sex"].stringValue //  = "\Ub0a8";
-        let view_cnt = data["view_cnt"].stringValue //  = 0;
-        
+//        let view_cnt = data["view_cnt"].intValue //: 0,
+//        let user_bbs_point = data["user_bbs_point"].intValue //: 0,
+        let user_name = data["user_name"].stringValue //: "포커땜에",
+        let user_age = data["user_age"].stringValue //: "10대",
+//        let dong = data["dong"].stringValue //: null,
+        let title = data["title"].stringValue //: "동갑 친구가 좋아요",
+//        let locale = data["locale"].stringValue //: "",
+        let user_img = data["user_img"].stringValue //: "",
+//        let gu = data["gu"].stringValue //: null,
+        let user_sex = data["user_sex"].stringValue //: "여",
+        let talk_img = data["talk_img"].stringValue //: "",
+        let reg_date = data["reg_date"].stringValue //: "2021-03-11 07:35:32",
+//        let times = data["times"].stringValue //: "01:49:12",
+        let user_id = data["user_id"].stringValue //: "6d4bc245c19f038ab6b70d44aef72f99",
+        let user_area = data["user_area"].stringValue //: "서울",
+//        let si = data["si"].stringValue //: null,
+//        let days = data["days"].intValue //: 0,
+//        let seq = data["seq"].intValue //: 5931
+
         if Gender.mail.rawValue == user_sex {
             ivProfile.image = UIImage(named: Gender.mail.avatar())
         }
         else {
             ivProfile.image = UIImage(named: Gender.femail.avatar())
         }
-        if let imgUrl = Utility.thumbnailUrl(user_id, file_name) {
+        if let imgUrl = Utility.thumbnailUrl(user_id, talk_img) {
             ivProfile.setImageCache(url: imgUrl, placeholderImgName: nil)
         }
         ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
         
         ivThumb.isHidden = true
-        if let imgUrl = Utility.thumbnailUrl(user_id, user_image) {
+        if let imgUrl = Utility.thumbnailUrl(user_id, user_img) {
             ivThumb.isHidden = false
             ivThumb.setImageCache(url: imgUrl, placeholderImgName: nil)
         }
         ivThumb.layer.cornerRadius = ivThumb.bounds.height/2
         
-        lbTitle.text = contents
-        lbSubTitle.text = "\(user_name), \(user_sex) \(user_age)"
-        lbMsg.isHidden = true
+        lbTitle.text = title
+        let result = "\(user_name), \(user_age), \(user_sex)"
+        let attr = NSMutableAttributedString.init(string: result)
+        attr.addAttribute(.foregroundColor, value: UIColor.label, range: NSMakeRange(0, result.length))
+        attr.addAttribute(.foregroundColor, value: RGB(148, 17, 0), range: NSMakeRange(0, user_name.length))
+        lbSubTitle.attributedText = attr
+        
+        let df = CDateFormatter.init()
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss" // "2021-03-11 07:35:32
+        var tStr = ""
+        if let regDate = df.date(from: reg_date) {
+            let curDate = Date()
+            let comps = curDate - regDate
+            
+            if let month = comps.month, month > 0 {
+                tStr = "\(month)달전"
+            }
+            else if let day = comps.day, day > 0 {
+                tStr = "\(day)일전"
+            }
+            else if let hour = comps.hour, hour > 0 {
+                tStr = "\(hour)시간"
+                if let minute = comps.minute, minute > 0 {
+                    tStr = " \(minute)분전"
+                }
+            }
+            else if let minute = comps.minute, minute > 0 {
+                tStr = "\(minute)분전"
+                if let second = comps.second, second > 0 {
+                    tStr.append(" \(second)초전")
+                }
+            }
+            else if let second = comps.second, second > 0 {
+                tStr.append("\(second)초전")
+            }
+            
+        }
+        lbMsg.text = "\(user_area), \(tStr)"
     }
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         

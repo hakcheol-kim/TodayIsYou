@@ -9,6 +9,14 @@ import Foundation
 import AVKit
 
 extension Date {
+    func startOfMonth() -> Date {
+       return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: self)))!
+    }
+
+    func endOfMonth() -> Date {
+       return Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: self.startOfMonth())!
+    }
+    
     func getStartDate(withYear year: Int) -> Date? {
         var calendar = Calendar(identifier: .gregorian)
         let local = Locale(identifier: "en_US_POSIX")
@@ -38,11 +46,11 @@ extension Date {
         let day: Int = Int(df.string(for: self)!) ?? 0
         return day
     }
-    func jumpingDay(jumping:Int)-> Date? {
+    func jumpingDay(jumping:Int)-> Date {
         var dayComponent = DateComponents()
         dayComponent.day = jumping
         let calendar = Calendar.init(identifier: .gregorian)
-        return calendar.date(byAdding: dayComponent, to: self)
+        return calendar.date(byAdding: dayComponent, to: self) ?? Date()
     }
     func stringDateWithFormat(_ formater: String) -> String {
         let df = CDateFormatter.init()
@@ -50,21 +58,17 @@ extension Date {
         let strDate = df.string(from: self)
         return strDate
     }
-    static func -(recent: Date, previous: Date) -> (month: Int?, day: Int?, hour: Int?, minute: Int?, second: Int?) {
-        let day = Calendar.current.dateComponents([.day], from: previous, to: recent).day
-        let month = Calendar.current.dateComponents([.month], from: previous, to: recent).month
-        let hour = Calendar.current.dateComponents([.hour], from: previous, to: recent).hour
-        var minute = Calendar.current.dateComponents([.minute], from: previous, to: recent).minute
-        var second = Calendar.current.dateComponents([.second], from: previous, to: recent).second
-        
-        if let m = minute, m > 60 {
-            minute = Int(m%60)
+    static func -(recent: Date, previous: Date) -> (DateComponents) {
+        var comps = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: previous, to: recent)
+        if let m = comps.minute, m > 60 {
+            let minute = Int(m%60)
+            comps.minute = minute
         }
-        if let s = second, s > 60 {
-            second = Int(s%60)
+        if let s = comps.second, s > 60 {
+            let second = Int(s%60)
+            comps.second = second
         }
-        
-        return (month: month, day: day, hour: hour, minute: minute, second: second)
+        return comps
     }
 }
 

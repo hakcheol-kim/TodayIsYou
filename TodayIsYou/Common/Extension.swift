@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 import AlamofireImage
 import CoreGraphics
+import SwiftyJSON
+
 let TAG_LOADING_IMG = 1234321
 
 //FIXME:: UITableView
@@ -22,6 +24,15 @@ extension UITableView {
     }
 }
 
+extension UICollectionView {
+    func reloadData(completion:@escaping ()-> Void) {
+        UIView.animate(withDuration: 0) {
+            self.reloadData()
+        } completion: { (finish) in
+            completion()
+        }
+    }
+}
 //FIXME:: UIViewController
 extension UIViewController {
     func setUserInterfaceStyle(_ interfaceStyle: UIUserInterfaceStyle) {
@@ -29,31 +40,13 @@ extension UIViewController {
             self.setValue(overrideUserInterfaceStyle, forKey:"overrideUserInterfaceStyle")
         }
     }
-    func showErrorAlertView(_ data: Any?) {
-        if let data = data as? Dictionary<String, Any> {
-            
-//            var title = "에러"
-//            if let code = data["code"] as? Int {
-//                title.append(" : \(code)")
-//            }
+    func showErrorToast(_ data: Any?) {
+        if let data = data as? JSON {
             var msg:String = ""
-            if let errors = data["errors"] as? NSArray {
-                for error in errors {
-                    if let error = error as?[String:Any], let message = error["message"] {
-                        msg.append("\(message)")
-                    }
-                }
-                if msg.isEmpty == false {
-                    msg = String(msg.dropLast())
-                }
-            }
-            if msg.isEmpty == true {
-                if let message = data["msg"] as? String {
-                    msg.append("\(message)")
-                }
-                else if let message = data["message"] as? String {
-                    msg.append("\(message)")
-                }
+            let message = data["message"].stringValue;
+            
+            if message.isEmpty == false {
+                msg.append("\(message)")
             }
             
             if msg.isEmpty == true {
@@ -67,38 +60,17 @@ extension UIViewController {
                     break
                 }
             }
-            if msg.contains("<") {
-                do {
-                    let attr = try NSMutableAttributedString.init(htmlString: msg)
-                    attr.addAttribute(.foregroundColor, value: UIColor.white, range: NSMakeRange(0, attr.string.length))
-                    findView.makeToast(attr)
-                }
-                catch {
-                }
-            }
-            else {
-                findView.makeToast(msg)
-            }
-            
+            findView.makeToast(msg)
         }
-        else if let error = data as? NSError {
-            guard let msg = error.localizedDescription as? String else {
-                return
-            }
-            var findView:UIScrollView? = nil
+        else if let error = data as? Error, let msg = error.localizedDescription as? String {
+            var findView:UIView = self.view
             for subview in self.view.subviews {
                 if let subview = subview as? UIScrollView {
                     findView = subview
                     break
                 }
             }
-            
-            if let findView = findView {
-                findView.makeToast(msg, position: .bottom)
-            }
-            else {
-                self.view.makeToast(msg)
-            }
+            findView.makeToast(msg)
         }
     }
     

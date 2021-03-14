@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SwiftyJSON
 class BaseViewController: UIViewController {
 
     override func viewDidLoad() {

@@ -8,5 +8,12 @@
 import UIKit
 
 class Utility: NSObject {
-
+    class func thumbnailUrl(_ userId: String?, _ fileName: String?) ->String? {
+        guard let userId = userId, let fileName = fileName, userId.isEmpty == false, fileName.isEmpty == false  else {
+            return nil
+        }
+        var url = "\(baseUrl)/upload/talk/\(userId)/thum/thum_\(fileName)"
+        url = url.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        return url
+    }
 }

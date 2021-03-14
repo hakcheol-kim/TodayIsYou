@@ -6,7 +6,62 @@
 //
 
 import UIKit
+import Alamofire
+import AlamofireImage
+import SwiftyJSON
+
+typealias ResSuccess = (JSON?) -> Void
+typealias ResFailure = (Any?) -> Void
+
+enum AppError: String, Error {
+    case invalidResponseType = "response data type not dictionary"
+    case reqeustStatusCodeOverRage = "response status code over range 200 ~ 300"
+}
+
+enum ContentType: String {
+    case json = "application/json; charset=utf-8"
+    case formdata = "multipart/form-data"
+    case urlencoded = "application/x-www-form-urlencoded"
+    case text = "text/plain"
+}
 
 class NetworkManager: NSObject {
-
+    static let ins = NetworkManager()
+    
+    func getFullUrl(_ url:String) -> String {
+        return "\(baseUrl)\(url)"
+    }
+    
+    func request(_ method: HTTPMethod, _ url: String, _ param:[String:Any]?, success:ResSuccess?, failure:ResFailure?) {
+        let fullUrl = self.getFullUrl(url)
+        
+        guard let encodedUrl = fullUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
+            return
+        }
+        
+        AppDelegate.instance.startIndicator()
+        let header: HTTPHeaders = [.contentType(ContentType.json.rawValue), .accept(ContentType.json.rawValue)]
+        
+        let request = AF.request(encodedUrl, method: method, parameters: param, encoding: JSONEncoding.default, headers: header)
+        request.responseJSON { (response:AFDataResponse<Any>) in
+            if let url = response.request?.url?.absoluteString {
+                print("\n\n =======request ======= \nurl: \(String(describing: url))")
+                if let param = param {
+                    print(String(describing: param))
+                }
+            }
+            print("======= response ======= \n\(response)")
+            AppDelegate.instance.stopIndicator()
+            
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                success?(json["Result"])
+                break
+            case .failure(let error):
+                failure?(error)
+                break
+            }
+        }
+    }
 }

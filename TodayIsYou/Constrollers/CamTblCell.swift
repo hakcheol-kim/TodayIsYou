@@ -13,7 +13,6 @@ class CamTblCell: UITableViewCell {
     @IBOutlet weak var ivProfile: UIImageViewAligned!
     @IBOutlet weak var lbTitle: UILabel!
     @IBOutlet weak var lbSubTitle: UILabel!
-    @IBOutlet weak var lbMsg: UILabel!
     @IBOutlet weak var ivThumb: UIImageViewAligned!
     @IBOutlet weak var btnType: CButton!
     
@@ -29,7 +28,6 @@ class CamTblCell: UITableViewCell {
         guard let data = data else {
             lbTitle.text = ""
             lbSubTitle.text = ""
-            lbMsg.text = ""
             ivThumb.isHidden = true
             return
         }
@@ -75,7 +73,6 @@ class CamTblCell: UITableViewCell {
         
         lbTitle.text = contents
         lbSubTitle.text = "\(user_name), \(user_sex) \(user_age)"
-        lbMsg.isHidden = true
     }
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         
