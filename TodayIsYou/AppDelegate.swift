@@ -15,6 +15,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     static var instance: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
+    var mainNavigationCtrl: BaseNavigationController {
+        return AppDelegate.instance.window?.rootViewController as! BaseNavigationController
+    }
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -25,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func callSeviceTermsViewCtrl() {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "SeviceTermsViewController")
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "TermsViewController")
         window?.rootViewController = BaseNavigationController.init(rootViewController: vc)
         window?.makeKeyAndVisible()
     }

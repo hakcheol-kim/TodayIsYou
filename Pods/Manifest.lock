@@ -2,6 +2,7 @@ PODS:
   - Alamofire (5.4.1)
   - AlamofireImage (4.1.0):
     - Alamofire (~> 5.1)
+  - BSImagePicker (3.3.1)
   - CRRefresh (1.1.3)
   - Firebase/Auth (7.8.0):
     - Firebase/CoreOnly
@@ -73,6 +74,7 @@ PODS:
   - GoogleUtilities/UserDefaults (7.3.0):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.5.0)
+  - Mantis (1.4.13)
   - nanopb (2.30907.0):
     - nanopb/decode (= 2.30907.0)
     - nanopb/encode (= 2.30907.0)
@@ -81,6 +83,7 @@ PODS:
   - NVActivityIndicatorView (5.1.1):
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
+  - PanModal (1.2.7)
   - PromisesObjC (1.2.12)
   - SwiftyJSON (4.3.0)
   - UIImageViewAlignedSwift (0.8.1)
@@ -88,11 +91,14 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 5.2)
   - AlamofireImage (~> 4.1)
+  - BSImagePicker (~> 3.1)
   - CRRefresh
   - Firebase/Auth
   - Firebase/Crashlytics
   - Firebase/Messaging
+  - Mantis (~> 1.4.1)
   - NVActivityIndicatorView
+  - PanModal
   - SwiftyJSON (~> 4.0)
   - UIImageViewAlignedSwift
 
@@ -100,6 +106,7 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - AlamofireImage
+    - BSImagePicker
     - CRRefresh
     - Firebase
     - FirebaseAuth
@@ -112,8 +119,10 @@ SPEC REPOS:
     - GoogleDataTransport
     - GoogleUtilities
     - GTMSessionFetcher
+    - Mantis
     - nanopb
     - NVActivityIndicatorView
+    - PanModal
     - PromisesObjC
     - SwiftyJSON
     - UIImageViewAlignedSwift
@@ -121,6 +130,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
+  BSImagePicker: 0fe04b574d4d6b81093785d2af6c26227efc8428
   CRRefresh: 1415d4ae06837fa7bb064c44f2e102f3ef517044
   Firebase: 1e0d6610f21bdd131231525d7ee78f7f9e64e606
   FirebaseAuth: 667e576a716f6f9fe31687791406f61135002d47
@@ -133,12 +143,14 @@ SPEC CHECKSUMS:
   GoogleDataTransport: b006084b73915a42c28a3466961a4edda3065da6
   GoogleUtilities: abda45f519bc4073aa1171d2f8742108def46017
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
+  Mantis: 5d93257edc89b07dc6898c4133b3838e37ee01ea
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
+  PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   UIImageViewAlignedSwift: e4f83530f90860aa31b6840bf570034a681bd2c4
 
-PODFILE CHECKSUM: 99099f9589a2e79cee6bb8b4c59f0ab3c1edc223
+PODFILE CHECKSUM: f4c36514209aa35a8b09b2ece10f212f3c0742af
 
 COCOAPODS: 1.10.1

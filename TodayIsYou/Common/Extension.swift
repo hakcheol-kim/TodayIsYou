@@ -43,10 +43,10 @@ extension UIViewController {
     func showErrorToast(_ data: Any?) {
         if let data = data as? JSON {
             var msg:String = ""
-            let message = data["message"].stringValue;
-            
+            let message = data["errorMessage"].stringValue;
+            let code = data["errorCode"].stringValue
             if message.isEmpty == false {
-                msg.append("\(message)")
+                msg.append("\(message)\nerror code : \(code)")
             }
             
             if msg.isEmpty == true {

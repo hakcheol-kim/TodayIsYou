@@ -32,7 +32,7 @@ class NetworkManager: NSObject {
         return "\(baseUrl)\(url)"
     }
     
-    func request(_ method: HTTPMethod, _ url: String, _ param:[String:Any]?, success:ResSuccess?, failure:ResFailure?) {
+    func request(_ method: HTTPMethod, _ url: String, _ param:[String:Any]?, _ encoding:ParameterEncoding = JSONEncoding.default, success:ResSuccess?, failure:ResFailure?) {
         let fullUrl = self.getFullUrl(url)
         
         guard let encodedUrl = fullUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
@@ -42,7 +42,7 @@ class NetworkManager: NSObject {
         AppDelegate.instance.startIndicator()
         let header: HTTPHeaders = [.contentType(ContentType.json.rawValue), .accept(ContentType.json.rawValue)]
         
-        let request = AF.request(encodedUrl, method: method, parameters: param, encoding: JSONEncoding.default, headers: header)
+        let request = AF.request(encodedUrl, method: method, parameters: param, encoding: encoding, headers: header)
         request.responseJSON { (response:AFDataResponse<Any>) in
             if let url = response.request?.url?.absoluteString {
                 print("\n\n =======request ======= \nurl: \(String(describing: url))")

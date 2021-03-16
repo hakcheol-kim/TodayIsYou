@@ -6,24 +6,56 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class NoticeListViewController: BaseViewController {
-
+    @IBOutlet weak var scrollView: UIScrollView!
+    
+    @IBOutlet weak var svContent: UIStackView!
+    
+    var listData:[JSON] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        CNavigationBar.drawBackButton(self, "공지사항", #selector(actionNaviBack))
+        requestNoticeList()
+    }
+    func requestNoticeList() {
+        ApiManager.ins.requestNoticeList(param: ["user_id": ShareData.instance.userId]) { (response) in
+            let isSuccess = response?["isSuccess"].stringValue
+            let result = response?["result"].arrayValue
+            if isSuccess == "01" {
+                if let result = result, result.count > 0 {
+                    self.listData = result
+                    self.scrollView.isHidden = false
+                    self.reloadData()
+                }
+                else {
+                    self.scrollView.isHidden = true
+                }
+            }
+            else {
+                self.showErrorToast(response)
+            }
+        } failure: { (error) in
+            self.showErrorToast(error)
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func reloadData() {
+        for subview in svContent.arrangedSubviews {
+            subview.removeFromSuperview()
+        }
+        
+        for item in listData {
+            let cell = Bundle.main.loadNibNamed("NoticeCellView", owner: nil, options: nil)?.first as! NoticeCellView
+            svContent.addArrangedSubview(cell)
+            cell.configurationData(item)
+        }
+        let lbTmp = UILabel.init()
+        lbTmp.text = ""
+        svContent.addArrangedSubview(lbTmp)
+        lbTmp.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
+        lbTmp.setContentHuggingPriority(UILayoutPriority(1), for: .horizontal)
     }
-    */
-
 }

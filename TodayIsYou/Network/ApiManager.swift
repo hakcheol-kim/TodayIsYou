@@ -7,6 +7,8 @@
 
 import UIKit
 import Foundation
+import Alamofire
+
 class ApiManager: NSObject {
     static let ins = ApiManager()
     
@@ -107,7 +109,7 @@ class ApiManager: NSObject {
     }
     ///나의정보가져오기
     /// - user_id
-    func requestGetUerInfo(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+    func requestUerInfo(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
         NetworkManager.ins.request(.post, "/api/talk/getUserInfo.json",  clientPara(param)) { (response) in
             success?(response)
         } failure: { (error) in
@@ -145,7 +147,7 @@ class ApiManager: NSObject {
     ///약관
     /// - mode: yk1(가입약관), yk2(개인정보취급방침), yk3(환급신청약관)
     func requestServiceTerms(mode:String, success:ResSuccess?, failure:ResFailure?) {
-        NetworkManager.ins.request(.post, "/api/talk/yk.do", ["mode": mode]) { (response) in
+        NetworkManager.ins.request(.post, "/api/talk/yk.do", ["mode": mode], URLEncoding.queryString) { (response) in
             success?(response)
         } failure: { (error) in
             failure?(error)

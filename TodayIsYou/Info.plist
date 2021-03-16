@@ -47,5 +47,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string></string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>프로파일 이미지 추가하기위해 캘러리 접근을 허용해주세요.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>프로파일 이미지 추가하기위해 캘러리 접근을 허용해주세요.</string>
 </dict>
 </plist>

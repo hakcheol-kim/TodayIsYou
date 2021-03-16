@@ -20,7 +20,7 @@ func imageFromColor(color: UIColor) -> UIImage {
 }
 
 class CButton: UIButton {
-    public var data: Any?
+    public var data: Any!
     
     @IBInspectable var borderWidth: CGFloat = 0.0 {
         didSet {

@@ -79,34 +79,30 @@ class TalkTblCell: UITableViewCell {
         lbSubTitle.attributedText = attr
         
         let df = CDateFormatter.init()
+        
         df.dateFormat = "yyyy-MM-dd HH:mm:ss" // "2021-03-11 07:35:32
         var tStr = ""
+        
         if let regDate = df.date(from: reg_date) {
             let curDate = Date()
             let comps = curDate - regDate
+            print("=== comps: \(comps)")
             
             if let month = comps.month, month > 0 {
                 tStr = "\(month)달전"
             }
             else if let day = comps.day, day > 0 {
-                tStr = "\(day)일전"
+                tStr = String(format: "%ld일전", day)
             }
             else if let hour = comps.hour, hour > 0 {
-                tStr = "\(hour)시간"
-                if let minute = comps.minute, minute > 0 {
-                    tStr = " \(minute)분전"
-                }
+                tStr = String(format: "%02ld시간 %02ld분전", hour, (comps.minute ?? 0))
             }
             else if let minute = comps.minute, minute > 0 {
-                tStr = "\(minute)분전"
-                if let second = comps.second, second > 0 {
-                    tStr.append(" \(second)초전")
-                }
+                tStr = String(format: "%02ld분 %02ld초전", minute, (comps.second ?? 0))
             }
             else if let second = comps.second, second > 0 {
-                tStr.append("\(second)초전")
+                tStr = String(format: "%02ld초전", second)
             }
-            
         }
         lbMsg.text = "\(user_area), \(tStr)"
     }

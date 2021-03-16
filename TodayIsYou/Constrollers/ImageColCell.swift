@@ -6,12 +6,12 @@
 //
 
 import UIKit
+import UIImageViewAlignedSwift
 
 class ImageColCell: UICollectionViewCell {
-
+    @IBOutlet weak var ivThumb: UIImageViewAligned!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
 }

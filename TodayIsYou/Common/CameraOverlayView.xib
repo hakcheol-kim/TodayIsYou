@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="AAl-Jo-qn4" customClass="CameraOverlayView" customModule="StartCode" customModuleProvider="target">
+        <view contentMode="scaleToFill" id="AAl-Jo-qn4" customClass="CameraOverlayView" customModule="TodayIsYou" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
@@ -28,21 +28,22 @@
                         <action selector="onClickedButtonActions:" destination="AAl-Jo-qn4" eventType="touchUpInside" id="XAR-Ts-bHg"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WgN-mw-8j9">
+                <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WgN-mw-8j9">
                     <rect key="frame" x="350" y="44" width="64" height="64"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="64" id="5ib-Hw-Za3"/>
                         <constraint firstAttribute="width" secondItem="WgN-mw-8j9" secondAttribute="height" multiplier="1:1" id="ocL-jw-7l9"/>
                     </constraints>
-                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
-                    <state key="normal" image="btn_photo_close"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="contentEdgeInsets" minX="13" minY="13" maxX="13" maxY="13"/>
+                    <state key="normal" image="xmark.circle" catalog="system"/>
                     <connections>
                         <action selector="onClickedButtonActions:" destination="AAl-Jo-qn4" eventType="touchUpInside" id="m2w-BY-O6Q"/>
                     </connections>
                 </button>
-                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VoW-AR-SNk" customClass="CButton" customModule="StartCode" customModuleProvider="target">
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VoW-AR-SNk" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
                     <rect key="frame" x="169" y="756" width="76" height="76"/>
-                    <color key="backgroundColor" red="0.50196078430000002" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.90196078430000004" green="0.1960784314" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="76" id="NXU-dx-QxB"/>
                         <constraint firstAttribute="width" secondItem="VoW-AR-SNk" secondAttribute="height" multiplier="1:1" id="qnW-AA-Ax4"/>
@@ -75,8 +76,8 @@
         </view>
     </objects>
     <resources>
-        <image name="btn_photo_close" width="64" height="62"/>
         <image name="camera.rotate" catalog="system" width="128" height="94"/>
         <image name="camera.rotate.fill" catalog="system" width="128" height="94"/>
+        <image name="xmark.circle" catalog="system" width="128" height="121"/>
     </resources>
 </document>

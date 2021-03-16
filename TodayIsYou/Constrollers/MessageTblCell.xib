@@ -46,7 +46,7 @@
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="여," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ubS-ex-1cl">
                                                 <rect key="frame" x="0.0" y="0.0" width="166" height="14.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <color key="textColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="여," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDh-E0-mWX">
@@ -76,7 +76,8 @@
                                     <constraint firstAttribute="width" secondItem="Ke1-b9-Sh3" secondAttribute="height" multiplier="1:1" id="Ltg-wo-4ws"/>
                                     <constraint firstAttribute="height" constant="40" id="dNd-lZ-Jts"/>
                                 </constraints>
-                                <state key="normal" image="my_video"/>
+                                <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                                <state key="normal" image="message_black_48dp"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="halfCornerRadius" value="YES"/>
                                 </userDefinedRuntimeAttributes>
@@ -109,7 +110,7 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="my_video" width="24" height="24"/>
+        <image name="message_black_48dp" width="96" height="96"/>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

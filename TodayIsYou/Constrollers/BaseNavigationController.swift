@@ -10,9 +10,16 @@ import UIKit
 class BaseNavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.interactivePopGestureRecognizer?.delegate = self
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+}
+
+extension BaseNavigationController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }

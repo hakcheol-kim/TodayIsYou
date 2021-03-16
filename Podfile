@@ -17,5 +17,8 @@ pod 'Firebase/Messaging'
 pod 'NVActivityIndicatorView'
 pod 'CRRefresh'
 pod 'UIImageViewAlignedSwift'
+pod 'PanModal'
+pod "BSImagePicker", "~> 3.1"
+pod 'Mantis', '~> 1.4.1'
 
 end

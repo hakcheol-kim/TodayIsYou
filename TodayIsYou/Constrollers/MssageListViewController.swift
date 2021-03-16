@@ -37,18 +37,70 @@ class MssageListViewController: BaseViewController {
     func dataRest() {
         pageNum = 1
         pageEnd = false
-//        requestTalkList()
+        requestMyMessageList()
         if listData.count > 0 {
             self.tblView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         }
     }
     func addData() {
-//        requestTalkList()
+        requestMyMessageList()
+    }
+    func requestMyMessageList() {
+        if pageEnd == true {
+            return
+        }
+        
+        var param:[String:Any] = [:]
+        
+        param["user_id"] = ShareData.instance.userId
+        param["pageNum"] = pageNum
+        ApiManager.ins.requestMsgList(param: param) { (response) in
+            self.canRequest = true
+            let result = response?["result"].arrayValue
+            let isSuccess = response?["isSuccess"].stringValue
+            if isSuccess == "01", let result = result {
+                if result.count == 0 {
+                    self.pageEnd = true
+                }
+                else {
+                    if self.pageNum == 1 {
+                        self.listData = result
+                    }
+                    else {
+                        self.listData.append(contentsOf: result)
+                    }
+                }
+                self.tblView.cr.endHeaderRefresh()
+                if (self.listData.count > 0) {
+                    self.tblView.isHidden = false
+                    self.tblView.reloadData()
+                }
+                else {
+                    self.tblView.isHidden = true
+                }
+                self.pageNum += 1
+            }
+            else {
+                self.showErrorToast(response)
+            }
+        } failure: { (error) in
+            self.showErrorToast(error)
+        }
     }
     
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
+        if sender == btnJim {
+            let vc = storyboard?.instantiateViewController(identifier: "MyFrendsListViewController") as! MyFrendsListViewController
+            AppDelegate.instance.mainNavigationCtrl.pushViewController(vc, animated: true)
+        }
+        else if sender == btnDelAll {
+            
+        }
+        else if sender == btnBlock {
+            let vc = storyboard?.instantiateViewController(identifier: "MyBlockListViewController") as! MyBlockListViewController
+            AppDelegate.instance.mainNavigationCtrl.pushViewController(vc, animated: true)
+        }
     }
-    
 }
 extension MssageListViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -70,7 +122,6 @@ extension MssageListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        
     }
 }
 
