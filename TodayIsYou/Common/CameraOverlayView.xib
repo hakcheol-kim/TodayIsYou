@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="AAl-Jo-qn4" customClass="CameraOverlayView" customModule="StartCode" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BWG-JI-5is">
+                    <rect key="frame" x="0.0" y="44" width="64" height="64"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="64" id="Kjv-Cx-S9l"/>
+                        <constraint firstAttribute="width" secondItem="BWG-JI-5is" secondAttribute="height" multiplier="1:1" id="Piv-hO-bRR"/>
+                    </constraints>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <inset key="contentEdgeInsets" minX="13" minY="17" maxX="13" maxY="17"/>
+                    <state key="normal" image="camera.rotate" catalog="system"/>
+                    <state key="selected" image="camera.rotate.fill" catalog="system"/>
+                    <connections>
+                        <action selector="onClickedButtonActions:" destination="AAl-Jo-qn4" eventType="touchUpInside" id="XAR-Ts-bHg"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WgN-mw-8j9">
+                    <rect key="frame" x="350" y="44" width="64" height="64"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="64" id="5ib-Hw-Za3"/>
+                        <constraint firstAttribute="width" secondItem="WgN-mw-8j9" secondAttribute="height" multiplier="1:1" id="ocL-jw-7l9"/>
+                    </constraints>
+                    <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
+                    <state key="normal" image="btn_photo_close"/>
+                    <connections>
+                        <action selector="onClickedButtonActions:" destination="AAl-Jo-qn4" eventType="touchUpInside" id="m2w-BY-O6Q"/>
+                    </connections>
+                </button>
+                <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VoW-AR-SNk" customClass="CButton" customModule="StartCode" customModuleProvider="target">
+                    <rect key="frame" x="169" y="756" width="76" height="76"/>
+                    <color key="backgroundColor" red="0.50196078430000002" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="76" id="NXU-dx-QxB"/>
+                        <constraint firstAttribute="width" secondItem="VoW-AR-SNk" secondAttribute="height" multiplier="1:1" id="qnW-AA-Ax4"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="halfCornerRadius" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="onClickedButtonActions:" destination="AAl-Jo-qn4" eventType="touchUpInside" id="ciK-Nh-W47"/>
+                    </connections>
+                </button>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="oub-0W-6Y4"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="WgN-mw-8j9" secondAttribute="trailing" id="LZ1-ha-UWz"/>
+                <constraint firstItem="WgN-mw-8j9" firstAttribute="top" secondItem="oub-0W-6Y4" secondAttribute="top" id="NqG-CZ-mE2"/>
+                <constraint firstItem="oub-0W-6Y4" firstAttribute="bottom" secondItem="VoW-AR-SNk" secondAttribute="bottom" constant="30" id="ayp-KS-6RX"/>
+                <constraint firstItem="VoW-AR-SNk" firstAttribute="centerX" secondItem="AAl-Jo-qn4" secondAttribute="centerX" id="uRd-cl-Iba"/>
+                <constraint firstItem="BWG-JI-5is" firstAttribute="top" secondItem="oub-0W-6Y4" secondAttribute="top" id="weH-Jd-YqP"/>
+                <constraint firstItem="BWG-JI-5is" firstAttribute="width" secondItem="BWG-JI-5is" secondAttribute="height" multiplier="1:1" id="wf8-4H-vJU"/>
+                <constraint firstItem="BWG-JI-5is" firstAttribute="leading" secondItem="oub-0W-6Y4" secondAttribute="leading" id="xj9-Dc-KPh"/>
+            </constraints>
+            <connections>
+                <outlet property="btnClose" destination="WgN-mw-8j9" id="lRj-4X-a4D"/>
+                <outlet property="btnRotaion" destination="BWG-JI-5is" id="2zW-Ja-zJm"/>
+                <outlet property="btnShot" destination="VoW-AR-SNk" id="pO2-I2-y2N"/>
+            </connections>
+            <point key="canvasLocation" x="94" y="753"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="btn_photo_close" width="64" height="62"/>
+        <image name="camera.rotate" catalog="system" width="128" height="94"/>
+        <image name="camera.rotate.fill" catalog="system" width="128" height="94"/>
+    </resources>
+</document>
