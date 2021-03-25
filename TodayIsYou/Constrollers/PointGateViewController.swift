@@ -78,7 +78,16 @@ extension PointGateViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
         else if indexPath.section == 1 {
-            
+            switch indexPath.row {
+            case 0:
+                guard let vc = self.storyboard?.instantiateViewController(identifier: "ExchangeViewController") as? ExchangeViewController else {
+                    return
+                }
+                self.navigationController?.pushViewController(vc, animated: true)
+                return
+            default:
+                return
+            }
         }
         
     }

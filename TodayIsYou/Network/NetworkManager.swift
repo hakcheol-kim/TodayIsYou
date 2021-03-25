@@ -39,19 +39,19 @@ class NetworkManager: NSObject {
             return
         }
         
-        AppDelegate.instance.startIndicator()
+        AppDelegate.ins.startIndicator()
         let header: HTTPHeaders = [.contentType(ContentType.json.rawValue), .accept(ContentType.json.rawValue)]
         
         let request = AF.request(encodedUrl, method: method, parameters: param, encoding: encoding, headers: header)
         request.responseJSON { (response:AFDataResponse<Any>) in
             if let url = response.request?.url?.absoluteString {
-                print("\n\n =======request ======= \nurl: \(String(describing: url))")
+                print("\n=======request: url: \(String(describing: url))")
                 if let param = param {
                     print(String(describing: param))
                 }
             }
-            print("======= response ======= \n\(response)")
-            AppDelegate.instance.stopIndicator()
+            print("\n======= response ======= \n\(response)")
+            AppDelegate.ins.stopIndicator()
             
             switch response.result {
             case .success(let value):

@@ -20,6 +20,9 @@ class BaseNavigationController: UINavigationController {
 
 extension BaseNavigationController: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        if self.viewControllers.count == 1 {
+            return false
+        }
         return true
     }
 }

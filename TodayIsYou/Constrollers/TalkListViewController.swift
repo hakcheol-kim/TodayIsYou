@@ -18,7 +18,7 @@ class TalkListViewController: BaseViewController {
     var pageNum: Int = 1
     var pageEnd: Bool = false
     var canRequest = true
-    var searchSex:Gender = ShareData.instance.mySex.transGender()
+    var searchSex:Gender = ShareData.ins.mySex.transGender()
     var searchArea: String = ""
     
     override func viewDidLoad() {
@@ -51,8 +51,8 @@ class TalkListViewController: BaseViewController {
         }
         
         var param: [String:Any] = [:]
-        param["app_type"] = ShareData.instance.appType
-        param["user_id"] = ShareData.instance.userId
+        param["app_type"] = appType
+        param["user_id"] = ShareData.ins.userId
         param["pageNum"] = pageNum
         param["search_sex"] = searchSex.rawValue
         param["search_area"] = searchArea

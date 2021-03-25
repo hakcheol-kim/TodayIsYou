@@ -7,7 +7,20 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A7CABF6B776A0D0FC982F5AB /* Pods_TodayIsYou.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67F9BCF181ACBEEE978896E7 /* Pods_TodayIsYou.framework */; };
+		578225F3EA13D7D7170A85FC /* Pods_TodayIsYou.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 072937B55979CBF92514E5AE /* Pods_TodayIsYou.framework */; };
+		E9522B8626058EBB002DD056 /* CamTalkAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9522B8526058EBB002DD056 /* CamTalkAlertView.swift */; };
+		E9522B8A26058EC1002DD056 /* CamTalkAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9522B8926058EC1002DD056 /* CamTalkAlertView.xib */; };
+		E954D9AF2609A743005E14BC /* TermsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E954D9AE2609A743005E14BC /* TermsViewController.xib */; };
+		E954D9B22609A832005E14BC /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E954D9B12609A832005E14BC /* Login.storyboard */; };
+		E954D9B62609A94D005E14BC /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E954D9B52609A94D005E14BC /* LoginViewController.swift */; };
+		E954D9E02609C724005E14BC /* SocialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E954D9DF2609C724005E14BC /* SocialLoginViewController.swift */; };
+		E954DA112609EAF0005E14BC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E954DA0D2609EA7C005E14BC /* GoogleService-Info.plist */; };
+		E95CA6DC260203EB0064AC64 /* LeftSideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95CA6DB260203EB0064AC64 /* LeftSideMenuViewController.swift */; };
+		E95CA6DF26024BA10064AC64 /* ConnectUserListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95CA6DE26024BA10064AC64 /* ConnectUserListViewController.swift */; };
+		E95CA6E3260259D20064AC64 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9C2CE8125F21EF9002A1F95 /* Main.storyboard */; };
+		E96FD37026073F5300B466D0 /* PermissionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96FD36F26073F5300B466D0 /* PermissionsController.swift */; };
+		E96FD37E26073FCB00B466D0 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E96FD37D26073FCB00B466D0 /* Contacts.framework */; };
+		E96FD3812607752A00B466D0 /* ProfanityFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E96FD3802607752A00B466D0 /* ProfanityFilter.swift */; };
 		E9836F5525FF19990072F22F /* ImageColCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9836F5325FF19990072F22F /* ImageColCell.swift */; };
 		E9836F5625FF19990072F22F /* ImageColCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9836F5425FF19990072F22F /* ImageColCell.xib */; };
 		E9836F7A25FF2F3B0072F22F /* CImagePickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9836F7825FF2F3B0072F22F /* CImagePickerController.swift */; };
@@ -17,6 +30,7 @@
 		E9836FE425FF39DC0072F22F /* CameraOverlayView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9836F7925FF2F3B0072F22F /* CameraOverlayView.xib */; };
 		E983700E25FF6C730072F22F /* PointGateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E983700D25FF6C730072F22F /* PointGateViewController.swift */; };
 		E983701125FF6F7B0072F22F /* PointHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E983701025FF6F7B0072F22F /* PointHistoryViewController.swift */; };
+		E985A4F0260C12E6009B8DB1 /* PopupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E985A4EE260C12E6009B8DB1 /* PopupListViewController.swift */; };
 		E99199AC25FDE0B300D6128A /* MyFrendsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99199AA25FDE0B300D6128A /* MyFrendsListViewController.swift */; };
 		E99199D625FDE53C00D6128A /* MyBlockListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99199D525FDE53C00D6128A /* MyBlockListViewController.swift */; };
 		E99199E825FDFAAC00D6128A /* NoticeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99199E725FDFAAC00D6128A /* NoticeListViewController.swift */; };
@@ -25,7 +39,7 @@
 		E99199FB25FE1D5A00D6128A /* PhotoManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99199FA25FE1D5A00D6128A /* PhotoManagerViewController.swift */; };
 		E99199FE25FE1D6C00D6128A /* PointChargeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99199FD25FE1D6C00D6128A /* PointChargeViewController.swift */; };
 		E9919A0125FE1D7300D6128A /* ExchangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9919A0025FE1D7300D6128A /* ExchangeViewController.swift */; };
-		E9919A0425FE1D8600D6128A /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9919A0325FE1D8600D6128A /* ContactUsViewController.swift */; };
+		E9919A0425FE1D8600D6128A /* ContactusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9919A0325FE1D8600D6128A /* ContactusViewController.swift */; };
 		E9919A0725FE1DFB00D6128A /* ConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9919A0625FE1DFB00D6128A /* ConfigurationViewController.swift */; };
 		E9919A0A25FE1ECF00D6128A /* ProfileManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9919A0925FE1ECF00D6128A /* ProfileManagerViewController.swift */; };
 		E99BD64225FB621900B000FE /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = E99BD63625FB621900B000FE /* LICENSE */; };
@@ -44,6 +58,11 @@
 		E99C4CAA25F88A0800B8DFB8 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99C4CA925F88A0800B8DFB8 /* Utility.swift */; };
 		E99C4CAD25F8966500B8DFB8 /* CImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99C4CAC25F8966500B8DFB8 /* CImageView.swift */; };
 		E99C4CC725F8B07F00B8DFB8 /* CFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99C4CC625F8B07F00B8DFB8 /* CFlowLayout.swift */; };
+		E99CFF3B260B638B009985F8 /* CipherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99CFF3A260B638B009985F8 /* CipherManager.swift */; };
+		E99CFF3E260B7C74009985F8 /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99CFF3D260B7C74009985F8 /* IntroViewController.swift */; };
+		E99CFF42260B81D5009985F8 /* MemberInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99CFF41260B81D5009985F8 /* MemberInfoViewController.swift */; };
+		E99CFF45260B8888009985F8 /* JoinTermsAgreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99CFF44260B8888009985F8 /* JoinTermsAgreeViewController.swift */; };
+		E99E51B4260AC0D400A5F5AE /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99E51B3260AC0D400A5F5AE /* KeychainItem.swift */; };
 		E9B12D9525F99C2A00FF7B11 /* TalkTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B12D9325F99C2A00FF7B11 /* TalkTblCell.swift */; };
 		E9B12D9625F99C2A00FF7B11 /* TalkTblCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B12D9425F99C2A00FF7B11 /* TalkTblCell.xib */; };
 		E9B12DBF25F9B35700FF7B11 /* PhotoColCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B12DBD25F9B35700FF7B11 /* PhotoColCell.xib */; };
@@ -52,8 +71,10 @@
 		E9B12DDF25FA02EF00FF7B11 /* RankTopColCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B12DDD25FA02EF00FF7B11 /* RankTopColCell.xib */; };
 		E9B12DE325FA03CB00FF7B11 /* RankTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B12DE125FA03CB00FF7B11 /* RankTblCell.swift */; };
 		E9B12DE425FA03CB00FF7B11 /* RankTblCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B12DE225FA03CB00FF7B11 /* RankTblCell.xib */; };
+		E9B544CC260A137C00EF6C2D /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B544CB260A137C00EF6C2D /* AuthenticationServices.framework */; };
+		E9B97C292600FA0200F8D805 /* ContactusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B97C272600FA0200F8D805 /* ContactusCell.swift */; };
+		E9B97C2A2600FA0200F8D805 /* ContactusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B97C282600FA0200F8D805 /* ContactusCell.xib */; };
 		E9C2CE7C25F21EF9002A1F95 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CE7B25F21EF9002A1F95 /* AppDelegate.swift */; };
-		E9C2CE8325F21EF9002A1F95 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9C2CE8125F21EF9002A1F95 /* Main.storyboard */; };
 		E9C2CE8525F21EF9002A1F95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9C2CE8425F21EF9002A1F95 /* Assets.xcassets */; };
 		E9C2CE8825F21EF9002A1F95 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9C2CE8625F21EF9002A1F95 /* LaunchScreen.storyboard */; };
 		E9C2CE9325F21F8E002A1F95 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CE9225F21F8E002A1F95 /* BaseViewController.swift */; };
@@ -61,7 +82,6 @@
 		E9C2CE9B25F21FF6002A1F95 /* BaseNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CE9A25F21FF6002A1F95 /* BaseNavigationController.swift */; };
 		E9C2CE9E25F22201002A1F95 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CE9D25F22201002A1F95 /* Constants.swift */; };
 		E9C2CEA225F22435002A1F95 /* TermsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CEA125F22435002A1F95 /* TermsViewController.swift */; };
-		E9C2CEA525F2245B002A1F95 /* MemberJoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CEA425F2245B002A1F95 /* MemberJoinViewController.swift */; };
 		E9C2CEAD25F226AC002A1F95 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CEAC25F2269E002A1F95 /* Extension.swift */; };
 		E9C2CEAF25F226AF002A1F95 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CEAB25F2269E002A1F95 /* DateExtension.swift */; };
 		E9C2CECF25F22ECC002A1F95 /* Clabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CEC925F22ECC002A1F95 /* Clabel.swift */; };
@@ -80,7 +100,7 @@
 		E9C2CEE825F23E55002A1F95 /* img_back2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E9C2CEE125F23E55002A1F95 /* img_back2.jpg */; };
 		E9C2CEEA25F23E55002A1F95 /* img_back6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E9C2CEE325F23E55002A1F95 /* img_back6.jpg */; };
 		E9C2CEEB25F23E55002A1F95 /* img_back3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E9C2CEE425F23E55002A1F95 /* img_back3.jpg */; };
-		E9C2CEFD25F26803002A1F95 /* VideoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CEFC25F26803002A1F95 /* VideoListViewController.swift */; };
+		E9C2CEFD25F26803002A1F95 /* CamTalkListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CEFC25F26803002A1F95 /* CamTalkListViewController.swift */; };
 		E9C2CF0525F26871002A1F95 /* TalkListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CF0425F26871002A1F95 /* TalkListViewController.swift */; };
 		E9C2CF0925F26889002A1F95 /* PhotoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CF0825F26889002A1F95 /* PhotoListViewController.swift */; };
 		E9C2CF0C25F268A1002A1F95 /* RankListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CF0B25F268A1002A1F95 /* RankListViewController.swift */; };
@@ -88,17 +108,46 @@
 		E9C2CF1225F2691D002A1F95 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CF1125F2691D002A1F95 /* SettingViewController.swift */; };
 		E9C2CF1625F28C7A002A1F95 /* CamTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CF1425F28C7A002A1F95 /* CamTblCell.swift */; };
 		E9C2CF1725F28C7A002A1F95 /* CamTblCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9C2CF1525F28C7A002A1F95 /* CamTblCell.xib */; };
-		E9C2CF1B25F28C9A002A1F95 /* VideoColCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CF1925F28C9A002A1F95 /* VideoColCell.swift */; };
-		E9C2CF1C25F28C9A002A1F95 /* VideoColCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9C2CF1A25F28C9A002A1F95 /* VideoColCell.xib */; };
+		E9C2CF1B25F28C9A002A1F95 /* CamTalkColCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C2CF1925F28C9A002A1F95 /* CamTalkColCell.swift */; };
+		E9C2CF1C25F28C9A002A1F95 /* CamTalkColCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9C2CF1A25F28C9A002A1F95 /* CamTalkColCell.xib */; };
 		E9DB9BF025FA59510060A072 /* FloatRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DB9BEF25FA59510060A072 /* FloatRatingView.swift */; };
 		E9DB9BF525FA67930060A072 /* MessageTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DB9BF325FA67930060A072 /* MessageTblCell.swift */; };
 		E9DB9BF625FA67930060A072 /* MessageTblCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9DB9BF425FA67930060A072 /* MessageTblCell.xib */; };
+		E9F49E98260470710087E68C /* CAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F49E96260470710087E68C /* CAlertViewController.swift */; };
+		E9F49E99260470710087E68C /* CAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9F49E97260470710087E68C /* CAlertViewController.xib */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXBuildRule section */
+		E9F49E7A26046A4A0087E68C /* PBXBuildRule */ = {
+			isa = PBXBuildRule;
+			compilerSpec = com.apple.compilers.proxy.script;
+			fileType = pattern.proxy;
+			inputFiles = (
+			);
+			isEditable = 1;
+			outputFiles = (
+			);
+			script = "# Type a script or drag a script file from your workspace to insert its path.\n";
+		};
+/* End PBXBuildRule section */
+
 /* Begin PBXFileReference section */
-		1F9B81EE24FA6F3260EADC10 /* Pods-TodayIsYou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayIsYou.debug.xcconfig"; path = "Target Support Files/Pods-TodayIsYou/Pods-TodayIsYou.debug.xcconfig"; sourceTree = "<group>"; };
-		67F9BCF181ACBEEE978896E7 /* Pods_TodayIsYou.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodayIsYou.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA99CE73B9C9F1DC3A7A8DFB /* Pods-TodayIsYou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayIsYou.release.xcconfig"; path = "Target Support Files/Pods-TodayIsYou/Pods-TodayIsYou.release.xcconfig"; sourceTree = "<group>"; };
+		072937B55979CBF92514E5AE /* Pods_TodayIsYou.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodayIsYou.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A19E1D6D5582F83B4633C684 /* Pods-TodayIsYou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayIsYou.debug.xcconfig"; path = "Target Support Files/Pods-TodayIsYou/Pods-TodayIsYou.debug.xcconfig"; sourceTree = "<group>"; };
+		D5D7B7BE3F033B2EBA029FB0 /* Pods-TodayIsYou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayIsYou.release.xcconfig"; path = "Target Support Files/Pods-TodayIsYou/Pods-TodayIsYou.release.xcconfig"; sourceTree = "<group>"; };
+		E9522B8526058EBB002DD056 /* CamTalkAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamTalkAlertView.swift; sourceTree = "<group>"; };
+		E9522B8926058EC1002DD056 /* CamTalkAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CamTalkAlertView.xib; sourceTree = "<group>"; };
+		E954D9AE2609A743005E14BC /* TermsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsViewController.xib; sourceTree = "<group>"; };
+		E954D9B12609A832005E14BC /* Login.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Login.storyboard; path = TodayIsYou/Constrollers/Login.storyboard; sourceTree = "<group>"; };
+		E954D9B52609A94D005E14BC /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		E954D9DF2609C724005E14BC /* SocialLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginViewController.swift; sourceTree = "<group>"; };
+		E954DA052609E3E8005E14BC /* TodayIsYouRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayIsYouRelease.entitlements; sourceTree = "<group>"; };
+		E954DA0D2609EA7C005E14BC /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		E95CA6DB260203EB0064AC64 /* LeftSideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftSideMenuViewController.swift; sourceTree = "<group>"; };
+		E95CA6DE26024BA10064AC64 /* ConnectUserListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectUserListViewController.swift; sourceTree = "<group>"; };
+		E96FD36F26073F5300B466D0 /* PermissionsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsController.swift; sourceTree = "<group>"; };
+		E96FD37D26073FCB00B466D0 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/Library/Frameworks/Contacts.framework; sourceTree = DEVELOPER_DIR; };
+		E96FD3802607752A00B466D0 /* ProfanityFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfanityFilter.swift; sourceTree = "<group>"; };
 		E9836F5325FF19990072F22F /* ImageColCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageColCell.swift; sourceTree = "<group>"; };
 		E9836F5425FF19990072F22F /* ImageColCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageColCell.xib; sourceTree = "<group>"; };
 		E9836F7725FF2F3B0072F22F /* CameraOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOverlayView.swift; sourceTree = "<group>"; };
@@ -108,6 +157,7 @@
 		E9836FC825FF2FE50072F22F /* PhotosUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PhotosUI.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/iOSSupport/System/Library/Frameworks/PhotosUI.framework; sourceTree = DEVELOPER_DIR; };
 		E983700D25FF6C730072F22F /* PointGateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointGateViewController.swift; sourceTree = "<group>"; };
 		E983701025FF6F7B0072F22F /* PointHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointHistoryViewController.swift; sourceTree = "<group>"; };
+		E985A4EE260C12E6009B8DB1 /* PopupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupListViewController.swift; sourceTree = "<group>"; };
 		E99199AA25FDE0B300D6128A /* MyFrendsListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFrendsListViewController.swift; sourceTree = "<group>"; };
 		E99199D525FDE53C00D6128A /* MyBlockListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBlockListViewController.swift; sourceTree = "<group>"; };
 		E99199E725FDFAAC00D6128A /* NoticeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeListViewController.swift; sourceTree = "<group>"; };
@@ -115,8 +165,8 @@
 		E99199F625FE165000D6128A /* NoticeCellView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NoticeCellView.xib; sourceTree = "<group>"; };
 		E99199FA25FE1D5A00D6128A /* PhotoManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoManagerViewController.swift; sourceTree = "<group>"; };
 		E99199FD25FE1D6C00D6128A /* PointChargeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointChargeViewController.swift; sourceTree = "<group>"; };
-		E9919A0025FE1D7300D6128A /* ExchangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeViewController.swift; sourceTree = "<group>"; };
-		E9919A0325FE1D8600D6128A /* ContactUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
+		E9919A0025FE1D7300D6128A /* ExchangeViewController.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = ExchangeViewController.swift; sourceTree = "<group>"; };
+		E9919A0325FE1D8600D6128A /* ContactusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactusViewController.swift; sourceTree = "<group>"; };
 		E9919A0625FE1DFB00D6128A /* ConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewController.swift; sourceTree = "<group>"; };
 		E9919A0925FE1ECF00D6128A /* ProfileManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManagerViewController.swift; sourceTree = "<group>"; };
 		E99BD52525FB490800B000FE /* TodayIsYou.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayIsYou.entitlements; sourceTree = "<group>"; };
@@ -137,6 +187,11 @@
 		E99C4CA925F88A0800B8DFB8 /* Utility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
 		E99C4CAC25F8966500B8DFB8 /* CImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CImageView.swift; sourceTree = "<group>"; };
 		E99C4CC625F8B07F00B8DFB8 /* CFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CFlowLayout.swift; sourceTree = "<group>"; };
+		E99CFF3A260B638B009985F8 /* CipherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CipherManager.swift; sourceTree = "<group>"; };
+		E99CFF3D260B7C74009985F8 /* IntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		E99CFF41260B81D5009985F8 /* MemberInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInfoViewController.swift; sourceTree = "<group>"; };
+		E99CFF44260B8888009985F8 /* JoinTermsAgreeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinTermsAgreeViewController.swift; sourceTree = "<group>"; };
+		E99E51B3260AC0D400A5F5AE /* KeychainItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItem.swift; sourceTree = "<group>"; };
 		E9B12D9325F99C2A00FF7B11 /* TalkTblCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TalkTblCell.swift; sourceTree = "<group>"; };
 		E9B12D9425F99C2A00FF7B11 /* TalkTblCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TalkTblCell.xib; sourceTree = "<group>"; };
 		E9B12DBD25F9B35700FF7B11 /* PhotoColCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoColCell.xib; sourceTree = "<group>"; };
@@ -145,6 +200,9 @@
 		E9B12DDD25FA02EF00FF7B11 /* RankTopColCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RankTopColCell.xib; sourceTree = "<group>"; };
 		E9B12DE125FA03CB00FF7B11 /* RankTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankTblCell.swift; sourceTree = "<group>"; };
 		E9B12DE225FA03CB00FF7B11 /* RankTblCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RankTblCell.xib; sourceTree = "<group>"; };
+		E9B544CB260A137C00EF6C2D /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/iOSSupport/System/Library/Frameworks/AuthenticationServices.framework; sourceTree = DEVELOPER_DIR; };
+		E9B97C272600FA0200F8D805 /* ContactusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactusCell.swift; sourceTree = "<group>"; };
+		E9B97C282600FA0200F8D805 /* ContactusCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactusCell.xib; sourceTree = "<group>"; };
 		E9C2CE7825F21EF9002A1F95 /* TodayIsYou.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodayIsYou.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9C2CE7B25F21EF9002A1F95 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E9C2CE8225F21EF9002A1F95 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -156,7 +214,6 @@
 		E9C2CE9A25F21FF6002A1F95 /* BaseNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNavigationController.swift; sourceTree = "<group>"; };
 		E9C2CE9D25F22201002A1F95 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		E9C2CEA125F22435002A1F95 /* TermsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewController.swift; sourceTree = "<group>"; };
-		E9C2CEA425F2245B002A1F95 /* MemberJoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberJoinViewController.swift; sourceTree = "<group>"; };
 		E9C2CEAB25F2269E002A1F95 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
 		E9C2CEAC25F2269E002A1F95 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		E9C2CEC625F22ECB002A1F95 /* CToast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CToast.swift; sourceTree = "<group>"; };
@@ -175,7 +232,7 @@
 		E9C2CEE125F23E55002A1F95 /* img_back2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = img_back2.jpg; sourceTree = "<group>"; };
 		E9C2CEE325F23E55002A1F95 /* img_back6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = img_back6.jpg; sourceTree = "<group>"; };
 		E9C2CEE425F23E55002A1F95 /* img_back3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = img_back3.jpg; sourceTree = "<group>"; };
-		E9C2CEFC25F26803002A1F95 /* VideoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoListViewController.swift; sourceTree = "<group>"; };
+		E9C2CEFC25F26803002A1F95 /* CamTalkListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamTalkListViewController.swift; sourceTree = "<group>"; };
 		E9C2CF0425F26871002A1F95 /* TalkListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TalkListViewController.swift; sourceTree = "<group>"; };
 		E9C2CF0825F26889002A1F95 /* PhotoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListViewController.swift; sourceTree = "<group>"; };
 		E9C2CF0B25F268A1002A1F95 /* RankListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankListViewController.swift; sourceTree = "<group>"; };
@@ -183,11 +240,13 @@
 		E9C2CF1125F2691D002A1F95 /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		E9C2CF1425F28C7A002A1F95 /* CamTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamTblCell.swift; sourceTree = "<group>"; };
 		E9C2CF1525F28C7A002A1F95 /* CamTblCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CamTblCell.xib; sourceTree = "<group>"; };
-		E9C2CF1925F28C9A002A1F95 /* VideoColCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoColCell.swift; sourceTree = "<group>"; };
-		E9C2CF1A25F28C9A002A1F95 /* VideoColCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VideoColCell.xib; sourceTree = "<group>"; };
+		E9C2CF1925F28C9A002A1F95 /* CamTalkColCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamTalkColCell.swift; sourceTree = "<group>"; };
+		E9C2CF1A25F28C9A002A1F95 /* CamTalkColCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CamTalkColCell.xib; sourceTree = "<group>"; };
 		E9DB9BEF25FA59510060A072 /* FloatRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatRatingView.swift; sourceTree = "<group>"; };
 		E9DB9BF325FA67930060A072 /* MessageTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTblCell.swift; sourceTree = "<group>"; };
 		E9DB9BF425FA67930060A072 /* MessageTblCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MessageTblCell.xib; sourceTree = "<group>"; };
+		E9F49E96260470710087E68C /* CAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CAlertViewController.swift; sourceTree = "<group>"; };
+		E9F49E97260470710087E68C /* CAlertViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CAlertViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -195,9 +254,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A7CABF6B776A0D0FC982F5AB /* Pods_TodayIsYou.framework in Frameworks */,
 				E9836FC925FF2FE50072F22F /* Photos.framework in Frameworks */,
+				E9B544CC260A137C00EF6C2D /* AuthenticationServices.framework in Frameworks */,
+				E96FD37E26073FCB00B466D0 /* Contacts.framework in Frameworks */,
 				E9836FCA25FF2FE50072F22F /* PhotosUI.framework in Frameworks */,
+				578225F3EA13D7D7170A85FC /* Pods_TodayIsYou.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,8 +268,8 @@
 		4421354776E866DDA1B4A94E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1F9B81EE24FA6F3260EADC10 /* Pods-TodayIsYou.debug.xcconfig */,
-				CA99CE73B9C9F1DC3A7A8DFB /* Pods-TodayIsYou.release.xcconfig */,
+				A19E1D6D5582F83B4633C684 /* Pods-TodayIsYou.debug.xcconfig */,
+				D5D7B7BE3F033B2EBA029FB0 /* Pods-TodayIsYou.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -216,11 +277,22 @@
 		E8058E01557F46CA2468173B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E9B544CB260A137C00EF6C2D /* AuthenticationServices.framework */,
+				E96FD37D26073FCB00B466D0 /* Contacts.framework */,
 				E9836FC725FF2FE50072F22F /* Photos.framework */,
 				E9836FC825FF2FE50072F22F /* PhotosUI.framework */,
-				67F9BCF181ACBEEE978896E7 /* Pods_TodayIsYou.framework */,
+				072937B55979CBF92514E5AE /* Pods_TodayIsYou.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E9522B8426058E31002DD056 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E9522B8526058EBB002DD056 /* CamTalkAlertView.swift */,
+				E9522B8926058EC1002DD056 /* CamTalkAlertView.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		E9836FFF25FF678E0072F22F /* Point */ = {
@@ -243,7 +315,9 @@
 				E99199F625FE165000D6128A /* NoticeCellView.xib */,
 				E99199FA25FE1D5A00D6128A /* PhotoManagerViewController.swift */,
 				E9919A0925FE1ECF00D6128A /* ProfileManagerViewController.swift */,
-				E9919A0325FE1D8600D6128A /* ContactUsViewController.swift */,
+				E9919A0325FE1D8600D6128A /* ContactusViewController.swift */,
+				E9B97C272600FA0200F8D805 /* ContactusCell.swift */,
+				E9B97C282600FA0200F8D805 /* ContactusCell.xib */,
 				E9919A0625FE1DFB00D6128A /* ConfigurationViewController.swift */,
 				E9836F5325FF19990072F22F /* ImageColCell.swift */,
 				E9836F5425FF19990072F22F /* ImageColCell.xib */,
@@ -300,6 +374,7 @@
 			isa = PBXGroup;
 			children = (
 				E9C2CE8125F21EF9002A1F95 /* Main.storyboard */,
+				E954D9B12609A832005E14BC /* Login.storyboard */,
 				E9C2CE7A25F21EF9002A1F95 /* TodayIsYou */,
 				E9C2CE7925F21EF9002A1F95 /* Products */,
 				4421354776E866DDA1B4A94E /* Pods */,
@@ -318,6 +393,9 @@
 		E9C2CE7A25F21EF9002A1F95 /* TodayIsYou */ = {
 			isa = PBXGroup;
 			children = (
+				E954DA0D2609EA7C005E14BC /* GoogleService-Info.plist */,
+				E954DA052609E3E8005E14BC /* TodayIsYouRelease.entitlements */,
+				E9522B8426058E31002DD056 /* Views */,
 				E99BD63425FB61F300B000FE /* Libary */,
 				E99BD52525FB490800B000FE /* TodayIsYou.entitlements */,
 				E99C4C6025F7BAB100B8DFB8 /* Network */,
@@ -337,11 +415,11 @@
 			children = (
 				E9C2CF0225F26840002A1F95 /* Main */,
 				E9C2CF0325F26854002A1F95 /* Join */,
-				E9C2CEFC25F26803002A1F95 /* VideoListViewController.swift */,
+				E9C2CEFC25F26803002A1F95 /* CamTalkListViewController.swift */,
 				E9C2CF1425F28C7A002A1F95 /* CamTblCell.swift */,
 				E9C2CF1525F28C7A002A1F95 /* CamTblCell.xib */,
-				E9C2CF1925F28C9A002A1F95 /* VideoColCell.swift */,
-				E9C2CF1A25F28C9A002A1F95 /* VideoColCell.xib */,
+				E9C2CF1925F28C9A002A1F95 /* CamTalkColCell.swift */,
+				E9C2CF1A25F28C9A002A1F95 /* CamTalkColCell.xib */,
 				E9C2CF0425F26871002A1F95 /* TalkListViewController.swift */,
 				E9B12D9325F99C2A00FF7B11 /* TalkTblCell.swift */,
 				E9B12D9425F99C2A00FF7B11 /* TalkTblCell.xib */,
@@ -360,6 +438,7 @@
 				E99199E625FDFA9800D6128A /* Setting */,
 				E99199AA25FDE0B300D6128A /* MyFrendsListViewController.swift */,
 				E99199D525FDE53C00D6128A /* MyBlockListViewController.swift */,
+				E95CA6DE26024BA10064AC64 /* ConnectUserListViewController.swift */,
 			);
 			path = Constrollers;
 			sourceTree = "<group>";
@@ -367,6 +446,7 @@
 		E9C2CEAA25F22669002A1F95 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				E99E51B3260AC0D400A5F5AE /* KeychainItem.swift */,
 				E9836F7725FF2F3B0072F22F /* CameraOverlayView.swift */,
 				E9836F7925FF2F3B0072F22F /* CameraOverlayView.xib */,
 				E9836F7825FF2F3B0072F22F /* CImagePickerController.swift */,
@@ -386,6 +466,12 @@
 				E9C2CEAC25F2269E002A1F95 /* Extension.swift */,
 				E99C4CA925F88A0800B8DFB8 /* Utility.swift */,
 				E99C4CC625F8B07F00B8DFB8 /* CFlowLayout.swift */,
+				E9F49E96260470710087E68C /* CAlertViewController.swift */,
+				E9F49E97260470710087E68C /* CAlertViewController.xib */,
+				E96FD36F26073F5300B466D0 /* PermissionsController.swift */,
+				E96FD3802607752A00B466D0 /* ProfanityFilter.swift */,
+				E99CFF3A260B638B009985F8 /* CipherManager.swift */,
+				E985A4EE260C12E6009B8DB1 /* PopupListViewController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -409,6 +495,8 @@
 				E9C2CE9A25F21FF6002A1F95 /* BaseNavigationController.swift */,
 				E9C2CE9225F21F8E002A1F95 /* BaseViewController.swift */,
 				E9C2CE9625F21FC4002A1F95 /* MainViewController.swift */,
+				E95CA6DB260203EB0064AC64 /* LeftSideMenuViewController.swift */,
+				E99CFF3D260B7C74009985F8 /* IntroViewController.swift */,
 			);
 			name = Main;
 			sourceTree = "<group>";
@@ -416,8 +504,12 @@
 		E9C2CF0325F26854002A1F95 /* Join */ = {
 			isa = PBXGroup;
 			children = (
-				E9C2CEA425F2245B002A1F95 /* MemberJoinViewController.swift */,
 				E9C2CEA125F22435002A1F95 /* TermsViewController.swift */,
+				E954D9AE2609A743005E14BC /* TermsViewController.xib */,
+				E954D9B52609A94D005E14BC /* LoginViewController.swift */,
+				E954D9DF2609C724005E14BC /* SocialLoginViewController.swift */,
+				E99CFF41260B81D5009985F8 /* MemberInfoViewController.swift */,
+				E99CFF44260B8888009985F8 /* JoinTermsAgreeViewController.swift */,
 			);
 			name = Join;
 			sourceTree = "<group>";
@@ -429,13 +521,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E9C2CE8C25F21EF9002A1F95 /* Build configuration list for PBXNativeTarget "TodayIsYou" */;
 			buildPhases = (
-				6C83714B6E218CAA6FF64F70 /* [CP] Check Pods Manifest.lock */,
+				200DCE249D41B959A65064DC /* [CP] Check Pods Manifest.lock */,
 				E9C2CE7425F21EF8002A1F95 /* Sources */,
 				E9C2CE7525F21EF8002A1F95 /* Frameworks */,
 				E9C2CE7625F21EF8002A1F95 /* Resources */,
-				D589F5AB5F19055E2E391BBB /* [CP] Embed Pods Frameworks */,
+				B16021EE005F3F283F4BDC25 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
+				E9F49E7A26046A4A0087E68C /* PBXBuildRule */,
 			);
 			dependencies = (
 			);
@@ -486,29 +579,35 @@
 				E9C2CEEA25F23E55002A1F95 /* img_back6.jpg in Resources */,
 				E9C2CE8825F21EF9002A1F95 /* LaunchScreen.storyboard in Resources */,
 				E9C2CEE625F23E55002A1F95 /* img_back5.jpg in Resources */,
+				E9522B8A26058EC1002DD056 /* CamTalkAlertView.xib in Resources */,
+				E95CA6E3260259D20064AC64 /* Main.storyboard in Resources */,
 				E9B12DDF25FA02EF00FF7B11 /* RankTopColCell.xib in Resources */,
 				E9836F5625FF19990072F22F /* ImageColCell.xib in Resources */,
+				E9F49E99260470710087E68C /* CAlertViewController.xib in Resources */,
 				E9836FE425FF39DC0072F22F /* CameraOverlayView.xib in Resources */,
+				E954DA112609EAF0005E14BC /* GoogleService-Info.plist in Resources */,
 				E9C2CEE525F23E55002A1F95 /* img_back4.jpg in Resources */,
 				E9C2CE8525F21EF9002A1F95 /* Assets.xcassets in Resources */,
 				E9B12D9625F99C2A00FF7B11 /* TalkTblCell.xib in Resources */,
+				E954D9AF2609A743005E14BC /* TermsViewController.xib in Resources */,
 				E99BD64225FB621900B000FE /* LICENSE in Resources */,
+				E954D9B22609A832005E14BC /* Login.storyboard in Resources */,
 				E9C2CF1725F28C7A002A1F95 /* CamTblCell.xib in Resources */,
 				E9B12DE425FA03CB00FF7B11 /* RankTblCell.xib in Resources */,
 				E9DB9BF625FA67930060A072 /* MessageTblCell.xib in Resources */,
 				E9C2CEE725F23E55002A1F95 /* img_back1.jpg in Resources */,
 				E9C2CEE825F23E55002A1F95 /* img_back2.jpg in Resources */,
+				E9B97C2A2600FA0200F8D805 /* ContactusCell.xib in Resources */,
 				E9B12DBF25F9B35700FF7B11 /* PhotoColCell.xib in Resources */,
-				E9C2CF1C25F28C9A002A1F95 /* VideoColCell.xib in Resources */,
+				E9C2CF1C25F28C9A002A1F95 /* CamTalkColCell.xib in Resources */,
 				E99199F725FE165000D6128A /* NoticeCellView.xib in Resources */,
-				E9C2CE8325F21EF9002A1F95 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6C83714B6E218CAA6FF64F70 /* [CP] Check Pods Manifest.lock */ = {
+		200DCE249D41B959A65064DC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -530,7 +629,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D589F5AB5F19055E2E391BBB /* [CP] Embed Pods Frameworks */ = {
+		B16021EE005F3F283F4BDC25 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -556,10 +655,12 @@
 			files = (
 				E9C2CE9E25F22201002A1F95 /* Constants.swift in Sources */,
 				E9C2CED325F22ECC002A1F95 /* CToast.swift in Sources */,
-				E9C2CEFD25F26803002A1F95 /* VideoListViewController.swift in Sources */,
+				E9C2CEFD25F26803002A1F95 /* CamTalkListViewController.swift in Sources */,
+				E954D9B62609A94D005E14BC /* LoginViewController.swift in Sources */,
 				E9C2CE9725F21FC4002A1F95 /* MainViewController.swift in Sources */,
 				E9C2CE7C25F21EF9002A1F95 /* AppDelegate.swift in Sources */,
 				E9C2CED025F22ECC002A1F95 /* CButton.swift in Sources */,
+				E954D9E02609C724005E14BC /* SocialLoginViewController.swift in Sources */,
 				E9C2CF1625F28C7A002A1F95 /* CamTblCell.swift in Sources */,
 				E99C4CC725F8B07F00B8DFB8 /* CFlowLayout.swift in Sources */,
 				E99199FE25FE1D6C00D6128A /* PointChargeViewController.swift in Sources */,
@@ -568,11 +669,15 @@
 				E9C2CF0F25F26916002A1F95 /* MssageListViewController.swift in Sources */,
 				E99BD64625FB621900B000FE /* FSPagerViewCell.swift in Sources */,
 				E99199AC25FDE0B300D6128A /* MyFrendsListViewController.swift in Sources */,
+				E99CFF45260B8888009985F8 /* JoinTermsAgreeViewController.swift in Sources */,
 				E99BD64825FB621900B000FE /* FSPageViewLayout.swift in Sources */,
 				E9C2CF0C25F268A1002A1F95 /* RankListViewController.swift in Sources */,
+				E99CFF42260B81D5009985F8 /* MemberInfoViewController.swift in Sources */,
 				E9C2CF1225F2691D002A1F95 /* SettingViewController.swift in Sources */,
 				E99C4CAD25F8966500B8DFB8 /* CImageView.swift in Sources */,
-				E9C2CF1B25F28C9A002A1F95 /* VideoColCell.swift in Sources */,
+				E96FD37026073F5300B466D0 /* PermissionsController.swift in Sources */,
+				E95CA6DF26024BA10064AC64 /* ConnectUserListViewController.swift in Sources */,
+				E9C2CF1B25F28C9A002A1F95 /* CamTalkColCell.swift in Sources */,
 				E99C4C6525F7BAED00B8DFB8 /* ApiManager.swift in Sources */,
 				E9B12DDE25FA02EF00FF7B11 /* RankTopColCell.swift in Sources */,
 				E99BD66425FB651800B000FE /* FSPagerView.swift in Sources */,
@@ -584,11 +689,13 @@
 				E9DB9BF025FA59510060A072 /* FloatRatingView.swift in Sources */,
 				E99199FB25FE1D5A00D6128A /* PhotoManagerViewController.swift in Sources */,
 				E9C2CE9325F21F8E002A1F95 /* BaseViewController.swift in Sources */,
+				E99CFF3E260B7C74009985F8 /* IntroViewController.swift in Sources */,
 				E99199F425FE164900D6128A /* NoticeCellView.swift in Sources */,
 				E9C2CEA225F22435002A1F95 /* TermsViewController.swift in Sources */,
 				E99199E825FDFAAC00D6128A /* NoticeListViewController.swift in Sources */,
-				E9919A0425FE1D8600D6128A /* ContactUsViewController.swift in Sources */,
-				E9C2CEA525F2245B002A1F95 /* MemberJoinViewController.swift in Sources */,
+				E9919A0425FE1D8600D6128A /* ContactusViewController.swift in Sources */,
+				E9F49E98260470710087E68C /* CAlertViewController.swift in Sources */,
+				E99E51B4260AC0D400A5F5AE /* KeychainItem.swift in Sources */,
 				E9C2CEAD25F226AC002A1F95 /* Extension.swift in Sources */,
 				E9C2CED625F22ECC002A1F95 /* CToolbar.swift in Sources */,
 				E983700E25FF6C730072F22F /* PointGateViewController.swift in Sources */,
@@ -601,20 +708,26 @@
 				E99199D625FDE53C00D6128A /* MyBlockListViewController.swift in Sources */,
 				E9836F7B25FF2F3B0072F22F /* CameraOverlayView.swift in Sources */,
 				E9B12DE325FA03CB00FF7B11 /* RankTblCell.swift in Sources */,
+				E985A4F0260C12E6009B8DB1 /* PopupListViewController.swift in Sources */,
 				E9C2CED425F22ECC002A1F95 /* CTextView.swift in Sources */,
 				E99BD64B25FB621900B000FE /* FSPagerCollectionView.swift in Sources */,
 				E9B12D9525F99C2A00FF7B11 /* TalkTblCell.swift in Sources */,
 				E9DB9BF525FA67930060A072 /* MessageTblCell.swift in Sources */,
 				E99C4CAA25F88A0800B8DFB8 /* Utility.swift in Sources */,
+				E9522B8626058EBB002DD056 /* CamTalkAlertView.swift in Sources */,
 				E983701125FF6F7B0072F22F /* PointHistoryViewController.swift in Sources */,
 				E99C4C6225F7BAD300B8DFB8 /* NetworkManager.swift in Sources */,
 				E9C2CF0925F26889002A1F95 /* PhotoListViewController.swift in Sources */,
 				E9919A0125FE1D7300D6128A /* ExchangeViewController.swift in Sources */,
 				E9C2CED725F22ECC002A1F95 /* CView.swift in Sources */,
+				E96FD3812607752A00B466D0 /* ProfanityFilter.swift in Sources */,
+				E9B97C292600FA0200F8D805 /* ContactusCell.swift in Sources */,
 				E9836F7A25FF2F3B0072F22F /* CImagePickerController.swift in Sources */,
 				E9B12DC025F9B35700FF7B11 /* PhotoColCell.swift in Sources */,
 				E9C2CED225F22ECC002A1F95 /* CustomColFlowLayout.swift in Sources */,
+				E99CFF3B260B638B009985F8 /* CipherManager.swift in Sources */,
 				E99BD64525FB621900B000FE /* FSPageViewTransformer.swift in Sources */,
+				E95CA6DC260203EB0064AC64 /* LeftSideMenuViewController.swift in Sources */,
 				E9919A0A25FE1ECF00D6128A /* ProfileManagerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -759,14 +872,17 @@
 		};
 		E9C2CE8D25F21EF9002A1F95 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1F9B81EE24FA6F3260EADC10 /* Pods-TodayIsYou.debug.xcconfig */;
+			baseConfigurationReference = A19E1D6D5582F83B4633C684 /* Pods-TodayIsYou.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TodayIsYou/TodayIsYou.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEVELOPMENT_TEAM = 6QB33R9MCL;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Alamofire\"",
@@ -792,30 +908,65 @@
 					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/FirebaseAnalytics\"",
 					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/GoogleAppMeasurement\"",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Alamofire/Alamofire.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AlamofireImage/AlamofireImage.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/BSImagePicker/BSImagePicker.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CRRefresh/CRRefresh.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseAuth/FirebaseAuth.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCore/FirebaseCore.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCrashlytics/FirebaseCrashlytics.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseInstallations/FirebaseInstallations.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseInstanceID/FirebaseInstanceID.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseMessaging/FirebaseMessaging.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleDataTransport/GoogleDataTransport.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUtilities/GoogleUtilities.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Mantis/Mantis.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PanModal/PanModal.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromisesObjC/FBLPromises.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftyJSON/SwiftyJSON.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/UIImageViewAlignedSwift/UIImageViewAlignedSwift.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/nanopb/nanopb.framework/Headers\"",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+					"$(inherited)",
+					"${PODS_ROOT}/Firebase/CoreOnly/Sources",
+					"\"${PODS_TARGET_SRCROOT}/Sources/FBLPromises/include\"",
+				);
 				INFOPLIST_FILE = TodayIsYou/Info.plist;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.co.Iruri.TodayIsYou;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Iruri.TodayIsYou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
 		};
 		E9C2CE8E25F21EF9002A1F95 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CA99CE73B9C9F1DC3A7A8DFB /* Pods-TodayIsYou.release.xcconfig */;
+			baseConfigurationReference = D5D7B7BE3F033B2EBA029FB0 /* Pods-TodayIsYou.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = TodayIsYou/TodayIsYou.entitlements;
+				CODE_SIGN_ENTITLEMENTS = TodayIsYou/TodayIsYouRelease.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEVELOPMENT_TEAM = 6QB33R9MCL;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/Alamofire\"",
@@ -841,17 +992,49 @@
 					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/FirebaseAnalytics\"",
 					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/GoogleAppMeasurement\"",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Alamofire/Alamofire.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AlamofireImage/AlamofireImage.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/BSImagePicker/BSImagePicker.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CRRefresh/CRRefresh.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseAuth/FirebaseAuth.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCore/FirebaseCore.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCoreDiagnostics/FirebaseCoreDiagnostics.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseCrashlytics/FirebaseCrashlytics.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseInstallations/FirebaseInstallations.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseInstanceID/FirebaseInstanceID.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseMessaging/FirebaseMessaging.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleDataTransport/GoogleDataTransport.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleUtilities/GoogleUtilities.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Mantis/Mantis.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PanModal/PanModal.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/PromisesObjC/FBLPromises.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftyJSON/SwiftyJSON.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/UIImageViewAlignedSwift/UIImageViewAlignedSwift.framework/Headers\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/nanopb/nanopb.framework/Headers\"",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/Firebase\"",
+					"$(inherited)",
+					"${PODS_ROOT}/Firebase/CoreOnly/Sources",
+					"\"${PODS_TARGET_SRCROOT}/Sources/FBLPromises/include\"",
+				);
 				INFOPLIST_FILE = TodayIsYou/Info.plist;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = kr.co.Iruri.TodayIsYou;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Iruri.TodayIsYou;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Release;
 		};

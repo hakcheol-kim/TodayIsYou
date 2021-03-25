@@ -8,8 +8,19 @@
 import UIKit
 
 class ShareData: NSObject {
-    static let instance = ShareData()
-    let userId: String = "a52fd10c131f149663a64ab074d5b44b"
-    let mySex: Gender = .mail
-    let appType: String = "A1"
+    static let ins = ShareData()
+    var userId: String = ""
+    var mySex: Gender = .mail
+    var myPoint: NSNumber? = nil
+    
+    func dfsSetValue(_ value: Any?, forKey key: String) {
+        UserDefaults.standard.setValue(value, forKey: key)
+        UserDefaults.standard.synchronize()
+        if key == DfsKey.myPoint {
+            myPoint = value as? NSNumber
+        }
+    }
+    func dfsObjectForKey(_ key: String) -> Any? {
+        return UserDefaults.standard.object(forKey: key)
+    }
 }

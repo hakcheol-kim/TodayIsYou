@@ -22,7 +22,7 @@ class CToolbar: UIToolbar {
     var btnUp:UIBarButtonItem?
     var btnDown:UIBarButtonItem?
     
-    convenience init(barItems:[BarItem], itemColor:UIColor = RGB(139, 0, 255)) {
+    convenience init(barItems:[BarItem], itemColor:UIColor = RGB(230, 100, 100)) {
         self.init()
     
         self.itemColor = itemColor
@@ -49,11 +49,15 @@ class CToolbar: UIToolbar {
                 self.btnUp = UIBarButtonItem.init(image: UIImage.init(systemName: "chevron.up"), style: .plain, target: target, action: selctor)
                 self.btnUp?.tintColor = itemColor
                 self.btnUp?.tag = TAG_TOOL_BAR_UP
+                btnUp?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : itemColor], for: .normal)
+                btnUp?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.lightGray], for: .disabled)
             }
             else if type == .down {
                 self.btnDown = UIBarButtonItem.init(image: UIImage.init(systemName: "chevron.down"), style: .plain, target: target, action: selctor)
                 self.btnDown?.tintColor = itemColor
                 self.btnDown?.tag = TAG_TOOL_BAR_DOWN
+                btnUp?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : itemColor], for: .normal)
+                btnUp?.setTitleTextAttributes([NSAttributedString.Key.foregroundColor : UIColor.lightGray], for: .disabled)
             }
         }
         var items:[UIBarButtonItem] = []

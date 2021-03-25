@@ -15,9 +15,13 @@ class CamTblCell: UITableViewCell {
     @IBOutlet weak var lbSubTitle: UILabel!
     @IBOutlet weak var ivThumb: UIImageViewAligned!
     @IBOutlet weak var btnType: CButton!
+    var data: JSON!
+    var didClickedClosure:((_ selData:JSON?, _ actionIndex: Int) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        let tap = UITapGestureRecognizer.init(target: self, action: #selector(onTapGesuterHandler(_ :)))
+        ivThumb.addGestureRecognizer(tap)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -31,7 +35,7 @@ class CamTblCell: UITableViewCell {
             ivThumb.isHidden = true
             return
         }
-        
+        self.data = data
         let all_user_cnt = data["all_user_cnt"].intValue //  = 4858;
         let contents = data["contents"].stringValue // = "\Uc5f0\Uc0c1\Uc774 \Uc88b\Uc544\Uc694";
         let days = data["days"].intValue // = 0;
@@ -74,7 +78,14 @@ class CamTblCell: UITableViewCell {
         lbTitle.text = contents
         lbSubTitle.text = "\(user_name), \(user_sex) \(user_age)"
     }
+    @objc func onTapGesuterHandler(_ gesture: UIGestureRecognizer) {
+        if gesture.view == ivThumb {
+            didClickedClosure?(self.data, 100)
+        }
+    }
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
-        
+        if sender == btnType {
+            didClickedClosure?(self.data, 101)
+        }
     }
 }

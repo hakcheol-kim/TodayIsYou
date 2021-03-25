@@ -33,7 +33,7 @@ class PhotoManagerViewController: BaseViewController {
     }
     
     func reqeustGetMyPhotoList() {
-        ApiManager.ins.requestGetMyPhotos(param: ["user_id":ShareData.instance.userId]) { (response) in
+        ApiManager.ins.requestGetMyPhotos(param: ["user_id":ShareData.ins.userId]) { (response) in
             let isSuccess = response?["isSuccess"].stringValue
             let result = response?["result"].arrayValue
             if let result = result, isSuccess == "01" {
@@ -63,7 +63,7 @@ class PhotoManagerViewController: BaseViewController {
             ApiManager.ins.requestServiceTerms(mode: "yk8") { (response) in
                 let isSuccess = response?["isSuccess"].stringValue
                 if isSuccess == "01", let yk = response?["yk"].stringValue {
-                    guard let vc = self.storyboard?.instantiateViewController(identifier: "TermsViewController") as? TermsViewController else { return }
+                    let vc = TermsViewController.init()
                     vc.content = yk
                     vc.type = .nomarl
                     self.navigationController?.pushViewController(vc, animated: true)

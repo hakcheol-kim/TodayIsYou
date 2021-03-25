@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>926574312014-vj5h0tm110tscn2sboga3oo3lqbaglj8.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.926574312014-vj5h0tm110tscn2sboga3oo3lqbaglj8</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDTXeSndMum47v5LEtnygppJ_S07HduLrs</string>
+	<key>GCM_SENDER_ID</key>
+	<string>926574312014</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>kr.Iruri.TodayIsYou</string>
+	<key>PROJECT_ID</key>
+	<string>todayisyou-1ad29</string>
+	<key>STORAGE_BUCKET</key>
+	<string>todayisyou-1ad29.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:926574312014:ios:04253e75c8e1409f89a11f</string>
+</dict>
+</plist>

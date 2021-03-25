@@ -9,6 +9,9 @@ import UIKit
 public let TAG_NAVI_BACK: Int = 10000
 public let TAG_NAVI_TITLE: Int = 10001
 public let TAG_NAVI_POINT: Int = 10002
+public let TAG_NAVI_P_COINT: Int = 10003
+public let TAG_NAVI_S_COINT: Int = 10004
+
 public let ColorNaviBar = RGB(230, 50, 70)
 
 class CNavigationBar: UINavigationBar {

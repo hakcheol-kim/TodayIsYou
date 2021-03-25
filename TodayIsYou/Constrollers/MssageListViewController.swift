@@ -18,7 +18,7 @@ class MssageListViewController: BaseViewController {
     var pageNum: Int = 1
     var pageEnd: Bool = false
     var canRequest = true
-    var searchSex:Gender = ShareData.instance.mySex.transGender()
+    var searchSex:Gender = ShareData.ins.mySex.transGender()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,7 +52,7 @@ class MssageListViewController: BaseViewController {
         
         var param:[String:Any] = [:]
         
-        param["user_id"] = ShareData.instance.userId
+        param["user_id"] = ShareData.ins.userId
         param["pageNum"] = pageNum
         ApiManager.ins.requestMsgList(param: param) { (response) in
             self.canRequest = true
@@ -91,14 +91,14 @@ class MssageListViewController: BaseViewController {
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         if sender == btnJim {
             let vc = storyboard?.instantiateViewController(identifier: "MyFrendsListViewController") as! MyFrendsListViewController
-            AppDelegate.instance.mainNavigationCtrl.pushViewController(vc, animated: true)
+            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnDelAll {
             
         }
         else if sender == btnBlock {
             let vc = storyboard?.instantiateViewController(identifier: "MyBlockListViewController") as! MyBlockListViewController
-            AppDelegate.instance.mainNavigationCtrl.pushViewController(vc, animated: true)
+            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
     }
 }

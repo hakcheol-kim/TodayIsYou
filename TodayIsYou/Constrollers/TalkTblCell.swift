@@ -79,14 +79,13 @@ class TalkTblCell: UITableViewCell {
         lbSubTitle.attributedText = attr
         
         let df = CDateFormatter.init()
-        
         df.dateFormat = "yyyy-MM-dd HH:mm:ss" // "2021-03-11 07:35:32
         var tStr = ""
         
         if let regDate = df.date(from: reg_date) {
             let curDate = Date()
             let comps = curDate - regDate
-            print("=== comps: \(comps)")
+
             
             if let month = comps.month, month > 0 {
                 tStr = "\(month)달전"

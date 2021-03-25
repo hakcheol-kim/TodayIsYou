@@ -1,5 +1,5 @@
 //
-//  VideoColCell.swift
+//  CamTalkColCell.swift
 //  TodayIsYou
 //
 //  Created by 김학철 on 2021/03/06.
@@ -9,7 +9,7 @@ import UIKit
 import SwiftyJSON
 import UIImageViewAlignedSwift
 
-class VideoColCell: UICollectionViewCell {
+class CamTalkColCell: UICollectionViewCell {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var btnHartCnt: UIButton!
     @IBOutlet weak var btnAvailableVideo: CButton!

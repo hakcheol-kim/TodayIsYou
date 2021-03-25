@@ -2,23 +2,32 @@
 # platform :ios, '9.0'
 
 target 'TodayIsYou' do
-  # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
+  pod 'Alamofire', '~> 5.2'
+  pod 'AlamofireImage', '~> 4.1'
+  pod 'SwiftyJSON', '~> 4.0'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Crashlytics'
+  pod 'Firebase/Messaging'
+  
+  pod 'KakaoSDKCommon'  # 필수 요소를 담은 공통 모듈
+  pod 'KakaoSDKAuth'  # 카카오 로그인
+  pod 'KakaoSDKUser'  # 사용자 관리
+  
+  pod 'naveridlogin-sdk-ios'
 
-use_frameworks!
-pod 'Alamofire', '~> 5.2'
-pod 'AlamofireImage', '~> 4.1'
-pod 'SwiftyJSON', '~> 4.0'
+  pod 'FBSDKCoreKit'
+  pod 'FBSDKLoginKit'
+  pod 'FBSDKShareKit'
 
-pod 'Firebase/Auth'
-pod 'Firebase/Crashlytics'
-pod 'Firebase/Messaging'
-
-pod 'NVActivityIndicatorView'
-pod 'CRRefresh'
-pod 'UIImageViewAlignedSwift'
-pod 'PanModal'
-pod "BSImagePicker", "~> 3.1"
-pod 'Mantis', '~> 1.4.1'
-
+  pod 'CryptoSwift'
+  
+  pod 'NVActivityIndicatorView'
+  pod 'CRRefresh'
+  pod 'UIImageViewAlignedSwift'
+  pod 'PanModal'
+  pod "BSImagePicker", "~> 3.1"
+  pod 'Mantis'
+  pod 'SideMenu', '~> 6.0'
+  
 end

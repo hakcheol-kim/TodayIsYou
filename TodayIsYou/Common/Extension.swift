@@ -12,6 +12,7 @@ import CoreGraphics
 import SwiftyJSON
 
 let TAG_LOADING_IMG = 1234321
+let imgDownloader = ImageDownloader()
 
 //FIXME:: UITableView
 extension UITableView {
@@ -107,7 +108,15 @@ extension UIView {
         self.backgroundColor = nil
         self.layer.backgroundColor = bgColor?.cgColor
     }
-    
+    func addGradient(_ startColor: UIColor?, end endColor: UIColor?, sPoint: CGPoint, ePoint: CGPoint) {
+        let subLayer = CAGradientLayer()
+        subLayer.frame = bounds
+        subLayer.colors = [startColor?.cgColor, endColor?.cgColor].compactMap { $0 }
+        subLayer.locations = [NSNumber(value: Int32(0.0)), NSNumber(value: 1)]
+        subLayer.startPoint = sPoint
+        subLayer.endPoint = ePoint
+        layer.insertSublayer(subLayer, at: 0)
+    }
     func startAnimation(raduis: CGFloat) {
         let imageName = "ic_loading"
 
@@ -164,7 +173,6 @@ extension UIImageView {
             return
         }
         self.af.setImage(withURL: requestUrl, placeholderImage: placeholderImg)
-        
     }
     
     func downloaded(from url: URL, contentMode mode: UIView.ContentMode = .scaleAspectFit) {
@@ -186,7 +194,31 @@ extension UIImageView {
             downloaded(from: url, contentMode: mode)
         }
 }
- 
+extension UIButton {
+    func setImageCache(url:String, placeholderImgName:String?) {
+        var placeholderImg: UIImage? = nil
+        
+        guard let reqUrl = URL(string: url) else {
+            return
+        }
+        self.accessibilityIdentifier = reqUrl.absoluteString
+        let request = URLRequest(url: reqUrl)
+        
+        imgDownloader.download(request, completion:  { response in
+            if case .success(let image) = response.result {
+                self.setImage(image, for: .normal)
+            }
+            else {
+                guard let defaultImgName = placeholderImgName, let img = UIImage(named: defaultImgName) else {
+                    return
+                }
+                self.setImage(img, for: .normal)
+            }
+        })
+        
+    }
+    
+}
 //FIXME:: CACornerMask
 extension CACornerMask {
     init(TL: Bool = false, TR: Bool = false, BL: Bool = false, BR: Bool = false) {
@@ -345,6 +377,31 @@ extension String {
         result = self.replacingOccurrences(of: ",", with: "")
         result = self.replacingOccurrences(of: ".", with: "")
         return result
+    }
+    func split(by length: Int) -> [String] {
+        var startIndex = self.startIndex
+        var results = [Substring]()
+        while startIndex < self.endIndex {
+            let endIndex = self.index(startIndex, offsetBy: length, limitedBy: self.endIndex) ?? self.endIndex
+            results.append(self[startIndex..<endIndex])
+            startIndex = endIndex
+        }
+        return results.map { String($0) }
+    }
+    
+    func reverseOf(splitLength length: Int = 0) -> String {
+        if length == 0 {
+            return String(self.reversed())
+        }
+        else {
+            var result = ""
+            let array = self.split(by: length)
+            for str in array {
+                let reStr = String(str.reversed())
+                result.append(reStr)
+            }
+            return result
+        }
     }
 }
 

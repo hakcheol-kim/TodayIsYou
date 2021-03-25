@@ -7,34 +7,65 @@
 
 import UIKit
 import NVActivityIndicatorView
+import KakaoSDKAuth
+import KakaoSDKCommon
+import Firebase
+import CryptoSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var loadingView: UIView?
-    static var instance: AppDelegate {
+    static var ins: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
     var mainNavigationCtrl: BaseNavigationController {
-        return AppDelegate.instance.window?.rootViewController as! BaseNavigationController
+        return AppDelegate.ins.window?.rootViewController as! BaseNavigationController
+    }
+    var mainViewCtrl: MainViewController {
+        return AppDelegate.ins.mainNavigationCtrl.viewControllers.first as! MainViewController
     }
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        FirebaseApp.configure()
+        KakaoSDKCommon.initSDK(appKey: KakaoNativeAppKey)
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         window!.overrideUserInterfaceStyle = .light
-        callMainViewCtrl()
+        
+        self.callTempView()
+        return true
+        
+        //1. 앱캐쉬에 저장되있닌지 찾는다.
+        
+        if let userId = ShareData.ins.dfsObjectForKey(DfsKey.userId) as? String, userId.length > 0 {
+            callMainViewCtrl()
+        }
+        else {
+            //2. 키체인 영역에 저장된 키가 있는지 찾는다. 있다면, userid 생성해서 저장하고 로그인한다.
+            let userIdentifier = KeychainItem.currentUserIdentifier
+            if (userIdentifier.isEmpty == false) {
+                callIntroViewCtrl()
+            }
+            else {
+                callLoginViewCtrl()
+            }
+        }
         
         return true
     }
-    
-    func callSeviceTermsViewCtrl() {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "TermsViewController")
+    func callTempView() {
+        let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(identifier: "MemberInfoViewController") as! MemberInfoViewController
         window?.rootViewController = BaseNavigationController.init(rootViewController: vc)
         window?.makeKeyAndVisible()
     }
-    
-    func callMemberJoinViewCtrl() {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MemberJoinViewController")
+    func callIntroViewCtrl() {
+        let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(identifier: "IntroViewController") as? IntroViewController
+        window?.rootViewController = vc
+        window?.makeKeyAndVisible()
+    }
+    func callLoginViewCtrl() {
+        let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(identifier: "LoginViewController")
         window?.rootViewController = BaseNavigationController.init(rootViewController: vc)
         window?.makeKeyAndVisible()
     }
@@ -74,6 +105,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             indicatorView.stopAnimating()
             loadingView.removeFromSuperview()
         }
+    }
+    
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        if (AuthApi.isKakaoTalkLoginUrl(url)) {
+            return AuthController.handleOpenUrl(url: url)
+        }
+        
+        return false
     }
 }
 

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SideMenu
 
 class MainViewController: BaseViewController {
     
@@ -50,7 +51,7 @@ class MainViewController: BaseViewController {
                 
                 switch selIndex {
                 case 0:
-                    let vc = storyboard?.instantiateViewController(identifier: "VideoListViewController") as! VideoListViewController
+                    let vc = storyboard?.instantiateViewController(identifier: "CamTalkListViewController") as! CamTalkListViewController
                     vc.sortType = videoSortType
                     vc.listType = videoListType
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
@@ -98,11 +99,12 @@ class MainViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         CNavigationBar.drawLeftBarItem(self, UIImage(systemName: "text.justify"), "영상토크", 1000, #selector(onclickedBtnActions(_ :)))
         
         CNavigationBar.drawRight(self, UIImage(named: "point"), nil, TAG_NAVI_POINT, #selector(onclickedBtnActions(_:)))
-        CNavigationBar.drawRight(self, nil, "0 S", 1001, nil)
-        CNavigationBar.drawRight(self, nil, "2,000 P", 1002, nil)
+        CNavigationBar.drawRight(self, nil, "0 S", TAG_NAVI_S_COINT, nil)
+        CNavigationBar.drawRight(self, nil, "0 P", TAG_NAVI_P_COINT, nil)
        
         tabView.addShadow(offset: CGSize(width: 1, height: 1), color: RGBA(0, 0, 0, 0.3), raduius: 3, opacity: 0.3)
         
@@ -114,17 +116,87 @@ class MainViewController: BaseViewController {
             btn.addTarget(self, action: #selector(onclickedBtnActions(_:)), for: .touchUpInside)
         }
         self.selIndex = 0
+        
+        setupSideMenu()
+        updateMenus()
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let sideMenuNavigationController = segue.destination as? SideMenuNavigationController else { return }
+        sideMenuNavigationController.settings = makeSettings()
+    }
+    
+    private func setupSideMenu() {
+        SideMenuManager.default.leftMenuNavigationController = storyboard?.instantiateViewController(withIdentifier: "LeftMenuNavigationController") as? SideMenuNavigationController
+        SideMenuManager.default.addPanGestureToPresent(toView: navigationController!.navigationBar)
+        SideMenuManager.default.addScreenEdgePanGesturesToPresent(toView: (AppDelegate.ins.window?.rootViewController?.view)!)
+    }
     @IBAction func onclickedBtnActions(_ sender:UIButton) {
         if sender.tag == 1000 {
-            
+            guard let left = SideMenuManager.default.leftMenuNavigationController else { return }
+            SideMenuManager.default.addScreenEdgePanGesturesToPresent(toView: (self.navigationController?.view)!, forMenu: .right)
+            self.present(left, animated: true, completion: nil)
         }
         else if sender.tag == TAG_NAVI_POINT {
-            
+            guard let vc = storyboard?.instantiateViewController(identifier: "PointChargeViewController") as? PointChargeViewController else {
+                return
+            }
+            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if btnTabs.contains(sender) == true {
             self.selIndex = sender.tag
         }
+    }
+   
+    private func updateMenus() {
+        let settings = makeSettings()
+        SideMenuManager.default.leftMenuNavigationController?.settings = settings
+    }
+    private func selectedPresentationStyle() -> SideMenuPresentationStyle {
+        let modes: [SideMenuPresentationStyle] = [.menuSlideIn, .viewSlideOut, .viewSlideOutMenuIn, .menuDissolveIn]
+        return modes[0]
+    }
+    private func makeSettings() -> SideMenuSettings {
+        
+        let presentationStyle = selectedPresentationStyle()
+        presentationStyle.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "img_back2.jpg"))
+        presentationStyle.menuStartAlpha = CGFloat(1.0)
+        presentationStyle.menuScaleFactor = CGFloat(1.0)
+        presentationStyle.onTopShadowOpacity = 0.3
+        presentationStyle.presentingEndAlpha = CGFloat(0.2)
+        presentationStyle.presentingScaleFactor = CGFloat(1)
+
+        var settings = SideMenuSettings()
+        settings.allowPushOfSameClassTwice = false
+        settings.presentationStyle = .menuSlideIn
+        settings.menuWidth = min(view.frame.width, view.frame.height) * CGFloat(0.55)
+        let styles:[UIBlurEffect.Style?] = [nil, .dark, .light, .extraLight]
+        settings.blurEffectStyle = styles[0]
+        settings.statusBarEndAlpha = 0
+
+        return settings
+    }
+    
+    func updateNaviPoint() {
+        guard let navibar = self.navigationController?.navigationBar, let btn = navibar.viewWithTag(TAG_NAVI_P_COINT) as? UIButton else {
+            return
+        }
+        
+        var point = ""
+        if let myPoint = ShareData.ins.myPoint {
+            point = "\(myPoint.stringValue.addComma()) P"
+        }
+        else {
+            point = "0 P"
+        }
+        btn.setTitle(point, for: .normal)
+        let size = btn.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: btn.bounds.height))
+        btn.frame = CGRect(origin: btn.frame.origin, size: size)
+    }
+}
+
+extension MainViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return false
     }
 }

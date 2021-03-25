@@ -6,9 +6,9 @@
 //
 
 import UIKit
-import SwiftyJSON
-class BaseViewController: UIViewController {
 
+class BaseViewController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -24,7 +24,18 @@ class BaseViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
     
-    
+    func reqGetPoint() {
+        let param = ["user_id": ShareData.ins.userId]
+        ApiManager.ins.requestGetPoint(param:param) { (respone) in
+            if let respone = respone {
+                let point = respone["point"].numberValue
+                ShareData.ins.dfsSetValue(point, forKey: DfsKey.myPoint)
+                AppDelegate.ins.mainViewCtrl.updateNaviPoint()
+            }
+        } failure: { (error) in
+            self.showErrorToast(error)
+        }
+    }
     func showToast(_ message:String?) {
         guard let message = message, message.isEmpty == false else {
             return
@@ -78,7 +89,7 @@ class BaseViewController: UIViewController {
     func findBottomConstraint(_ view: UIView) -> NSLayoutConstraint? {
         var findConst:NSLayoutConstraint? = nil
         for const in view.constraints {
-            if const.identifier == "bottom" {
+            if let conId = const.identifier, conId.contains("bottom") == true {
                 findConst = const
                 break
             }
@@ -89,12 +100,17 @@ class BaseViewController: UIViewController {
     @objc func notificationHandler(_ notification: NSNotification) {
         let heightKeyboard = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as AnyObject).cgRectValue.size.height
         let duration = CGFloat((notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.floatValue ?? 0.0)
- 
-        //scrollView bottom constraint identyfier "bottom" 정의해야한다.
-        let findConst = self.findBottomConstraint(self.view)
-        guard let bottomContainer = findConst else {
+        
+        let bottomConstraint = self.findBottomConstraint(self.view)
+        
+        
+        guard let bottomCon = bottomConstraint, let conId = bottomCon.identifier else {
             return
         }
+        
+        var heightBtn:Float = 0.0
+        let strH = conId.replacingOccurrences(of: "bottom", with: "", options: [.caseInsensitive, .regularExpression])
+        heightBtn = Float(strH) ?? 0.0
         
         if notification.name == UIResponder.keyboardWillShowNotification {
             var tabBarHeight:CGFloat = 0.0
@@ -103,16 +119,48 @@ class BaseViewController: UIViewController {
             }
             
             let safeBottom:CGFloat = self.view.window?.safeAreaInsets.bottom ?? 0
-            bottomContainer.constant = heightKeyboard - safeBottom - tabBarHeight
+            bottomCon.constant = heightKeyboard - safeBottom - tabBarHeight - CGFloat(heightBtn)
             UIView.animate(withDuration: TimeInterval(duration), animations: { [self] in
                 self.view.layoutIfNeeded()
             })
         }
         else if notification.name == UIResponder.keyboardWillHideNotification {
-            bottomContainer.constant = 0
+            bottomCon.constant = 0
             UIView.animate(withDuration: TimeInterval(duration)) {
                 self.view.layoutIfNeeded()
             }
         }
     }
+    
+//    let appleIDProvider = ASAuthorizationAppleIDProvider()
+//    appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
+//        switch credentialState {
+//        case .authorized:
+//            break // The Apple ID credential is valid.
+//        case .revoked, .notFound:
+//            // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
+//            DispatchQueue.main.async {
+//                self.window?.rootViewController?.showLoginViewController()
+//            }
+//        default:
+//            break
+//        }
+//    }
+//    return true
+//}
+//    @IBAction func signOutButtonPressed() {
+//        // For the purpose of this demo app, delete the user identifier that was previously stored in the keychain.
+//        KeychainItem.deleteUserIdentifierFromKeychain()
+//
+//        // Clear the user interface.
+//        userIdentifierLabel.text = ""
+//        givenNameLabel.text = ""
+//        familyNameLabel.text = ""
+//        emailLabel.text = ""
+//
+//        // Display the login controller again.
+//        DispatchQueue.main.async {
+//            self.showLoginViewController()
+//        }
+//    }
 }

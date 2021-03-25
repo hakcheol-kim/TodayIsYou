@@ -14,6 +14,7 @@ class TermsViewController: BaseViewController {
     @IBOutlet weak var safetyView: UIView!
     @IBOutlet weak var btnOk: UIButton!
     @IBOutlet weak var tvContent: CTextView!
+    
     var fontContent = UIFont.systemFont(ofSize: 14, weight: .regular)
     var vcTitle: String = "약관"
     var content: String = ""
@@ -35,19 +36,13 @@ class TermsViewController: BaseViewController {
             safetyView.isHidden = true
         }
         
-        tvContent.insetTop = 8
-        tvContent.insetBottom = 8
-        tvContent.insetLeft = 8
-        tvContent.insetRigth = 8
-        
         if content.isEmpty == false {
-            do {
-                let attr = try NSMutableAttributedString(htmlString: content)
-                attr.addAttribute(.font, value: fontContent, range: NSMakeRange(0, attr.string.length))
-                tvContent.attributedText = attr
-            } catch {
-                tvContent.attributedText = nil
-            }
+            tvContent.text = content
         }
     }
+    
+    @IBAction func onClickedBtnActions(_ sender: UIButton) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
 }

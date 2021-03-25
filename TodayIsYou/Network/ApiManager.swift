@@ -234,4 +234,43 @@ class ApiManager: NSObject {
             failure?(error)
         }
     }
+    func requestQnaWrite(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/insertQna.do", param, URLEncoding.queryString) { (response) in
+            success?(response)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    
+    func requestGetUserList(param:[String:Any],  success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/userList.json", clientPara(param)) { (response) in
+            success?(response)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    
+    func requestGetPoint(param:[String:Any],  success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/getPoint.json", clientPara(param)) { (response) in
+            success?(response)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    //블락리스트
+    func requestGetBlockList(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/getBlackList.json", clientPara(param)) { (response) in
+            success?(response)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    func requestCheckMyFriend(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/myFriendCheck.json", clientPara(param)) { (response) in
+            success?(response)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    
 }

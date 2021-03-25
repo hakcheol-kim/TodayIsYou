@@ -23,7 +23,7 @@ class PhotoListViewController: BaseViewController {
     var pageNum: Int = 1
     var pageEnd: Bool = false
     var canRequest = true
-    var searchSex:Gender = ShareData.instance.mySex.transGender()
+    var searchSex:Gender = ShareData.ins.mySex.transGender()
     var searchTag: String = "인기"
     
     
@@ -82,7 +82,7 @@ class PhotoListViewController: BaseViewController {
         }
         
         var param: [String:Any] = [:]
-        param["user_id"] = ShareData.instance.userId
+        param["user_id"] = ShareData.ins.userId
         param["pageNum"] = pageNum
         param["search_photo_sex"] = searchSex.rawValue
         param["search_photo_top"] = searchTag

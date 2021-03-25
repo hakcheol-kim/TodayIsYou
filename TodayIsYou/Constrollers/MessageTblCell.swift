@@ -93,7 +93,6 @@ class MessageTblCell: UITableViewCell {
             var tStr = ""
             let curDate = Date()
             let comps = curDate - regDate
-            print("=== comps: \(comps)")
             
             if let month = comps.month, month > 0 {
                 tStr = "\(month)달전"

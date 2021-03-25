@@ -16,7 +16,7 @@ class MyFrendsListViewController: BaseViewController {
     var pageNum: Int = 1
     var pageEnd: Bool = false
     var canRequest = true
-    var searchSex:Gender = ShareData.instance.mySex.transGender()
+    var searchSex:Gender = ShareData.ins.mySex.transGender()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,7 +53,7 @@ class MyFrendsListViewController: BaseViewController {
         
         var param:[String:Any] = [:]
         
-        param["user_id"] = ShareData.instance.userId
+        param["user_id"] = ShareData.ins.userId
         param["pageNum"] = pageNum
         
         ApiManager.ins.requestMyFriendsList(param: param) { (response) in
