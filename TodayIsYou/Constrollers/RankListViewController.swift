@@ -22,7 +22,7 @@ class RankListViewController: BaseViewController {
     var pageNum: Int = 1
     var pageEnd: Bool = false
     var canRequest = true
-    var searchSex:Gender = ShareData.ins.mySex.transGender()
+    var searchSex:Gender = ShareData.ins.userSex.transGender()
     var listCount = 0
     var itemSize = CGSize.zero
     override func viewDidLoad() {
@@ -79,11 +79,11 @@ class RankListViewController: BaseViewController {
         
         ApiManager.ins.requestRankingList(param: param) { (resonse) in
             self.canRequest = true
-            let result = resonse?["result"].arrayValue
-            let isSuccess = resonse?["isSuccess"].stringValue
-            self.listCount = (resonse?["listCount"].intValue)!
+            let result = resonse["result"].arrayValue
+            let isSuccess = resonse["isSuccess"].stringValue
+            self.listCount = resonse["listCount"].intValue
             
-            if isSuccess == "01", let result = result {
+            if isSuccess == "01" {
                 if result.count == 0 {
                     self.pageEnd = true
                 }
@@ -158,6 +158,9 @@ extension RankListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let item = listData[indexPath.row]
+        let vc = storyboard?.instantiateViewController(identifier: "RankDetailViewController") as! RankDetailViewController
+        vc.passData = item
+        AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
     }
 }
 

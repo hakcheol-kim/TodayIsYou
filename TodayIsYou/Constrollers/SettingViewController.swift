@@ -85,15 +85,17 @@ class SettingViewController: BaseViewController {
             
         }
         else if sender == btnSetting {
-                
+            let vc = storyboard?.instantiateViewController(identifier: "ConfigurationViewController") as! ConfigurationViewController
+            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnJoinTerm {
             ApiManager.ins.requestServiceTerms(mode: "yk1") { (response) in
-                let isSuccess = response?["isSuccess"].stringValue
-                if isSuccess == "01", let yk = response?["yk"].stringValue {
+                let isSuccess = response["isSuccess"].stringValue
+                let yk = response["yk"].stringValue
+                if isSuccess == "01" {
                     let vc = TermsViewController.init()
                     vc.vcTitle = "가입 약관";
-                    vc.content = yk;
+                    vc.content = yk
                     AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
                 }
             } failure: { (error) in
@@ -102,8 +104,9 @@ class SettingViewController: BaseViewController {
         }
         else if sender == btnPrivacyTerm {
             ApiManager.ins.requestServiceTerms(mode: "yk2") { (response) in
-                let isSuccess = response?["isSuccess"].stringValue
-                if isSuccess == "01", let yk = response?["yk"].stringValue {
+                let isSuccess = response["isSuccess"].stringValue
+                let yk = response["yk"].stringValue
+                if isSuccess == "01"  {
                     let vc = TermsViewController.init()
                     vc.vcTitle = "개인정보 취급방침";
                     vc.content = yk;
@@ -114,7 +117,7 @@ class SettingViewController: BaseViewController {
             }
         }
         else if sender == btnCyber {
-            
+            AppDelegate.ins.openUrl(cyberUrl, completion: nil)
         }
     }
     

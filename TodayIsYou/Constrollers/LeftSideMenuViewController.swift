@@ -54,6 +54,26 @@ class LeftSideMenuViewController: UIViewController {
         headerView.clipsToBounds = true
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+       
+        
+        lbNickName.text = ShareData.ins.dfsObjectForKey(DfsKey.userName) as? String
+    
+        var subStr: String = "\(ShareData.ins.userPoint?.intValue ?? 0)".addComma()
+        subStr.append(" P")
+        if let sPoint = ShareData.ins.dfsObjectForKey(DfsKey.userR) as? NSNumber {
+            let s = sPoint.stringValue.addComma()
+            subStr.append(" \(s) S")
+        }
+        ivProfile.clipsToBounds = true
+        lbUserInfo.text = subStr
+        ivProfile.image = Gender.defaultImg(ShareData.ins.userSex.rawValue)
+        if let userImg = ShareData.ins.dfsObjectForKey(DfsKey.userImage) as? String, let url = Utility.thumbnailUrl(ShareData.ins.userId, userImg) {
+            ivProfile.setImageCache(url: url, placeholderImgName: nil)
+            ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
+        }
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tblView.reloadData()

@@ -18,7 +18,7 @@ class TalkListViewController: BaseViewController {
     var pageNum: Int = 1
     var pageEnd: Bool = false
     var canRequest = true
-    var searchSex:Gender = ShareData.ins.mySex.transGender()
+    var searchSex:String = ShareData.ins.userSex.transGender().rawValue
     var searchArea: String = ""
     
     override func viewDidLoad() {
@@ -30,6 +30,14 @@ class TalkListViewController: BaseViewController {
         self.dataRest()
         tblView.cr.addHeadRefresh { [weak self] in
             self?.dataRest()
+        }
+        
+        if let lbGender = btnGender.viewWithTag(100) as? UILabel {
+            lbGender.text = searchSex
+        }
+        
+        if let lbArea = btnArea.viewWithTag(100) as? UILabel {
+            lbArea.text = "전체"
         }
     }
     
@@ -54,14 +62,14 @@ class TalkListViewController: BaseViewController {
         param["app_type"] = appType
         param["user_id"] = ShareData.ins.userId
         param["pageNum"] = pageNum
-        param["search_sex"] = searchSex.rawValue
+        param["search_sex"] = searchSex
         param["search_area"] = searchArea
         
         ApiManager.ins.requestTalkList(param: param) { (resonse) in
             self.canRequest = true
-            let result = resonse?["result"].arrayValue
-            let isSuccess = resonse?["isSuccess"].stringValue
-            if isSuccess == "01", let result = result {
+            let result = resonse["result"].arrayValue
+            let isSuccess = resonse["isSuccess"].stringValue
+            if isSuccess == "01" {
                 if result.count == 0 {
                     self.pageEnd = true
                 }
@@ -88,6 +96,43 @@ class TalkListViewController: BaseViewController {
             }
         } failure: { (error) in
             self.showErrorToast(error)
+        }
+    }
+    
+    @IBAction func onClickedBtnActions(_ sender: UIButton) {
+        if sender == btnGender {
+            let vc = PopupListViewController.initWithType(.normal, "성별을 선택해주세요.", ["남", "여"], nil) { (vcs, selItem, index) in
+                vcs.dismiss(animated: false, completion: nil)
+                
+                guard let selItem = selItem as? String, let lbGender = self.btnGender.viewWithTag(100) as? UILabel else {
+                    return
+                }
+                lbGender.text = selItem
+                self.searchSex = selItem
+                self.dataRest()
+            }
+            self.presentPanModal(vc)
+        }
+        else if sender == btnArea {
+            var area = areaRange
+            area.insert("전체", at: 0)
+            let vc = PopupListViewController.initWithType(.normal, "지역을 선택해주세요.", area, nil) { (vcs, selItem, index) in
+                vcs.dismiss(animated: true, completion: nil)
+                
+                guard let selItem = selItem as? String, let lbArea = self.btnArea.viewWithTag(100) as? UILabel  else {
+                    return
+                }
+                
+                lbArea.text = selItem
+                if selItem == "전체" {
+                    self.searchArea = ""
+                }
+                else {
+                    self.searchArea = selItem
+                }
+                self.dataRest()
+            }
+            self.presentPanModal(vc)
         }
     }
 }

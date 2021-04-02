@@ -56,9 +56,6 @@ class CamTalkListViewController: BaseViewController {
         collectionView.cr.addHeadRefresh { [weak self] in
             self?.dataRest()
         }
-        
-        self.reqGetPoint()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,7 +68,7 @@ class CamTalkListViewController: BaseViewController {
         let prama = ["black_user_id" : ShareData.ins.userId, "user_id" : toUserId]
         ApiManager.ins.requestGetBlockList(param: prama) { (response) in
             self.group.leave()
-            if response?["isSuccess"].stringValue == "01" {
+            if response["isSuccess"].stringValue == "01" {
                 self.isBlocked = true
             }
         } failure: { (error) in
@@ -86,7 +83,7 @@ class CamTalkListViewController: BaseViewController {
         let prama = ["black_user_id":toUserId, "user_id": ShareData.ins.userId]
         ApiManager.ins.requestGetBlockList(param: prama) { (response) in
             self.group.leave()
-            if response?["isSuccess"].stringValue == "01" {
+            if response["isSuccess"].stringValue == "01" {
                 self.isMyBlock = true
             }
         } failure: { (error) in
@@ -100,7 +97,7 @@ class CamTalkListViewController: BaseViewController {
         let param = ["from_user_id": ShareData.ins.userId, "to_user_id":toUserId]
         ApiManager.ins.requestCheckMyFriend(param: param) { (response) in
             self.group.leave()
-            if response?["isSuccess"].stringValue == "01" {
+            if response["isSuccess"].stringValue == "01" {
                 self.isMyFriend = true
             }
         } failure: { (error) in
@@ -231,16 +228,16 @@ class CamTalkListViewController: BaseViewController {
         var param: [String:Any] = [:]
         param["app_type"] = appType
         param["user_id"] = ShareData.ins.userId
-        param["my_sex"] = ShareData.ins.mySex.rawValue
+        param["my_sex"] = ShareData.ins.userSex.rawValue
         param["pageNum"] = pageNum
         param["search_sex"] = sortType.key()
         param["search_list"] = listType.rawValue
         
         ApiManager.ins.requestCamTalkList(param: param) { (resonse) in
             self.canRequest = true
-            let result = resonse?["result"].arrayValue
-            let isSuccess = resonse?["isSuccess"].stringValue
-            if isSuccess == "01", let result = result {
+            let result = resonse["result"].arrayValue
+            let isSuccess = resonse["isSuccess"].stringValue
+            if isSuccess == "01" {
                 if result.count == 0 {
                     self.pageEnd = true
                 }
@@ -305,7 +302,7 @@ class CamTalkListViewController: BaseViewController {
     
     func checkAvailableCamTalk() {
         let user_sex = self.selData["user_sex"].stringValue
-        if  user_sex == ShareData.ins.mySex.rawValue {
+        if  user_sex == ShareData.ins.userSex.rawValue {
             self.showToast("같은 성별은 영상채팅이 불가합니다!!")
             return
         }
@@ -328,7 +325,7 @@ class CamTalkListViewController: BaseViewController {
                     self.showToast("내가 차단 했습니다!!")
                 }
                 else {
-                    if ("남" == ShareData.ins.mySex.rawValue) {
+                    if ("남" == ShareData.ins.userSex.rawValue) {
                         if self.isMyFriend {
                             self.showCamTalkAlert()
                         }
@@ -346,8 +343,7 @@ class CamTalkListViewController: BaseViewController {
     }
     
     func showCamTalkAlert() {
-        
-        let vc = CAlertViewController.init(.alert, nil, nil, nil) { (vcs, selItem, index) in
+        let vc = CAlertViewController.init(type: .alert, title: nil, message: nil, actions: nil) { (vcs, selItem, index) in
             vcs.dismiss(animated: true, completion: nil)
             if index == 1 {
                 print("음성")

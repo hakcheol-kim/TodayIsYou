@@ -34,9 +34,9 @@ class PhotoManagerViewController: BaseViewController {
     
     func reqeustGetMyPhotoList() {
         ApiManager.ins.requestGetMyPhotos(param: ["user_id":ShareData.ins.userId]) { (response) in
-            let isSuccess = response?["isSuccess"].stringValue
-            let result = response?["result"].arrayValue
-            if let result = result, isSuccess == "01" {
+            let isSuccess = response["isSuccess"].stringValue
+            let result = response["result"].arrayValue
+            if isSuccess == "01" {
                 self.listData = result
                 if self.listData.count > 0 {
                     self.collectionView.isHidden = false
@@ -61,8 +61,9 @@ class PhotoManagerViewController: BaseViewController {
         }
         else if sender == btnShowTerm {
             ApiManager.ins.requestServiceTerms(mode: "yk8") { (response) in
-                let isSuccess = response?["isSuccess"].stringValue
-                if isSuccess == "01", let yk = response?["yk"].stringValue {
+                let isSuccess = response["isSuccess"].stringValue
+                let yk = response["yk"].stringValue
+                if isSuccess == "01" {
                     let vc = TermsViewController.init()
                     vc.content = yk
                     vc.type = .nomarl

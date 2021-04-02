@@ -18,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="80" translatesAutoresizingMaskIntoConstraints="NO" id="9bD-7R-YlV">
-                                <rect key="frame" x="16" y="87" width="343" height="568"/>
+                                <rect key="frame" x="16" y="58" width="343" height="626"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="-30" translatesAutoresizingMaskIntoConstraints="NO" id="4u6-hl-Rl7">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="272"/>
@@ -55,7 +55,7 @@
                                         <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="0.0" right="0.0"/>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Ugg-ho-kHe">
-                                        <rect key="frame" x="0.0" y="352" width="343" height="216"/>
+                                        <rect key="frame" x="0.0" y="352" width="343" height="274"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wv6-Uh-L3d" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="0.0" width="343" height="48"/>
@@ -129,6 +129,31 @@
                                                     <action selector="onClickedBtnAction:" destination="kVx-3f-niI" eventType="touchUpInside" id="qAT-Gg-3ws"/>
                                                 </connections>
                                             </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DMv-Qz-kQR" customClass="GIDSignInButton">
+                                                <rect key="frame" x="0.0" y="224" width="343" height="50"/>
+                                                <subviews>
+                                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OpA-B2-kgU" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="0.0" width="343" height="50"/>
+                                                        <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        <state key="normal" title="Sign in with Google" image="ico_google">
+                                                            <color key="titleColor" systemColor="labelColor"/>
+                                                        </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="halfCornerRadius" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstItem="OpA-B2-kgU" firstAttribute="leading" secondItem="DMv-Qz-kQR" secondAttribute="leading" id="Ab9-OB-Nay"/>
+                                                    <constraint firstAttribute="bottom" secondItem="OpA-B2-kgU" secondAttribute="bottom" id="Ecb-N7-azS"/>
+                                                    <constraint firstAttribute="trailing" secondItem="OpA-B2-kgU" secondAttribute="trailing" id="QJ5-ob-05H"/>
+                                                    <constraint firstItem="OpA-B2-kgU" firstAttribute="top" secondItem="DMv-Qz-kQR" secondAttribute="top" id="csC-vI-o2Y"/>
+                                                    <constraint firstAttribute="height" constant="50" id="gOZ-6I-EZr"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -146,13 +171,14 @@
                     <connections>
                         <outlet property="btnApple" destination="Hjs-vS-6k9" id="26K-2F-nW7"/>
                         <outlet property="btnFacebook" destination="NUW-fH-p6D" id="enj-DD-6rJ"/>
+                        <outlet property="btnGoogleSignIn" destination="DMv-Qz-kQR" id="4ij-M5-qhX"/>
                         <outlet property="btnKako" destination="wv6-Uh-L3d" id="hvM-aE-Xdi"/>
                         <outlet property="btnNaver" destination="qut-Dq-468" id="xKS-hI-f8s"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1qr-ng-1LM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-710" y="143"/>
+            <point key="canvasLocation" x="-711.20000000000005" y="142.61083743842366"/>
         </scene>
         <!--Intro View Controller-->
         <scene sceneID="ULx-RQ-2Wj">
@@ -424,7 +450,7 @@
                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="'-' 없이 입력해주세요." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="54d-Su-4hH" customClass="CTextField" customModule="TodayIsYou" customModuleProvider="target">
+                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="입력해주세요." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="54d-Su-4hH" customClass="CTextField" customModule="TodayIsYou" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="15.666666666666686" width="327" height="45"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="45" id="nhh-eY-Os5"/>
@@ -453,6 +479,7 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
+                                                            <action selector="textFieldEdtingChanged:" destination="1le-kE-QAG" eventType="editingChanged" id="5Qa-4h-0aZ"/>
                                                             <outlet property="delegate" destination="1le-kE-QAG" id="gqx-uQ-a9z"/>
                                                         </connections>
                                                     </textField>
@@ -627,7 +654,7 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sDq-9B-nwf">
                                                         <rect key="frame" x="0.0" y="60.666666666666686" width="327" height="20"/>
                                                         <subviews>
-                                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="입력해주세요." textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8oo-zk-0pK">
+                                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="정보를 입력해주세요." textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8oo-zk-0pK">
                                                                 <rect key="frame" x="0.0" y="5.6666666666666865" width="327" height="14.333333333333336"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                 <color key="textColor" red="0.90196078430000004" green="0.1960784314" blue="0.27450980390000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -784,7 +811,7 @@
     </scenes>
     <designables>
         <designable name="54d-Su-4hH">
-            <size key="intrinsicContentSize" width="131.33333333333334" height="19.666666666666668"/>
+            <size key="intrinsicContentSize" width="82.333333333333329" height="19.666666666666668"/>
         </designable>
         <designable name="zXp-ND-NGz">
             <size key="intrinsicContentSize" width="138.33333333333334" height="19.666666666666668"/>
@@ -796,6 +823,7 @@
         <image name="ico_appicon" width="341.33334350585938" height="341.33334350585938"/>
         <image name="ico_apple" width="14" height="18"/>
         <image name="ico_facebook" width="9" height="16"/>
+        <image name="ico_google" width="18" height="18.333333969116211"/>
         <image name="ico_kakao" width="16" height="14"/>
         <image name="ico_naver" width="14" height="12"/>
         <image name="logo" width="720" height="1280"/>
@@ -808,6 +836,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

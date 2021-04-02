@@ -12,7 +12,6 @@ import Alamofire
 class ApiManager: NSObject {
     static let ins = ApiManager()
     
-    
     func clientPara(_ param:[String:Any]) -> [String:Any] {
         return ["clientPara":param]
     }
@@ -83,7 +82,7 @@ class ApiManager: NSObject {
     ///차단목록리스트
     ///- user_id:
     func requestMssageAllDelete(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
-        NetworkManager.ins.request(.post, "/api/talk/messageAllDelete.do", param) { (response) in
+        NetworkManager.ins.request(.post, "/api/talk/messageAllDelete.do", param, URLEncoding.queryString) { (response) in
             success?(response)
         } failure: { (error) in
             failure?(error)
@@ -218,8 +217,8 @@ class ApiManager: NSObject {
     }
     /// 신고하기
     ///- user_id:, to_user_id:, to_user_name, memo: o - 설정에서 입력<br/>ㅇ
-    func requestDeclareToUser(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
-        NetworkManager.ins.request(.post, "/api/talk/insertReport.do", param) { (response) in
+    func requestReport(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/insertReport.do", param, URLEncoding.queryString) { (response) in
             success?(response)
         } failure: { (error) in
             failure?(error)
@@ -257,6 +256,14 @@ class ApiManager: NSObject {
             failure?(error)
         }
     }
+    func requestMyHomePoint(param:[String:Any],  success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/getHomePoint.json", clientPara(param)) { (response) in
+            success?(response)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    
     //블락리스트
     func requestGetBlockList(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
         NetworkManager.ins.request(.post, "/api/talk/getBlackList.json", clientPara(param)) { (response) in
@@ -265,6 +272,7 @@ class ApiManager: NSObject {
             failure?(error)
         }
     }
+    //내친구인지 체크
     func requestCheckMyFriend(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
         NetworkManager.ins.request(.post, "/api/talk/myFriendCheck.json", clientPara(param)) { (response) in
             success?(response)
@@ -272,5 +280,68 @@ class ApiManager: NSObject {
             failure?(error)
         }
     }
-    
+    //회원가입
+    func requestMemberRegist(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/insertUser.do", param, URLEncoding.queryString) { (response) in
+            success?(response)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    //유저 설정정보 변경
+    func requestUpdateUserSetting(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/updateConfig.do", param, URLEncoding.queryString) { (response) in
+            success?(response)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    /// 회원탈퇴
+    func requestUserOut(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/userOut.do", param, URLEncoding.queryString) { (response) in
+            success?(response)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    /// 블락 유저인지 체크
+    func requestCheckBlockUser(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/getUserBlock.json", clientPara(param)) { (res) in
+            success?(res)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    /// 포토 상세 체크
+    func requestPhotoDetailCheck(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/getPhotoTalkViewNew.json", clientPara(param)) { (res) in
+            success?(res)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    /// 포토 디테일 뷰
+    func requestPhotoDetailList(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/getPhotoImgList.json", clientPara(param)) { (res) in
+            success?(res)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    //포토 좋아요
+    func requestGoodPhotoPlus(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/goodPhotoPlus.json", clientPara(param)) { (res) in
+            success?(res)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    //랭크상세
+    func requestRankDetail(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/getUserImgTalkList.json", clientPara(param)) { (res) in
+            success?(res)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
 }

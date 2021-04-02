@@ -22,10 +22,10 @@ class NoticeListViewController: BaseViewController {
     }
     func requestNoticeList() {
         ApiManager.ins.requestNoticeList(param: ["user_id": ShareData.ins.userId]) { (response) in
-            let isSuccess = response?["isSuccess"].stringValue
-            let result = response?["result"].arrayValue
+            let isSuccess = response["isSuccess"].stringValue
+            let result = response["result"].arrayValue
             if isSuccess == "01" {
-                if let result = result, result.count > 0 {
+                if result.count > 0 {
                     self.listData = result
                     self.scrollView.isHidden = false
                     self.reloadData()

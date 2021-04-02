@@ -16,7 +16,7 @@ class MyFrendsListViewController: BaseViewController {
     var pageNum: Int = 1
     var pageEnd: Bool = false
     var canRequest = true
-    var searchSex:Gender = ShareData.ins.mySex.transGender()
+    var searchSex:Gender = ShareData.ins.userSex.transGender()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,9 +58,9 @@ class MyFrendsListViewController: BaseViewController {
         
         ApiManager.ins.requestMyFriendsList(param: param) { (response) in
             self.canRequest = true
-            let result = response?["result"].arrayValue
-            let isSuccess = response?["isSuccess"].stringValue
-            if isSuccess == "01", let result = result {
+            let result = response["result"].arrayValue
+            let isSuccess = response["isSuccess"].stringValue
+            if isSuccess == "01"{
                 if result.count == 0 {
                     self.pageEnd = true
                 }

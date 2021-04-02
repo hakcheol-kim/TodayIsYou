@@ -19,9 +19,13 @@ import KakaoSDKUser
 
 import AuthenticationServices
 import CryptoSwift
+import Alamofire
+import SwiftyJSON
+
+import GoogleSignIn
 
 enum LoginType {
-    case kakao, facebook, apple, naver
+    case kakao, facebook, apple, naver, google
 }
 
 class SocialLoginViewController: UIViewController {
@@ -36,7 +40,7 @@ class SocialLoginViewController: UIViewController {
     
     func loginWithType(_ type: LoginType, _ completion:((_ user:[String:Any]?, _ error: Error?) -> Void)?) {
         self.completion = completion
-     
+        
         if type == .kakao {
             self.loginKako()
         }
@@ -49,6 +53,11 @@ class SocialLoginViewController: UIViewController {
         else if type == .apple {
             self.loginApple()
         }
+//        else if type == .google {
+//            GIDSignIn.sharedInstance()?.delegate = self
+//            GIDSignIn.sharedInstance()?.presentingViewController = self
+//            GIDSignIn.sharedInstance().signIn()
+//        }
         else {
             self.completion?(nil, nil)
         }
@@ -79,10 +88,9 @@ class SocialLoginViewController: UIViewController {
                             self.completion?(nil, error)
                             return
                         }
-                        
                         self.user["joinType"] = "kakao"
                         self.user["userId"] = "\(user.id)"
-                         
+                        
                         if let email = user.kakaoAccount?.email {
                             self.user["email"] = email
                         }
@@ -110,114 +118,122 @@ class SocialLoginViewController: UIViewController {
     private func loginNaver() {
         let connection = NaverThirdPartyLoginConnection.getSharedInstance()
         connection?.delegate = self
-        if let valid = connection?.isValidAccessTokenExpireTimeNow(), valid == false {
-            connection?.requestThirdPartyLogin()
-        }
-        else {
-            connection?.requestAccessTokenWithRefreshToken()
-        }
+        connection?.requestThirdPartyLogin()
     }
     
-    private func reqeustFetchNaverUserInfo() {
-        guard let naverConnection = NaverThirdPartyLoginConnection.getSharedInstance() else { return }
-        guard let accessToken = naverConnection.accessToken else { return }
-        let authorization = "Bearer \(accessToken)"
+    private func getNaverInfo() {
+        let instance = NaverThirdPartyLoginConnection.getSharedInstance()
+        guard let isValidAccessToken = instance?.isValidAccessTokenExpireTimeNow() else { return }
         
-        if let url = URL(string: "https://openapi.naver.com/v1/nid/me") {
-            var request = URLRequest(url: url)
-            request.httpMethod = "GET"
-            request.setValue(authorization, forHTTPHeaderField: "Authorization")
-            
-            URLSession.shared.dataTask(with: request) { (data, response, error) in
-                guard let data = data else {
-                    self.completion?(nil, error)
+        if !isValidAccessToken {
+            return
+        }
+        
+        guard let tokenType = instance?.tokenType else { return }
+        guard let accessToken = instance?.accessToken else { return }
+        
+        let urlStr = "https://openapi.naver.com/v1/nid/me"
+        let url = URL(string: urlStr)!
+        
+        let authorization = "\(tokenType) \(accessToken)"
+        
+        let req = AF.request(url, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: ["Authorization": authorization])
+        
+        req.responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                guard let value = value as? [String:Any], let object = value["response"] else {
+                    self.completion?(nil, nil)
                     return
                 }
                 
-                do {
-                    guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: AnyObject] else {
-                        self.completion?(nil, error)
-                        return
-                    }
-                    guard let response = json["response"] as? [String: Any] else {
-                        self.completion?(nil, error)
-                        return
-                    }
-                    self.user["joinType"] = "naver"
-                    self.user["accessToken"] = response["access_token"] ?? ""
-                    self.user["userId"] = response["id"] ?? ""
-                    
-                    if let email = response["email"]  as?String {
-                        self.user["email"] = email
-                    }
-                    
-                    if let name = response["name"]  as?String {
-                        self.user["name"] = name
-                    }
-                    if let nickname = response["nickname"]  as?String {
-                        self.user["nickname"] = nickname
-                    }
-                    if let profileImageUrl = response["profile_image"]  as?String {
-                        self.user["profileImageUrl"] = profileImageUrl
-                    }
-                    if let birthday = response["birthday"] as? String {
-                        self.user["birthday"] = birthday
-                    }
-                    if let gender = response["gender"] as? String {
-                        self.user["gender"] = gender
-                    }
-                    
-                    DispatchQueue.main.async { [self] in
-                        print("=== naver login: \(self.user)")
-                        self.completion?(self.user, error)
-                    }
-                } catch let error {
-                    DispatchQueue.main.async {
-                        self.completion?(nil, error)
-                    }
+                let json = JSON(object)
+                
+                self.user["joinType"] = "naver"
+                self.user["accessToken"] = json["access_token"].stringValue
+                self.user["userId"] = json["id"].stringValue
+                
+                let email = json["email"].stringValue
+                let name = json["name"].stringValue
+                let nickname = json["nickname"].stringValue
+                let profile_image = json["profile_image"].stringValue
+                let birthday = json["birthday"].stringValue
+                let gender = json["gender"].stringValue
+                
+                if email.isEmpty == false {
+                    self.user["email"] = email
                 }
-            }.resume()
-        }
-    }
-    
-    /// facebook
-    private func loginFacebook() {
-        let readPermission:[Permission] = [.publicProfile]
-        LoginManager.init().logIn(permissions: readPermission, viewController: self) { (result) in
-            switch result {
-            case .success(granted: _ , declined: _ , token: _):
-                guard let token = AccessToken.current?.tokenString else {
-                    self.completion?(self.user, nil)
-                    return
+                if name.isEmpty == false {
+                    self.user["name"] = name
                 }
-                self.user["accessToken"] = token
-                let credential = FacebookAuthProvider.credential(withAccessToken: token)
-                Auth.auth().signIn(with: credential) { (user: AuthDataResult?, error: Error?) in
-                    if let error = error {
-                        self.completion?(self.user, error)
-                    }
-                    else {
-                        let request = GraphRequest(graphPath: "me", parameters: ["fields": "id"], tokenString: AccessToken.current?.tokenString, version: nil, httpMethod: .get)
-                        let connection = GraphRequestConnection.init()
-                        connection.add(request) { (httpResponse, result, error) in
-                            if let dic:Dictionary = result as? Dictionary<String, AnyObject>, let id = dic["id"] {
-                                self.user["userId"] = "\(id)"
-                                self.user["joinType"] = "facebook"
-                                self.completion?(self.user, nil)
-                            }
-                        }
-                        connection.start()
-                    }
+                if nickname.isEmpty == false {
+                    self.user["nickname"] = nickname
                 }
+                if profile_image.isEmpty == false {
+                    self.user["profileImageUrl"] = profile_image
+                }
+                if birthday.isEmpty == false {
+                    self.user["birthday"] = birthday
+                }
+                if gender.isEmpty == false {
+                    self.user["gender"] = gender
+                }
+                print("=== naver login: \(self.user)")
+                self.completion?(self.user, nil)
+                
                 break
-            case .cancelled:
-                self.completion?(nil, nil)
-                break
-            case .failed(let error):
+            case .failure(let error):
                 self.completion?(nil, error)
                 break
             }
         }
+    }
+    /// facebook
+    private func loginFacebook() {
+        if let token = AccessToken.current, !token.isExpired {
+            self.user["accessToken"] = token
+            self.fetchFacebookMe()
+        }
+        else {
+            let loginManager = LoginManager()
+            let readPermission:[Permission] = [.publicProfile]
+            loginManager.logIn(permissions: readPermission, viewController: self) { (result: LoginResult) in
+                switch result {
+                case .success(granted: _, declined: _, token: _):
+                    self.signInFirebase()
+                case .cancelled:
+                    print("facebook login cancel")
+                    self.completion?(nil, nil);
+                case .failed(let err):
+                    print(err)
+                    self.completion?(nil, err);
+                }
+            }
+        }
+    }
+    
+    func fetchFacebookMe() {
+        let connection = GraphRequestConnection()
+        let request = GraphRequest(graphPath: "me", parameters: ["fields": "id"], tokenString: AccessToken.current?.tokenString, version: nil, httpMethod: .get)
+        
+        connection.add(request) { (httpResponse, result, error: Error?) in
+            if nil != error {
+                print(error!)
+                self.completion?(nil, nil)
+                return
+            }
+            guard let result = result else {
+                self.completion?(nil, nil)
+                return
+            }
+            
+            if let dic:Dictionary = result as? Dictionary<String, AnyObject>, let id = dic["id"] {
+                self.user["userId"] = "\(id)"
+                self.user["joinType"] = "facebook"
+                self.completion?(self.user, nil)
+            }
+        }
+        connection.start()
     }
     private func faceBookLogOut(completion: @escaping (_ error: Error?) -> Void) {
         let loginManager = LoginManager()
@@ -232,7 +248,22 @@ class SocialLoginViewController: UIViewController {
             completion(error)
         }
     }
-    
+    func signInFirebase() {
+        guard let token = AccessToken.current?.tokenString else {
+            return
+        }
+        
+        self.user["accessToken"] = token
+        let credential = FacebookAuthProvider.credential(withAccessToken: token)
+        Auth.auth().signIn(with: credential) { (user: AuthDataResult?, error: Error?) in
+            if let error = error {
+                print(error)
+            }
+            else {
+                self.fetchFacebookMe()
+            }
+        }
+    }
     /// apple
     private func loginApple() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()
@@ -245,39 +276,51 @@ class SocialLoginViewController: UIViewController {
         authorizationController.performRequests()
     }
     
-//    func performExistingAccountSetupFlows() {
-//      // Prepare requests for both Apple ID and password providers.
-//      let requests = [ASAuthorizationAppleIDProvider().createRequest(),
-//                      ASAuthorizationPasswordProvider().createRequest()]
-//
-//      // Create an authorization controller with the given requests.
-//      let authorizationController = ASAuthorizationController(authorizationRequests: requests)
-//      authorizationController.delegate = self
-//      authorizationController.presentationContextProvider = self
-//      authorizationController.performRequests()
-//    }
+    //    func performExistingAccountSetupFlows() {
+    //      // Prepare requests for both Apple ID and password providers.
+    //      let requests = [ASAuthorizationAppleIDProvider().createRequest(),
+    //                      ASAuthorizationPasswordProvider().createRequest()]
+    //
+    //      // Create an authorization controller with the given requests.
+    //      let authorizationController = ASAuthorizationController(authorizationRequests: requests)
+    //      authorizationController.delegate = self
+    //      authorizationController.presentationContextProvider = self
+    //      authorizationController.performRequests()
+    //    }
 }
 
 extension SocialLoginViewController: NaverThirdPartyLoginConnectionDelegate {
+    // 로그인 버튼을 눌렀을 경우 열게 될 브라우저
+//    func oauth20ConnectionDidOpenInAppBrowser(forOAuth request: URLRequest!) {
+//        let naverSignInVC = NLoginThirdPartyOAuth20InAppBrowserViewController(request: request)!
+//        naverSignInVC.parentOrientation = UIInterfaceOrientation(rawValue: UIDevice.current.orientation.rawValue)!
+//        present(naverSignInVC, animated: false, completion: nil)
+//    }
+    
+    // 로그인에 성공했을 경우 호출
     func oauth20ConnectionDidFinishRequestACTokenWithAuthCode() {
-        // 로그인 성공 (로그인된 상태에서 requestThirdPartyLogin()를 호출하면 이 메서드는 불리지 않는다.)
-        self.reqeustFetchNaverUserInfo()
+        print("[Success] : Success Naver Login")
+        self.getNaverInfo()
     }
     
+    // 접근 토큰 갱신
     func oauth20ConnectionDidFinishRequestACTokenWithRefreshToken() {
-        // 로그인된 상태(로그아웃이나 연동해제 하지않은 상태)에서 로그인 재시도
-        self.reqeustFetchNaverUserInfo()
+        let instance = NaverThirdPartyLoginConnection.getSharedInstance()
+        instance?.requestDeleteToken()
     }
     
+    // 로그아웃 할 경우 호출(토큰 삭제)
     func oauth20ConnectionDidFinishDeleteToken() {
-         // 연동해제 콜백
+        let instance = NaverThirdPartyLoginConnection.getSharedInstance()
+        instance?.requestDeleteToken()
     }
     
+    // 모든 Error
     func oauth20Connection(_ oauthConnection: NaverThirdPartyLoginConnection!, didFailWithError error: Error!) {
-         //  접근 토큰, 갱신 토큰, 연동 해제등이 실패
+        print("[Error] :", error.localizedDescription)
     }
-    
 }
+
 extension SocialLoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return (self.view.window)!

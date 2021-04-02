@@ -62,16 +62,22 @@ class PopupListViewController: BaseViewController {
             lbTitle.text = vcTitle
         }
         btnClose.imageView?.contentMode = .scaleAspectFill
+        self.btnClose.addTarget(self, action: #selector(onClickedBtnActions(_ :)), for: .touchUpInside)
+        
+
         self.view.layoutIfNeeded()
+        self.tblView.tableFooterView = UIView.init(frame: CGRect(x: 0, y: 0, width: tblView.bounds.width, height: 64))
+        
         self.tblView.reloadData {
             self.view.layoutIfNeeded()
             self.fitHeight = self.tblView.contentSize.height
             if self.svTitle.isHidden == false {
                 self.fitHeight += self.svTitle.bounds.height
             }
+            self.fitHeight += self.view.window?.safeAreaInsets.bottom ?? 0
+            self.panModalSetNeedsLayoutUpdate()
+            self.panModalTransition(to: .shortForm)
         }
-        self.tblView.tableFooterView = UIView.init()
-        self.btnClose.addTarget(self, action: #selector(onClickedBtnActions(_ :)), for: .touchUpInside)
     }
     
     @objc func onClickedBtnActions(_ sender: UIButton) {
@@ -113,16 +119,14 @@ extension PopupListViewController: PanModalPresentable {
         return false
     }
     var panScrollable: UIScrollView? {
-        return nil
+        return self.tblView
     }
-    
     var topOffset: CGFloat {
         guard let window = AppDelegate.ins.window else {
             return 100
         }
         return window.safeAreaInsets.top + 50
     }
-    
     var shortFormHeight: PanModalHeight {
         return PanModalHeight.contentHeight(fitHeight)
     }
@@ -132,5 +136,4 @@ extension PopupListViewController: PanModalPresentable {
     var anchorModalToLongForm: Bool {
         return false
     }
-
 }

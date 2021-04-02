@@ -20,6 +20,14 @@ class Utility: NSObject {
         url = url.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         return url
     }
+    class func originImgUrl(_ userId: String?, _ fileName: String?) ->String? {
+        guard let userId = userId, let fileName = fileName, userId.isEmpty == false, fileName.isEmpty == false  else {
+            return nil
+        }
+        var url = "\(baseUrl)/upload/talk/\(userId)/\(fileName)"
+        url = url.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        return url
+    }
     class func createUserId(_ input:String) -> String {
         return input.md5()
     }

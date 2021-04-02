@@ -23,7 +23,7 @@ class PhotoListViewController: BaseViewController {
     var pageNum: Int = 1
     var pageEnd: Bool = false
     var canRequest = true
-    var searchSex:Gender = ShareData.ins.mySex.transGender()
+    var searchSex:Gender = ShareData.ins.userSex.transGender()
     var searchTag: String = "인기"
     
     
@@ -89,9 +89,9 @@ class PhotoListViewController: BaseViewController {
         
         ApiManager.ins.requestPhotoList(param: param) { (resonse) in
             self.canRequest = true
-            let result = resonse?["result"].arrayValue
-            let isSuccess = resonse?["isSuccess"].stringValue
-            if isSuccess == "01", let result = result {
+            let result = resonse["result"].arrayValue
+            let isSuccess = resonse["isSuccess"].stringValue
+            if isSuccess == "01" {
                 if result.count == 0 {
                     self.pageEnd = true
                 }
@@ -163,6 +163,10 @@ extension PhotoListViewController: UICollectionViewDataSource, UICollectionViewD
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        let item = listData[indexPath.row]
+        let vc = storyboard?.instantiateViewController(identifier: "PhotoDetailViewController") as! PhotoDetailViewController
+        vc.passData = item
+        AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
     }
 }
 extension PhotoListViewController: UIScrollViewDelegate {

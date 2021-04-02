@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>926574312014-vj5h0tm110tscn2sboga3oo3lqbaglj8.apps.googleusercontent.com</string>
+	<string>926574312014-n9e23mncbmivh842bclfgm0bino0vf2a.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.926574312014-vj5h0tm110tscn2sboga3oo3lqbaglj8</string>
+	<string>com.googleusercontent.apps.926574312014-n9e23mncbmivh842bclfgm0bino0vf2a</string>
 	<key>API_KEY</key>
 	<string>AIzaSyDTXeSndMum47v5LEtnygppJ_S07HduLrs</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>kr.Iruri.TodayIsYou</string>
+	<string>com.Iruri.TodayIsYou</string>
 	<key>PROJECT_ID</key>
 	<string>todayisyou-1ad29</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:926574312014:ios:04253e75c8e1409f89a11f</string>
+	<string>1:926574312014:ios:a6d9e370b0fa0f1189a11f</string>
 </dict>
 </plist>

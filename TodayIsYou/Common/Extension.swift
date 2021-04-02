@@ -311,8 +311,8 @@ extension String {
         return predicate.evaluate(with: self)
     }
     public func validateKorPhoneNumber() -> Bool {
-//        let reg = "^[0-9]{3}[-]+[0-9]{4}[-]+[0-9]{4}$"
-        let reg = "^[0-9]{3}+[0-9]{4}+[0-9]{4}$"
+        let reg = "^[0-9]{3}[-]+[0-9]{4}[-]+[0-9]{4}$"
+//        let reg = "^[0-9]{3}+[0-9]{4}+[0-9]{4}$"
         let predicate = NSPredicate(format:"SELF MATCHES %@", reg)
         return predicate.evaluate(with: self)
     }
@@ -403,6 +403,9 @@ extension String {
             return result
         }
     }
+    func maskOfSuffixLenght(_ length:Int) -> String? {
+        return String(repeating: "x", count: Swift.max(0, count-length)) + suffix(length)
+    }
 }
 
 extension NSAttributedString {
@@ -423,7 +426,7 @@ extension Data {
 
 extension Bundle {
     /// 앱 이름
-    class var appName: String {
+    var appName: String {
         if let value = Bundle.main.infoDictionary?["CFBundleDisplayName"] as? String {
             return value
         }
@@ -436,17 +439,36 @@ extension Bundle {
         return ""
     }
     ////// 앱 빌드 버전
-    class var appBuildVersion: String {
+    var appBuildVersion: String {
         if let value = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
             return value
         }
         return ""
     }
     /// 앱 번들 ID
-    class var bundleIdentifier: String {
+    var bundleIdentifier: String {
         if let value = Bundle.main.infoDictionary?["CFBundleIdentifier"] as? String {
             return value
         }
         return ""
+    }
+}
+
+extension Locale {
+    var languageCode: String {
+        let localId = NSLocale.preferredLanguages[0] as String
+        let info = NSLocale.components(fromLocaleIdentifier: localId)
+        guard let language = info["kCFLocaleLanguageCodeKey"] else {
+            return ""
+        }
+        return language
+    }
+    var countryCode: String {
+        let localId = NSLocale.preferredLanguages[0] as String
+        let info = NSLocale.components(fromLocaleIdentifier: localId)
+        guard let language = info["kCFLocaleCountryCodeKey"] else {
+            return ""
+        }
+        return language
     }
 }

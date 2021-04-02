@@ -66,9 +66,9 @@ class ExchangeViewController: BaseViewController {
    
    func requestTerm() {
       ApiManager.ins.requestServiceTerms(mode: "yk3") { (response) in
-         let isSuccess = response?["isSuccess"].stringValue
+         let isSuccess = response["isSuccess"].stringValue
          if (isSuccess == "01") {
-            self.yk = response?["yk"].stringValue
+            self.yk = response["yk"].stringValue
             self.decorationUI()
          }
          else {

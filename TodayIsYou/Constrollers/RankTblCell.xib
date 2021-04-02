@@ -89,9 +89,9 @@
                                             </label>
                                         </subviews>
                                     </stackView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lwv-qa-AqX" customClass="FloatRatingView" customModule="TodayIsYou" customModuleProvider="target">
+                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lwv-qa-AqX" customClass="FloatRatingView" customModule="TodayIsYou" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="26" width="87" height="15"/>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="87" id="Dk1-X8-R7P"/>
                                             <constraint firstAttribute="height" constant="15" id="rDS-WR-lRw"/>
@@ -138,9 +138,6 @@
         <image name="ico_star_gray" width="20" height="20"/>
         <image name="ico_star_red" width="20" height="20"/>
         <image name="ico_trigonometry" width="40" height="40"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemPinkColor">
             <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

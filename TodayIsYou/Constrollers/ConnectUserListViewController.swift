@@ -21,6 +21,7 @@ class ConnectUserCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+    
     func configurationData(_ data: JSON?) {
         guard let data = data else {
             return
@@ -100,8 +101,20 @@ class ConnectUserListViewController: BaseViewController {
     var pageNum: Int = 1
     var pageEnd: Bool = false
     var canRequest = true
-    var searchSex:Gender = ShareData.ins.mySex.transGender()
-    var searchState: String = "" //접속: "", ON, OFF
+    var searchSex:String = "성별" {
+        didSet {
+            if let lbGender = self.btnGender.viewWithTag(100) as? UILabel {
+                lbGender.text = searchSex
+            }
+        }
+    }
+    var searchState: String = "접속" {
+        didSet {
+            if let lbState = self.btnState.viewWithTag(100) as? UILabel {
+                lbState.text = searchState
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,9 +122,12 @@ class ConnectUserListViewController: BaseViewController {
         
         CNavigationBar.drawBackButton(self, "사용자 접속목록",  #selector(actionNaviBack))
         self.tblView.tableFooterView = UIView.init()
+        self.searchSex = "성별"
+        self.searchState = "접속"
+        
         self.dataRest()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
@@ -141,16 +157,27 @@ class ConnectUserListViewController: BaseViewController {
         param["app_type"] = appType
         param["user_id"] = ShareData.ins.userId
         param["pageNum"] = pageNum
-        param["search_sex"] = searchSex.rawValue
-        param["search_onoff"] = searchState
+        if searchSex == "성별" {
+            param["search_sex"] = ""
+        }
+        else {
+            param["search_sex"] = searchSex
+        }
+        if searchState == "접속" {
+            param["search_onoff"] = ""
+        }
+        else {
+            param["search_onoff"] = searchState
+        }
         
         ApiManager.ins.requestGetUserList(param: param) { (resonse) in
             self.canRequest = true
-            let result = resonse?["result"].arrayValue
-            let isSuccess = resonse?["isSuccess"].stringValue
-            if isSuccess == "01", let result = result {
+            let result = resonse["result"].arrayValue
+            let isSuccess = resonse["isSuccess"].stringValue
+            if isSuccess == "01" {
                 if result.count == 0 {
                     self.pageEnd = true
+                    self.listData = result
                 }
                 else {
                     if self.pageNum == 1 {
@@ -178,6 +205,28 @@ class ConnectUserListViewController: BaseViewController {
         }
     }
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
+        if sender == btnGender {
+            let vc = PopupListViewController.initWithType(.normal, "성별을 선택해주세요.", ["성별", "남", "여"], nil) { (vcs, selItem, index) in
+                vcs.dismiss(animated: true, completion: nil)
+                guard let selItem = selItem as? String else {
+                    return
+                }
+                self.searchSex = selItem
+                self.dataRest()
+            }
+            self.presentPanModal(vc)
+        }
+        else if sender == btnState {
+            let vc = PopupListViewController.initWithType(.normal, "접속상태를 선택해주세요.", ["접속", "ON", "OFF"], nil) { (vcs, selItem, index) in
+                vcs.dismiss(animated: true, completion: nil)
+                guard let selItem = selItem as? String else {
+                    return
+                }
+                self.searchState = selItem
+                self.dataRest()
+            }
+            self.presentPanModal(vc)
+        }
     }
     
 }
@@ -197,6 +246,13 @@ extension ConnectUserListViewController: UITableViewDelegate, UITableViewDataSou
         }
         
         return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let item = listData[indexPath.row]
+        let vc = storyboard?.instantiateViewController(identifier: "RankDetailViewController") as! RankDetailViewController
+        vc.passData = item
+        AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
     }
 }
 

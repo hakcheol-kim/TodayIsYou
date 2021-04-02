@@ -11,6 +11,9 @@ import KakaoSDKAuth
 import KakaoSDKCommon
 import Firebase
 import CryptoSwift
+import NaverThirdPartyLogin
+import FBSDKCoreKit
+import GoogleSignIn
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -28,39 +31,48 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
+        
+        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
+        
         KakaoSDKCommon.initSDK(appKey: KakaoNativeAppKey)
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window!.overrideUserInterfaceStyle = .light
         
-        self.callTempView()
-        return true
+        //네이버
+        let naverThirdPartyLoginInstance = NaverThirdPartyLoginConnection.getSharedInstance()
+        // 네이버 앱으로 인증하는 방식을 활성화하려면 앱 델리게이트에 다음 코드를 추가합니다.
+        naverThirdPartyLoginInstance?.isNaverAppOauthEnable = true
+        // SafariViewContoller에서 인증하는 방식을 활성화하려면 앱 델리게이트에 다음 코드를 추가합니다.
+        naverThirdPartyLoginInstance?.isInAppOauthEnable = true
+        // 인증 화면을 iPhone의 세로 모드에서만 사용하려면 다음 코드를 추가합니다.
+        naverThirdPartyLoginInstance?.setOnlyPortraitSupportInIphone(true)
+        // 애플리케이션 이름
+        naverThirdPartyLoginInstance?.appName = Bundle.main.appName
+        // 콜백을 받을 URL Scheme
+        naverThirdPartyLoginInstance?.serviceUrlScheme = NAVER_URL_SCHEME
+        // 애플리케이션에서 사용하는 클라이언트 아이디
+        naverThirdPartyLoginInstance?.consumerKey = NAVER_CONSUMER_KEY
+        // 애플리케이션에서 사용하는 클라이언트 시크릿
+        naverThirdPartyLoginInstance?.consumerSecret = NAVER_CONSUMER_SECRET
         
-        //1. 앱캐쉬에 저장되있닌지 찾는다.
         
-        if let userId = ShareData.ins.dfsObjectForKey(DfsKey.userId) as? String, userId.length > 0 {
-            callMainViewCtrl()
-        }
-        else {
-            //2. 키체인 영역에 저장된 키가 있는지 찾는다. 있다면, userid 생성해서 저장하고 로그인한다.
-            let userIdentifier = KeychainItem.currentUserIdentifier
-            if (userIdentifier.isEmpty == false) {
-                callIntroViewCtrl()
-            }
-            else {
-                callLoginViewCtrl()
-            }
-        }
+        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+//        self.callTempView()
+//        return true
+
+        callIntroViewCtrl()
         
         return true
     }
+ 
     func callTempView() {
         let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(identifier: "MemberInfoViewController") as! MemberInfoViewController
         window?.rootViewController = BaseNavigationController.init(rootViewController: vc)
         window?.makeKeyAndVisible()
     }
     func callIntroViewCtrl() {
-        let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(identifier: "IntroViewController") as? IntroViewController
+        let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(identifier: "IntroViewController") as! IntroViewController
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }
@@ -74,7 +86,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = BaseNavigationController.init(rootViewController: vc)
         window?.makeKeyAndVisible()
     }
-    
+    func openUrl(_ url:String, completion: ((_ success:Bool) -> Void)?) {
+        let encodedUrl = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        guard let requestUrl = URL.init(string: encodedUrl) else {
+            completion?(false)
+            return
+        }
+        UIApplication.shared.open(requestUrl, options: [:]) { (success) in
+            completion?(success)
+        }
+    }
+
     func startIndicator() {
         DispatchQueue.main.async {
             if self.loadingView == nil {
@@ -106,15 +128,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             loadingView.removeFromSuperview()
         }
     }
-    
-    
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         if (AuthApi.isKakaoTalkLoginUrl(url)) {
             return AuthController.handleOpenUrl(url: url)
         }
-        
-        return false
+        else if let scheme = url.scheme, scheme.hasPrefix("naverlogin") == true {
+            let result = NaverThirdPartyLoginConnection.getSharedInstance()?.receiveAccessToken(url)
+            if result == CANCELBYUSER {
+                print("result: \(String(describing: result))")
+                return false
+            }
+        }
+        else if let scheme = url.scheme, scheme.hasPrefix("fb") == true {
+            ApplicationDelegate.shared.application(app, open: url, sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplication.OpenURLOptionsKey.annotation])
+        }
+        else if let scheme = url.scheme, scheme.hasPrefix("com.googleusercontent.apps") {
+            return GIDSignIn.sharedInstance().handle(url)
+        }
+        return true
     }
+    
+    
 }
-
-

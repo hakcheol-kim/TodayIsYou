@@ -10,8 +10,8 @@ import Alamofire
 import AlamofireImage
 import SwiftyJSON
 
-typealias ResSuccess = (JSON?) -> Void
-typealias ResFailure = (Any?) -> Void
+typealias ResSuccess = (JSON) -> Void
+typealias ResFailure = (Any) -> Void
 
 enum AppError: String, Error {
     case invalidResponseType = "response data type not dictionary"

@@ -18,10 +18,11 @@ target 'TodayIsYou' do
 
   pod 'FBSDKCoreKit'
   pod 'FBSDKLoginKit'
-  pod 'FBSDKShareKit'
-
-  pod 'CryptoSwift'
   
+  pod 'GoogleSignIn'
+  
+  pod 'CryptoSwift'
+  pod 'PhoneNumberKit', '~> 3.3'
   pod 'NVActivityIndicatorView'
   pod 'CRRefresh'
   pod 'UIImageViewAlignedSwift'
@@ -29,5 +30,5 @@ target 'TodayIsYou' do
   pod "BSImagePicker", "~> 3.1"
   pod 'Mantis'
   pod 'SideMenu', '~> 6.0'
-  
+  pod 'Lightbox'
 end

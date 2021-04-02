@@ -40,9 +40,10 @@ class ContactusViewController: BaseViewController {
     }
     func requestQnaList() {
         ApiManager.ins.requestQnaList(param: ["user_id":ShareData.ins.userId]) { (response) in
-            let isSuccess = response?["isSuccess"].stringValue
+            let isSuccess = response["isSuccess"].stringValue
+            let result =  response["result"].arrayValue
             if isSuccess == "01" {
-                if let result =  response?["result"].arrayValue, result.count > 0 {
+                if result.count > 0 {
                     self.listData = result
                     self.tblView.isHidden = false
                     self.reloadTableView()
@@ -68,7 +69,7 @@ class ContactusViewController: BaseViewController {
             
             let param = ["question": msg, "user_id": ShareData.ins.userId]
             ApiManager.ins.requestQnaWrite(param:param) { (response) in
-                let isSuccess = response?["isSuccess"].stringValue
+                let isSuccess = response["isSuccess"].stringValue
                 if isSuccess == "01" {
                     self.requestQnaList()
                     self.tvMsg.text = nil

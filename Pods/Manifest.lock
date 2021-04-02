@@ -2,7 +2,13 @@ PODS:
   - Alamofire (5.4.1)
   - AlamofireImage (4.1.0):
     - Alamofire (~> 5.1)
+  - AppAuth (1.4.0):
+    - AppAuth/Core (= 1.4.0)
+    - AppAuth/ExternalUserAgent (= 1.4.0)
+  - AppAuth/Core (1.4.0)
+  - AppAuth/ExternalUserAgent (1.4.0)
   - BSImagePicker (3.3.1)
+  - Cache (6.0.0)
   - CRRefresh (1.1.3)
   - CryptoSwift (1.3.8)
   - FBSDKCoreKit (9.1.0):
@@ -15,52 +21,48 @@ PODS:
     - FBSDKLoginKit/Login (= 9.1.0)
   - FBSDKLoginKit/Login (9.1.0):
     - FBSDKCoreKit (~> 9.1.0)
-  - FBSDKShareKit (9.1.0):
-    - FBSDKShareKit/Share (= 9.1.0)
-  - FBSDKShareKit/Share (9.1.0):
-    - FBSDKCoreKit (~> 9.1.0)
-  - Firebase/Auth (7.8.1):
+  - Firebase/Auth (7.9.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 7.8.0)
-  - Firebase/CoreOnly (7.8.1):
-    - FirebaseCore (= 7.8.0)
-  - Firebase/Crashlytics (7.8.1):
+    - FirebaseAuth (~> 7.9.0)
+  - Firebase/CoreOnly (7.9.0):
+    - FirebaseCore (= 7.9.0)
+  - Firebase/Crashlytics (7.9.0):
     - Firebase/CoreOnly
-    - FirebaseCrashlytics (~> 7.8.0)
-  - Firebase/Messaging (7.8.1):
+    - FirebaseCrashlytics (~> 7.9.0)
+  - Firebase/Messaging (7.9.0):
     - Firebase/CoreOnly
-    - FirebaseMessaging (~> 7.8.0)
-  - FirebaseAuth (7.8.0):
+    - FirebaseMessaging (~> 7.9.0)
+  - FirebaseAuth (7.9.0):
     - FirebaseCore (~> 7.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GTMSessionFetcher/Core (~> 1.4)
-  - FirebaseCore (7.8.0):
+  - FirebaseCore (7.9.0):
     - FirebaseCoreDiagnostics (~> 7.4)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Logger (~> 7.0)
-  - FirebaseCoreDiagnostics (7.8.0):
+  - FirebaseCoreDiagnostics (7.9.0):
     - GoogleDataTransport (~> 8.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Logger (~> 7.0)
     - nanopb (~> 2.30907.0)
-  - FirebaseCrashlytics (7.8.0):
+  - FirebaseCrashlytics (7.9.0):
     - FirebaseCore (~> 7.0)
     - FirebaseInstallations (~> 7.0)
     - GoogleDataTransport (~> 8.0)
     - nanopb (~> 2.30907.0)
     - PromisesObjC (~> 1.2)
-  - FirebaseInstallations (7.8.0):
+  - FirebaseInstallations (7.9.0):
     - FirebaseCore (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/UserDefaults (~> 7.0)
     - PromisesObjC (~> 1.2)
-  - FirebaseInstanceID (7.8.0):
+  - FirebaseInstanceID (7.9.0):
     - FirebaseCore (~> 7.0)
     - FirebaseInstallations (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/UserDefaults (~> 7.0)
-  - FirebaseMessaging (7.8.0):
+  - FirebaseMessaging (7.9.0):
     - FirebaseCore (~> 7.0)
     - FirebaseInstanceID (~> 7.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
@@ -71,6 +73,10 @@ PODS:
     - GoogleUtilities/Environment (~> 7.2)
     - nanopb (~> 2.30907.0)
     - PromisesObjC (~> 1.2)
+  - GoogleSignIn (5.0.2):
+    - AppAuth (~> 1.2)
+    - GTMAppAuth (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
   - GoogleUtilities/AppDelegateSwizzler (7.3.1):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -88,7 +94,16 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.3.1):
     - GoogleUtilities/Logger
+  - GTMAppAuth (1.1.0):
+    - AppAuth/Core (~> 1.4)
+    - GTMSessionFetcher (~> 1.4)
+  - GTMSessionFetcher (1.5.0):
+    - GTMSessionFetcher/Full (= 1.5.0)
   - GTMSessionFetcher/Core (1.5.0)
+  - GTMSessionFetcher/Full (1.5.0):
+    - GTMSessionFetcher/Core (= 1.5.0)
+  - Imaginary (5.0.0):
+    - Cache (~> 6.0.0)
   - KakaoSDKAuth (2.4.1):
     - KakaoSDKCommon (= 2.4.1)
   - KakaoSDKCommon (2.4.1):
@@ -101,6 +116,8 @@ PODS:
   - KakaoSDKUser (2.4.1):
     - KakaoSDKAuth (= 2.4.1)
     - KakaoSDKCommon (= 2.4.1)
+  - Lightbox (2.5.0):
+    - Imaginary (~> 5.0.0)
   - Mantis (1.5.1)
   - nanopb (2.30907.0):
     - nanopb/decode (= 2.30907.0)
@@ -112,6 +129,12 @@ PODS:
     - NVActivityIndicatorView/Base (= 5.1.1)
   - NVActivityIndicatorView/Base (5.1.1)
   - PanModal (1.2.7)
+  - PhoneNumberKit (3.3.3):
+    - PhoneNumberKit/PhoneNumberKitCore (= 3.3.3)
+    - PhoneNumberKit/UIKit (= 3.3.3)
+  - PhoneNumberKit/PhoneNumberKitCore (3.3.3)
+  - PhoneNumberKit/UIKit (3.3.3):
+    - PhoneNumberKit/PhoneNumberKitCore
   - PromisesObjC (1.2.12)
   - SideMenu (6.5.0)
   - SwiftyJSON (4.3.0)
@@ -125,17 +148,19 @@ DEPENDENCIES:
   - CryptoSwift
   - FBSDKCoreKit
   - FBSDKLoginKit
-  - FBSDKShareKit
   - Firebase/Auth
   - Firebase/Crashlytics
   - Firebase/Messaging
+  - GoogleSignIn
   - KakaoSDKAuth
   - KakaoSDKCommon
   - KakaoSDKUser
+  - Lightbox
   - Mantis
   - naveridlogin-sdk-ios
   - NVActivityIndicatorView
   - PanModal
+  - PhoneNumberKit (~> 3.3)
   - SideMenu (~> 6.0)
   - SwiftyJSON (~> 4.0)
   - UIImageViewAlignedSwift
@@ -144,12 +169,13 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - AlamofireImage
+    - AppAuth
     - BSImagePicker
+    - Cache
     - CRRefresh
     - CryptoSwift
     - FBSDKCoreKit
     - FBSDKLoginKit
-    - FBSDKShareKit
     - Firebase
     - FirebaseAuth
     - FirebaseCore
@@ -159,16 +185,21 @@ SPEC REPOS:
     - FirebaseInstanceID
     - FirebaseMessaging
     - GoogleDataTransport
+    - GoogleSignIn
     - GoogleUtilities
+    - GTMAppAuth
     - GTMSessionFetcher
+    - Imaginary
     - KakaoSDKAuth
     - KakaoSDKCommon
     - KakaoSDKUser
+    - Lightbox
     - Mantis
     - nanopb
     - naveridlogin-sdk-ios
     - NVActivityIndicatorView
     - PanModal
+    - PhoneNumberKit
     - PromisesObjC
     - SideMenu
     - SwiftyJSON
@@ -177,36 +208,42 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
+  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   BSImagePicker: 0fe04b574d4d6b81093785d2af6c26227efc8428
+  Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
   CRRefresh: 1415d4ae06837fa7bb064c44f2e102f3ef517044
   CryptoSwift: 01b0f0cba1d5c212e5a335ff6c054fb75a204f00
   FBSDKCoreKit: a00fe2efd780c195a5e09201bf51c56106245b40
   FBSDKLoginKit: d98498c598ec09de657385a9349a1f21119b7f86
-  FBSDKShareKit: d5aafc35870083f53c15ec0eb9eda4dfe8037d11
-  Firebase: d59ad4129167f9f0d2a4f6c1f0c462254b6002c8
-  FirebaseAuth: 667e576a716f6f9fe31687791406f61135002d47
-  FirebaseCore: 049029df3096e5c118917029be7da75ee16f3b1b
-  FirebaseCoreDiagnostics: 066f996579cf097bdad3d7dc9a918d6b9e129c50
-  FirebaseCrashlytics: d07e61d85aabc7d38a68f94ff99995f8557ea8d0
-  FirebaseInstallations: 7f7ed0e7e27fb51f57291e1876e2ddb1524126c1
-  FirebaseInstanceID: aaecc93b4528bbcafea12c477e26827719ca1183
-  FirebaseMessaging: 1d5cac3728c042d3d4700ecb56bbac893660a963
+  Firebase: d8bd6bd34b4c7ed57bfdd056c66ff5adcdde53ab
+  FirebaseAuth: 20625f04fdd213995249a82375b3dab39b1c136c
+  FirebaseCore: 0798738ad1ae0fda67e17c7b9081241c431c6859
+  FirebaseCoreDiagnostics: 3d36e05da74cb8b7ce30e6594a8f201b982c725c
+  FirebaseCrashlytics: 73cfa8d24d573ed1ff648acce3900df39ca32d77
+  FirebaseInstallations: 5e777e6640fa060405cc7632447b6c5ca5af4742
+  FirebaseInstanceID: 53140c03b9f6136f890d7901399f85a4c90ab2d0
+  FirebaseMessaging: 5f83f200a251c44f647f36cb43e557be09889e8d
   GoogleDataTransport: b006084b73915a42c28a3466961a4edda3065da6
+  GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
   GoogleUtilities: e1d9ed4e544fc32a93e00e721400cbc3f377200d
+  GTMAppAuth: 197a8dabfea5d665224aa00d17f164fc2248dab9
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
+  Imaginary: cf5e3a7dd6ab1dcbd47ba8ce5edf2307c4e99eb3
   KakaoSDKAuth: fcba1c9ede431683f5bdd84c835a96981cb115a5
   KakaoSDKCommon: 0912aa0c7db051ae8dc07a35395cf644f7728f95
   KakaoSDKUser: 11955811d99d1ff1f1dfd5428afe69937e31ccef
+  Lightbox: cc3d5124f024fa8197fd23f913160db1c61a1852
   Mantis: b99411203667836be24acef58fbd820e62d36be0
   nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   naveridlogin-sdk-ios: b9d7c20677981177ed994ecb1c8c2b49f223277d
   NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
+  PhoneNumberKit: 4ce83273551c4d2ae10b7361162f4283dd02835f
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   UIImageViewAlignedSwift: e4f83530f90860aa31b6840bf570034a681bd2c4
 
-PODFILE CHECKSUM: f8aa1695847d229ff0a6055d8ef5f26d20a3f086
+PODFILE CHECKSUM: c6a883a0cbeaeb63fe2a4cda11146ad73bf00b3b
 
 COCOAPODS: 1.10.1

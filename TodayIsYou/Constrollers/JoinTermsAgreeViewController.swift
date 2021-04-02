@@ -50,15 +50,20 @@ class JoinTermsAgreeViewController: BaseViewController {
                 self.view.makeToast("약관에 동의해 주세요.")
                 return
             }
+            
+            user["instantExperienceLaunched"] = false
+            let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(identifier: "MemberInfoViewController") as! MemberInfoViewController
+            vc.user = user
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
  
     func requestTerm(_ mode: String) {
         
         ApiManager.ins.requestServiceTerms(mode: mode) { (response) in
-            let yk = response?["yk"].stringValue
-            let isSuccess = response?["isSuccess"]
-            if isSuccess == "01", yk?.isEmpty == false {
+            let yk = response["yk"].stringValue
+            let isSuccess = response["isSuccess"]
+            if isSuccess == "01", yk.isEmpty == false {
                 let vc = TermsViewController.init()
                 if mode == "yk1" {
                     vc.vcTitle = "서비스 이용약관"
@@ -66,7 +71,7 @@ class JoinTermsAgreeViewController: BaseViewController {
                 else {
                     vc.vcTitle = "개인정보 취급방침"
                 }
-                vc.content = yk!
+                vc.content = yk
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             else {

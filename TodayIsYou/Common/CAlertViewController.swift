@@ -43,7 +43,7 @@ class CAlertViewController: UIViewController {
     var arrTextView:[CTextView] = []
     var actions:[CAletActionType]?
     
-    convenience init(_ type:CAletType, _ title:Any? = nil, _ message:Any? = nil, _ actions:[CAletActionType]?, completion:CAletClosure?) {
+     convenience init(type:CAletType, title:Any? = nil, message:Any? = nil, actions:[CAletActionType]?, completion:CAletClosure?) {
         self.init()
         self.type = type
         self.aletTitle = title
@@ -55,11 +55,14 @@ class CAlertViewController: UIViewController {
         self.modalTransitionStyle = .crossDissolve
     }
     
+    class func show(type:CAletType, title:Any? = nil, message:Any? = nil, actions:[CAletActionType]?, completion:CAletClosure?) {
+        let calert = CAlertViewController.init(type: type, title: title, message: message, actions: actions, completion: completion)
+        UIApplication.shared.keyWindow?.rootViewController?.present(calert, animated: true, completion: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         containerView.layer.cornerRadius = 8
         containerView.layer.maskedCorners = CACornerMask(TL: true, TR: true, BL: true, BR: true)
-//        containerView.clipsToBounds = true
         
         self.reloadUI()
     }
@@ -90,25 +93,22 @@ class CAlertViewController: UIViewController {
             lbTitle.text = aletTitle
         }
         
-        for subview in svContent.subviews {
-            subview.removeFromSuperview()
-        }
-        
         if let message = message as? NSAttributedString {
-            let lbMsg = UILabel.init()
-            lbMsg.textAlignment = .center
-            lbMsg.font = fontMsg
-            lbMsg.attributedText = message
+            svMsg.isHidden = false
+            let lbMsg = self.createMsgLabel()
             svMsg.addArrangedSubview(lbMsg)
+            lbMsg.attributedText = message
         }
         else if let message = message as? String {
-            let lbMsg = UILabel.init()
-            lbMsg.textAlignment = .center
-            lbMsg.font = fontMsg
-            lbMsg.text = message
+            svMsg.isHidden = false
+            let lbMsg = self.createMsgLabel()
             svMsg.addArrangedSubview(lbMsg)
+
+            lbMsg.text = message
         }
-        
+        else {
+            svMsg.isHidden = true
+        }
         if let actions = actions {
             for subview in svButton.subviews {
                 subview.removeFromSuperview()
@@ -122,7 +122,19 @@ class CAlertViewController: UIViewController {
                 }
             }
         }
+        
+        self.view.layoutIfNeeded()
     }
+    
+    func createMsgLabel() -> UILabel {
+        let lbMsg = UILabel.init()
+        lbMsg.textAlignment = .center
+        lbMsg.textColor = UIColor.label
+        lbMsg.font = fontMsg
+        lbMsg.numberOfLines = 0
+        return lbMsg
+    }
+    
     func addCustomView(_ view:UIView) {
         self.view.layoutIfNeeded()
         self.containerView.backgroundColor = UIColor.clear
@@ -166,22 +178,37 @@ class CAlertViewController: UIViewController {
         arrBtn.append(btn)
     }
     
-    func addTextView(_ placeholder: String? = nil,_ font: UIFont = UIFont.systemFont(ofSize: 15, weight: .regular), _ edge: UIEdgeInsets = .zero) {
+    func addTextView(_ placeholder: String? = nil, _ edge: UIEdgeInsets = .zero) {
         self.view.layoutIfNeeded()
+        
+        var svWrap: UIStackView? = svContent.viewWithTag(12345) as? UIStackView
+        if svWrap == nil {
+            svWrap = UIStackView.init()
+            svWrap!.tag = 12345
+        }
+        svContent.addArrangedSubview(svWrap!)
+        svWrap!.isLayoutMarginsRelativeArrangement = true
+        svWrap!.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        
         let tv = CTextView.init()
-        svContent.addArrangedSubview(tv)
+        svWrap!.addArrangedSubview(tv)
+        
         if let placeholder = placeholder {
             tv.placeHolderString = placeholder
         }
+
         tv.delegate = self
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.heightAnchor.constraint(equalToConstant: 120).isActive = true
-        tv.font = font
+        tv.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        tv.layer.borderWidth = 1
+        tv.layer.borderColor = RGB(216, 216, 216).cgColor
+        tv.layer.cornerRadius = 8
+        tv.insetLeft = edge.left
+        tv.insetTop = edge.top
+        tv.insetBottom = edge.bottom
+        tv.insetRigth = edge.right
         
-        tv.insetLeft = 0
-        tv.insetTop = 0
-        tv.insetBottom = 0
-        tv.insetRigth = 0
         tv.setNeedsDisplay()
         
         arrTextView.append(tv)
@@ -197,15 +224,7 @@ class CAlertViewController: UIViewController {
             }
         }
         else {
-            if arrTextView.isEmpty == false {
-                if let textView = arrTextView.first, textView.text.isEmpty == true {
-                    return
-                }
-                self.completion?(self, nil, sender.tag-100)
-            }
-            else {
-                self.completion?(self, nil, sender.tag-100)
-            }
+            self.completion?(self, nil, sender.tag-100)
         }
     }
     
@@ -233,5 +252,9 @@ class CAlertViewController: UIViewController {
 }
 
 extension CAlertViewController: UITextViewDelegate {
-    
+    func textViewDidChange(_ textView: UITextView) {
+        if let textView = textView as? CTextView {
+            textView.placeholderLabel?.isHidden = !textView.text.isEmpty
+        }
+    }
 }

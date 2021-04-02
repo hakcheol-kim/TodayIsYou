@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Lightbox
+import Photos
 
 class BaseViewController: UIViewController {
     
@@ -24,12 +26,13 @@ class BaseViewController: UIViewController {
         super.viewWillDisappear(animated)
     }
     
-    func reqGetPoint() {
+    func requestMyHomePoint() {
         let param = ["user_id": ShareData.ins.userId]
-        ApiManager.ins.requestGetPoint(param:param) { (respone) in
-            if let respone = respone {
-                let point = respone["point"].numberValue
-                ShareData.ins.dfsSetValue(point, forKey: DfsKey.myPoint)
+        
+        ApiManager.ins.requestMyHomePoint(param:param) { (respone) in
+            let isSuccess = respone["isSuccess"].stringValue
+            if isSuccess == "01" {
+                ShareData.ins.setHomePoint(respone)
                 AppDelegate.ins.mainViewCtrl.updateNaviPoint()
             }
         } failure: { (error) in
@@ -131,36 +134,19 @@ class BaseViewController: UIViewController {
             }
         }
     }
-    
-//    let appleIDProvider = ASAuthorizationAppleIDProvider()
-//    appleIDProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
-//        switch credentialState {
-//        case .authorized:
-//            break // The Apple ID credential is valid.
-//        case .revoked, .notFound:
-//            // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
-//            DispatchQueue.main.async {
-//                self.window?.rootViewController?.showLoginViewController()
-//            }
-//        default:
-//            break
-//        }
-//    }
-//    return true
-//}
-//    @IBAction func signOutButtonPressed() {
-//        // For the purpose of this demo app, delete the user identifier that was previously stored in the keychain.
-//        KeychainItem.deleteUserIdentifierFromKeychain()
-//
-//        // Clear the user interface.
-//        userIdentifierLabel.text = ""
-//        givenNameLabel.text = ""
-//        familyNameLabel.text = ""
-//        emailLabel.text = ""
-//
-//        // Display the login controller again.
-//        DispatchQueue.main.async {
-//            self.showLoginViewController()
-//        }
-//    }
+    func showPhoto(imgUrls:Array<String>) {
+        if imgUrls.isEmpty == true {
+            return
+        }
+        var images:[LightboxImage] = [LightboxImage]()
+        for url in imgUrls {
+            if let imgUrl = URL(string: url) {
+                let lightbox = LightboxImage(imageURL: imgUrl)
+                images.append(lightbox)
+            }
+        }
+        let controller = LightboxController(images: images, startIndex: 0)
+        controller.dynamicBackground = true
+        present(controller, animated: true, completion: nil)
+    }
 }

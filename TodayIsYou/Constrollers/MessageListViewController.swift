@@ -1,5 +1,5 @@
 //
-//  MssageListViewController.swift
+//  MessageListViewController.swift
 //  TodayIsYou
 //
 //  Created by 김학철 on 2021/03/05.
@@ -8,7 +8,7 @@
 import UIKit
 import SwiftyJSON
 
-class MssageListViewController: BaseViewController {
+class MessageListViewController: BaseViewController {
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var btnDelAll: UIButton!
     @IBOutlet weak var btnJim: UIButton!
@@ -18,7 +18,7 @@ class MssageListViewController: BaseViewController {
     var pageNum: Int = 1
     var pageEnd: Bool = false
     var canRequest = true
-    var searchSex:Gender = ShareData.ins.mySex.transGender()
+    var searchSex:Gender = ShareData.ins.userSex.transGender()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,11 +56,12 @@ class MssageListViewController: BaseViewController {
         param["pageNum"] = pageNum
         ApiManager.ins.requestMsgList(param: param) { (response) in
             self.canRequest = true
-            let result = response?["result"].arrayValue
-            let isSuccess = response?["isSuccess"].stringValue
-            if isSuccess == "01", let result = result {
+            let result = response["result"].arrayValue
+            let isSuccess = response["isSuccess"].stringValue
+            if isSuccess == "01" {
                 if result.count == 0 {
                     self.pageEnd = true
+                    self.listData = result
                 }
                 else {
                     if self.pageNum == 1 {
@@ -94,7 +95,22 @@ class MssageListViewController: BaseViewController {
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnDelAll {
-            
+            CAlertViewController.show(type: .alert, title: "대화삭제", message: "모든 대화가 삭제됩니다.", actions: [.cancel , .ok]) { (vcs, selItem, index) in
+                vcs.dismiss(animated: true, completion: nil)
+                if index == 1 {
+                    ApiManager.ins.requestMssageAllDelete(param: ["user_id":ShareData.ins.userId]) { (res) in
+                        let isSuccess = res["isSuccess"].stringValue
+                        if isSuccess == "01" {
+                            self.dataRest()
+                        }
+                        else {
+                            self.showErrorToast(res)
+                        }
+                    } failure: { (error) in
+                        self.showErrorToast(error)
+                    }
+                }
+            }
         }
         else if sender == btnBlock {
             let vc = storyboard?.instantiateViewController(identifier: "MyBlockListViewController") as! MyBlockListViewController
@@ -102,7 +118,7 @@ class MssageListViewController: BaseViewController {
         }
     }
 }
-extension MssageListViewController: UITableViewDelegate, UITableViewDataSource {
+extension MessageListViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listData.count
@@ -125,7 +141,7 @@ extension MssageListViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension MssageListViewController: UIScrollViewDelegate {
+extension MessageListViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let velocityY = scrollView.panGestureRecognizer.translation(in: scrollView).y
         let offsetY = floor((scrollView.contentOffset.y + scrollView.bounds.height)*100)/100

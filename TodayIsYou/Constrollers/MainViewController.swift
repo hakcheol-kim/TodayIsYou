@@ -77,7 +77,7 @@ class MainViewController: BaseViewController {
                     self.selectedVc = vc
                     break
                 case 4:
-                    let vc = storyboard?.instantiateViewController(identifier: "MssageListViewController") as! MssageListViewController
+                    let vc = storyboard?.instantiateViewController(identifier: "MssageListViewController") as! MessageListViewController
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     
                     self.selectedVc = vc
@@ -119,8 +119,20 @@ class MainViewController: BaseViewController {
         
         setupSideMenu()
         updateMenus()
+        self.requestMyHomePoint()
+        self.requestGetUserInfo()
     }
-    
+    func requestGetUserInfo() {
+        let param = ["app_type": appType, "user_id":ShareData.ins.userId]
+        ApiManager.ins.requestUerInfo(param: param) { (response) in
+            let isSuccess = response["isSuccess"].stringValue
+            if isSuccess == "01" {
+                ShareData.ins.setUserInfo(response)
+            }
+        } failure: { (error) in
+            self.showErrorToast(error)
+        }
+    }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let sideMenuNavigationController = segue.destination as? SideMenuNavigationController else { return }
         sideMenuNavigationController.settings = makeSettings()
@@ -178,20 +190,35 @@ class MainViewController: BaseViewController {
     }
     
     func updateNaviPoint() {
-        guard let navibar = self.navigationController?.navigationBar, let btn = navibar.viewWithTag(TAG_NAVI_P_COINT) as? UIButton else {
+        guard let navibar = self.navigationController?.navigationBar, let btnP = navibar.viewWithTag(TAG_NAVI_P_COINT) as? UIButton else {
             return
         }
         
         var point = ""
-        if let myPoint = ShareData.ins.myPoint {
-            point = "\(myPoint.stringValue.addComma()) P"
+        if let userPoint = ShareData.ins.userPoint {
+            point = "\(userPoint.stringValue.addComma()) P"
         }
         else {
             point = "0 P"
         }
-        btn.setTitle(point, for: .normal)
-        let size = btn.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: btn.bounds.height))
-        btn.frame = CGRect(origin: btn.frame.origin, size: size)
+        btnP.setTitle(point, for: .normal)
+        let size = btnP.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: btnP.bounds.height))
+        btnP.frame = CGRect(origin: btnP.frame.origin, size: size)
+        
+        guard let btnS = navibar.viewWithTag(TAG_NAVI_S_COINT) as? UIButton else {
+            return
+        }
+        
+        var pointS = ""
+        if let sPoint = ShareData.ins.dfsObjectForKey(DfsKey.userR) as? NSNumber {
+            pointS = "\(sPoint.stringValue.addComma()) S"
+        }
+        else {
+            pointS = "0 S"
+        }
+        btnS.setTitle(pointS, for: .normal)
+        let size2 = btnS.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: btnS.bounds.height))
+        btnS.frame = CGRect(origin: btnS.frame.origin, size: size2)
     }
 }
 

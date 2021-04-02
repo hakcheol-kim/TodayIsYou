@@ -82,6 +82,7 @@ class CFlowLayout: UICollectionViewFlowLayout {
             }
         }
     }
+    
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         var layoutAttributes = [UICollectionViewLayoutAttributes]()
         for attributes in layoutCache {
