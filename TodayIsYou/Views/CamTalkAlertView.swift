@@ -63,9 +63,9 @@ class CamTalkAlertView: UIView {
         lbAge.text = user_age
         lbCnt.text = "\(good_cnt)".addComma()
         starRatingView.rating = user_score
-       
+        
         btnProfile.setImage(Gender.defaultImg(user_sex), for: .normal)
-        if let url = Utility.thumbnailUrl(user_id, user_img) {
+        if let url = Utility.thumbnailUrl(user_id, file_name) {
             btnProfile.setImageCache(url: url, placeholderImgName: nil)
         }
     }
