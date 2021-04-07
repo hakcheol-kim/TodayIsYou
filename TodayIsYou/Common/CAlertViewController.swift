@@ -7,32 +7,36 @@
 
 import UIKit
 enum CAletType {
-    case alert
+    case alert, custom
 }
+
 enum CAletActionType {
-    case ok, cancel, normal
+    case ok, cancel, normal, check
 }
 
 typealias CAletClosure = (_ vcs:CAlertViewController, _ selItem:Any?, _ index:Int) ->Void
 
 class CAlertViewController: UIViewController {
+    @IBOutlet weak var btnIcon: CButton!
+    @IBOutlet weak var containerView: CView!
     @IBOutlet weak var svContainer: UIStackView!
+    @IBOutlet weak var svTitle: UIStackView!
     @IBOutlet weak var titleView: UIView!
-    @IBOutlet weak var svMsg: UIStackView!
     @IBOutlet weak var lbTitle: UILabel!
     @IBOutlet weak var svContent: UIStackView!
     @IBOutlet weak var svButton: UIStackView!
-    @IBOutlet weak var containerView: CView!
     @IBOutlet weak var btnsView: UIView!
     @IBOutlet weak var bottmContainerView: NSLayoutConstraint!
     @IBOutlet weak var shadowView: CView!
     @IBOutlet weak var heightBtn: NSLayoutConstraint!
-    
     @IBOutlet weak var btnFullClose: UIButton!
+    
     var isBackGroundTouchClose: Bool = true
     var fontMsg: UIFont = UIFont.systemFont(ofSize: 16, weight: .regular)
     var fontTitle: UIFont = UIFont.systemFont(ofSize: 18, weight: .medium)
-    var contentInset:UIEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+    
+    var insetContent:UIEdgeInsets = UIEdgeInsets(top: 24, left: 16, bottom: 24, right: 16)
+    var insetTitle:UIEdgeInsets = UIEdgeInsets(top: 24, left: 16, bottom: 16, right: 16)
     
     var type: CAletType = .alert
     var aletTitle: Any?
@@ -42,6 +46,10 @@ class CAlertViewController: UIViewController {
     var arrBtn:Array<UIButton> = []
     var arrTextView:[CTextView] = []
     var actions:[CAletActionType]?
+    var iconImgName: String = ""
+    var iconImg:UIImage?
+    var customView: UIView?
+    var arrBtnCheck:Array<UIButton> = []
     
      convenience init(type:CAletType, title:Any? = nil, message:Any? = nil, actions:[CAletActionType]?, completion:CAletClosure?) {
         self.init()
@@ -59,6 +67,7 @@ class CAlertViewController: UIViewController {
         let calert = CAlertViewController.init(type: type, title: title, message: message, actions: actions, completion: completion)
         UIApplication.shared.keyWindow?.rootViewController?.present(calert, animated: true, completion: nil)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         containerView.layer.cornerRadius = 8
@@ -93,26 +102,57 @@ class CAlertViewController: UIViewController {
             lbTitle.text = aletTitle
         }
         
-        if let message = message as? NSAttributedString {
-            svMsg.isHidden = false
-            let lbMsg = self.createMsgLabel()
-            svMsg.addArrangedSubview(lbMsg)
-            lbMsg.attributedText = message
+        btnIcon.isHidden = true
+        if iconImgName.isEmpty == false {
+            svTitle.layoutMargins = UIEdgeInsets(top: 40, left: 16, bottom: 8, right: 8)
+            lbTitle.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+            btnIcon.imageView?.contentMode = .scaleAspectFill
+            btnIcon.isHidden = false
+            if iconImgName.contains("http") == true || iconImgName.contains("https") {
+                btnIcon.setImageCache(url: iconImgName, placeholderImgName: nil)
+            }
+            else {
+                if let image = UIImage(named: iconImgName) {
+                    btnIcon.setImage(image, for: .normal)
+                }
+            }
         }
-        else if let message = message as? String {
-            svMsg.isHidden = false
-            let lbMsg = self.createMsgLabel()
-            svMsg.addArrangedSubview(lbMsg)
-
-            lbMsg.text = message
+        else if let iconImg = iconImg {
+            svTitle.layoutMargins = UIEdgeInsets(top: 40, left: 16, bottom: 8, right: 8)
+            lbTitle.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+            btnIcon.isHidden = false
+            
+            btnIcon.setImage(iconImg, for: .normal)
+            btnIcon.contentVerticalAlignment = .fill
+            btnIcon.contentHorizontalAlignment = .fill
+            btnIcon.imageView?.contentMode = .scaleAspectFit
+            btnIcon.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         }
-        else {
-            svMsg.isHidden = true
+        
+        if type == .custom {
+            if let customView = customView {
+                svContent.addArrangedSubview(customView)
+                svContent.layoutMargins = UIEdgeInsets.zero
+            }
         }
+        else if type == .alert {
+            if let message = message as? NSAttributedString {
+                let lbMsg = self.createMsgLabel()
+                svContent.addArrangedSubview(lbMsg)
+                lbMsg.attributedText = message
+            }
+            else if let message = message as? String {
+                let lbMsg = self.createMsgLabel()
+                svContent.addArrangedSubview(lbMsg)
+                lbMsg.text = message
+            }
+        }
+        
         if let actions = actions {
             for subview in svButton.subviews {
                 subview.removeFromSuperview()
             }
+            arrBtn.removeAll()
             for action in actions {
                 if (action == .ok) {
                     self.addAction(action, "확인")
@@ -127,7 +167,11 @@ class CAlertViewController: UIViewController {
     }
     
     func createMsgLabel() -> UILabel {
+        if let lb = svContent.viewWithTag(10005) as? UILabel {
+            lb.removeFromSuperview()
+        }
         let lbMsg = UILabel.init()
+        lbMsg.tag = 10005
         lbMsg.textAlignment = .center
         lbMsg.textColor = UIColor.label
         lbMsg.font = fontMsg
@@ -137,12 +181,11 @@ class CAlertViewController: UIViewController {
     
     func addCustomView(_ view:UIView) {
         self.view.layoutIfNeeded()
-        self.containerView.backgroundColor = UIColor.clear
-        
-        svContent.isHidden = true
-        svContainer.insertArrangedSubview(view, at: 0)
+        self.customView = view
+        self.reloadUI()
     }
-    func addAction(_ actionType:CAletActionType, _ title:String? = nil, _ img: UIImage? = nil, _ tintColor: UIColor? = UIColor.lightGray) {
+    
+    func addAction(_ actionType:CAletActionType, _ title:String? = nil, _ img: UIImage? = nil, _ tintColor: UIColor? = UIColor.lightGray, _ isSelected:Bool = false) {
         self.view.layoutIfNeeded()
         self.view.layer.borderColor = UIColor.clear.cgColor
         
@@ -171,32 +214,66 @@ class CAlertViewController: UIViewController {
             btn.setTitleColor(UIColor.label, for: .normal)
         }
         
-        btnsView.isHidden = false
-        svButton.addArrangedSubview(btn)
-        btn.addTarget(self, action: #selector(onClickedBtnActions(_:)), for: .touchUpInside)
-        btn.tag = 100+arrBtn.count
-        arrBtn.append(btn)
+        if actionType == .ok
+            || actionType == .cancel
+            || actionType == .normal {
+            
+            btnsView.isHidden = false
+            svButton.addArrangedSubview(btn)
+            btn.addTarget(self, action: #selector(onClickedBtnActions(_:)), for: .touchUpInside)
+            btn.tag = 100+arrBtn.count
+            arrBtn.append(btn)
+        }
+        else if actionType == .check {
+            var svCheckBtn: UIStackView!
+            if let sv = svContent.viewWithTag(121212) as? UIStackView {
+                svCheckBtn = sv
+            }
+            else {
+                svCheckBtn = UIStackView.init()
+                svCheckBtn.tag = 121212
+                svCheckBtn.axis = .vertical
+                svCheckBtn.spacing = 0
+                svContent.insertArrangedSubview(svCheckBtn, at: 0)
+                svContent.spacing = 16
+            }
+            arrBtnCheck.append(btn)
+            btn.contentHorizontalAlignment = .leading
+            btn.setImage(UIImage(systemName: "square"), for: .normal)
+            btn.setImage(UIImage(systemName: "checkmark.square"), for: .selected);
+            btn.tintColor = tintColor
+            btn.titleEdgeInsets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 0)
+            
+            btn.translatesAutoresizingMaskIntoConstraints = false
+            svCheckBtn.addArrangedSubview(btn)
+            btn.isSelected = isSelected
+            btn.heightAnchor.constraint(equalToConstant: 35).isActive = true
+            btn.tag = 200+svCheckBtn.subviews.count
+            btn.addTarget(self, action: #selector(onClickedBtnActions(_:)), for: .touchUpInside)
+        }
     }
     
-    func addTextView(_ placeholder: String? = nil, _ edge: UIEdgeInsets = .zero) {
-        self.view.layoutIfNeeded()
+    func addTextView(_ placeholder: String? = nil, _ edge: UIEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)) {
         
-        var svWrap: UIStackView? = svContent.viewWithTag(12345) as? UIStackView
-        if svWrap == nil {
-            svWrap = UIStackView.init()
-            svWrap!.tag = 12345
+        self.view.layoutIfNeeded()
+        var svWrap: UIStackView!
+        if let sv = svContent.viewWithTag(12345) as? UIStackView {
+            svWrap = sv
         }
-        svContent.addArrangedSubview(svWrap!)
-        svWrap!.isLayoutMarginsRelativeArrangement = true
-        svWrap!.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        else {
+            svWrap = UIStackView()
+            svWrap.tag = 12345
+        }
+        svContent.addArrangedSubview(svWrap)
         
         let tv = CTextView.init()
-        svWrap!.addArrangedSubview(tv)
+        svWrap.addArrangedSubview(tv)
         
         if let placeholder = placeholder {
             tv.placeHolderString = placeholder
         }
-
+        svContent.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+        
         tv.delegate = self
         tv.translatesAutoresizingMaskIntoConstraints = false
         tv.heightAnchor.constraint(equalToConstant: 120).isActive = true
@@ -204,13 +281,13 @@ class CAlertViewController: UIViewController {
         tv.layer.borderWidth = 1
         tv.layer.borderColor = RGB(216, 216, 216).cgColor
         tv.layer.cornerRadius = 8
+        
         tv.insetLeft = edge.left
         tv.insetTop = edge.top
         tv.insetBottom = edge.bottom
         tv.insetRigth = edge.right
         
         tv.setNeedsDisplay()
-        
         arrTextView.append(tv)
     }
     
@@ -223,8 +300,11 @@ class CAlertViewController: UIViewController {
                 self.dismiss(animated: false, completion: nil)
             }
         }
-        else {
+        else if sender.tag < 200 { //ok, cancel
             self.completion?(self, nil, sender.tag-100)
+        }
+        else if sender.tag < 300 {
+            sender.isSelected = !sender.isSelected
         }
     }
     

@@ -4,204 +4,111 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB" customClass="CamTalkAlertView" customModule="TodayIsYou" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="598" height="383"/>
+            <rect key="frame" x="0.0" y="0.0" width="492" height="271"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="qY8-bF-Uod">
-                    <rect key="frame" x="0.0" y="40" width="598" height="343"/>
+                <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="HPK-Fk-6C1">
+                    <rect key="frame" x="0.0" y="0.0" width="492" height="271"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KlU-Sh-SEs">
-                            <rect key="frame" x="0.0" y="0.0" width="598" height="80"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="먼저 영상 신청해주세요" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9WV-5H-pXe">
+                            <rect key="frame" x="16" y="24" width="460" height="21.5"/>
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wiP-I6-e27">
+                            <rect key="frame" x="16" y="61.5" width="460" height="25"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="kK1-cx-A9I">
-                                    <rect key="frame" x="0.0" y="0.0" width="598" height="80"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8uD-fj-wcH">
-                                            <rect key="frame" x="234.5" y="0.0" width="129.5" height="80"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="900" verticalCompressionResistancePriority="900" text="연지" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JuU-Fd-jYB">
-                                                    <rect key="frame" x="16" y="54" width="26" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="900" verticalCompressionResistancePriority="900" text="20대" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ggg-BO-QAR">
-                                                    <rect key="frame" x="50" y="54" width="32" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="uZC-la-lZD">
-                                                    <rect key="frame" x="90" y="54" width="23.5" height="18"/>
-                                                    <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ico_heart" translatesAutoresizingMaskIntoConstraints="NO" id="Hu2-NT-T8Y">
-                                                            <rect key="frame" x="0.0" y="0.0" width="13.5" height="18"/>
-                                                        </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="900" verticalCompressionResistancePriority="900" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JwA-Yd-kK1">
-                                                            <rect key="frame" x="16.5" y="0.0" width="7" height="18"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                            <color key="textColor" systemColor="tertiarySystemBackgroundColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                </stackView>
-                                            </subviews>
-                                            <edgeInsets key="layoutMargins" top="50" left="16" bottom="8" right="16"/>
-                                        </stackView>
-                                    </subviews>
-                                </stackView>
+                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kle-cm-zmu" customClass="FloatRatingView" customModule="TodayIsYou" customModuleProvider="target">
+                                    <rect key="frame" x="130" y="0.0" width="200" height="25"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="kle-cm-zmu" secondAttribute="height" multiplier="8:1" id="O6k-QE-3gD"/>
+                                        <constraint firstAttribute="height" constant="25" id="TSP-oA-dNB"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="ico_star_gray"/>
+                                        <userDefinedRuntimeAttribute type="image" keyPath="fullImage" value="ico_star_red"/>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="minRating">
+                                            <integer key="value" value="0"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="maxRating">
+                                            <integer key="value" value="5"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="rating">
+                                            <real key="value" value="0.0"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
                             </subviews>
-                            <color key="backgroundColor" red="0.98431372549999996" green="0.30980392159999998" blue="0.30980392159999998" alpha="1" colorSpace="calibratedRGB"/>
-                            <constraints>
-                                <constraint firstAttribute="bottom" secondItem="kK1-cx-A9I" secondAttribute="bottom" id="BmV-fs-KfR"/>
-                                <constraint firstItem="kK1-cx-A9I" firstAttribute="leading" secondItem="KlU-Sh-SEs" secondAttribute="leading" id="CVL-iD-ufV"/>
-                                <constraint firstItem="kK1-cx-A9I" firstAttribute="top" secondItem="KlU-Sh-SEs" secondAttribute="top" id="EaC-mX-gZy"/>
-                                <constraint firstAttribute="trailing" secondItem="kK1-cx-A9I" secondAttribute="trailing" id="rri-vk-499"/>
-                            </constraints>
-                        </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QOG-JK-Ax5">
-                            <rect key="frame" x="0.0" y="80" width="598" height="263"/>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="SYb-Jt-4ir">
+                            <rect key="frame" x="16" y="102.5" width="460" height="57.5"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="HPK-Fk-6C1">
-                                    <rect key="frame" x="0.0" y="0.0" width="598" height="263"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="먼저 영상 신청해주세요" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9WV-5H-pXe">
-                                            <rect key="frame" x="16" y="24" width="566" height="21.5"/>
-                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wiP-I6-e27">
-                                            <rect key="frame" x="16" y="61.5" width="566" height="25"/>
-                                            <subviews>
-                                                <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kle-cm-zmu" customClass="FloatRatingView" customModule="TodayIsYou" customModuleProvider="target">
-                                                    <rect key="frame" x="183" y="0.0" width="200" height="25"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" secondItem="kle-cm-zmu" secondAttribute="height" multiplier="8:1" id="O6k-QE-3gD"/>
-                                                        <constraint firstAttribute="height" constant="25" id="TSP-oA-dNB"/>
-                                                    </constraints>
-                                                    <userDefinedRuntimeAttributes>
-                                                        <userDefinedRuntimeAttribute type="image" keyPath="emptyImage" value="ico_star_gray"/>
-                                                        <userDefinedRuntimeAttribute type="image" keyPath="fullImage" value="ico_star_red"/>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="minRating">
-                                                            <integer key="value" value="0"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="maxRating">
-                                                            <integer key="value" value="5"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                        <userDefinedRuntimeAttribute type="number" keyPath="rating">
-                                                            <real key="value" value="0.0"/>
-                                                        </userDefinedRuntimeAttribute>
-                                                    </userDefinedRuntimeAttributes>
-                                                </view>
-                                            </subviews>
-                                        </stackView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="SYb-Jt-4ir">
-                                            <rect key="frame" x="16" y="102.5" width="566" height="57.5"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="영상 음성 채팅 신성시 0 포인트가 차감됩니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OrR-eG-NEw">
-                                                    <rect key="frame" x="0.0" y="0.0" width="566" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* 영상, 음성, 채팅시 차감되는 위 포인트는 상대와의 열결 여부와 상관없이 차감되며 환불되지 않습니다. 영상, 음성 신청시 이에 동의함으로 간주됩니다." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7PU-Hk-uOe">
-                                                    <rect key="frame" x="0.0" y="26" width="566" height="31.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </stackView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GbT-S9-123">
-                                            <rect key="frame" x="16" y="176" width="566" height="87"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="488-2o-rgC">
-                                                    <rect key="frame" x="0.0" y="0.0" width="499" height="87"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nIM-1M-DUf">
-                                                    <rect key="frame" x="499" y="0.0" width="67" height="87"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
-                                                    <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="8"/>
-                                                    <inset key="titleEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="0.0"/>
-                                                    <state key="normal" title="신고" image="warning">
-                                                        <color key="titleColor" red="0.90196078430000004" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
-                                                    </state>
-                                                </button>
-                                            </subviews>
-                                        </stackView>
-                                    </subviews>
-                                    <edgeInsets key="layoutMargins" top="24" left="16" bottom="0.0" right="16"/>
-                                </stackView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="영상 음성 채팅 신성시 0 포인트가 차감됩니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OrR-eG-NEw">
+                                    <rect key="frame" x="0.0" y="0.0" width="460" height="18"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* 영상, 음성, 채팅시 차감되는 위 포인트는 상대와의 열결 여부와 상관없이 차감되며 환불되지 않습니다. 영상, 음성 신청시 이에 동의함으로 간주됩니다." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7PU-Hk-uOe">
+                                    <rect key="frame" x="0.0" y="26" width="460" height="31.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                    <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstItem="HPK-Fk-6C1" firstAttribute="leading" secondItem="QOG-JK-Ax5" secondAttribute="leading" id="D3b-LO-42Y"/>
-                                <constraint firstAttribute="trailing" secondItem="HPK-Fk-6C1" secondAttribute="trailing" id="Iuh-K3-M6D"/>
-                                <constraint firstItem="HPK-Fk-6C1" firstAttribute="top" secondItem="QOG-JK-Ax5" secondAttribute="top" id="L5U-IQ-ZJj"/>
-                                <constraint firstAttribute="bottom" secondItem="HPK-Fk-6C1" secondAttribute="bottom" id="Zgo-ZK-Cac"/>
-                            </constraints>
-                        </view>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GbT-S9-123">
+                            <rect key="frame" x="16" y="176" width="460" height="95"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="488-2o-rgC">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="95"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nIM-1M-DUf">
+                                    <rect key="frame" x="393" y="0.0" width="67" height="95"/>
+                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                    <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="8"/>
+                                    <inset key="titleEdgeInsets" minX="0.0" minY="12" maxX="0.0" maxY="0.0"/>
+                                    <state key="normal" title="신고" image="warning">
+                                        <color key="titleColor" red="0.90196078430000004" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                </button>
+                            </subviews>
+                        </stackView>
                     </subviews>
+                    <edgeInsets key="layoutMargins" top="24" left="16" bottom="0.0" right="16"/>
                 </stackView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="48Z-DY-v7D" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
-                    <rect key="frame" x="259" y="0.0" width="80" height="80"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="48Z-DY-v7D" secondAttribute="height" multiplier="1:1" id="O15-Ct-jXT"/>
-                        <constraint firstAttribute="height" constant="80" id="mjh-Iw-y0P"/>
-                    </constraints>
-                    <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="boolean" keyPath="halfCornerRadius" value="YES"/>
-                    </userDefinedRuntimeAttributes>
-                </button>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="48Z-DY-v7D" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="Eww-CX-Mwh"/>
-                <constraint firstAttribute="trailing" secondItem="qY8-bF-Uod" secondAttribute="trailing" id="JkC-Em-QF1"/>
-                <constraint firstItem="qY8-bF-Uod" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Ohw-10-cMH"/>
-                <constraint firstAttribute="bottom" secondItem="qY8-bF-Uod" secondAttribute="bottom" id="SWO-7p-skV"/>
-                <constraint firstItem="48Z-DY-v7D" firstAttribute="bottom" secondItem="qY8-bF-Uod" secondAttribute="top" constant="40" id="m0E-Os-pYB"/>
-                <constraint firstItem="48Z-DY-v7D" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="xxi-s8-8sS"/>
+                <constraint firstAttribute="trailing" secondItem="HPK-Fk-6C1" secondAttribute="trailing" id="DCq-LW-8Wg"/>
+                <constraint firstAttribute="bottom" secondItem="HPK-Fk-6C1" secondAttribute="bottom" id="H5Y-at-wZX"/>
+                <constraint firstItem="HPK-Fk-6C1" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="d3N-eq-srJ"/>
+                <constraint firstItem="HPK-Fk-6C1" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="tMW-I4-geS"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="btnProfile" destination="48Z-DY-v7D" id="IM3-Mq-Wh8"/>
                 <outlet property="btnReport" destination="nIM-1M-DUf" id="JIU-PB-tRA"/>
-                <outlet property="lbAge" destination="Ggg-BO-QAR" id="tYd-oE-d3B"/>
-                <outlet property="lbCnt" destination="JwA-Yd-kK1" id="GvX-jt-bO5"/>
                 <outlet property="lbMsg1" destination="OrR-eG-NEw" id="ZIx-YR-eXp"/>
                 <outlet property="lbMsg2" destination="7PU-Hk-uOe" id="DMw-IM-zdn"/>
-                <outlet property="lbName" destination="JuU-Fd-jYB" id="qPm-z8-3u9"/>
                 <outlet property="lbTitle" destination="9WV-5H-pXe" id="d0N-gH-Lh5"/>
                 <outlet property="starRatingView" destination="kle-cm-zmu" id="Tbz-cQ-dHT"/>
-                <outlet property="titleView" destination="KlU-Sh-SEs" id="Tjh-Ud-lyS"/>
             </connections>
-            <point key="canvasLocation" x="-263.768115942029" y="8.3705357142857135"/>
+            <point key="canvasLocation" x="-469.56521739130437" y="13.058035714285714"/>
         </view>
     </objects>
     <resources>
-        <image name="ico_heart" width="13.5" height="13.5"/>
         <image name="ico_star_gray" width="20" height="20"/>
         <image name="ico_star_red" width="20" height="20"/>
         <image name="warning" width="32" height="32"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="tertiarySystemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

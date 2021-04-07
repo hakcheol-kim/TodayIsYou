@@ -137,8 +137,14 @@ extension RankListViewController: FSPagerViewDelegate, FSPagerViewDataSource {
         cell.configurationData(item)
         return cell
     }
+    
     func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
         pagerView.deselectItem(at: index, animated: false)
+        
+        let item = listData[index]
+        let vc = storyboard?.instantiateViewController(identifier: "RankDetailViewController") as! RankDetailViewController
+        vc.passData = item
+        AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
     }
 }
 

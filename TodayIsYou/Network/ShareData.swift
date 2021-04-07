@@ -35,7 +35,12 @@ class ShareData: NSObject {
         let user_score = user["user_score"].numberValue
         let user_age = user["user_age"].stringValue
         let good_cnt = user["good_cnt"].numberValue
-      
+        let user_bbs_point = user["user_bbs_point"].numberValue
+        let user_img = user["user_img"].stringValue
+        let talk_user_img = user["talk_user_img"].stringValue
+        let cam_user_img = user["cam_user_img"].stringValue
+        let connect_push = user["connect_push"].stringValue
+        
         let dfs = UserDefaults.standard
         dfs.setValue(user_id, forKey: DfsKey.userId)
         dfs.setValue(user_name, forKey: DfsKey.userName)
@@ -46,6 +51,11 @@ class ShareData: NSObject {
         dfs.setValue(user_point, forKey: DfsKey.userPoint)
         dfs.setValue(user_score, forKey: DfsKey.userScore)
         dfs.setValue(good_cnt, forKey: DfsKey.goodCnt)
+        dfs.setValue(user_bbs_point, forKey: DfsKey.userBbsPoint)
+        dfs.setValue(user_img, forKey: DfsKey.userImg)
+        dfs.setValue(talk_user_img, forKey: DfsKey.talkUserImg)
+        dfs.setValue(cam_user_img, forKey: DfsKey.camUserImg)
+        dfs.setValue(connect_push, forKey: DfsKey.connectPush)
         
         self.userId = user_id
         self.userPoint = user_point
@@ -105,4 +115,36 @@ class ShareData: NSObject {
         dfs.synchronize()
     }
     
+    func getAge() ->[String]? {
+        guard let filePath = Bundle.main.path(forResource: "StaticData", ofType: "plist"),
+              let rootDic = NSDictionary(contentsOfFile: filePath) as? Dictionary<String, Any>,
+              let age = rootDic["age"] as? [String] else {
+            return nil
+        }
+        return age
+    }
+    func getArea() ->[String]? {
+        guard let filePath = Bundle.main.path(forResource: "StaticData", ofType: "plist"),
+              let rootDic = NSDictionary(contentsOfFile: filePath) as? Dictionary<String, Any>,
+              let area = rootDic["area"] as? [String] else {
+            return nil
+        }
+        return area
+    }
+    func getCamTalkMemo() ->[String]? {
+        guard let filePath = Bundle.main.path(forResource: "StaticData", ofType: "plist"),
+              let rootDic = NSDictionary(contentsOfFile: filePath) as? Dictionary<String, Any>,
+              let array = rootDic["cam_talk_memo"] as? [String] else {
+            return nil
+        }
+        return array
+    }
+    func getTalkMemo() ->[String]? {
+        guard let filePath = Bundle.main.path(forResource: "StaticData", ofType: "plist"),
+              let rootDic = NSDictionary(contentsOfFile: filePath) as? Dictionary<String, Any>,
+              let array = rootDic["talk_memo"] as? [String] else {
+            return nil
+        }
+        return array
+    }
 }

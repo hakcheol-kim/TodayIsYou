@@ -9,7 +9,7 @@ import UIKit
 import SwiftyJSON
 import CRRefresh
 
-class CamTalkListViewController: BaseViewController {
+class CamTalkListViewController: MainActionViewController {
     
     @IBOutlet weak var centerSelMarkView: NSLayoutConstraint!
     @IBOutlet weak var btnListType: CButton!
@@ -30,13 +30,6 @@ class CamTalkListViewController: BaseViewController {
     var pageNum: Int = 1
     var pageEnd: Bool = false
     var canRequest = true
-    var selData:JSON!
-    
-    let group = DispatchGroup.init()
-    let queue = DispatchQueue.global()
-    var isMyBlock = false
-    var isBlocked = false
-    var isMyFriend = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,61 +53,6 @@ class CamTalkListViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-    }
-    
-    func getBlackList(toUserId:String) {
-        group.enter()
-        self.isBlocked = false
-        let prama = ["black_user_id" : ShareData.ins.userId, "user_id" : toUserId]
-        ApiManager.ins.requestGetBlockList(param: prama) { (response) in
-            self.group.leave()
-            if response["isSuccess"].stringValue == "01" {
-                self.isBlocked = true
-            }
-        } failure: { (error) in
-            self.group.leave()
-            self.showErrorToast(error)
-        }
-    }
-    //내가 차단한 리스트
-    func getMyBlockList(toUserId:String) {
-        group.enter()
-        self.isMyBlock = false
-        let prama = ["black_user_id":toUserId, "user_id": ShareData.ins.userId]
-        ApiManager.ins.requestGetBlockList(param: prama) { (response) in
-            self.group.leave()
-            if response["isSuccess"].stringValue == "01" {
-                self.isMyBlock = true
-            }
-        } failure: { (error) in
-            self.group.leave()
-            self.showErrorToast(error)
-        }
-    }
-    func getMyFriendCheck(toUserId:String) {
-        group.enter()
-        self.isMyFriend = false
-        let param = ["from_user_id": ShareData.ins.userId, "to_user_id":toUserId]
-        ApiManager.ins.requestCheckMyFriend(param: param) { (response) in
-            self.group.leave()
-            if response["isSuccess"].stringValue == "01" {
-                self.isMyFriend = true
-            }
-        } failure: { (error) in
-            self.group.leave()
-            self.showErrorToast(error)
-        }
-    }
-    func getUserInfo(toUserId:String) {
-        self.group.enter()
-        let param = ["app_type": appType, "user_id":toUserId]
-        ApiManager.ins.requestUerInfo(param: param) { (response) in
-            self.group.leave()
-            self.selData = response
-        } failure: { (error) in
-            self.group.leave()
-            self.showErrorToast(error)
-        }
     }
     func decorationUI() {
         let imgNor = UIImage.image(from: RGB(120, 120, 130))
@@ -280,94 +218,111 @@ class CamTalkListViewController: BaseViewController {
             self.showErrorToast(error)
         }
     }
-   
-    @objc func onClickedAlertProfile(_ sender: UIButton) {
-        if let presentedVc = self.presentedViewController {
-            presentedVc.dismiss(animated: true, completion: nil)
-        }
-        guard let selData = selData else {
-            return
-        }
-        let k = 0
-    }
-    @objc func onClickedAlertBlock(_ sender: UIButton)  {
-        if let presentedVc = self.presentedViewController {
-            presentedVc.dismiss(animated: true, completion: nil)
-        }
-        guard let selData = selData else {
-            return
-        }
-        let k = 0
-    }
-    
-    func checkAvailableCamTalk() {
-        let user_sex = self.selData["user_sex"].stringValue
-        if  user_sex == ShareData.ins.userSex.rawValue {
-            self.showToast("같은 성별은 영상채팅이 불가합니다!!")
-            return
-        }
-        
-        let toUserId = selData["user_id"].stringValue
-        self.getUserInfo(toUserId: toUserId)
-        self.getBlackList(toUserId: toUserId)
-        self.getMyBlockList(toUserId: toUserId)
-        self.getMyFriendCheck(toUserId: toUserId)
-        
-        group.notify(queue: queue) {
-            DispatchQueue.main.async {
-                if  self.isBlocked && self.isMyBlock {
-                    self.showToast("쌍방이 차단했습니다!!")
-                }
-                else if self.isBlocked {
-                    self.showToast("상대가 차단 했습니다!!")
-                }
-                else if self.isMyBlock {
-                    self.showToast("내가 차단 했습니다!!")
-                }
-                else {
-                    if ("남" == ShareData.ins.userSex.rawValue) {
-                        if self.isMyFriend {
-                            self.showCamTalkAlert()
-                        }
-                        else {
-                            
-                        }
-                    }
-                    else {
-                        self.showCamTalkAlert()
-                    }
-                }
-            }
-        }
-        print("job enter finished")
-    }
-    
-    func showCamTalkAlert() {
-        let vc = CAlertViewController.init(type: .alert, title: nil, message: nil, actions: nil) { (vcs, selItem, index) in
-            vcs.dismiss(animated: true, completion: nil)
-            if index == 1 {
-                print("음성")
-            }
-            else if index == 2 {
-                print("영상")
-            }
-        }
-        
-        let customView = Bundle.main.loadNibNamed("CamTalkAlertView", owner: nil, options: nil)?.first as! CamTalkAlertView
-        customView.configurationData(selData)
-        
-        customView.btnProfile.addTarget(self, action: #selector(self.onClickedAlertProfile(_ :)), for: .touchUpInside)
-        customView.btnReport.addTarget(self, action: #selector(self.onClickedAlertBlock(_ :)), for: .touchUpInside)
-        vc.addCustomView(customView)
-
-        vc.addAction(.normal, "취소", UIImage(systemName: "xmark.circle.fill"), RGB(216, 216, 216))
-        vc.addAction(.normal, "음성", UIImage(systemName: "phone.fill.arrow.up.right"), RGB(230, 100, 100))
-        vc.addAction(.normal, "영상", UIImage(systemName: "arrow.up.right.video.fill"), RGB(230, 100, 100))
-        self.present(vc, animated: true, completion: nil)
-    }
     
     func checkPointPhone() {
         
+    }
+    
+    override func presentCamTalkAlert() {
+        let customView = Bundle.main.loadNibNamed("CamTalkAlertView", owner: nil, options: nil)?.first as! CamTalkAlertView
+        
+        let vc = CAlertViewController.init(type: .custom, title: "", message: nil, actions: nil) { (vcs, selItem, index) in
+            vcs.dismiss(animated: true, completion: nil)
+            if index == 1 {
+                print("음성")
+                self.actionAlertPhoneCall()
+            }
+            else if index == 2 {
+                print("영상")
+                self.actionAlertCamTalkCall()
+            }
+        }
+        
+        vc.addCustomView(customView)
+        customView.configurationData(selectedUser)
+        vc.iconImgName = customView.getImgUrl()
+        vc.aletTitle = customView.getTitleAttr()
+        
+        if ShareData.ins.userSex.rawValue == "남" {
+            if isMyFriend {
+                customView.lbMsg1.text = "대화 목록에 있는 상대는 신청이 무료입니다"
+                customView.lbMsg2.isHidden = true
+            }
+            else {
+                customView.lbMsg2.isHidden = false
+                var camPoint = "0"
+                var phonePoint = "0"
+                
+                if let p1 = ShareData.ins.dfsObjectForKey(DfsKey.camOutUserPoint) as? NSNumber, let p2 = ShareData.ins.dfsObjectForKey(DfsKey.phoneOutUserPoint) as? NSNumber {
+                    camPoint = p1.stringValue.addComma()
+                    phonePoint = p2.stringValue.addComma()
+                }
+                customView.lbMsg1.text = "영상 음성 채팅 신청시 \(0) 포인트가 차감 됩니다."
+            }
+        }
+        else {
+            customView.lbMsg2.isHidden = true
+            customView.lbMsg1.text = "무료로 이용 가능합니다."
+        }
+        vc.reloadUI()
+        customView.btnReport.addTarget(self, action: #selector(actionAlertReport), for: .touchUpInside)
+        vc.btnIcon.addTarget(self, action: #selector(actionAlertProfile), for: .touchUpInside)
+        vc.addAction(.cancel, "취소", UIImage(systemName: "xmark.circle.fill"), RGB(216, 216, 216))
+        vc.addAction(.ok, "음성", UIImage(systemName: "phone.fill.arrow.up.right"), RGB(230, 100, 100))
+        vc.addAction(.ok, "영상", UIImage(systemName: "arrow.up.right.video.fill"), RGB(230, 100, 100))
+        self.present(vc, animated: true, completion: nil)
+    }
+  
+    @objc private func actionAlertProfile() {
+        if let presentedVc = presentedViewController {
+            presentedVc.dismiss(animated: false, completion: nil)
+        }
+        
+    }
+    @objc private func actionAlertReport() {
+        if let presentedVc = presentedViewController {
+            presentedVc.dismiss(animated: false, completion: nil)
+        }
+        self.presentBlockAlert()
+    }
+    private func actionAlertPhoneCall() {
+        
+    }
+    private func actionAlertCamTalkCall() {
+    }
+    
+    func presentBlockAlert() {
+        let user_name = self.selectedUser["user_name"].stringValue
+        let user_id = self.selectedUser["user_id"].stringValue
+        
+        let alert = CAlertViewController.init(type: .alert, title: "\(user_name)님 신고하기", message: nil, actions: [.cancel, .ok]) { (vcs, selItem, index) in
+            
+            if (index == 1) {
+                guard let text = vcs.arrTextView.first?.text, text.isEmpty == false else {
+                    return
+                }
+                vcs.dismiss(animated: true, completion: nil)
+                let param = ["user_name":user_name, "to_user_id":user_id, "user_id":ShareData.ins.userId, "memo":text]
+                ApiManager.ins.requestReport(param: param) { (res) in
+                    let isSuccess = res["isSuccess"].stringValue
+                    if isSuccess == "01" {
+                        self.showToast("신고가 완료되었습니다.")
+                    }
+                    else {
+                        self.showErrorToast(res)
+                    }
+                } failure: { (error) in
+                    self.showErrorToast(error)
+                }
+            }
+            else {
+                vcs.dismiss(animated: true, completion: nil)
+            }
+        }
+        alert.iconImg = UIImage(named: "warning")
+        alert.addTextView("내용을 입력해주세요.", UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+        
+        self.present(alert, animated: true, completion: nil)
     }
 }
 extension CamTalkListViewController: UITableViewDataSource, UITableViewDelegate {
@@ -387,9 +342,10 @@ extension CamTalkListViewController: UITableViewDataSource, UITableViewDelegate 
                 guard let selData = selData else {
                     return
                 }
-                self.selData = selData
+                
                 if index == 100 {
-                    self.checkAvailableCamTalk()
+                    self.selectedUser = selData
+                    self.checkAvaiableCamTalk()
                 }
             }
         }
@@ -397,8 +353,8 @@ extension CamTalkListViewController: UITableViewDataSource, UITableViewDelegate 
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        self.selData = listData[indexPath.row]
-        self.checkAvailableCamTalk()
+        self.selectedUser = listData[indexPath.row]
+        self.checkAvaiableCamTalk()
     }
 }
 
@@ -421,8 +377,8 @@ extension CamTalkListViewController: UICollectionViewDataSource, UICollectionVie
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        self.selData = listData[indexPath.row]
-        self.checkAvailableCamTalk()
+        self.selectedUser = listData[indexPath.row]
+        self.checkAvaiableCamTalk()
     }
 }
 

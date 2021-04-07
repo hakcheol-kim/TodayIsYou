@@ -100,6 +100,9 @@ class MemberInfoViewController: BaseViewController {
             presentPanModal(vc)
         }
         else if sender == btnAge {
+            guard let ageRange = ShareData.ins.getAge() else {
+                return
+            }
             let vc = PopupListViewController.initWithType(.normal, "연령 선택해주세요.", ageRange, nil) { (vcs, item, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 guard let item = item as? String else {
@@ -110,7 +113,10 @@ class MemberInfoViewController: BaseViewController {
             presentPanModal(vc)
         }
         else if sender == btnArea {
-            let vc = PopupListViewController.initWithType(.normal, "지역 선택해주세요.", areaRange, nil) { (vcs, item, index) in
+            guard let area = ShareData.ins.getArea() else {
+                return
+            }
+            let vc = PopupListViewController.initWithType(.normal, "지역 선택해주세요.", area, nil) { (vcs, item, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 guard let item = item as? String else {
                     return

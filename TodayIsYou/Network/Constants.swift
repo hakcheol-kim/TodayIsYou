@@ -37,12 +37,12 @@ struct AppColor {
 
 let IsShowTutorial = "IsShowTutorial"
 let kPushSetting = "PushSetting"
-let kPushUserData = "PushUserData"
+
 
 struct DfsKey {
     static let joinType = "joinType"
     static let identifier = "identifier"
-
+    static let pushData = "PushUserData"
     static let userId = "user_id"
     static let userSex = "user_sex"
     static let userName = "user_name"
@@ -51,6 +51,11 @@ struct DfsKey {
     static let userScore = "user_score"
     static let userAge = "user_age"
     static let goodCnt = "good_cnt"
+    static let userImg = "user_img"
+    static let talkUserImg = "talk_user_img"
+    static let camUserImg = "cam_user_img"
+    static let connectPush = "connect_push"
+    
     static let userPoint = "user_point"
     static let phoneOutStartPoint =  "phone_out_start_point"
     static let camOutUserPoint =  "cam_out_user_point"
@@ -73,6 +78,7 @@ struct DfsKey {
     static let phoneInUserPoint =  "phone_in_user_point"
     static let camMsgOutPoint =  "cam_msg_out_point"
     static let camPlayPoint =  "cam_play_point"
+    static let userBbsPoint = "user_bbs_point"
 }
 struct NotiName {
     static let pushData = "pushData"
@@ -146,6 +152,6 @@ enum ListType: String {
     case table = "text"
     case collection = "image"
 }
-
-let ageRange = ["10대", "20대", "30대", "40대", "50대", "60대", "70대", "80대"]
-let areaRange = ["서울", "부산", "대구", "인천", "광주", "대전", "울산", "경기", "강원", "충북", "충남", "전북", "전남", "경북", "경남", "제주", "해외"]
+enum PhotoManageType: Int {
+    case add, cam, talk
+}

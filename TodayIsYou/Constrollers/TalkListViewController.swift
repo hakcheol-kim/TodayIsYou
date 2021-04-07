@@ -8,7 +8,7 @@
 import UIKit
 import SwiftyJSON
 
-class TalkListViewController: BaseViewController {
+class TalkListViewController: MainActionViewController {
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var btnGender: CButton!
     @IBOutlet weak var btnArea: CButton!
@@ -114,7 +114,9 @@ class TalkListViewController: BaseViewController {
             self.presentPanModal(vc)
         }
         else if sender == btnArea {
-            var area = areaRange
+            guard var area = ShareData.ins.getArea() else {
+                return
+            }
             area.insert("전체", at: 0)
             let vc = PopupListViewController.initWithType(.normal, "지역을 선택해주세요.", area, nil) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
@@ -135,6 +137,79 @@ class TalkListViewController: BaseViewController {
             self.presentPanModal(vc)
         }
     }
+    
+    override func presentTalkMsgAlert() {
+        var msg:String? = nil
+        if let bbsPoint = ShareData.ins.dfsObjectForKey(DfsKey.userBbsPoint) as? NSNumber, bbsPoint.intValue > 0 {
+            msg = "메세지 전송시 \(bbsPoint)P 소모됩니다."
+        }
+    
+        let alert = CAlertViewController.init(type: .alert, title: "메세지 전송", message: msg, actions: [.cancel, .ok]) { (vcs, selItem, index)  in
+            
+            if index == 1 {
+                guard let text = vcs.arrTextView.first?.text, text.isEmpty == false else {
+                    self.showToast("내용을 입력해주세요.")
+                    return
+                }
+                self.requestSendMsg(text)
+                vcs.dismiss(animated: true, completion: nil)
+            }
+            else {
+                vcs.dismiss(animated: true, completion: nil)
+            }
+        }
+        
+        alert.iconImg = UIImage(systemName: "envelope.fill")
+        alert.addTextView("입력해주세요.")
+        alert.reloadUI()
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func requestSendMsg(_ content:String) {
+        
+        var param:[String:Any] = [:]
+            
+        var friend_mode = "N"
+        if isMyFriend {
+            friend_mode = "Y"
+        }
+        var bbsPoint = 0
+        if let p = ShareData.ins.dfsObjectForKey(DfsKey.userBbsPoint) as? NSNumber {
+            bbsPoint = p.intValue
+        }
+        param["user_id"] = ShareData.ins.userId
+        param["from_user_id"] = ShareData.ins.userId
+        param["from_user_sex"] = ShareData.ins.userSex.rawValue
+        param["to_user_id"] = self.selectedUser["user_id"].stringValue
+        param["to_user_name"] = self.selectedUser["user_name"].stringValue
+        param["memo"] = content
+        param["user_bbs_point"] = bbsPoint
+        param["point_user_id"] = ShareData.ins.userId
+        param["friend_mode"] = friend_mode
+        
+        ApiManager.ins.requestSendTalkMsg(param: param) { (res) in
+            let isSuccess = res["isSuccess"].stringValue
+            if isSuccess == "00" {
+                let errorCode = res["errorCode"].stringValue
+                if errorCode == "0002" {
+                    self.showToast("탈퇴한 회원 입니다")
+                }
+                else if errorCode == "0003" {
+                    self.showToast("차단 상태인 회원 입니다")
+                }
+                else {
+                    self.showToast("오류!!")
+                }
+            }
+            else {
+                self.showToast("쪽지 전송 완료");
+                //TODO:: Save local db
+                
+            }
+        } failure: { (error) in
+            self.showErrorToast(error)
+        }
+    }
 }
 
 extension TalkListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -152,6 +227,11 @@ extension TalkListViewController: UITableViewDelegate, UITableViewDataSource {
             cell?.configurationData(item)
         }
         return cell!
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        self.selectedUser = listData[indexPath.row]
+        self.checkAvaiableTalkMsg()
     }
 }
 

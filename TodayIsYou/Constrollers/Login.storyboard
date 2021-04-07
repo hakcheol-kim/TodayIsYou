@@ -23,7 +23,7 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="-30" translatesAutoresizingMaskIntoConstraints="NO" id="4u6-hl-Rl7">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="272"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ico_appicon" translatesAutoresizingMaskIntoConstraints="NO" id="lmt-0a-mdo">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ico_app_150" translatesAutoresizingMaskIntoConstraints="NO" id="lmt-0a-mdo">
                                                 <rect key="frame" x="77.666666666666671" y="0.0" width="187.66666666666663" height="187.33333333333334"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="lmt-0a-mdo" secondAttribute="height" multiplier="1:1" id="1hW-bC-lcW"/>
@@ -820,7 +820,7 @@
     <resources>
         <image name="checkmark.square" catalog="system" width="128" height="114"/>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
-        <image name="ico_appicon" width="341.33334350585938" height="341.33334350585938"/>
+        <image name="ico_app_150" width="150" height="150"/>
         <image name="ico_apple" width="14" height="18"/>
         <image name="ico_facebook" width="9" height="16"/>
         <image name="ico_google" width="18" height="18.333333969116211"/>

@@ -6,7 +6,15 @@
 //
 
 import UIKit
+import UIImageViewAlignedSwift
 
 class ImgColCell: UICollectionViewCell {
+    static let identifier = "ImgColCell"
     
+    @IBOutlet weak var ivThumb: UIImageViewAligned!
+    @IBOutlet weak var btnState: CButton!
+    
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+    }
 }

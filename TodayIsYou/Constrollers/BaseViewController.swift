@@ -138,10 +138,12 @@ class BaseViewController: UIViewController {
         if imgUrls.isEmpty == true {
             return
         }
+    
         var images:[LightboxImage] = [LightboxImage]()
         for url in imgUrls {
             if let imgUrl = URL(string: url) {
                 let lightbox = LightboxImage(imageURL: imgUrl)
+                print(imgUrl)
                 images.append(lightbox)
             }
         }

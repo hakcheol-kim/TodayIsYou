@@ -128,6 +128,7 @@
                 <outlet property="btnHartCnt" destination="MM2-EA-EXI" id="Drq-Ag-Jqh"/>
                 <outlet property="btnImgCnt" destination="den-Qs-hFN" id="gDT-Wu-fI4"/>
                 <outlet property="containerView" destination="1QB-yq-pyk" id="Ppv-D5-P6f"/>
+                <outlet property="infoView" destination="o6Z-ST-nGf" id="rQN-yP-Jdq"/>
                 <outlet property="ivThumb" destination="86l-fE-0ca" id="4Xq-GO-LWk"/>
                 <outlet property="lbInfo" destination="sFd-Wd-I70" id="y4h-eT-cvG"/>
             </connections>

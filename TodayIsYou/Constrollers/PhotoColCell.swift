@@ -15,6 +15,7 @@ class PhotoColCell: UICollectionViewCell {
     @IBOutlet weak var btnImgCnt: CButton!
     @IBOutlet weak var ivThumb: UIImageViewAligned!
     @IBOutlet weak var lbInfo: UILabel!
+    @IBOutlet weak var infoView: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

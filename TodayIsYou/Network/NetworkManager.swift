@@ -64,4 +64,60 @@ class NetworkManager: NSObject {
             }
         }
     }
+    
+    func requestFileUpload(_ method: HTTPMethod, _ url: String, _ param:[String:Any]?, success:ResSuccess?, failure:ResFailure?) {
+        let fullUrl = self.getFullUrl(url)
+        guard let encodedUrl = fullUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let param = param else {
+            return
+        }
+        
+        AppDelegate.ins.startIndicator()
+        let header: HTTPHeaders = [.contentType(ContentType.formdata.rawValue), .accept(ContentType.json.rawValue)]
+        
+        AF.upload(multipartFormData: { (multipartFormData) in
+            for (key, value) in param {
+                if let value = value as? Array<UIImage> {
+                    for img in value {
+                        if let imgData = img.jpegData(compressionQuality: 0.9) {
+                            let strDate = Utility.getCurrentDate(format: "yyyyMMddHHmmssS")
+                            multipartFormData.append(imgData, withName: "\(key)[]", fileName: "JPEG_\(strDate).jpg", mimeType: "image/jpg")
+                            print(" == imgData byte: \(ByteCountFormatter().string(fromByteCount: Int64(imgData.count)))")
+                        }
+                    }
+                }
+                else {
+                    if let value = value as? UIImage {
+                        if let imgData = value.jpegData(compressionQuality: 0.9) {
+                            let strDate = Utility.getCurrentDate(format: "yyyyMMddHHmmssS")
+                            multipartFormData.append(imgData, withName: "\(key)", fileName: "JPEG_\(strDate).jpg", mimeType: "image/jpg")
+                            print(" == imgData byte: \(ByteCountFormatter().string(fromByteCount: Int64(imgData.count)))")
+                        }
+                    }
+                    else {
+                        let data:Data? = "\(value)".data(using: .utf8)
+                        if let data = data {
+                            multipartFormData.append(data, withName: key)
+                        }
+                    }
+                }
+            }
+        }, to: encodedUrl, method: method, headers: header).responseJSON { (response) in
+            if let url = response.request?.url?.absoluteString {
+                print("\n=======request: url: \(String(describing: url))")
+                print(String(describing: param))
+            }
+            print("\n======= response ======= \n\(response)")
+            AppDelegate.ins.stopIndicator()
+            
+            switch response.result {
+            case .success(let value):
+                let json = JSON(value)
+                success?(json["Result"])
+                break
+            case .failure(let error):
+                failure?(error)
+                break
+            }
+        }
+    }
 }

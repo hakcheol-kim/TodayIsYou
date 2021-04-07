@@ -12511,6 +12511,7 @@
 			baseConfigurationReference = 2C62FB3E0264C26694D61CF6E5B9F296 /* Mantis.release.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Mantis";
+				DEVELOPMENT_TEAM = 6QB33R9MCL;
 				IBSC_MODULE = Mantis;
 				INFOPLIST_FILE = "Target Support Files/Mantis/ResourceBundle-Resource-Mantis-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -13928,6 +13929,7 @@
 			baseConfigurationReference = 354229A1F97D04D6CE2C735A76A5EA40 /* Mantis.debug.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Mantis";
+				DEVELOPMENT_TEAM = 6QB33R9MCL;
 				IBSC_MODULE = Mantis;
 				INFOPLIST_FILE = "Target Support Files/Mantis/ResourceBundle-Resource-Mantis-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;

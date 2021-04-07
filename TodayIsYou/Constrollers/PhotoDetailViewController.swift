@@ -20,17 +20,26 @@ class PhotoDetailColCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.setupVisualEffectBlur()
     }
     fileprivate func setupVisualEffectBlur() {
+        if let visuableEffectView = self.viewWithTag(1000) as? UIVisualEffectView {
+            visuableEffectView.removeFromSuperview()
+        }
         self.visuableEffectView = UIVisualEffectView()
         self.addSubview(self.visuableEffectView)
+        visuableEffectView.tag = 1000
         visuableEffectView.isUserInteractionEnabled = false
         self.visuableEffectView.translatesAutoresizingMaskIntoConstraints = false
         self.visuableEffectView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
         self.visuableEffectView.leadingAnchor.constraint(equalTo: self.leadingAnchor).isActive = true
         self.visuableEffectView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         self.visuableEffectView.trailingAnchor.constraint(equalTo: self.trailingAnchor).isActive = true
+        
+        if animator != nil {
+            animator.stopAnimation(true)
+            animator.finishAnimation(at: .current)
+            animator = nil
+        }
         
         self.animator = UIViewPropertyAnimator(duration: 3, curve: .linear)
         self.animator.addAnimations {
@@ -47,6 +56,7 @@ class PhotoDetailColCell: UICollectionViewCell {
         if let url = Utility.thumbnailUrl(user_id, img_name) {
             ivThumb.setImageCache(url: url, placeholderImgName: nil)
         }
+        self.setupVisualEffectBlur()
         
         let count = 3*indexPath.section + indexPath.row;
         if count < maxShowPhoto {
@@ -58,7 +68,7 @@ class PhotoDetailColCell: UICollectionViewCell {
     }
 }
 
-class PhotoDetailViewController: BaseViewController {
+class PhotoDetailViewController: MainActionViewController {
     
     var passData:JSON!
     @IBOutlet var collectionView: UICollectionView!
@@ -141,6 +151,77 @@ class PhotoDetailViewController: BaseViewController {
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    override func presentTalkMsgAlert() {
+        var msg:String? = nil
+        if let bbsPoint = ShareData.ins.dfsObjectForKey(DfsKey.userBbsPoint) as? NSNumber, bbsPoint.intValue > 0 {
+            msg = "메세지 전송시 \(bbsPoint)P 소모됩니다."
+        }
+    
+        let alert = CAlertViewController.init(type: .alert, title: "메세지 전송", message: msg, actions: [.cancel, .ok]) { (vcs, selItem, index)  in
+            
+            if index == 1 {
+                guard let text = vcs.arrTextView.first?.text, text.isEmpty == false else {
+                    self.showToast("내용을 입력해주세요.")
+                    return
+                }
+                self.requestSendMsg(text)
+                vcs.dismiss(animated: true, completion: nil)
+            }
+            else {
+                vcs.dismiss(animated: true, completion: nil)
+            }
+        }
+        
+        alert.iconImg = UIImage(systemName: "envelope.fill")
+        alert.addTextView("입력해주세요.")
+        alert.reloadUI()
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func requestSendMsg(_ content:String) {
+        var param:[String:Any] = [:]
+            
+        var friend_mode = "N"
+        if isMyFriend {
+            friend_mode = "Y"
+        }
+        var bbsPoint = 0
+        if let p = ShareData.ins.dfsObjectForKey(DfsKey.userBbsPoint) as? NSNumber {
+            bbsPoint = p.intValue
+        }
+        param["user_id"] = ShareData.ins.userId
+        param["from_user_id"] = ShareData.ins.userId
+        param["from_user_sex"] = ShareData.ins.userSex.rawValue
+        param["to_user_id"] = passData["user_id"].stringValue
+        param["to_user_name"] = passData["user_name"].stringValue
+        param["memo"] = content
+        param["user_bbs_point"] = bbsPoint
+        param["point_user_id"] = ShareData.ins.userId
+        param["friend_mode"] = friend_mode
+        
+        ApiManager.ins.requestSendTalkMsg(param: param) { (res) in
+            let isSuccess = res["isSuccess"].stringValue
+            if isSuccess == "00" {
+                let errorCode = res["errorCode"].stringValue
+                if errorCode == "0002" {
+                    self.showToast("탈퇴한 회원 입니다")
+                }
+                else if errorCode == "0003" {
+                    self.showToast("차단 상태인 회원 입니다")
+                }
+                else {
+                    self.showToast("오류!!")
+                }
+            }
+            else {
+                self.showToast("쪽지 전송 완료");
+                //TODO:: Save local db
+            }
+        } failure: { (error) in
+            self.showErrorToast(error)
+        }
+    }
 }
 
 extension PhotoDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -196,7 +277,8 @@ extension PhotoDetailViewController: UICollectionViewDelegate, UICollectionViewD
                     }
                 }
                 else if actionIndex == 1 {
-                    print("call msg")
+                    self.selectedUser = self.passData
+                    self.checkAvaiableTalkMsg()
                 }
             }
             return self.myheader!
@@ -218,10 +300,11 @@ extension PhotoDetailViewController: UICollectionViewDelegate, UICollectionViewD
         collectionView.deselectItem(at: indexPath, animated: true)
         let item = listData[indexPath.row];
         
-        let end_date = checkInfo["end_date"].stringValue
+        var end_date = checkInfo["end_date"].stringValue
         let index = 3*indexPath.section + indexPath.row
         let photoDayPoint = ShareData.ins.dfsObjectForKey(DfsKey.photoDayPoint) as! NSNumber
         
+        end_date = "3543"
         if index < maxShowPhoto { //전체 보기
             let user_id = item["user_id"].stringValue
             let img_name = item["img_name"].stringValue
@@ -231,12 +314,11 @@ extension PhotoDetailViewController: UICollectionViewDelegate, UICollectionViewD
             self.showPhoto(imgUrls: [url])
         }
         else if end_date.isEmpty == true && "남" == ShareData.ins.userSex.rawValue && photoDayPoint.intValue > 0 {
-            let msg = "\(photoDayPoint.stringValue) 포인트가 소모되며 24시간동안 볼수 있습니다.\n결제하시겠습니까?"
+            let msg = "전체사진을 보기위해 \(photoDayPoint.stringValue) 포인트가 소모되며\n24시간동안 볼수 있습니다.\n결제하시겠습니까?"
             CAlertViewController.show(type:.alert, title:"전체사진보기", message: msg, actions: [.cancel, .ok]) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 if index == 1 {
                     //포토 전체보기 결재 진행
-                    
                 }
             }
         }
@@ -244,7 +326,17 @@ extension PhotoDetailViewController: UICollectionViewDelegate, UICollectionViewD
             CAlertViewController.show(type:.alert, title:"전체사진보기", message: "전체 사진을 볼수 있습니다.", actions: [.cancel, .ok]) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 if index == 1 {
-                    //전체사진보기
+                    var imgUrls:[String] = []
+                    for item in self.listData {
+                        let user_id = item["user_id"].stringValue
+                        let img_name = item["img_name"].stringValue
+                        if let url = Utility.originImgUrl(user_id, img_name) {
+                            imgUrls.append(url)
+                        }
+                    }
+                    if imgUrls.isEmpty == false {
+                        self.showPhoto(imgUrls: imgUrls)
+                    }
                 }
             }
         }

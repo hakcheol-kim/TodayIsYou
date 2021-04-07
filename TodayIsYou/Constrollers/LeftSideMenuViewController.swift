@@ -57,19 +57,28 @@ class LeftSideMenuViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
        
-        
-        lbNickName.text = ShareData.ins.dfsObjectForKey(DfsKey.userName) as? String
-    
-        var subStr: String = "\(ShareData.ins.userPoint?.intValue ?? 0)".addComma()
-        subStr.append(" P")
-        if let sPoint = ShareData.ins.dfsObjectForKey(DfsKey.userR) as? NSNumber {
-            let s = sPoint.stringValue.addComma()
-            subStr.append(" \(s) S")
-        }
         ivProfile.clipsToBounds = true
-        lbUserInfo.text = subStr
+        
+        if let userName = ShareData.ins.dfsObjectForKey(DfsKey.userName) {
+            let gender = ShareData.ins.userSex.rawValue
+            lbNickName.text = "\(userName), \(gender)"
+        }
+        
+        
+        
+        let pPoint: String = "\(ShareData.ins.userPoint?.intValue ?? 0)".addComma()+"P"
+        let sp = ShareData.ins.dfsObjectForKey(DfsKey.userR) as? NSNumber
+        
+        var sPoint = "0S"
+        if let sp = sp?.stringValue {
+            sPoint = "\(sp.addComma())S"
+        }
+        let result = "<span style='color:rgb(255,0,0); font-size:16px;'>\(pPoint) <span style='color:rgb(0,0,255);'>\(sPoint)</span></span>"
+        
+        lbUserInfo.attributedText = try? NSAttributedString.init(htmlString: result)
+        
         ivProfile.image = Gender.defaultImg(ShareData.ins.userSex.rawValue)
-        if let userImg = ShareData.ins.dfsObjectForKey(DfsKey.userImage) as? String, let url = Utility.thumbnailUrl(ShareData.ins.userId, userImg) {
+        if let userImg = ShareData.ins.dfsObjectForKey(DfsKey.userImg) as? String, let url = Utility.thumbnailUrl(ShareData.ins.userId, userImg) {
             ivProfile.setImageCache(url: url, placeholderImgName: nil)
             ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
         }

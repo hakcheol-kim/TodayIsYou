@@ -7,6 +7,8 @@
 
 import UIKit
 import SwiftyJSON
+import UIImageViewAlignedSwift
+
 class SettingViewController: BaseViewController {
     @IBOutlet weak var btnProfile: UIButton!
     @IBOutlet weak var lbUserInfo: UILabel!
@@ -28,18 +30,18 @@ class SettingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        requestMyInfo()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        requestMyInfo()
     }
     
     func requestMyInfo() {
         ApiManager.ins.requestUerInfo(param: ["user_id":ShareData.ins.userId]) { (response) in
             self.userInfo = response
             self.decorationUi()
+            ShareData.ins.setUserInfo(response)
         } failure: { (error) in
             self.showErrorToast(error)
         }
@@ -49,36 +51,90 @@ class SettingViewController: BaseViewController {
         let userName = userInfo["user_name"].stringValue
         let userSex = userInfo["user_sex"].stringValue
         let userAge = userInfo["user_age"].stringValue
+        let user_img = userInfo["user_img"].stringValue
+        let user_id = userInfo["user_id"].stringValue
+        let user_sex = userInfo["user_sex"].stringValue
         lbUserInfo.text = "\(userName), \(userSex), \(userAge)"
+        
+        let ivProfile = btnProfile.viewWithTag(100) as! UIImageViewAligned
+        if let url = Utility.thumbnailUrl(user_id, user_img) {
+            ivProfile.setImageCache(url: url, placeholderImgName: nil)
+            ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
+            ivProfile.clipsToBounds = true
+        }
+        else {
+            ivProfile.image = Gender.defaultImg(user_sex)
+            ivProfile.layer.cornerRadius = 0
+            ivProfile.clipsToBounds = true
+        }
     }
     
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         if sender == btnProfile {
             let vc = storyboard?.instantiateViewController(identifier: "ProfileManagerViewController") as! ProfileManagerViewController
-            vc.data = userInfo
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnNotice {
-            guard let vc = storyboard?.instantiateViewController(identifier: "NoticeListViewController") as? NoticeListViewController else { return }
+            let vc = storyboard?.instantiateViewController(identifier: "NoticeListViewController") as! NoticeListViewController
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnAbsent {
-
+            let user_sex = userInfo["user_sex"].stringValue
+            if user_sex == "남" {
+                let user_id = userInfo["user_id"].stringValue
+                let day_login_point = userInfo["day_login_point"].numberValue
+                let now_date = Utility.getCurrentDate(format: "yyyy-MM-dd")
+                let param:[String : Any] = ["user_id":user_id, "user_point_type":day_login_point, "now_date":now_date]
+                ApiManager.ins.requestLoginCheck(param: param) { (res) in
+                    let isSuccess = res["isSuccess"].stringValue
+                    let point_save = res["point_save"].stringValue
+                    
+                    if isSuccess == "01" {
+                        if "Y1" == point_save {
+                            if "남" == ShareData.ins.userSex.rawValue {
+                                self.showToast("출석 체크 포인트가 적립 되었습니다")
+                            }
+                            self.requestMyHomePoint()
+                        }
+                        else if "Y2" == point_save {
+                            if "남" == ShareData.ins.userSex.rawValue {
+                                var point = "0"
+                                if let p = ShareData.ins.dfsObjectForKey(DfsKey.dayLimitPoint) as? NSNumber {
+                                    point = p.stringValue
+                                }
+                                let msg = "보유한 포인트가 \(point.addComma()) 이하일때 적립 가능합니다"
+                                self.showToast(msg)
+                            }
+                        }
+                        else if "N" == ShareData.ins.userSex.rawValue {
+                            self.showToast("이미 출석 체크를 했습니다")
+                        }
+                    }
+                    else {
+                        self.showErrorToast(res)
+                    }
+                } failure: { (error) in
+                    self.showErrorToast(error)
+                }
+            }
+            else {
+                self.showToast("여성은 무료입니다.")
+            }
         }
         else if sender == btnPhoto {
-            guard let vc = storyboard?.instantiateViewController(identifier: "PhotoManagerViewController") as? PhotoManagerViewController else { return }
+            let vc = storyboard?.instantiateViewController(identifier: "PhotoManagerViewController") as! PhotoManagerViewController
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnPoint {
-            guard let vc = storyboard?.instantiateViewController(identifier: "PointChargeViewController") as? PointChargeViewController else { return }
+            let vc = storyboard?.instantiateViewController(identifier: "PointChargeViewController") as! PointChargeViewController
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnExchange {
-            guard let vc = storyboard?.instantiateViewController(identifier: "PointGateViewController") as? PointGateViewController else { return }
+            let vc = storyboard?.instantiateViewController(identifier: "PointGateViewController") as! PointGateViewController
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnContactUs {
-            guard let vc = storyboard?.instantiateViewController(identifier: "ContactusViewController") as? ContactusViewController else { return }
+            let vc = storyboard?.instantiateViewController(identifier: "ContactusViewController") as! ContactusViewController
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnReport {

@@ -26,7 +26,6 @@ class PhotoListViewController: BaseViewController {
     var searchSex:Gender = ShareData.ins.userSex.transGender()
     var searchTag: String = "인기"
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         

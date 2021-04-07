@@ -118,7 +118,7 @@ class ApiManager: NSObject {
     ///나의정보 업데이트
     /// - user_id, user_name, user_age, user_name_new
     func requestUpdateUerInfo(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
-        NetworkManager.ins.request(.post, "/api/talk/updateUser.do", param) { (response) in
+        NetworkManager.ins.request(.post, "/api/talk/updateUser.do", param, URLEncoding.queryString) { (response) in
             success?(response)
         } failure: { (error) in
             failure?(error)
@@ -136,7 +136,7 @@ class ApiManager: NSObject {
     ///나의 프로필 등록
     /// - user_id, image_profile_reservation: true, image_cam_reservation: true, image_talk_reservation: true
     func requestRegistPhoto(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
-        NetworkManager.ins.request(.post, "/api/talk/myPhotoWrite.json", param) { (response) in
+        NetworkManager.ins.requestFileUpload(.post, "/api/talk/myPhotoWrite.json", param) { (response) in
             success?(response)
         } failure: { (error) in
             failure?(error)
@@ -339,6 +339,64 @@ class ApiManager: NSObject {
     //랭크상세
     func requestRankDetail(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
         NetworkManager.ins.request(.post, "/api/talk/getUserImgTalkList.json", clientPara(param)) { (res) in
+            success?(res)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    
+    //fcm key update
+    func requestUpdateFcmToken(param:[String:Any],  success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/updateToken.do", param, URLEncoding.queryString) { (res) in
+            success?(res)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    ///나의 영상토크 정보가져오기
+    func requestMyImgTalk(param:[String:Any],  success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/getMyImgTalk.json", clientPara(param)) { (res) in
+            success?(res)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    ///나의 토크 정보가져오기
+    func requestMyTalk(param:[String:Any],  success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/getMyTalk.json", clientPara(param)) { (res) in
+            success?(res)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    
+    ///메세지 전송
+    func requestSendTalkMsg(param:[String:Any],  success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/messageWrite.do", param, URLEncoding.queryString) { (res) in
+            success?(res)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    ///사진삭제
+    func requestDeleteMyPhoto(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/deleteMyPhoto.json", clientPara(param)) { (res) in
+            success?(res)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    ///나의 정보 변경
+    func requestModifyMyPhoto(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/updateImg.do", param, URLEncoding.queryString) { (res) in
+            success?(res)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    ///출석체크
+    func requestLoginCheck(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/loginCheck.do", param, URLEncoding.queryString) { (res) in
             success?(res)
         } failure: { (error) in
             failure?(error)

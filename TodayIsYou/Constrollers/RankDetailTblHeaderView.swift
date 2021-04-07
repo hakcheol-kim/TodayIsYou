@@ -55,7 +55,7 @@ class RankDetailTblHeaderView: UIView {
         let user_score = data["user_score"].doubleValue
         
         ivThumb.image = Gender.defaultImg(user_sex)
-        let keys:[String] = ["user_img", "cam_user_img", "talk_user_img"]
+        let keys:[String] = ["cam_user_img", "user_img", "talk_user_img"]
         var urls:[String] = []
         for key in keys {
             let value = data[key].stringValue

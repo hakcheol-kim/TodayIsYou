@@ -18,6 +18,9 @@ class Utility: NSObject {
         }
         var url = "\(baseUrl)/upload/talk/\(userId)/thum/thum_\(fileName)"
         url = url.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+        if url.isEmpty == false {
+            print("url: \(url)")
+        }
         return url
     }
     class func originImgUrl(_ userId: String?, _ fileName: String?) ->String? {
@@ -30,6 +33,12 @@ class Utility: NSObject {
     }
     class func createUserId(_ input:String) -> String {
         return input.md5()
+    }
+    class func getCurrentDate(format:String) -> String {
+        let df = CDateFormatter.init()
+        df.dateFormat = format
+        let dateStr = df.string(from: Date())
+        return dateStr
     }
     
 }

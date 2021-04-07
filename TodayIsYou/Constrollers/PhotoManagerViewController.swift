@@ -9,35 +9,44 @@ import UIKit
 import SwiftyJSON
 import Photos
 import BSImagePicker
+import UIImageViewAlignedSwift
 
 class PhotoManagerViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var btnAddPhoto: CButton!
     @IBOutlet weak var btnCheckTerm: UIButton!
     @IBOutlet weak var btnShowTerm: UIButton!
+    var type:PhotoManageType = .add
     
     var listData:[JSON] = []
     override func viewDidLoad() {
         super.viewDidLoad()
 
         CNavigationBar.drawBackButton(self, "내 사진 관리", #selector(actionNaviBack))
-        collectionView.register(UINib(nibName: "ImageColCell", bundle: nil), forCellWithReuseIdentifier: "ImageColCell")
         
-        let layout = CFlowLayout.init()
-        layout.numberOfColumns = 3
-        layout.delegate = self
-        layout.lineSpacing = 2
-        layout.secInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
+        let layout = UICollectionViewFlowLayout.init()
+        layout.sectionInset = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
+        layout.minimumLineSpacing = 2
+        layout.minimumInteritemSpacing = 0
+        collectionView.collectionViewLayout = layout
+        
         btnCheckTerm.isSelected = true
         reqeustGetMyPhotoList()
+        
+        collectionView.cr.addHeadRefresh { [weak self] in
+            self?.reqeustGetMyPhotoList()
+        }
     }
     
     func reqeustGetMyPhotoList() {
         ApiManager.ins.requestGetMyPhotos(param: ["user_id":ShareData.ins.userId]) { (response) in
             let isSuccess = response["isSuccess"].stringValue
             let result = response["result"].arrayValue
+            
             if isSuccess == "01" {
-                self.listData = result
+                self.listData.removeAll()
+                self.listData.append(contentsOf: result)
+ 
                 if self.listData.count > 0 {
                     self.collectionView.isHidden = false
                     self.collectionView.reloadData()
@@ -45,6 +54,7 @@ class PhotoManagerViewController: BaseViewController {
                 else {
                     self.collectionView.isHidden = true
                 }
+                self.collectionView.cr.endHeaderRefresh()
             }
             else {
                 self.collectionView.isHidden = true
@@ -77,6 +87,11 @@ class PhotoManagerViewController: BaseViewController {
             }
         }
         else if sender == btnAddPhoto {
+            if btnCheckTerm.isSelected == false {
+                self.showToast("사용자 제작 콘텐츠(UGC) 등록 약관에 동의 하세요.")
+                return
+            }
+            
             let alert = UIAlertController.init(title:nil, message: nil, preferredStyle: .actionSheet)
             alert.addAction(UIAlertAction.init(title: "카메라로 사진 촬영하기", style: .default, handler: { (action) in
                 alert.dismiss(animated: true, completion: nil)
@@ -86,7 +101,7 @@ class PhotoManagerViewController: BaseViewController {
                 alert.dismiss(animated: true, completion: nil)
                 self.showCameraPicker(.photoLibrary)
             }))
-            alert.addAction(UIAlertAction.init(title: "취소", style: .destructive, handler: { (action) in
+            alert.addAction(UIAlertAction.init(title: "취소", style: .cancel, handler: { (action) in
                 alert.dismiss(animated: true, completion: nil)
             }))
             self.present(alert, animated: true, completion: nil)
@@ -95,45 +110,220 @@ class PhotoManagerViewController: BaseViewController {
     
     func showCameraPicker(_ sourceType: UIImagePickerController.SourceType) {
         let picker = CImagePickerController.init(sourceType) { (orig, crop) in
-            guard let orig = orig else {
+            guard let orig = orig, let crop = crop else {
                 return
             }
-            if let crop = crop {
-                print("== orig: \(orig), crop:\(crop)")
-            }
-            else {
-                print("== orig: \(orig)")
-            }
+            print("== orig: \(orig), crop:\(crop)")
+            
+            self.showPhotoUsingAlert(orig, crop)
         }
         self.present(picker, animated: true, completion: nil)
+    }
+    
+    func showPhotoUsingAlert(_ orig:UIImage, _ crop: UIImage) {
         
-//            let picker = ImagePickerController()
-//            picker.settings.selection.max = 5
-//            picker.settings.theme.selectionStyle = .numbered
-//            picker.settings.fetch.assets.supportedMediaTypes = [.image]
-//            picker.settings.selection.unselectOnReachingMax = true
-//
-//            self.presentImagePicker(picker, select: nil, deselect: nil, cancel: nil) { (assets) in
-//                print("Finished with selections: \(assets)")
-//                picker.dismiss(animated: false)
-//            }
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.2) { [weak self] in
+            let vc = CAlertViewController.init(type: .alert, title: "이미지 검증/등록 신청", message: "*선택 사항이 동시에 모두 등록 가능합니다.", actions: nil) { (vcs, selItem, index) in
+                vcs.dismiss(animated: true, completion: nil);
+                
+                if (index == 1) {
+                    var param:[String:Any] = [:]
+                    for i in 0..<vcs.arrBtnCheck.count {
+                        let btn = vcs.arrBtnCheck[i]
+                        if i == 0 {
+                            if btn.isSelected == true {
+                                param["image_cam_reservation"] = true
+                            }
+                            else {
+                                param["image_cam_reservation"] = false
+                            }
+                        }
+                        else if i == 1 {
+                            if btn.isSelected == true {
+                                param["image_talk_reservation"] = true
+                            }
+                            else {
+                                param["image_talk_reservation"] = false
+                            }
+                        }
+                        else {
+                            if btn.isSelected == true {
+                                param["image_profile_reservation"] = true
+                            }
+                            else {
+                                param["image_profile_reservation"] = false
+                            }
+                        }
+                    }
+                    
+                    param["user_id"] = ShareData.ins.userId
+                    param["user_file"] = crop
+                    
+                    ApiManager.ins.requestRegistPhoto(param: param) { (res) in
+                        let isSuccess = res["isSuccess"].stringValue
+                        if isSuccess == "01" {
+                            self?.view.makeToast("등록 성공!!")
+                            self?.reqeustGetMyPhotoList()
+                        }
+                        else {
+                            self?.showErrorToast(res)
+                        }
+                        
+                    } failure: { (error) in
+                        self?.showErrorToast(error)
+                    }
+                }
+            }
+            vc.addAction(.check, "프로필 이미지에 등록", nil, RGB(230, 100, 100), true)
+            vc.addAction(.check, "영상톡 이미지에 등록", nil, RGB(230, 100, 100), true)
+            vc.addAction(.check, "일반톡 이미지에 등록", nil, RGB(230, 100, 100), true)
+            vc.addAction(.cancel, "취소")
+            vc.addAction(.ok, "신청")
+            vc.iconImg = UIImage(named: "ico_app_80")
+            vc.fontMsg = UIFont.systemFont(ofSize: 13)
+            vc.reloadUI()
+            self?.present(vc, animated: true, completion: nil)
+        }
     }
 }
 
-extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionViewDataSource, CFlowLayoutDelegate {
+extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return listData.count
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageColCell", for: indexPath) as! ImageColCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImgColCell.identifier, for: indexPath) as? ImgColCell else {
+            return UICollectionViewCell()
+        }
+        
+        let item = listData[indexPath.row]
+        let user_id = item["user_id"].stringValue
+        let user_img = item["user_img"].stringValue
+        let view_yn = item["view_yn"].stringValue
+        
+        var imgName = "icon_man"
+        if ShareData.ins.userSex.rawValue == "여" {
+            imgName = "icon_femail"
+        }
+        if let url = Utility.thumbnailUrl(user_id, user_img) {
+            cell.ivThumb.setImageCache(url: url, placeholderImgName: imgName)
+        }
+        if view_yn == "Y" {
+            cell.btnState.setTitle("검중완료", for: .normal)
+            cell.btnState.setTitleColor(RGB(255, 0, 0), for: .normal)
+        }
+        else {
+            cell.btnState.setTitle("검중중", for: .normal)
+            cell.btnState.setTitleColor(RGB(255, 255, 0), for: .normal)
+        }
         
         return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, heightForItemAtIndexPath indexpath: NSIndexPath) -> CGFloat {
-        return  ceil(1.2*(collectionView.bounds.size.width/3))
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (collectionView.bounds.width - 3*4)/3
+        let height = 1.2*width
+        return CGSize(width: width, height: height)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+        let item = listData[indexPath.row]
+        let view_yn = item["view_yn"].stringValue
+        
+        if view_yn == "N" {
+            self.showToast("검증 완료 후 등록 삭제 보기가 가능합니다!!")
+        }
+        else {
+            let user_id = item["user_id"].stringValue
+            let user_img = item["user_img"].stringValue
+            let seq = item["seq"].numberValue
+            
+            guard let url = Utility.thumbnailUrl(user_id, user_img) else {
+                return
+            }
+            
+            let vc = CAlertViewController.init(type: .alert, title: "사진 등록, 삭제, 보기", message: "*상황에 맞도록 선택해주세요.", actions: nil) { (vcs, selItem, index) in
+                vcs.dismiss(animated: true, completion: nil)
+                
+                if index == 1 {
+                    let param = ["seq":seq]
+                    ApiManager.ins.requestDeleteMyPhoto(param: param) { (res) in
+                        let isSuccess = res["isSuccess"].stringValue
+                        if isSuccess == "01" {
+                            self.reqeustGetMyPhotoList()
+                        }
+                        else {
+                            self.showErrorToast(res)
+                        }
+                    } failure: { (error) in
+                        self.showErrorToast(error)
+                    }
+                }
+                else if index == 2 {
+                    self.showPhoto(imgUrls: [url])
+                }
+                else if index == 3, vcs.arrBtnCheck.count > 0 {
+                    var param:[String:Any] = [:]
+                    for i in 0..<vcs.arrBtnCheck.count {
+                        let btn = vcs.arrBtnCheck[i]
+                        if i == 0 {
+                            if btn.isSelected == true {
+                                param["image_profile_save"] = true
+                                param["image_photo_save"] = true
+                            }
+                            else {
+                                param["image_profile_save"] = false
+                                param["image_photo_save"] = false
+                            }
+                        }
+                        else if i == 1 {
+                            if btn.isSelected == true {
+                                param["image_cam_save"] = true
+                            }
+                            else {
+                                param["image_cam_save"] = false
+                            }
+                        }
+                        else {
+                            if btn.isSelected == true {
+                                param["image_talk_save"] = true
+                            }
+                            else {
+                                param["image_talk_save"] = false
+                            }
+                        }
+                    }
+                    
+                    param["user_file"] = item["user_img"].stringValue
+                    param["user_id"] = ShareData.ins.userId
+                    ApiManager.ins.requestModifyMyPhoto(param: param) { (res) in
+                        let isSuccess = res["isSuccess"].stringValue
+                        if isSuccess == "01" {
+                            AppDelegate.ins.window?.makeToast("이미지 변경 완료되었습니다.")
+                            self.navigationController?.popToRootViewController(animated: true)
+                        }
+                        else {
+                            self.showErrorToast(res)
+                        }
+                    } failure: { (error) in
+                        self.showErrorToast(error)
+                    }
+                }
+            }
+            
+            vc.addAction(.check, "프로필 사진 변경 등록", nil, RGB(230, 100, 100), true)
+            vc.addAction(.check, "영상톡 사진 변경 등록", nil, RGB(230, 100, 100), true)
+            vc.addAction(.check, "일반톡 사진 변경 등록", nil, RGB(230, 100, 100), true)
+            
+            vc.addAction(.cancel, "취소")
+            vc.addAction(.normal, "삭제")
+            vc.addAction(.normal, "보기")
+            vc.addAction(.ok, "확인")
+            vc.iconImgName = url
+            vc.fontMsg = UIFont.systemFont(ofSize: 13)
+            vc.reloadUI()
+            self.present(vc, animated: true, completion: nil)
+            
+        }
     }
 }

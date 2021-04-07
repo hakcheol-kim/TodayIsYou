@@ -6,24 +6,58 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class PhotoTalkWriteViewController: BaseViewController {
-
+    @IBOutlet weak var lbMsg: UILabel!
+    @IBOutlet weak var btnAddPhoto: CButton!
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    var listData:[JSON] = []
     override func viewDidLoad() {
         super.viewDidLoad()
+        CNavigationBar.drawBackButton(self, "포토 토크 등록", #selector(actionNaviBack))
+        collectionView.register(UINib(nibName: "PhotoCell", bundle: nil), forCellWithReuseIdentifier: "PhotoCell")
+        
+        let layout = CFlowLayout.init()
+        layout.numberOfColumns = 3
+        layout.lineSpacing = 2
+        layout.secInset = UIEdgeInsets(top: 0, left: 4, bottom: 0, right: 4)
+        collectionView.collectionViewLayout = layout
+        layout.delegate = self
+        
+        requestPhotoTalkList()
+    }
+    func requestPhotoTalkList() {
+        
+    }
+    @IBAction func onClickedBtnActions(_ sender: Any) {
+        
+    }
+}
 
-        // Do any additional setup after loading the view.
+extension PhotoTalkWriteViewController: UICollectionViewDataSource, UICollectionViewDelegate, CFlowLayoutDelegate {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return listData.count
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! PhotoColCell
+        
+        cell.btnImgCnt.isHidden = true
+        cell.btnHartCnt.isHidden = true
+        cell.infoView.isHidden = true
+        
+        let item = listData[indexPath.row]
+        
+        return cell
     }
-    */
-
+    
+    func collectionView(_ collectionView: UICollectionView, heightForItemAtIndexPath indexpath: NSIndexPath) -> CGFloat {
+        let width = (collectionView.bounds.width - 12)/3
+        return width*1.2
+    }
+    
+    
 }
