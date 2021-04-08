@@ -53,23 +53,17 @@ extension PointGateViewController: UITableViewDelegate, UITableViewDataSource {
         if indexPath.section == 0 {
             switch indexPath.row {
             case 0:
-                guard let vc = self.storyboard?.instantiateViewController(identifier: "PointHistoryViewController") as? PointHistoryViewController else {
-                    return
-                }
+                let vc = PointHistoryViewController.instantiateFromStoryboard(.main)!
                 vc.type = .point
                 self.navigationController?.pushViewController(vc, animated: true)
                 return
             case 1:
-                guard let vc = self.storyboard?.instantiateViewController(identifier: "PointHistoryViewController") as? PointHistoryViewController else {
-                    return
-                }
+                let vc = PointHistoryViewController.instantiateFromStoryboard(.main)!
                 vc.type = .star
                 self.navigationController?.pushViewController(vc, animated: true)
                 return
             case 2:
-                guard let vc = self.storyboard?.instantiateViewController(identifier: "PointHistoryViewController") as? PointHistoryViewController else {
-                    return
-                }
+                let vc = PointHistoryViewController.instantiateFromStoryboard(.main)!
                 vc.type = .exchange
                 self.navigationController?.pushViewController(vc, animated: true)
                 return
@@ -80,9 +74,7 @@ extension PointGateViewController: UITableViewDelegate, UITableViewDataSource {
         else if indexPath.section == 1 {
             switch indexPath.row {
             case 0:
-                guard let vc = self.storyboard?.instantiateViewController(identifier: "ExchangeViewController") as? ExchangeViewController else {
-                    return
-                }
+                let vc = ExchangeViewController.instantiateFromStoryboard(.main)!
                 self.navigationController?.pushViewController(vc, animated: true)
                 return
             default:

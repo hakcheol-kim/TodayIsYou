@@ -37,7 +37,15 @@ class TermsViewController: BaseViewController {
         }
         
         if content.isEmpty == false {
-            tvContent.text = content
+            let paragraph = NSMutableParagraphStyle.init()
+            paragraph.headIndent = 10
+            paragraph.paragraphSpacing = 5;
+            
+            let attr = NSMutableAttributedString.init(string: content)
+            attr.addAttribute(.font, value: UIFont.systemFont(ofSize: 14), range: NSMakeRange(0, content.length))
+            attr.addAttribute(.paragraphStyle, value: paragraph, range: NSMakeRange(0, content.length))
+            
+            tvContent.attributedText = attr
         }
     }
     

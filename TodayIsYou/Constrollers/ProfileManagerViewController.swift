@@ -31,12 +31,11 @@ class ProfileManagerViewController: BaseViewController {
         CNavigationBar.drawBackButton(self, "프로필 수정", #selector(actionNaviBack))
         tfNickName.inputAccessoryView = accessoryView
         accessoryView.addTarget(self, selctor: #selector(actionKeybardDown))
-        
-        requestMyInfo()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.addKeyboardNotification()
+        requestMyInfo()
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.removeKeyboardNotification()
@@ -83,7 +82,7 @@ class ProfileManagerViewController: BaseViewController {
             self.showToast("성별은 변경이 불가합니다.")
         }
         else if sender == btnProfile {
-            let vc = storyboard?.instantiateViewController(identifier: "PhotoManagerViewController") as! PhotoManagerViewController
+            let vc = PhotoManagerViewController.instantiate(with: .profile)
             self.navigationController?.pushViewController(vc, animated: true)
         }
         else if sender == btnAge {

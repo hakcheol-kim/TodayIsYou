@@ -53,11 +53,15 @@ class ContactusCell: UITableViewCell {
             lbMessage.text = answer
             lbDate.text = answer_date
             svContent.addArrangedSubview(lbTmp)
+
+            ivBgView.tintColor = UIColor(named: "chat_bubble_color_sent")
+            guard let img = UIImage(named: "ico_peech_bubble_left") else {
+                return
+            }
+            ivBgView.image = img.resizableImage(withCapInsets: UIEdgeInsets(top: 17, left: 21, bottom: 17, right: 21), resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
+            lbMessage.textColor = UIColor(named: "chat_text_color_sent")
             
-            let img = UIImage(named: "ico_bubble_red")!
-            ivBgView.image = img.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 8, bottom: 7, right: 7), resizingMode: .stretch)
-            lbMessage.textColor = UIColor.white
-            svMsg.layoutMargins = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 8)
+            svMsg.layoutMargins = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 8)
         }
         else {
             svSub.alignment = .trailing
@@ -66,9 +70,14 @@ class ContactusCell: UITableViewCell {
             lbMessage.textColor = UIColor.label
             svContent.insertArrangedSubview(lbTmp, at: 0)
             
-            let img = UIImage(named: "ico_bubble_gray")!
-            ivBgView.image = img.resizableImage(withCapInsets: UIEdgeInsets(top: 8, left: 7, bottom: 7, right: 8), resizingMode: .stretch)
-            svMsg.layoutMargins = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 12)
+            ivBgView.tintColor = UIColor(named: "chat_bubble_color_received")
+            guard let img = UIImage(named: "ico_peech_bubble_right") else {
+                return
+            }
+            ivBgView.image = img.resizableImage(withCapInsets: UIEdgeInsets(top: 17, left: 21, bottom: 17, right: 21), resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
+            lbMessage.textColor = UIColor(named: "chat_text_color_received")
+            
+            svMsg.layoutMargins = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 16)
         }
         lbMessage.sizeToFit()
         self.layoutIfNeeded()

@@ -16,9 +16,14 @@ class PhotoManagerViewController: BaseViewController {
     @IBOutlet weak var btnAddPhoto: CButton!
     @IBOutlet weak var btnCheckTerm: UIButton!
     @IBOutlet weak var btnShowTerm: UIButton!
-    var type:PhotoManageType = .add
+    var type:PhotoManageType = .normal
     
     var listData:[JSON] = []
+    static func instantiate(with type:PhotoManageType) -> PhotoManagerViewController {
+        let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(identifier: "PhotoManagerViewController") as! PhotoManagerViewController
+        vc.type = type
+        return vc
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -185,6 +190,49 @@ class PhotoManagerViewController: BaseViewController {
             self?.present(vc, animated: true, completion: nil)
         }
     }
+    
+    func requestChangePhotoTalk(_ param:[String:Any]) {
+        ApiManager.ins.requestChangePhotoTalk(param: param) { (res) in
+            let isSuccess = res["isSuccess"].stringValue
+            if isSuccess == "01" {
+                AppDelegate.ins.window?.makeToast("이미지 등록")
+                self.navigationController?.popViewController(animated: true)
+            }
+            else {
+                self.showErrorToast(res)
+            }
+        } fail: { (error) in
+            self.showErrorToast(error)
+        }
+    }
+    func requestChangeMyPhoto(_ param:[String:Any]) {
+        ApiManager.ins.requestModifyMyPhoto(param: param) { (res) in
+            let isSuccess = res["isSuccess"].stringValue
+            if isSuccess == "01" {
+                AppDelegate.ins.window?.makeToast("이미지 등록")
+                self.navigationController?.popViewController(animated: true)
+            }
+            else {
+                self.showErrorToast(res)
+            }
+        } failure: { (error) in
+            self.showErrorToast(error)
+        }
+    }
+    func requestDeleteMyPhoto(_ param:[String:Any]) {
+        ApiManager.ins.requestDeleteMyPhoto(param: param) { (res) in
+            let isSuccess = res["isSuccess"].stringValue
+            if isSuccess == "01" {
+                self.reqeustGetMyPhotoList()
+            }
+            else {
+                self.showErrorToast(res)
+            }
+        } failure: { (error) in
+            self.showErrorToast(error)
+        }
+    }
+    
 }
 
 extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -233,7 +281,8 @@ extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionView
         if view_yn == "N" {
             self.showToast("검증 완료 후 등록 삭제 보기가 가능합니다!!")
         }
-        else {
+        else if type == .photo {
+            
             let user_id = item["user_id"].stringValue
             let user_img = item["user_img"].stringValue
             let seq = item["seq"].numberValue
@@ -242,78 +291,41 @@ extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionView
                 return
             }
             
-            let vc = CAlertViewController.init(type: .alert, title: "사진 등록, 삭제, 보기", message: "*상황에 맞도록 선택해주세요.", actions: nil) { (vcs, selItem, index) in
+            let vc = CAlertViewController.init(type: .alert, title: "사진 등록, 삭제, 보기", message:nil , actions: nil) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 
                 if index == 1 {
                     let param = ["seq":seq]
-                    ApiManager.ins.requestDeleteMyPhoto(param: param) { (res) in
-                        let isSuccess = res["isSuccess"].stringValue
-                        if isSuccess == "01" {
-                            self.reqeustGetMyPhotoList()
-                        }
-                        else {
-                            self.showErrorToast(res)
-                        }
-                    } failure: { (error) in
-                        self.showErrorToast(error)
-                    }
+                    self.requestDeleteMyPhoto(param)
                 }
                 else if index == 2 {
                     self.showPhoto(imgUrls: [url])
                 }
                 else if index == 3, vcs.arrBtnCheck.count > 0 {
                     var param:[String:Any] = [:]
-                    for i in 0..<vcs.arrBtnCheck.count {
-                        let btn = vcs.arrBtnCheck[i]
-                        if i == 0 {
-                            if btn.isSelected == true {
-                                param["image_profile_save"] = true
-                                param["image_photo_save"] = true
-                            }
-                            else {
-                                param["image_profile_save"] = false
-                                param["image_photo_save"] = false
-                            }
-                        }
-                        else if i == 1 {
-                            if btn.isSelected == true {
-                                param["image_cam_save"] = true
-                            }
-                            else {
-                                param["image_cam_save"] = false
-                            }
-                        }
-                        else {
-                            if btn.isSelected == true {
-                                param["image_talk_save"] = true
-                            }
-                            else {
-                                param["image_talk_save"] = false
-                            }
-                        }
+                    guard let btn = vcs.arrBtnCheck.first else {
+                        return
                     }
                     
-                    param["user_file"] = item["user_img"].stringValue
-                    param["user_id"] = ShareData.ins.userId
-                    ApiManager.ins.requestModifyMyPhoto(param: param) { (res) in
-                        let isSuccess = res["isSuccess"].stringValue
-                        if isSuccess == "01" {
-                            AppDelegate.ins.window?.makeToast("이미지 변경 완료되었습니다.")
-                            self.navigationController?.popToRootViewController(animated: true)
-                        }
-                        else {
-                            self.showErrorToast(res)
-                        }
-                    } failure: { (error) in
-                        self.showErrorToast(error)
+                    if btn.isSelected == true {
+                        param["user_id"] = ShareData.ins.userId
+                        param["user_file"] = item["user_img"].stringValue
+                        param["contents"] = ""
+                        self.requestChangePhotoTalk(param)
+                    }
+                    else {
+                        param["user_id"] = ShareData.ins.userId
+                        param["user_file"] = item["user_img"].stringValue
+                        param["image_profile_save"] = false
+                        param["image_cam_save"] = false
+                        param["image_talk_save"] = false
+                        param["image_photo_save"] = false
+                        
+                        self.requestChangeMyPhoto(param)
                     }
                 }
             }
-            
-            vc.addAction(.check, "프로필 사진 변경 등록", nil, RGB(230, 100, 100), true)
-            vc.addAction(.check, "영상톡 사진 변경 등록", nil, RGB(230, 100, 100), true)
-            vc.addAction(.check, "일반톡 사진 변경 등록", nil, RGB(230, 100, 100), true)
+            vc.addAction(.check, "포토톡 사진 추가 등록", nil, RGB(230, 100, 100), true)
             
             vc.addAction(.cancel, "취소")
             vc.addAction(.normal, "삭제")
@@ -323,7 +335,79 @@ extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionView
             vc.fontMsg = UIFont.systemFont(ofSize: 13)
             vc.reloadUI()
             self.present(vc, animated: true, completion: nil)
-            
         }
+        else {
+            let user_id = item["user_id"].stringValue
+            let user_img = item["user_img"].stringValue
+            let seq = item["seq"].numberValue
+            
+            guard let url = Utility.thumbnailUrl(user_id, user_img) else {
+                return
+            }
+            
+            let vc = CAlertViewController.init(type: .alert, title: "사진 등록, 삭제, 보기", message:"*상황에 맞도록 선택해주세요." , actions: nil) { (vcs, selItem, index) in
+                vcs.dismiss(animated: true, completion: nil)
+                
+                if index == 1 {
+                    let param = ["seq":seq]
+                    self.requestDeleteMyPhoto(param)
+                }
+                else if index == 2 {
+                    self.showPhoto(imgUrls: [url])
+                }
+                else if index == 3, vcs.arrBtnCheck.count > 0 {
+                    var param:[String:Any] = [:]
+                    param["user_file"] = item["user_img"].stringValue
+                    param["user_id"] = ShareData.ins.userId
+                    
+                    for i in 0..<vcs.arrBtnCheck.count {
+                        let btn = vcs.arrBtnCheck[i]
+                        if i == 0 {
+                            param["image_profile_save"] = btn.isSelected
+                        }
+                        else if i == 1 {
+                            param["image_cam_save"] = btn.isSelected
+                        }
+                        else {
+                            param["image_talk_save"] = btn.isSelected
+                        }
+                    }
+                    param["image_photo_save"] = false
+                 
+                    self.requestChangeMyPhoto(param)
+                }
+            }
+            
+            if type == .cam {
+                vc.addAction(.check, "프로필 사진 변경 등록", nil, RGB(230, 100, 100), false)
+                vc.addAction(.check, "영상톡 사진 변경 등록", nil, RGB(230, 100, 100), true)
+                vc.addAction(.check, "일반톡 사진 변경 등록", nil, RGB(230, 100, 100), false)
+            }
+            else if type == .talk {
+                vc.addAction(.check, "프로필 사진 변경 등록", nil, RGB(230, 100, 100), false)
+                vc.addAction(.check, "영상톡 사진 변경 등록", nil, RGB(230, 100, 100), false)
+                vc.addAction(.check, "일반톡 사진 변경 등록", nil, RGB(230, 100, 100), true)
+            }
+            else if type == .profile {
+                vc.addAction(.check, "프로필 사진 변경 등록", nil, RGB(230, 100, 100), true)
+                vc.addAction(.check, "영상톡 사진 변경 등록", nil, RGB(230, 100, 100), false)
+                vc.addAction(.check, "일반톡 사진 변경 등록", nil, RGB(230, 100, 100), false)
+            }
+            else {
+                vc.addAction(.check, "프로필 사진 변경 등록", nil, RGB(230, 100, 100), true)
+                vc.addAction(.check, "영상톡 사진 변경 등록", nil, RGB(230, 100, 100), true)
+                vc.addAction(.check, "일반톡 사진 변경 등록", nil, RGB(230, 100, 100), true)
+            }
+            
+            vc.addAction(.cancel, "취소")
+            vc.addAction(.normal, "삭제")
+            vc.addAction(.normal, "보기")
+            vc.addAction(.ok, "확인")
+            vc.iconImgName = url
+            vc.fontMsg = UIFont.systemFont(ofSize: 13)
+            vc.reloadUI()
+            self.present(vc, animated: true, completion: nil)
+        }
+        
     }
 }

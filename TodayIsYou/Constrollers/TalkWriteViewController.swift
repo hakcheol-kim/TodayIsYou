@@ -14,6 +14,7 @@ class TalkWriteViewController: BaseViewController {
     @IBOutlet var btnRegiTalk: UIButton!
     @IBOutlet var btnProfile: UIButton!
     @IBOutlet var lbMsg:UILabel!
+    @IBOutlet weak var btnLink: UIButton!
     
     var type: PhotoManageType = .cam
     var data:JSON!
@@ -44,21 +45,7 @@ class TalkWriteViewController: BaseViewController {
             btnRegiTalk.setTitle("토크 등록", for: .normal)
         }
     }
-    
-    func requestMyTalk() {
-        ApiManager.ins.requestMyTalk(param: ["user_id":ShareData.ins.userId]) { (res) in
-            let isSuccess = res["isSuccess"].stringValue
-            if isSuccess == "01" {
-                self.data = res
-                self.decorationUi()
-            }
-            else {
-                self.showErrorToast(res)
-            }
-        } failure: { (error) in
-            self.showErrorToast(error)
-        }
-    }
+    //영상토크
     func requestMyImgTalk() {
         ApiManager.ins.requestMyImgTalk(param: ["user_id":ShareData.ins.userId]) { (res) in
             let isSuccess = res["isSuccess"].stringValue
@@ -73,13 +60,36 @@ class TalkWriteViewController: BaseViewController {
             self.showErrorToast(error)
         }
     }
+    //토크
+    func requestMyTalk() {
+        ApiManager.ins.requestMyTalk(param: ["user_id":ShareData.ins.userId]) { (res) in
+            let isSuccess = res["isSuccess"].stringValue
+            if isSuccess == "01" {
+                self.data = res
+                self.decorationUi()
+            }
+            else {
+                self.showErrorToast(res)
+            }
+        } failure: { (error) in
+            self.showErrorToast(error)
+        }
+    }
+   
     func decorationUi() {
         let contents = data["contents"].stringValue
         let user_img = data["user_img"].stringValue
         
         self.selMemo = contents
-        if let url = Utility.thumbnailUrl(ShareData.ins.userId, user_img), let ivProfile = btnProfile.viewWithTag(100) as? UIImageView {
+        let ivProfile = btnProfile.viewWithTag(100) as! UIImageView
+
+        if let url = Utility.thumbnailUrl(ShareData.ins.userId, user_img) {
             ivProfile.setImageCache(url: url, placeholderImgName: nil)
+            ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
+            ivProfile.clipsToBounds = true
+        }
+        else {
+            ivProfile.image = Gender.defaultImg(ShareData.ins.userSex.rawValue)
         }
         
         lbMsg.text = "사진은 검증된 이미지만 등록 됩니다."
@@ -92,6 +102,12 @@ class TalkWriteViewController: BaseViewController {
             if let talkDayPoint = ShareData.ins.dfsObjectForKey(DfsKey.talkDayPoint) as? NSNumber, talkDayPoint.intValue > 0, "남" == ShareData.ins.userSex.rawValue {
                 lbMsg.text = "사진은 검증된 이미지만 등록 됩니다.\n1일 1회 토크 등록시 " + talkDayPoint.stringValue + "P를 적립해 드립니다"
             }
+        }
+        btnLink.isHidden = true
+        if type == .cam {
+            btnLink.isHidden = false
+            let attr = NSAttributedString.init(string: "영상 채팅으로 적립 받고 환급받는 방법을 알아보기", attributes: [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue])
+            btnLink.setAttributedTitle(attr, for: .normal)
         }
     }
     
@@ -114,7 +130,6 @@ class TalkWriteViewController: BaseViewController {
             if list.isEmpty == true { return }
             let vc = PopupListViewController.initWithType(.normal, "선택해주세요.", list, nil) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
-                
                 guard let selItem = selItem as? String else {
                     return
                 }
@@ -123,11 +138,90 @@ class TalkWriteViewController: BaseViewController {
             self.presentPanModal(vc)
         }
         else if sender == btnProfile {
-            let vc = storyboard?.instantiateViewController(identifier: "PhotoManagerViewController") as! PhotoManagerViewController
+            let vc = PhotoManagerViewController.instantiate(with: type)
             self.navigationController?.pushViewController(vc, animated: true)
         }
+        else if sender == btnLink {
+            ApiManager.ins.requestServiceTerms(mode: "yk6") { (res) in
+                let isSuccess = res["isSuccess"].stringValue
+                let yk = res["yk"].stringValue
+                if isSuccess == "01", yk.isEmpty == false {
+                    let vc = TermsViewController.init()
+                    vc.vcTitle = "포인트 적립 방법 안내"
+                    vc.content = yk
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                else {
+                    self.showErrorToast(res)
+                }
+            } failure: { (error) in
+                self.showErrorToast(error)
+            }
+        }
         else if sender == btnRegiTalk {
-            
+            if type == .cam {
+                let param = ["user_id":ShareData.ins.userId, "contents":selMemo]
+                ApiManager.ins.requestChangeCamTalk(param: param) { (res) in
+                    let isSuccess = res["isSuccess"].stringValue
+                    let point_save = res["point_save"].stringValue
+                    if isSuccess == "01" {
+                        if "Y1" == point_save && "남" == ShareData.ins.userSex.rawValue {
+                            self.showToastWindow("포인트가 적립 되었습니다")
+                        }
+                        else if "Y2" == point_save && "남" == ShareData.ins.userSex.rawValue {
+                            var point = "0"
+                            if let p = ShareData.ins.dfsObjectForKey(DfsKey.dayLimitPoint) as? NSNumber {
+                                point = p.stringValue
+                            }
+                            self.showToastWindow("보유한 포인트가 \(point.addComma()) 이하일때 적립 가능합니다.")
+                        }
+                        else {
+                            self.showToastWindow("등록 완료되었습니다.")
+                        }
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                    else {
+                        self.showErrorToast(res)
+                    }
+                } fail: { (error) in
+                    self.showErrorToast(error)
+                }
+            }
+            else if type == .talk {
+                let point = data["user_bbs_point"].numberValue
+                let parma:[String:Any] = ["user_id" : ShareData.ins.userId, "title" : selMemo, "user_bbs_point" : point]
+                ApiManager.ins.requestChangeTalk(param: parma) { (res) in
+                    let isSuccess = res["isSuccess"].stringValue
+                    let point_save = res["point_save"].stringValue
+                    if isSuccess == "01" {
+                        if "Y1" == point_save && "남" == ShareData.ins.userSex.rawValue {
+                            self.showToastWindow("포인트가 적립 되었습니다")
+                        }
+                        else if "Y2" == point_save && "남" == ShareData.ins.userSex.rawValue {
+                            var point = "0"
+                            if let p = ShareData.ins.dfsObjectForKey(DfsKey.dayLimitPoint) as? NSNumber {
+                                point = p.stringValue
+                            }
+                            self.showToastWindow("\(point.addComma()) 포인트 이하일때 적립 가능합니다(금일은 적립 불가능 합니다.)")
+                        }
+//                        else if "N" == point_save {
+//                            self.showToastWindow("1일 1회 적립되었습니다.")
+//                        }
+//                        else if "W" == point_save {
+//                            self.showToastWindow("1일 1회 적립되었습니다.")
+//                        }
+                        else {
+                            self.showToastWindow("등록 완료!")
+                        }
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                    else {
+                        self.showErrorToast(res)
+                    }
+                } fail: { (err) in
+                    self.showErrorToast(err)
+                }
+            }
         }
     }
 }

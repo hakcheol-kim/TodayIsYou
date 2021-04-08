@@ -114,33 +114,23 @@ extension LeftSideMenuViewController: UITableViewDelegate, UITableViewDataSource
         self.dismiss(animated: true) {
             switch indexPath.row {
             case 0:
-                guard let vc = self.storyboard?.instantiateViewController(identifier: "PointChargeViewController") as? PointChargeViewController else {
-                    return
-                }
+                let vc = PointChargeViewController.instantiateFromStoryboard(.main)!
                 AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
                 break
             case 1:
-                guard let vc = self.storyboard?.instantiateViewController(identifier: "NoticeListViewController") as? NoticeListViewController else {
-                    return
-                }
+                let vc = NoticeListViewController.instantiateFromStoryboard(.main)!
                 AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
                 break
             case 2:
-                guard let vc = self.storyboard?.instantiateViewController(identifier: "MyFrendsListViewController") as? MyFrendsListViewController else {
-                    return
-                }
+                let vc = MyFrendsListViewController .instantiateFromStoryboard(.main)!
                 AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
                 break
             case 3:
-                guard let vc = self.storyboard?.instantiateViewController(identifier: "MyBlockListViewController") as? MyBlockListViewController else {
-                    return
-                }
+                let vc = MyBlockListViewController.instantiateFromStoryboard(.main)!
                 AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
                 break
             case 4:
-                guard let vc = self.storyboard?.instantiateViewController(identifier: "ConnectUserListViewController") as? ConnectUserListViewController else {
-                    return
-                }
+                let vc = ConnectUserListViewController.instantiateFromStoryboard(.main)!
                 AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
                 break
             default:

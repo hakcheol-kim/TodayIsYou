@@ -64,7 +64,12 @@ class BaseViewController: UIViewController {
             findView.makeToast(message)
         }
     }
-    
+    func showToastWindow(_ msg: String?) {
+        guard let msg = msg else {
+            return
+        }
+        AppDelegate.ins.window?.makeToast(msg)
+    }
     @objc public func actionNaviBack() {
         self.navigationController?.popViewController(animated: true)
     }

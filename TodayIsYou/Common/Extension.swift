@@ -41,6 +41,11 @@ extension UIViewController {
             self.setValue(overrideUserInterfaceStyle, forKey:"overrideUserInterfaceStyle")
         }
     }
+    class func instantiateFromStoryboard(_ name:Storyboard) -> Self? {
+        let storyboard = UIStoryboard(name: name.rawValue, bundle: nil)
+        let arrName = NSStringFromClass(self).components(separatedBy: ".")
+        return storyboard.instantiateViewController(identifier: arrName.last!)
+    }
     func showErrorToast(_ data: Any?) {
         if let data = data as? JSON {
             var msg:String = ""
@@ -63,7 +68,7 @@ extension UIViewController {
             }
             findView.makeToast(msg)
         }
-        else if let error = data as? Error, let msg = error.localizedDescription as? String {
+        else if let error = data as? Error, let msg = error.localizedDescription as String? {
             var findView:UIView = self.view
             for subview in self.view.subviews {
                 if let subview = subview as? UIScrollView {

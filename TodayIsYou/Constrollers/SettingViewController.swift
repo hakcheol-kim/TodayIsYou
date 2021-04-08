@@ -71,11 +71,11 @@ class SettingViewController: BaseViewController {
     
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         if sender == btnProfile {
-            let vc = storyboard?.instantiateViewController(identifier: "ProfileManagerViewController") as! ProfileManagerViewController
+            let vc = ProfileManagerViewController.instantiateFromStoryboard(.main)!
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnNotice {
-            let vc = storyboard?.instantiateViewController(identifier: "NoticeListViewController") as! NoticeListViewController
+            let vc = NoticeListViewController.instantiateFromStoryboard(.main)!
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnAbsent {
@@ -122,26 +122,26 @@ class SettingViewController: BaseViewController {
             }
         }
         else if sender == btnPhoto {
-            let vc = storyboard?.instantiateViewController(identifier: "PhotoManagerViewController") as! PhotoManagerViewController
+            let vc = PhotoManagerViewController.instantiateFromStoryboard(.main)!
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnPoint {
-            let vc = storyboard?.instantiateViewController(identifier: "PointChargeViewController") as! PointChargeViewController
+            let vc = PointChargeViewController.instantiateFromStoryboard(.main)!
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnExchange {
-            let vc = storyboard?.instantiateViewController(identifier: "PointGateViewController") as! PointGateViewController
+            let vc = PointGateViewController.instantiateFromStoryboard(.main)!
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnContactUs {
-            let vc = storyboard?.instantiateViewController(identifier: "ContactusViewController") as! ContactusViewController
+            let vc = ContactusViewController.instantiateFromStoryboard(.main)!
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnReport {
             
         }
         else if sender == btnSetting {
-            let vc = storyboard?.instantiateViewController(identifier: "ConfigurationViewController") as! ConfigurationViewController
+            let vc = ConfigurationViewController.instantiateFromStoryboard(.main)!
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnJoinTerm {

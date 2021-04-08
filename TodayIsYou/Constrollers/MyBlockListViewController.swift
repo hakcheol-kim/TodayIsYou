@@ -51,7 +51,6 @@ class MyBlockListViewController: BaseViewController {
         }
         
         var param:[String:Any] = [:]
-        
         param["user_id"] = ShareData.ins.userId
         param["pageNum"] = pageNum
         
@@ -62,6 +61,7 @@ class MyBlockListViewController: BaseViewController {
             if isSuccess == "01" {
                 if result.count == 0 {
                     self.pageEnd = true
+                    self.listData = result
                 }
                 else {
                     if self.pageNum == 1 {

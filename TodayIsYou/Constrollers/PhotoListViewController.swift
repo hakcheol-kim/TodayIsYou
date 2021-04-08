@@ -163,7 +163,7 @@ extension PhotoListViewController: UICollectionViewDataSource, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
         let item = listData[indexPath.row]
-        let vc = storyboard?.instantiateViewController(identifier: "PhotoDetailViewController") as! PhotoDetailViewController
+        let vc = PhotoDetailViewController.instantiateFromStoryboard(.main)!
         vc.passData = item
         AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
     }

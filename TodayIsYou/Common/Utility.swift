@@ -19,7 +19,7 @@ class Utility: NSObject {
         var url = "\(baseUrl)/upload/talk/\(userId)/thum/thum_\(fileName)"
         url = url.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
         if url.isEmpty == false {
-            print("url: \(url)")
+//            print("url: \(url)")
         }
         return url
     }

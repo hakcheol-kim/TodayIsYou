@@ -47,7 +47,7 @@ class MainViewController: BaseViewController {
                 }
             }
             
-            self.svItems.isHidden = true
+            
             if oldSelIndex != selIndex {
                 if let selectedVc = selectedVc {
                     self.myRemoveChildViewController(childViewController: selectedVc)
@@ -55,60 +55,60 @@ class MainViewController: BaseViewController {
                 
                 switch selIndex {
                 case 0:
-                    let vc = storyboard?.instantiateViewController(identifier: "CamTalkListViewController") as! CamTalkListViewController
+                    let vc = CamTalkListViewController.instantiateFromStoryboard(.main)!
                     vc.sortType = videoSortType
                     vc.listType = videoListType
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     self.selectedVc = vc
                     self.changeNaviTitle("영상토크")
-                    svItems.isHidden = false
-                    btnPlus.isHidden = false
-                    btnRocket.isHidden = false
-                    btnRocket.isHidden = false
                     break
                 case 1:
-                    
-                    let vc = storyboard?.instantiateViewController(identifier: "TalkListViewController") as! TalkListViewController
+                    let vc = TalkListViewController.instantiateFromStoryboard(.main)!
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     self.selectedVc = vc
                     self.changeNaviTitle("토크")
-                    svItems.isHidden = false
-                    btnPlus.isHidden = false
-                    btnRocket.isHidden = true
                     break
                 case 2:
-                    let vc = storyboard?.instantiateViewController(identifier: "PhotoListViewController") as! PhotoListViewController
+                    let vc = PhotoListViewController.instantiateFromStoryboard(.main)!
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     self.selectedVc = vc
                     self.changeNaviTitle("포토토크")
-                    svItems.isHidden = false
-                    btnPlus.isHidden = false
-                    btnRocket.isHidden = true
                     break
                 case 3:
-                    let vc = storyboard?.instantiateViewController(identifier: "RankListViewController") as! RankListViewController
+                    let vc = RankListViewController.instantiateFromStoryboard(.main)!
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     self.selectedVc = vc
                     self.changeNaviTitle("인기순위")
                     break
                 case 4:
-                    let vc = storyboard?.instantiateViewController(identifier: "MssageListViewController") as! MessageListViewController
+                    let vc = RankListViewController.instantiateFromStoryboard(.main)!
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     self.selectedVc = vc
                     self.changeNaviTitle("쪽지함")
                     break
                 case 5:
-                    let vc = storyboard?.instantiateViewController(identifier: "SettingViewController") as! SettingViewController
+                    let vc = SettingViewController.instantiateFromStoryboard(.main)!
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     self.selectedVc = vc
                     self.changeNaviTitle("설정")
                     break
                 default:
-                    
                     break
                 }
-                
             }
+            
+            svItems.isHidden = true
+            if selIndex == 0 {
+                svItems.isHidden = false
+                btnRocket.isHidden = false
+                btnPlus.isHidden = false
+            }
+            else if selIndex == 1 || selIndex == 2 {
+                svItems.isHidden = false
+                btnRocket.isHidden = true
+                btnPlus.isHidden = false
+            }
+            
             oldSelIndex = selIndex
         }
     }
@@ -168,9 +168,7 @@ class MainViewController: BaseViewController {
             self.present(left, animated: true, completion: nil)
         }
         else if sender.tag == TAG_NAVI_POINT {
-            guard let vc = storyboard?.instantiateViewController(identifier: "PointChargeViewController") as? PointChargeViewController else {
-                return
-            }
+            let vc = PointChargeViewController.instantiateFromStoryboard(.main)!
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if btnTabs.contains(sender) == true {
@@ -186,7 +184,7 @@ class MainViewController: BaseViewController {
                 AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
             }
             else {
-                let vc = storyboard?.instantiateViewController(identifier: "PhotoTalkWriteViewController") as! PhotoTalkWriteViewController
+                let vc = PhotoTalkWriteViewController.instantiateFromStoryboard(.main)!
                 AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
             }
         }

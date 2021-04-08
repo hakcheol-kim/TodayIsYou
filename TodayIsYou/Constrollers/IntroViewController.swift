@@ -13,6 +13,8 @@ class IntroViewController: UIViewController {
         super.viewDidLoad()
         
         //1. 앱캐쉬에 저장되있닌지 찾는다.
+//        ShareData.ins.dfsSetValue("a52fd10c131f149663a64ab074d5b44b", forKey: DfsKey.userId)
+        
         if let userId = ShareData.ins.dfsObjectForKey(DfsKey.userId) as? String, userId.length > 0 {
             //유저 아이디 disk 저장되있는것을 메모리에 올린다.
             ShareData.ins.userId = userId

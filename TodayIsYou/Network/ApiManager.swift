@@ -402,4 +402,44 @@ class ApiManager: NSObject {
             failure?(error)
         }
     }
+    ///영상토크 변경
+    func requestChangeCamTalk(param:[String:Any], succces:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/imgTalkWrite.do", param, URLEncoding.queryString) { (res) in
+            succces?(res)
+        } failure: { (error) in
+            fail?(error)
+        }
+    }
+    ///토크 변경
+    func requestChangeTalk(param:[String:Any], succces:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/talkWrite.do", param, URLEncoding.queryString) { (res) in
+            succces?(res)
+        } failure: { (error) in
+            fail?(error)
+        }
+    }
+    ///포토토크 리스트 가져오기
+    func requestGetMyPhotoTalk(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/getMyPhotoTalk.json", clientPara(param)) { (res) in
+            success?(res)
+        } failure: { (err) in
+            fail?(err)
+        }
+    }
+    ///포토 토크 변경
+    func requestChangePhotoTalk(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/photoTalkWrite.do", param, URLEncoding.queryString) { (res) in
+            success?(res)
+        } failure: { (err) in
+            fail?(err)
+        }
+    }
+    ///포토토크 삭제
+    func requestDeletePhotoTalk(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/deletePhotoImg.json", clientPara(param)) { (res) in
+            success?(res)
+        } failure: { (err) in
+            fail?(err)
+        }
+    }
 }

@@ -52,7 +52,7 @@ class JoinTermsAgreeViewController: BaseViewController {
             }
             
             user["instantExperienceLaunched"] = false
-            let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(identifier: "MemberInfoViewController") as! MemberInfoViewController
+            let vc = MemberInfoViewController.instantiateFromStoryboard(.login)!
             vc.user = user
             self.navigationController?.pushViewController(vc, animated: true)
         }

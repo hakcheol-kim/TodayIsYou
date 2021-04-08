@@ -42,8 +42,7 @@ class PopupListViewController: BaseViewController {
     
     static func initWithType(_ type: PopupType, _ title:String?, _ data:[Any], _ keys:[String]?, completion:((_ vcs: UIViewController, _ selItem:Any?, _ index:NSInteger) -> Void)?) -> PopupListViewController {
         
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PopupListViewController") as! PopupListViewController
-        
+        let vc = PopupListViewController.instantiateFromStoryboard(.main)!
         vc.completion = completion
         vc.listData = data
         vc.type = type

@@ -142,7 +142,7 @@ extension RankListViewController: FSPagerViewDelegate, FSPagerViewDataSource {
         pagerView.deselectItem(at: index, animated: false)
         
         let item = listData[index]
-        let vc = storyboard?.instantiateViewController(identifier: "RankDetailViewController") as! RankDetailViewController
+        let vc = RankDetailViewController.instantiateFromStoryboard(.main)!
         vc.passData = item
         AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
     }
@@ -164,7 +164,7 @@ extension RankListViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let item = listData[indexPath.row]
-        let vc = storyboard?.instantiateViewController(identifier: "RankDetailViewController") as! RankDetailViewController
+        let vc = RankDetailViewController.instantiateFromStoryboard(.main)!
         vc.passData = item
         AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
     }

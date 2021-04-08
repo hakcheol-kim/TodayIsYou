@@ -153,5 +153,10 @@ enum ListType: String {
     case collection = "image"
 }
 enum PhotoManageType: Int {
-    case add, cam, talk
+    case normal, cam, talk, photo, profile
+}
+
+enum Storyboard: String {
+    case main = "Main"
+    case login = "Login"
 }

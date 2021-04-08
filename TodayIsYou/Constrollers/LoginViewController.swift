@@ -95,7 +95,7 @@ class LoginViewController: SocialLoginViewController {
             if isSuccess == "00" { //신규
                 ShareData.ins.dfsSetValue(newUserId, forKey: DfsKey.userId)
                 ShareData.ins.userId = newUserId
-                let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(identifier: "JoinTermsAgreeViewController") as! JoinTermsAgreeViewController
+                let vc = JoinTermsAgreeViewController.instantiateFromStoryboard(.login)!
                 let info = ["user_id":newUserId]
                 vc.user = info
                 self.navigationController?.pushViewController(vc, animated: true)

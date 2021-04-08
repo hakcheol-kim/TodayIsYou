@@ -61,7 +61,6 @@ class MessageListViewController: BaseViewController {
             if isSuccess == "01" {
                 if result.count == 0 {
                     self.pageEnd = true
-                    self.listData = result
                 }
                 else {
                     if self.pageNum == 1 {
@@ -91,7 +90,7 @@ class MessageListViewController: BaseViewController {
     
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         if sender == btnJim {
-            let vc = storyboard?.instantiateViewController(identifier: "MyFrendsListViewController") as! MyFrendsListViewController
+            let vc = MyFrendsListViewController.instantiateFromStoryboard(.main)!
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnDelAll {
@@ -113,7 +112,7 @@ class MessageListViewController: BaseViewController {
             }
         }
         else if sender == btnBlock {
-            let vc = storyboard?.instantiateViewController(identifier: "MyBlockListViewController") as! MyBlockListViewController
+            let vc = MyBlockListViewController.instantiateFromStoryboard(.main)!
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
     }
@@ -139,7 +138,9 @@ extension MessageListViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let item = listData[indexPath.row]
-        
+        let vc = ChattingViewController.instantiateFromStoryboard(.main)!
+        vc.passData = item
+        AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
     }
 }
 

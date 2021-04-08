@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -391,6 +392,7 @@
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="3자 이상 입력해주세요." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="zXp-ND-NGz" customClass="CTextField" customModule="TodayIsYou" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="15.666666666666671" width="327" height="45"/>
+                                                        <color key="tintColor" name="AccentColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="45" id="8rY-tE-KCk"/>
                                                         </constraints>
@@ -828,6 +830,9 @@
         <image name="ico_naver" width="14" height="12"/>
         <image name="logo" width="720" height="1280"/>
         <image name="squareshape" catalog="system" width="128" height="114"/>
+        <namedColor name="AccentColor">
+            <color red="0.90196078430000004" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

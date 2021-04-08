@@ -250,7 +250,7 @@ extension ConnectUserListViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let item = listData[indexPath.row]
-        let vc = storyboard?.instantiateViewController(identifier: "RankDetailViewController") as! RankDetailViewController
+        let vc = RankDetailViewController.instantiateFromStoryboard(.main)!
         vc.passData = item
         AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
     }

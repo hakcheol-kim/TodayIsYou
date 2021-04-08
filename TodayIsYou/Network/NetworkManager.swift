@@ -50,7 +50,7 @@ class NetworkManager: NSObject {
                     print(String(describing: param))
                 }
             }
-            print("\n======= response ======= \n\(response)")
+//            print("\n======= response ======= \n\(response)")
             AppDelegate.ins.stopIndicator()
             
             switch response.result {
@@ -106,7 +106,7 @@ class NetworkManager: NSObject {
                 print("\n=======request: url: \(String(describing: url))")
                 print(String(describing: param))
             }
-            print("\n======= response ======= \n\(response)")
+//            print("\n======= response ======= \n\(response)")
             AppDelegate.ins.stopIndicator()
             
             switch response.result {

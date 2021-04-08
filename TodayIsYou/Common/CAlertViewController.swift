@@ -102,32 +102,38 @@ class CAlertViewController: UIViewController {
             lbTitle.text = aletTitle
         }
         
-        btnIcon.isHidden = true
-        if iconImgName.isEmpty == false {
-            svTitle.layoutMargins = UIEdgeInsets(top: 40, left: 16, bottom: 8, right: 8)
-            lbTitle.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-            btnIcon.imageView?.contentMode = .scaleAspectFill
-            btnIcon.isHidden = false
-            if iconImgName.contains("http") == true || iconImgName.contains("https") {
-                btnIcon.setImageCache(url: iconImgName, placeholderImgName: nil)
-            }
-            else {
-                if let image = UIImage(named: iconImgName) {
-                    btnIcon.setImage(image, for: .normal)
+        if titleView.isHidden == false {
+            btnIcon.isHidden = true
+            if iconImgName.isEmpty == false {
+                svTitle.layoutMargins = UIEdgeInsets(top: 40, left: 16, bottom: 8, right: 8)
+                lbTitle.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+                btnIcon.imageView?.contentMode = .scaleAspectFill
+                btnIcon.isHidden = false
+                if iconImgName.contains("http") == true || iconImgName.contains("https") {
+                    btnIcon.setImageCache(url: iconImgName, placeholderImgName: nil)
+                }
+                else {
+                    if let image = UIImage(named: iconImgName) {
+                        btnIcon.setImage(image, for: .normal)
+                    }
                 }
             }
+            else if let iconImg = iconImg {
+                svTitle.layoutMargins = UIEdgeInsets(top: 40, left: 16, bottom: 8, right: 8)
+                lbTitle.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+                btnIcon.isHidden = false
+                
+                btnIcon.setImage(iconImg, for: .normal)
+                btnIcon.contentVerticalAlignment = .fill
+                btnIcon.contentHorizontalAlignment = .fill
+                btnIcon.imageView?.contentMode = .scaleAspectFit
+                btnIcon.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
+            }
+            else {
+                svTitle.layoutMargins = insetTitle
+            }
         }
-        else if let iconImg = iconImg {
-            svTitle.layoutMargins = UIEdgeInsets(top: 40, left: 16, bottom: 8, right: 8)
-            lbTitle.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-            btnIcon.isHidden = false
-            
-            btnIcon.setImage(iconImg, for: .normal)
-            btnIcon.contentVerticalAlignment = .fill
-            btnIcon.contentHorizontalAlignment = .fill
-            btnIcon.imageView?.contentMode = .scaleAspectFit
-            btnIcon.contentEdgeInsets = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
-        }
+        
         
         if type == .custom {
             if let customView = customView {

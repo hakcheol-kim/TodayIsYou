@@ -79,7 +79,9 @@ class MessageTblCell: UITableViewCell {
         lbTitle.text = memo
         let result = "\(user_name), \(user_age), \(user_sex)"
         let attr = NSMutableAttributedString.init(string: result)
+        attr.addAttribute(.foregroundColor, value: RGB(125, 125, 125), range: NSMakeRange(0, result.length))
         attr.addAttribute(.foregroundColor, value: RGB(148, 17, 0), range: NSMakeRange(0, user_name.length))
+        attr.addAttribute(.foregroundColor, value: UIColor.label, range: NSMakeRange(result.length-1, 1))
         lbSubTitle.attributedText = attr
         
         let df = CDateFormatter.init()

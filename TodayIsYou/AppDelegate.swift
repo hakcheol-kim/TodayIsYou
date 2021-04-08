@@ -68,22 +68,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
  
     func callTempView() {
-        let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(identifier: "MemberInfoViewController") as! MemberInfoViewController
+        let vc = MemberInfoViewController.instantiateFromStoryboard(.login)!
         window?.rootViewController = BaseNavigationController.init(rootViewController: vc)
         window?.makeKeyAndVisible()
     }
     func callIntroViewCtrl() {
-        let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(identifier: "IntroViewController") as! IntroViewController
+        let vc = IntroViewController.instantiateFromStoryboard(.login)!
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }
     func callLoginViewCtrl() {
-        let vc = UIStoryboard(name: "Login", bundle: nil).instantiateViewController(identifier: "LoginViewController")
+        let vc = LoginViewController.instantiateFromStoryboard(.login)!
         window?.rootViewController = BaseNavigationController.init(rootViewController: vc)
         window?.makeKeyAndVisible()
     }
     func callMainViewCtrl() {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "MainViewController")
+        let vc = MainViewController.instantiateFromStoryboard(.main)!
         window?.rootViewController = BaseNavigationController.init(rootViewController: vc)
         window?.makeKeyAndVisible()
     }
