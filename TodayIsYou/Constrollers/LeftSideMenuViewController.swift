@@ -60,7 +60,7 @@ class LeftSideMenuViewController: UIViewController {
         ivProfile.clipsToBounds = true
         
         if let userName = ShareData.ins.dfsObjectForKey(DfsKey.userName) {
-            let gender = ShareData.ins.userSex.rawValue
+            let gender = ShareData.ins.mySex.rawValue
             lbNickName.text = "\(userName), \(gender)"
         }
         
@@ -77,8 +77,8 @@ class LeftSideMenuViewController: UIViewController {
         
         lbUserInfo.attributedText = try? NSAttributedString.init(htmlString: result)
         
-        ivProfile.image = Gender.defaultImg(ShareData.ins.userSex.rawValue)
-        if let userImg = ShareData.ins.dfsObjectForKey(DfsKey.userImg) as? String, let url = Utility.thumbnailUrl(ShareData.ins.userId, userImg) {
+        ivProfile.image = Gender.defaultImg(ShareData.ins.mySex.rawValue)
+        if let userImg = ShareData.ins.dfsObjectForKey(DfsKey.userImg) as? String, let url = Utility.thumbnailUrl(ShareData.ins.myId, userImg) {
             ivProfile.setImageCache(url: url, placeholderImgName: nil)
             ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
         }

@@ -165,8 +165,8 @@ class CamTalkListViewController: MainActionViewController {
         
         var param: [String:Any] = [:]
         param["app_type"] = appType
-        param["user_id"] = ShareData.ins.userId
-        param["my_sex"] = ShareData.ins.userSex.rawValue
+        param["user_id"] = ShareData.ins.myId
+        param["my_sex"] = ShareData.ins.mySex.rawValue
         param["pageNum"] = pageNum
         param["search_sex"] = sortType.key()
         param["search_list"] = listType.rawValue
@@ -222,78 +222,15 @@ class CamTalkListViewController: MainActionViewController {
     func checkPointPhone() {
         
     }
-    
-    override func presentCamTalkAlert() {
-        let customView = Bundle.main.loadNibNamed("CamTalkAlertView", owner: nil, options: nil)?.first as! CamTalkAlertView
-        
-        let vc = CAlertViewController.init(type: .custom, title: "", message: nil, actions: nil) { (vcs, selItem, index) in
-            vcs.dismiss(animated: true, completion: nil)
-            if index == 1 {
-                print("음성")
-                self.actionAlertPhoneCall()
-            }
-            else if index == 2 {
-                print("영상")
-                self.actionAlertCamTalkCall()
-            }
-        }
-        
-        vc.addCustomView(customView)
-        customView.configurationData(selectedUser)
-        vc.iconImgName = customView.getImgUrl()
-        vc.aletTitle = customView.getTitleAttr()
-        
-        if ShareData.ins.userSex.rawValue == "남" {
-            if isMyFriend {
-                customView.lbMsg1.text = "대화 목록에 있는 상대는 신청이 무료입니다"
-                customView.lbMsg2.isHidden = true
-            }
-            else {
-                customView.lbMsg2.isHidden = false
-                var camPoint = "0"
-                var phonePoint = "0"
-                
-                if let p1 = ShareData.ins.dfsObjectForKey(DfsKey.camOutUserPoint) as? NSNumber, let p2 = ShareData.ins.dfsObjectForKey(DfsKey.phoneOutUserPoint) as? NSNumber {
-                    camPoint = p1.stringValue.addComma()
-                    phonePoint = p2.stringValue.addComma()
-                }
-                customView.lbMsg1.text = "영상 음성 채팅 신청시 \(0) 포인트가 차감 됩니다."
-            }
-        }
-        else {
-            customView.lbMsg2.isHidden = true
-            customView.lbMsg1.text = "무료로 이용 가능합니다."
-        }
-        vc.reloadUI()
-        customView.btnReport.addTarget(self, action: #selector(actionAlertReport), for: .touchUpInside)
-        vc.btnIcon.addTarget(self, action: #selector(actionAlertProfile), for: .touchUpInside)
-        vc.addAction(.cancel, "취소", UIImage(systemName: "xmark.circle.fill"), RGB(216, 216, 216))
-        vc.addAction(.ok, "음성", UIImage(systemName: "phone.fill.arrow.up.right"), RGB(230, 100, 100))
-        vc.addAction(.ok, "영상", UIImage(systemName: "arrow.up.right.video.fill"), RGB(230, 100, 100))
-        self.present(vc, animated: true, completion: nil)
-    }
-  
-    @objc private func actionAlertProfile() {
-        if let presentedVc = presentedViewController {
-            presentedVc.dismiss(animated: false, completion: nil)
-        }
+    override func actionAlertPhoneCall() {
         
     }
-    @objc private func actionAlertReport() {
-        if let presentedVc = presentedViewController {
-            presentedVc.dismiss(animated: false, completion: nil)
-        }
-        self.presentBlockAlert()
-    }
-    private func actionAlertPhoneCall() {
+    override func actionAlertCamTalkCall() {
         
     }
-    private func actionAlertCamTalkCall() {
-    }
-    
-    func presentBlockAlert() {
-        let user_name = self.selectedUser["user_name"].stringValue
-        let user_id = self.selectedUser["user_id"].stringValue
+    override func actionBlockAlert() {
+        let user_name = self.selUser["user_name"].stringValue
+        let user_id = self.selUser["user_id"].stringValue
         
         let alert = CAlertViewController.init(type: .alert, title: "\(user_name)님 신고하기", message: nil, actions: [.cancel, .ok]) { (vcs, selItem, index) in
             
@@ -302,7 +239,7 @@ class CamTalkListViewController: MainActionViewController {
                     return
                 }
                 vcs.dismiss(animated: true, completion: nil)
-                let param = ["user_name":user_name, "to_user_id":user_id, "user_id":ShareData.ins.userId, "memo":text]
+                let param = ["user_name":user_name, "to_user_id":user_id, "user_id":ShareData.ins.myId, "memo":text]
                 ApiManager.ins.requestReport(param: param) { (res) in
                     let isSuccess = res["isSuccess"].stringValue
                     if isSuccess == "01" {
@@ -320,7 +257,7 @@ class CamTalkListViewController: MainActionViewController {
             }
         }
         alert.iconImg = UIImage(named: "warning")
-        alert.addTextView("내용을 입력해주세요.", UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+        alert.addTextView("신고 내용을 입력해주세요.", UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
         
         self.present(alert, animated: true, completion: nil)
     }
@@ -344,8 +281,8 @@ extension CamTalkListViewController: UITableViewDataSource, UITableViewDelegate 
                 }
                 
                 if index == 100 {
-                    self.selectedUser = selData
-                    self.checkAvaiableCamTalk()
+                    self.selUser = selData
+                    self.checkCamTalk()
                 }
             }
         }
@@ -353,8 +290,8 @@ extension CamTalkListViewController: UITableViewDataSource, UITableViewDelegate 
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        self.selectedUser = listData[indexPath.row]
-        self.checkAvaiableCamTalk()
+        self.selUser = listData[indexPath.row]
+        self.checkCamTalk()
     }
 }
 
@@ -377,8 +314,8 @@ extension CamTalkListViewController: UICollectionViewDataSource, UICollectionVie
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        self.selectedUser = listData[indexPath.row]
-        self.checkAvaiableCamTalk()
+        self.selUser = listData[indexPath.row]
+        self.checkCamTalk()
     }
 }
 

@@ -17,7 +17,7 @@ class IntroViewController: UIViewController {
         
         if let userId = ShareData.ins.dfsObjectForKey(DfsKey.userId) as? String, userId.length > 0 {
             //유저 아이디 disk 저장되있는것을 메모리에 올린다.
-            ShareData.ins.userId = userId
+            ShareData.ins.myId = userId
             self.requestUserInfo()
         }
         else {
@@ -26,7 +26,7 @@ class IntroViewController: UIViewController {
             if (userIdentifier.isEmpty == false) {
                 let userInfo = CipherManager.aes128Decrypt(toHex: userIdentifier)
                 let userId = Utility.createUserId(userInfo)
-                ShareData.ins.userId = userId
+                ShareData.ins.myId = userId
                 self.requestUserInfo()
             }
             else {
@@ -37,10 +37,10 @@ class IntroViewController: UIViewController {
     
     //탈퇴회원인지 체크
     func requestUserInfo() {
-        if ShareData.ins.userId.isEmpty == true {
+        if ShareData.ins.myId.isEmpty == true {
             return
         }
-        let param = ["app_type": appType, "user_id": ShareData.ins.userId]
+        let param = ["app_type": appType, "user_id": ShareData.ins.myId]
         
         ApiManager.ins.requestUerInfo(param: param) { (response) in
             
@@ -90,7 +90,7 @@ class IntroViewController: UIViewController {
     }
     
     func requestCheckUserBlock() {
-        let param = ["user_id":ShareData.ins.userId]
+        let param = ["user_id":ShareData.ins.myId]
         ApiManager.ins.requestCheckBlockUser(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {

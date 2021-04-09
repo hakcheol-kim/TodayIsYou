@@ -51,7 +51,6 @@ class CamTalkAlertView: UIView {
                 break
             }
         }
-        
         return imgUrl
     }
     

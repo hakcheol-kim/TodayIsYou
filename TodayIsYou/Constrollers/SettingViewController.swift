@@ -38,7 +38,7 @@ class SettingViewController: BaseViewController {
     }
     
     func requestMyInfo() {
-        ApiManager.ins.requestUerInfo(param: ["user_id":ShareData.ins.userId]) { (response) in
+        ApiManager.ins.requestUerInfo(param: ["user_id":ShareData.ins.myId]) { (response) in
             self.userInfo = response
             self.decorationUi()
             ShareData.ins.setUserInfo(response)
@@ -91,13 +91,13 @@ class SettingViewController: BaseViewController {
                     
                     if isSuccess == "01" {
                         if "Y1" == point_save {
-                            if "남" == ShareData.ins.userSex.rawValue {
+                            if "남" == ShareData.ins.mySex.rawValue {
                                 self.showToast("출석 체크 포인트가 적립 되었습니다")
                             }
                             self.requestMyHomePoint()
                         }
                         else if "Y2" == point_save {
-                            if "남" == ShareData.ins.userSex.rawValue {
+                            if "남" == ShareData.ins.mySex.rawValue {
                                 var point = "0"
                                 if let p = ShareData.ins.dfsObjectForKey(DfsKey.dayLimitPoint) as? NSNumber {
                                     point = p.stringValue
@@ -106,7 +106,7 @@ class SettingViewController: BaseViewController {
                                 self.showToast(msg)
                             }
                         }
-                        else if "N" == ShareData.ins.userSex.rawValue {
+                        else if "N" == ShareData.ins.mySex.rawValue {
                             self.showToast("이미 출석 체크를 했습니다")
                         }
                     }

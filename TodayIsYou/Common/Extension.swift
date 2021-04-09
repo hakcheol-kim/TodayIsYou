@@ -201,8 +201,6 @@ extension UIImageView {
 }
 extension UIButton {
     func setImageCache(url:String, placeholderImgName:String?) {
-        var placeholderImg: UIImage? = nil
-        
         guard let reqUrl = URL(string: url) else {
             return
         }

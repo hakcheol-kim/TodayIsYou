@@ -111,6 +111,7 @@ class CAlertViewController: UIViewController {
                 btnIcon.isHidden = false
                 if iconImgName.contains("http") == true || iconImgName.contains("https") {
                     btnIcon.setImageCache(url: iconImgName, placeholderImgName: nil)
+                    btnIcon.accessibilityValue = iconImgName
                 }
                 else {
                     if let image = UIImage(named: iconImgName) {

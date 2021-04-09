@@ -155,7 +155,7 @@ class ConnectUserListViewController: BaseViewController {
         
         var param: [String:Any] = [:]
         param["app_type"] = appType
-        param["user_id"] = ShareData.ins.userId
+        param["user_id"] = ShareData.ins.myId
         param["pageNum"] = pageNum
         if searchSex == "성별" {
             param["search_sex"] = ""

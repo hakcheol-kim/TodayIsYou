@@ -26,7 +26,7 @@ class ConfigurationViewController: BaseViewController {
     }
     
     func reqeustGetUserInfo() {
-        let param = ["user_id": ShareData.ins.userId]
+        let param = ["user_id": ShareData.ins.myId]
         ApiManager.ins.requestUerInfo(param: param) { (response) in
             let isSuccess = response["isSuccess"]
             if isSuccess == "01" {
@@ -120,7 +120,7 @@ class ConfigurationViewController: BaseViewController {
         }
     }
     func resputUserOut() {
-        let param = ["user_id": ShareData.ins.userId]
+        let param = ["user_id": ShareData.ins.myId]
         ApiManager.ins.requestUserOut(param:param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
@@ -152,7 +152,7 @@ class ConfigurationViewController: BaseViewController {
         }
         
         var param:[String:Any] = [:]
-        param["user_id"] = ShareData.ins.userId
+        param["user_id"] = ShareData.ins.myId
         param["recommend"] = "Y"
         param["noti_yn"] = notiYn
         param["connect_push"] = connectPush

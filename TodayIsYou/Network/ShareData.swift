@@ -10,8 +10,8 @@ import SwiftyJSON
 
 class ShareData: NSObject {
     static let ins = ShareData()
-    var userId: String = ""
-    var userSex: Gender = .mail
+    var myId: String = ""
+    var mySex: Gender = .mail
     var userPoint: NSNumber? = nil
     
     func dfsSetValue(_ value: Any?, forKey key: String) {
@@ -57,14 +57,14 @@ class ShareData: NSObject {
         dfs.setValue(cam_user_img, forKey: DfsKey.camUserImg)
         dfs.setValue(connect_push, forKey: DfsKey.connectPush)
         
-        self.userId = user_id
+        self.myId = user_id
         self.userPoint = user_point
         
         if user_sex == "남" {
-            self.userSex = Gender.mail
+            self.mySex = Gender.mail
         }
         else {
-            self.userSex = Gender.femail
+            self.mySex = Gender.femail
         }
         
         dfs.synchronize()

@@ -81,7 +81,7 @@ class MainViewController: BaseViewController {
                     self.changeNaviTitle("인기순위")
                     break
                 case 4:
-                    let vc = RankListViewController.instantiateFromStoryboard(.main)!
+                    let vc = MessageListViewController.instantiateFromStoryboard(.main)!
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     self.selectedVc = vc
                     self.changeNaviTitle("쪽지함")
@@ -118,9 +118,9 @@ class MainViewController: BaseViewController {
         
         CNavigationBar.drawLeftBarItem(self, UIImage(systemName: "text.justify"), "영상토크", TAG_NAVI_TITLE, #selector(onclickedBtnActions(_ :)))
         
-        CNavigationBar.drawRight(self, UIImage(named: "point"), nil, TAG_NAVI_POINT, #selector(onclickedBtnActions(_:)))
-        CNavigationBar.drawRight(self, nil, "0 S", TAG_NAVI_S_COINT, nil)
         CNavigationBar.drawRight(self, nil, "0 P", TAG_NAVI_P_COINT, nil)
+        CNavigationBar.drawRight(self, nil, "0 S", TAG_NAVI_S_COINT, nil)
+        CNavigationBar.drawRight(self, UIImage(named: "point"), nil, TAG_NAVI_POINT, #selector(onclickedBtnActions(_:)))
        
         tabView.addShadow(offset: CGSize(width: 1, height: 1), color: RGBA(0, 0, 0, 0.3), raduius: 3, opacity: 0.3)
         
@@ -141,7 +141,7 @@ class MainViewController: BaseViewController {
         
     }
     func requestGetUserInfo() {
-        let param = ["app_type": appType, "user_id":ShareData.ins.userId]
+        let param = ["app_type": appType, "user_id":ShareData.ins.myId]
         ApiManager.ins.requestUerInfo(param: param) { (response) in
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
@@ -230,36 +230,17 @@ class MainViewController: BaseViewController {
     }
     
     func updateNaviPoint() {
-        guard let navibar = self.navigationController?.navigationBar, let btnP = navibar.viewWithTag(TAG_NAVI_P_COINT) as? UIButton else {
-            return
-        }
-        
-        var point = ""
+        var pointP = "0 P"
         if let userPoint = ShareData.ins.userPoint {
-            point = "\(userPoint.stringValue.addComma()) P"
+            pointP = "\(userPoint.stringValue.addComma()) P"
         }
-        else {
-            point = "0 P"
-        }
-        btnP.setTitle(point, for: .normal)
-        let size = btnP.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: btnP.bounds.height))
-        btnP.frame = CGRect(origin: btnP.frame.origin, size: size)
-        
-        guard let btnS = navibar.viewWithTag(TAG_NAVI_S_COINT) as? UIButton else {
-            return
-        }
-        
-        var pointS = ""
+        CNavigationBar.drawRight(self, nil, pointP, TAG_NAVI_P_COINT, nil)
+
+        var pointS = "0 S"
         if let sPoint = ShareData.ins.dfsObjectForKey(DfsKey.userR) as? NSNumber {
             pointS = "\(sPoint.stringValue.addComma()) S"
         }
-        else {
-            pointS = "0 S"
-        }
-        
-        btnS.setTitle(pointS, for: .normal)
-        let size2 = btnS.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude, height: btnS.bounds.height))
-        btnS.frame = CGRect(origin: btnS.frame.origin, size: size2)
+        CNavigationBar.drawRight(self, nil, pointS, TAG_NAVI_S_COINT, nil)
     }
 }
 

@@ -47,7 +47,7 @@ class TalkWriteViewController: BaseViewController {
     }
     //영상토크
     func requestMyImgTalk() {
-        ApiManager.ins.requestMyImgTalk(param: ["user_id":ShareData.ins.userId]) { (res) in
+        ApiManager.ins.requestMyImgTalk(param: ["user_id":ShareData.ins.myId]) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
                 self.data = res
@@ -62,7 +62,7 @@ class TalkWriteViewController: BaseViewController {
     }
     //토크
     func requestMyTalk() {
-        ApiManager.ins.requestMyTalk(param: ["user_id":ShareData.ins.userId]) { (res) in
+        ApiManager.ins.requestMyTalk(param: ["user_id":ShareData.ins.myId]) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
                 self.data = res
@@ -83,23 +83,23 @@ class TalkWriteViewController: BaseViewController {
         self.selMemo = contents
         let ivProfile = btnProfile.viewWithTag(100) as! UIImageView
 
-        if let url = Utility.thumbnailUrl(ShareData.ins.userId, user_img) {
+        if let url = Utility.thumbnailUrl(ShareData.ins.myId, user_img) {
             ivProfile.setImageCache(url: url, placeholderImgName: nil)
             ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
             ivProfile.clipsToBounds = true
         }
         else {
-            ivProfile.image = Gender.defaultImg(ShareData.ins.userSex.rawValue)
+            ivProfile.image = Gender.defaultImg(ShareData.ins.mySex.rawValue)
         }
         
         lbMsg.text = "사진은 검증된 이미지만 등록 됩니다."
         if type == .cam {
-            if let camDayPoint = ShareData.ins.dfsObjectForKey(DfsKey.camDayPoint) as? NSNumber, camDayPoint.intValue > 0, "남" == ShareData.ins.userSex.rawValue {
+            if let camDayPoint = ShareData.ins.dfsObjectForKey(DfsKey.camDayPoint) as? NSNumber, camDayPoint.intValue > 0, "남" == ShareData.ins.mySex.rawValue {
                 lbMsg.text = "사진은 검증된 이미지만 등록 됩니다.\n1일 1회 토크 등록시 " + camDayPoint.stringValue + "P를 적립해 드립니다"
             }
         }
         else if type == .cam {
-            if let talkDayPoint = ShareData.ins.dfsObjectForKey(DfsKey.talkDayPoint) as? NSNumber, talkDayPoint.intValue > 0, "남" == ShareData.ins.userSex.rawValue {
+            if let talkDayPoint = ShareData.ins.dfsObjectForKey(DfsKey.talkDayPoint) as? NSNumber, talkDayPoint.intValue > 0, "남" == ShareData.ins.mySex.rawValue {
                 lbMsg.text = "사진은 검증된 이미지만 등록 됩니다.\n1일 1회 토크 등록시 " + talkDayPoint.stringValue + "P를 적립해 드립니다"
             }
         }
@@ -160,15 +160,15 @@ class TalkWriteViewController: BaseViewController {
         }
         else if sender == btnRegiTalk {
             if type == .cam {
-                let param = ["user_id":ShareData.ins.userId, "contents":selMemo]
+                let param = ["user_id":ShareData.ins.myId, "contents":selMemo]
                 ApiManager.ins.requestChangeCamTalk(param: param) { (res) in
                     let isSuccess = res["isSuccess"].stringValue
                     let point_save = res["point_save"].stringValue
                     if isSuccess == "01" {
-                        if "Y1" == point_save && "남" == ShareData.ins.userSex.rawValue {
+                        if "Y1" == point_save && "남" == ShareData.ins.mySex.rawValue {
                             self.showToastWindow("포인트가 적립 되었습니다")
                         }
-                        else if "Y2" == point_save && "남" == ShareData.ins.userSex.rawValue {
+                        else if "Y2" == point_save && "남" == ShareData.ins.mySex.rawValue {
                             var point = "0"
                             if let p = ShareData.ins.dfsObjectForKey(DfsKey.dayLimitPoint) as? NSNumber {
                                 point = p.stringValue
@@ -189,15 +189,15 @@ class TalkWriteViewController: BaseViewController {
             }
             else if type == .talk {
                 let point = data["user_bbs_point"].numberValue
-                let parma:[String:Any] = ["user_id" : ShareData.ins.userId, "title" : selMemo, "user_bbs_point" : point]
+                let parma:[String:Any] = ["user_id" : ShareData.ins.myId, "title" : selMemo, "user_bbs_point" : point]
                 ApiManager.ins.requestChangeTalk(param: parma) { (res) in
                     let isSuccess = res["isSuccess"].stringValue
                     let point_save = res["point_save"].stringValue
                     if isSuccess == "01" {
-                        if "Y1" == point_save && "남" == ShareData.ins.userSex.rawValue {
+                        if "Y1" == point_save && "남" == ShareData.ins.mySex.rawValue {
                             self.showToastWindow("포인트가 적립 되었습니다")
                         }
-                        else if "Y2" == point_save && "남" == ShareData.ins.userSex.rawValue {
+                        else if "Y2" == point_save && "남" == ShareData.ins.mySex.rawValue {
                             var point = "0"
                             if let p = ShareData.ins.dfsObjectForKey(DfsKey.dayLimitPoint) as? NSNumber {
                                 point = p.stringValue

@@ -107,7 +107,7 @@ class PhotoDetailViewController: MainActionViewController {
     func checkPhotoDetail() {
         let seq = passData["seq"].stringValue
         let user_id = passData["user_id"].stringValue
-        let param = ["my_user_id":ShareData.ins.userId, "user_id": user_id, "seq":seq]
+        let param = ["my_user_id":ShareData.ins.myId, "user_id": user_id, "seq":seq]
     
         ApiManager.ins.requestPhotoDetailCheck(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
@@ -190,14 +190,14 @@ class PhotoDetailViewController: MainActionViewController {
         if let p = ShareData.ins.dfsObjectForKey(DfsKey.userBbsPoint) as? NSNumber {
             bbsPoint = p.intValue
         }
-        param["user_id"] = ShareData.ins.userId
-        param["from_user_id"] = ShareData.ins.userId
-        param["from_user_sex"] = ShareData.ins.userSex.rawValue
+        param["user_id"] = ShareData.ins.myId
+        param["from_user_id"] = ShareData.ins.myId
+        param["from_user_sex"] = ShareData.ins.mySex.rawValue
         param["to_user_id"] = passData["user_id"].stringValue
         param["to_user_name"] = passData["user_name"].stringValue
         param["memo"] = content
         param["user_bbs_point"] = bbsPoint
-        param["point_user_id"] = ShareData.ins.userId
+        param["point_user_id"] = ShareData.ins.myId
         param["friend_mode"] = friend_mode
         
         ApiManager.ins.requestSendTalkMsg(param: param) { (res) in
@@ -252,14 +252,15 @@ extension PhotoDetailViewController: UICollectionViewDelegate, UICollectionViewD
                 guard let selItem = selItem else {
                     return
                 }
+                let user_id = selItem["user_id"].stringValue
+                
                 if actionIndex == 0 {
-                    let user_id = selItem["user_id"].stringValue
                     let seq = selItem["seq"].stringValue
                     if user_id.isEmpty == true || seq.isEmpty == true {
                         return
                     }
                     
-                    let param = ["my_user_id":ShareData.ins.userId, "user_id":user_id, "seq": seq]
+                    let param = ["my_user_id":ShareData.ins.myId, "user_id":user_id, "seq": seq]
                     
                     ApiManager.ins.requestGoodPhotoPlus(param: param) { (res) in
                         let isSuccess = res["isSuccess"].stringValue
@@ -277,8 +278,8 @@ extension PhotoDetailViewController: UICollectionViewDelegate, UICollectionViewD
                     }
                 }
                 else if actionIndex == 1 {
-                    self.selectedUser = self.passData
-                    self.checkAvaiableTalkMsg()
+                    self.selUser = selItem
+                    self.checkTalk()
                 }
             }
             return self.myheader!
@@ -313,7 +314,7 @@ extension PhotoDetailViewController: UICollectionViewDelegate, UICollectionViewD
             }
             self.showPhoto(imgUrls: [url])
         }
-        else if end_date.isEmpty == true && "남" == ShareData.ins.userSex.rawValue && photoDayPoint.intValue > 0 {
+        else if end_date.isEmpty == true && "남" == ShareData.ins.mySex.rawValue && photoDayPoint.intValue > 0 {
             let msg = "전체사진을 보기위해 \(photoDayPoint.stringValue) 포인트가 소모되며\n24시간동안 볼수 있습니다.\n결제하시겠습니까?"
             CAlertViewController.show(type:.alert, title:"전체사진보기", message: msg, actions: [.cancel, .ok]) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)

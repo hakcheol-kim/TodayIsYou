@@ -42,7 +42,7 @@ class ProfileManagerViewController: BaseViewController {
     }
     
     func requestMyInfo() {
-        ApiManager.ins.requestUerInfo(param: ["user_id":ShareData.ins.userId]) { (response) in
+        ApiManager.ins.requestUerInfo(param: ["user_id":ShareData.ins.myId]) { (response) in
             self.userInfo = response
             self.decorationUi()
         } failure: { (error) in
@@ -109,7 +109,7 @@ class ProfileManagerViewController: BaseViewController {
             }
             
             let userName = userInfo["user_name"].stringValue
-            let param = ["user_id":ShareData.ins.userId, "user_name":userName, "user_name_new": text,
+            let param = ["user_id":ShareData.ins.myId, "user_name":userName, "user_name_new": text,
                          "user_age":selAge, "user_sex":userInfo["user_sex"].stringValue]
             
             ApiManager.ins.requestUpdateUerInfo(param: param) { (res) in

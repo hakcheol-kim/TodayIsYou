@@ -18,7 +18,7 @@ class TalkListViewController: MainActionViewController {
     var pageNum: Int = 1
     var pageEnd: Bool = false
     var canRequest = true
-    var searchSex:String = ShareData.ins.userSex.transGender().rawValue
+    var searchSex:String = ShareData.ins.mySex.transGender().rawValue
     var searchArea: String = ""
     
     override func viewDidLoad() {
@@ -60,7 +60,7 @@ class TalkListViewController: MainActionViewController {
         
         var param: [String:Any] = [:]
         param["app_type"] = appType
-        param["user_id"] = ShareData.ins.userId
+        param["user_id"] = ShareData.ins.myId
         param["pageNum"] = pageNum
         param["search_sex"] = searchSex
         param["search_area"] = searchArea
@@ -177,14 +177,14 @@ class TalkListViewController: MainActionViewController {
         if let p = ShareData.ins.dfsObjectForKey(DfsKey.userBbsPoint) as? NSNumber {
             bbsPoint = p.intValue
         }
-        param["user_id"] = ShareData.ins.userId
-        param["from_user_id"] = ShareData.ins.userId
-        param["from_user_sex"] = ShareData.ins.userSex.rawValue
-        param["to_user_id"] = self.selectedUser["user_id"].stringValue
-        param["to_user_name"] = self.selectedUser["user_name"].stringValue
+        param["user_id"] = ShareData.ins.myId
+        param["from_user_id"] = ShareData.ins.myId
+        param["from_user_sex"] = ShareData.ins.mySex.rawValue
+        param["to_user_id"] = self.selUser["user_id"].stringValue
+        param["to_user_name"] = self.selUser["user_name"].stringValue
         param["memo"] = content
         param["user_bbs_point"] = bbsPoint
-        param["point_user_id"] = ShareData.ins.userId
+        param["point_user_id"] = ShareData.ins.myId
         param["friend_mode"] = friend_mode
         
         ApiManager.ins.requestSendTalkMsg(param: param) { (res) in
@@ -230,8 +230,8 @@ extension TalkListViewController: UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.selectedUser = listData[indexPath.row]
-        self.checkAvaiableTalkMsg()
+        self.selUser = listData[indexPath.row]
+        self.checkTalk()
     }
 }
 

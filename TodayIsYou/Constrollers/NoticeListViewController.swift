@@ -21,7 +21,7 @@ class NoticeListViewController: BaseViewController {
         requestNoticeList()
     }
     func requestNoticeList() {
-        ApiManager.ins.requestNoticeList(param: ["user_id": ShareData.ins.userId]) { (response) in
+        ApiManager.ins.requestNoticeList(param: ["user_id": ShareData.ins.myId]) { (response) in
             let isSuccess = response["isSuccess"].stringValue
             let result = response["result"].arrayValue
             if isSuccess == "01" {

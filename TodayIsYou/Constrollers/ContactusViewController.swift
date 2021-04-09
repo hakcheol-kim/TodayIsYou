@@ -39,7 +39,7 @@ class ContactusViewController: BaseViewController {
         }
     }
     func requestQnaList() {
-        ApiManager.ins.requestQnaList(param: ["user_id":ShareData.ins.userId]) { (response) in
+        ApiManager.ins.requestQnaList(param: ["user_id":ShareData.ins.myId]) { (response) in
             let isSuccess = response["isSuccess"].stringValue
             let result =  response["result"].arrayValue
             if isSuccess == "01" {
@@ -67,7 +67,7 @@ class ContactusViewController: BaseViewController {
                 return
             }
             
-            let param = ["question": msg, "user_id": ShareData.ins.userId]
+            let param = ["question": msg, "user_id": ShareData.ins.myId]
             ApiManager.ins.requestQnaWrite(param:param) { (response) in
                 let isSuccess = response["isSuccess"].stringValue
                 if isSuccess == "01" {

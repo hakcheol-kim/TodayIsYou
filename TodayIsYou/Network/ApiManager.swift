@@ -442,4 +442,36 @@ class ApiManager: NSObject {
             fail?(err)
         }
     }
+    ///채팅 상세리스트 불러오기
+    func requestChatMsgList(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/chatMsgUpdate.do", param, URLEncoding.queryString) { (res) in
+            success?(res)
+        } failure: { (err) in
+            fail?(err)
+        }
+    }
+    ///내가 상대를 차단 해제
+    func requestDeleteBlockList(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/deleteBlackList.do", param, URLEncoding.queryString) { (res) in
+            success?(res)
+        } failure: { (err) in
+            fail?(err)
+        }
+    }
+    //블락리스트 추가
+    func requestSetBlockList(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/insertBlackList.do", param, URLEncoding.queryString) { (res) in
+            success?(res)
+        } failure: { (err) in
+            fail?(err)
+        }
+    }
+    //친구 추가
+    func requestSetMyFried(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/insertMyFriend.do", param, URLEncoding.queryString) { (res) in
+            success?(res)
+        } failure: { (err) in
+            fail?(err)
+        }
+    }
 }

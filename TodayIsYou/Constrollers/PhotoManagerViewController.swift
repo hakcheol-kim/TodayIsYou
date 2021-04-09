@@ -44,7 +44,7 @@ class PhotoManagerViewController: BaseViewController {
     }
     
     func reqeustGetMyPhotoList() {
-        ApiManager.ins.requestGetMyPhotos(param: ["user_id":ShareData.ins.userId]) { (response) in
+        ApiManager.ins.requestGetMyPhotos(param: ["user_id":ShareData.ins.myId]) { (response) in
             let isSuccess = response["isSuccess"].stringValue
             let result = response["result"].arrayValue
             
@@ -161,7 +161,7 @@ class PhotoManagerViewController: BaseViewController {
                         }
                     }
                     
-                    param["user_id"] = ShareData.ins.userId
+                    param["user_id"] = ShareData.ins.myId
                     param["user_file"] = crop
                     
                     ApiManager.ins.requestRegistPhoto(param: param) { (res) in
@@ -251,7 +251,7 @@ extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionView
         let view_yn = item["view_yn"].stringValue
         
         var imgName = "icon_man"
-        if ShareData.ins.userSex.rawValue == "여" {
+        if ShareData.ins.mySex.rawValue == "여" {
             imgName = "icon_femail"
         }
         if let url = Utility.thumbnailUrl(user_id, user_img) {
@@ -308,13 +308,13 @@ extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionView
                     }
                     
                     if btn.isSelected == true {
-                        param["user_id"] = ShareData.ins.userId
+                        param["user_id"] = ShareData.ins.myId
                         param["user_file"] = item["user_img"].stringValue
                         param["contents"] = ""
                         self.requestChangePhotoTalk(param)
                     }
                     else {
-                        param["user_id"] = ShareData.ins.userId
+                        param["user_id"] = ShareData.ins.myId
                         param["user_file"] = item["user_img"].stringValue
                         param["image_profile_save"] = false
                         param["image_cam_save"] = false
@@ -358,7 +358,7 @@ extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionView
                 else if index == 3, vcs.arrBtnCheck.count > 0 {
                     var param:[String:Any] = [:]
                     param["user_file"] = item["user_img"].stringValue
-                    param["user_id"] = ShareData.ins.userId
+                    param["user_id"] = ShareData.ins.myId
                     
                     for i in 0..<vcs.arrBtnCheck.count {
                         let btn = vcs.arrBtnCheck[i]

@@ -44,7 +44,6 @@ class CNavigationBar: UINavigationBar {
             
             button.frame = CGRect.init(x: 0, y: 0, width: width + button.titleEdgeInsets.left, height: button.frame.size.height)
         }
-       
         let barBtn = UIBarButtonItem.init(customView: button)
         barBtn.tag = TAG_NAVI_BACK
         controller.navigationItem.setLeftBarButton(barBtn, animated: false)
@@ -100,7 +99,7 @@ class CNavigationBar: UINavigationBar {
         naviBar?.shadowImage = UIImage.init()
         UINavigationBar.appearance().shadowImage = UIImage.init()
     }
-    
+
     class func drawRight(_ controller: UIViewController, _ img:UIImage?, _ title: String?, _ tag:Int,  _ selctor:Selector?) {
         
         let button: UIButton = UIButton.init(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
@@ -119,12 +118,7 @@ class CNavigationBar: UINavigationBar {
             button.setTitle(title, for: .normal)
             
             let width: CGFloat = button.sizeThatFits(CGSize.init(width: CGFloat.greatestFiniteMagnitude, height: button.frame.size.height)).width
-//            if width > 250.0 {
-//                width = 250
-//            }
-//            else if width < 44 {
-//                width = 44
-//            }
+
             button.frame = CGRect.init(x: 0, y: 0, width: width + 8, height: button.frame.size.height)
         }
 //        button.layer.borderColor = UIColor.white.cgColor;
@@ -134,9 +128,23 @@ class CNavigationBar: UINavigationBar {
         }
         
         let barBtn = UIBarButtonItem.init(customView: button)
+        barBtn.tag = tag
+        
         if var items = controller.navigationItem.rightBarButtonItems, items.isEmpty == false {
-            items.append(barBtn)
-            controller.navigationItem.setRightBarButtonItems(items, animated: false)
+            var hasExistBarItem = false
+            for (index, item) in items.enumerated() {
+                if item.tag == tag {
+                    items[index] = barBtn
+                    hasExistBarItem = true
+                    break
+                }
+            }
+            if hasExistBarItem == false {
+                controller.navigationItem.rightBarButtonItems?.insert(barBtn, at: 0)
+            }
+            else {
+                controller.navigationItem.rightBarButtonItems = items
+            }
         }
         else {
             controller.navigationItem.setRightBarButton(barBtn, animated: false)

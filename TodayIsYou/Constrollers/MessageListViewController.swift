@@ -18,7 +18,7 @@ class MessageListViewController: BaseViewController {
     var pageNum: Int = 1
     var pageEnd: Bool = false
     var canRequest = true
-    var searchSex:Gender = ShareData.ins.userSex.transGender()
+    var searchSex:Gender = ShareData.ins.mySex.transGender()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,7 +30,7 @@ class MessageListViewController: BaseViewController {
         tblView.cr.addHeadRefresh { [weak self] in
             self?.dataRest()
         }
-        
+
         self.dataRest()
     }
     
@@ -52,7 +52,7 @@ class MessageListViewController: BaseViewController {
         
         var param:[String:Any] = [:]
         
-        param["user_id"] = ShareData.ins.userId
+        param["user_id"] = ShareData.ins.myId
         param["pageNum"] = pageNum
         ApiManager.ins.requestMsgList(param: param) { (response) in
             self.canRequest = true
@@ -97,7 +97,7 @@ class MessageListViewController: BaseViewController {
             CAlertViewController.show(type: .alert, title: "대화삭제", message: "모든 대화가 삭제됩니다.", actions: [.cancel , .ok]) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 if index == 1 {
-                    ApiManager.ins.requestMssageAllDelete(param: ["user_id":ShareData.ins.userId]) { (res) in
+                    ApiManager.ins.requestMssageAllDelete(param: ["user_id":ShareData.ins.myId]) { (res) in
                         let isSuccess = res["isSuccess"].stringValue
                         if isSuccess == "01" {
                             self.dataRest()

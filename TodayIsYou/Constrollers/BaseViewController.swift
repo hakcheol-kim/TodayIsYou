@@ -27,7 +27,7 @@ class BaseViewController: UIViewController {
     }
     
     func requestMyHomePoint() {
-        let param = ["user_id": ShareData.ins.userId]
+        let param = ["user_id": ShareData.ins.myId]
         
         ApiManager.ins.requestMyHomePoint(param:param) { (respone) in
             let isSuccess = respone["isSuccess"].stringValue
