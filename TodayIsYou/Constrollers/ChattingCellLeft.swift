@@ -7,15 +7,15 @@
 
 import UIKit
 import SwiftyJSON
-
-class ChattingCell: UITableViewCell {
-    static let identifier = "ChattingCell"
+import UIImageViewAlignedSwift
+class ChattingCellLeft: UITableViewCell {
+    static let identifier = "ChattingCellLeft"
     
     @IBOutlet weak var svContent: UIStackView!
     @IBOutlet weak var svSub: UIStackView!
     
-    @IBOutlet weak var ivMangerIcon: UIImageView!
-    @IBOutlet weak var lbManagerTitle: UILabel!
+    @IBOutlet weak var ivIcon: UIImageViewAligned!
+    @IBOutlet weak var lbName: UILabel!
     @IBOutlet weak var ivBgView: UIImageView!
     @IBOutlet weak var lbMessage: UILabel!
     @IBOutlet weak var lbDate: UILabel!
@@ -29,31 +29,28 @@ class ChattingCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configurationData(_ data: JSON?) {
-        guard let data = data else {
+    func configurationData(_ data: ChatMessage?) {
+        guard let chat = data else {
             lbMessage.text = ""
             lbDate.text = ""
             return
         }
-        let answer_date = data["answer_date"].stringValue
-        let answer = data["answer"].stringValue
         
-        let question = data["question"].stringValue
-        let question_date = data["question_date"].stringValue
-        
-        ivMangerIcon.isHidden = true
-        lbManagerTitle.isHidden = true
+        ivSenderIcon.isHidden = true
+        lbSenderName.isHidden = true
         let lbTmp = self.getTmpLabel()
         
         ivBgView.backgroundColor = UIColor.clear
         ivBgView.contentMode = .scaleToFill
         
-        if answer_date.isEmpty == false {
+        if chat.type == 0 {
             svSub.alignment = .leading
-            ivMangerIcon.isHidden = false
-            lbManagerTitle.isHidden = false
-            lbMessage.text = answer
-            lbDate.text = answer_date
+            ivSenderIcon.isHidden = false
+            lbSenderName.isHidden = false
+            
+            
+            lbMessage.text = chat.memo
+            lbDate.text = chat.to_user_name
             svContent.addArrangedSubview(lbTmp)
 
             ivBgView.tintColor = UIColor(named: "chat_bubble_color_sent")
