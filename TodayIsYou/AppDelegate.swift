@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 import NVActivityIndicatorView
 import KakaoSDKAuth
 import KakaoSDKCommon
@@ -186,20 +187,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("=== apn token regist failed")
     }
+    
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "TodayIsYou")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+           
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }()
+    // MARK: - Core Data Saving support
+    func saveContext () {
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+               let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+    }
 }
+
 extension AppDelegate: UNUserNotificationCenterDelegate {
     //앱이 켜진상태, Forground
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
         let userInfo = notification.request.content.userInfo
-        
         guard let aps = userInfo["aps"] as? [String:Any], let alert = aps["alert"] as? [String:Any] else {
             return
         }
         guard let title = alert["title"] as? String else {
             return
         }
-        
+        print("push data: ==== \(userInfo)")
         var message:String?
         if let body = alert["body"] as? String {
             message = body

@@ -168,7 +168,7 @@ extension UIView {
 
 //FIXME:: UIImageView
 extension UIImageView {
-    func setImageCache(url:String, placeholderImgName:String?) {
+    func setImageCache(_ url:String, _ placeholderImgName:String? = nil) {
         var placeholderImg: UIImage? = nil
         if let placeholderImgName = placeholderImgName {
             placeholderImg = UIImage(named: placeholderImgName)
@@ -200,7 +200,7 @@ extension UIImageView {
         }
 }
 extension UIButton {
-    func setImageCache(url:String, placeholderImgName:String?) {
+    func setImageCache(_ url:String, _ placeholderImgName:String? = nil) {
         guard let reqUrl = URL(string: url) else {
             return
         }
@@ -269,6 +269,9 @@ extension UIImage {
         return UIGraphicsImageRenderer(size: canvas, format: format).image {
             _ in draw(in: CGRect(origin: .zero, size: canvas))
         }
+    }
+    func getCropRatio() -> CGFloat {
+        return CGFloat(self.size.height/self.size.width)
     }
 }
 //FIXME:: Error

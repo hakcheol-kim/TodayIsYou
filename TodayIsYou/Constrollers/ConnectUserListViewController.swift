@@ -86,7 +86,7 @@ class ConnectUserCell: UITableViewCell {
         
         ivProfile.image = Gender.defaultImg(user_sex)
         if let url = Utility.thumbnailUrl(user_id, user_img) {
-            ivProfile.setImageCache(url: url, placeholderImgName: nil)
+            ivProfile.setImageCache(url)
         }
     }
 }

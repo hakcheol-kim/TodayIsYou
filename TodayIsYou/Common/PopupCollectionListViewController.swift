@@ -32,7 +32,7 @@ class PopupCollectionListViewController: BaseViewController {
     var keys:[String]? = nil
     var type:PopupColType = .normal
     var vcTitle: Any?
-    var fitHeight:CGFloat = 100
+    var fitHeight:CGFloat = 0
     
     var completion:((_ vcs: UIViewController, _ selItem:Any?, _ index:NSInteger) -> Void)?
     
@@ -76,14 +76,14 @@ class PopupCollectionListViewController: BaseViewController {
         layout.delegate = self
         collectionView.collectionViewLayout = layout
         
-        self.collectionView.reloadData {
-            self.view.layoutIfNeeded()
-            self.fitHeight = self.collectionView.contentSize.height
-            if self.svTitle.isHidden == false {
-                self.fitHeight += self.svTitle.bounds.height
-            }
-            self.panModalSetNeedsLayoutUpdate()
+        self.collectionView.reloadData()
+        self.view.layoutIfNeeded()
+        
+        self.fitHeight = self.collectionView.contentSize.height
+        if self.svTitle.isHidden == false {
+            self.fitHeight += self.svTitle.bounds.height
         }
+        self.panModalSetNeedsLayoutUpdate()
     }
     
     @objc func onClickedBtnActions(_ sender: UIButton) {

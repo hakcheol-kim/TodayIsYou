@@ -84,7 +84,7 @@ class TalkWriteViewController: BaseViewController {
         let ivProfile = btnProfile.viewWithTag(100) as! UIImageView
 
         if let url = Utility.thumbnailUrl(ShareData.ins.myId, user_img) {
-            ivProfile.setImageCache(url: url, placeholderImgName: nil)
+            ivProfile.setImageCache(url)
             ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
             ivProfile.clipsToBounds = true
         }

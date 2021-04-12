@@ -255,7 +255,7 @@ extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionView
             imgName = "icon_femail"
         }
         if let url = Utility.thumbnailUrl(user_id, user_img) {
-            cell.ivThumb.setImageCache(url: url, placeholderImgName: imgName)
+            cell.ivThumb.setImageCache(url)
         }
         if view_yn == "Y" {
             cell.btnState.setTitle("검중완료", for: .normal)

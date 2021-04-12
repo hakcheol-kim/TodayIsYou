@@ -56,7 +56,7 @@ class PhotoDetailReusableView: UICollectionReusableView {
         
         ivThumb.image = Gender.defaultImg(user_sex)
         if let url = Utility.originImgUrl(user_id, file_name) {
-            ivThumb.setImageCache(url: url, placeholderImgName: nil)
+            ivThumb.setImageCache(url)
         }
         lbName.text = user_name
         btnHeartCnt.setTitle("\(recommend_cnt)", for: .normal)

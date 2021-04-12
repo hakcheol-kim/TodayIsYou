@@ -72,7 +72,7 @@ class NetworkManager: NSObject {
         }
         
         AppDelegate.ins.startIndicator()
-        let header: HTTPHeaders = [.contentType(ContentType.formdata.rawValue), .accept(ContentType.json.rawValue)]
+        let header: HTTPHeaders = [.contentType(ContentType.formdata.rawValue)]
         
         AF.upload(multipartFormData: { (multipartFormData) in
             for (key, value) in param {

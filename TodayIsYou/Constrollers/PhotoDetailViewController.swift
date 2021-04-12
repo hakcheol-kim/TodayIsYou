@@ -54,7 +54,7 @@ class PhotoDetailColCell: UICollectionViewCell {
         
         ivThumb.image = nil
         if let url = Utility.thumbnailUrl(user_id, img_name) {
-            ivThumb.setImageCache(url: url, placeholderImgName: nil)
+            ivThumb.setImageCache(url)
         }
         self.setupVisualEffectBlur()
         

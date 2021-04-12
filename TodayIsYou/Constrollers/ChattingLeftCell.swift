@@ -8,23 +8,37 @@
 import UIKit
 import SwiftyJSON
 import UIImageViewAlignedSwift
-class ChattingCellLeft: UITableViewCell {
-    static let identifier = "ChattingCellLeft"
+
+class ChattingLeftCell: UITableViewCell {
+    
+    static let identifier = "ChattingLeftCell"
     
     @IBOutlet weak var svContent: UIStackView!
     @IBOutlet weak var svSub: UIStackView!
-    
-    @IBOutlet weak var ivIcon: UIImageViewAligned!
+    @IBOutlet weak var ivFile: UIImageView!
+    @IBOutlet weak var ivIcon: UIImageView!
     @IBOutlet weak var lbName: UILabel!
     @IBOutlet weak var ivBgView: UIImageView!
     @IBOutlet weak var lbMessage: UILabel!
     @IBOutlet weak var lbDate: UILabel!
     @IBOutlet weak var svMsg: UIStackView!
+    
+    let calendar = Calendar.init(identifier: .gregorian)
+    let df = CDateFormatter()
+
+    var didClickedClosure:((_ selData:Any?, _ actionIdx: Int) -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        df.locale = Locale(identifier: "ko_KR")
+        ivFile.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer.init(target: self, action: #selector(tapGesuterHandler(_ :)))
+        ivFile.addGestureRecognizer(tap)
+        
+        ivFile.layer.cornerRadius = 16
+        ivFile.clipsToBounds = true
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
@@ -36,60 +50,59 @@ class ChattingCellLeft: UITableViewCell {
             return
         }
         
-        ivSenderIcon.isHidden = true
-        lbSenderName.isHidden = true
-        let lbTmp = self.getTmpLabel()
+        ivIcon.layer.cornerRadius = 18
         
         ivBgView.backgroundColor = UIColor.clear
         ivBgView.contentMode = .scaleToFill
+        svSub.alignment = .leading
+        lbName.text = chat.to_user_name
+        lbMessage.text = chat.memo
         
-        if chat.type == 0 {
-            svSub.alignment = .leading
-            ivSenderIcon.isHidden = false
-            lbSenderName.isHidden = false
-            
-            
-            lbMessage.text = chat.memo
-            lbDate.text = chat.to_user_name
-            svContent.addArrangedSubview(lbTmp)
-
-            ivBgView.tintColor = UIColor(named: "chat_bubble_color_sent")
-            guard let img = UIImage(named: "ico_peech_bubble_left") else {
-                return
+        if let date = chat.reg_date {
+            if calendar.isDateInToday(date) {
+                df.dateFormat = "a hh:mm"
             }
-            ivBgView.image = img.resizableImage(withCapInsets: UIEdgeInsets(top: 17, left: 21, bottom: 17, right: 21), resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
-            lbMessage.textColor = UIColor(named: "chat_text_color_sent")
-            
-            svMsg.layoutMargins = UIEdgeInsets(top: 8, left: 16, bottom: 8, right: 8)
-        }
-        else {
-            svSub.alignment = .trailing
-            lbMessage.text = question
-            lbDate.text = question_date
-            lbMessage.textColor = UIColor.label
-            svContent.insertArrangedSubview(lbTmp, at: 0)
-            
-            ivBgView.tintColor = UIColor(named: "chat_bubble_color_received")
-            guard let img = UIImage(named: "ico_peech_bubble_right") else {
-                return
+            else {
+                df.dateFormat = "yy.MM.dd hh:mm"
             }
-            ivBgView.image = img.resizableImage(withCapInsets: UIEdgeInsets(top: 17, left: 21, bottom: 17, right: 21), resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
-            lbMessage.textColor = UIColor(named: "chat_text_color_received")
-            
-            svMsg.layoutMargins = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 16)
+            lbDate.text = df.string(from: date)
         }
-        lbMessage.sizeToFit()
-        self.layoutIfNeeded()
+        ivIcon.image = UIImage(systemName: "person.fill")
+        if let url = Utility.thumbnailUrl(chat.to_user_id, chat.profile_name) {
+            ivIcon.setImageCache(url)
+        }
+        ivBgView.backgroundColor = UIColor.clear
+        ivBgView.tintColor = UIColor(named: "chat_bubble_color_sent")
+        guard let img = UIImage(named: "ico_peech_bubble_left") else {
+            return
+        }
+        ivBgView.image = img.resizableImage(withCapInsets: UIEdgeInsets(top: 17, left: 21, bottom: 17, right: 21), resizingMode: .stretch).withRenderingMode(.alwaysTemplate)
+        lbMessage.textColor = UIColor(named: "chat_text_color_sent")
+    
+        ivFile.isHidden = true
+        ivBgView.isHidden = false
+        
+        if let file_name = chat.file_name, file_name.isEmpty == false, let url = Utility.thumbnailUrl(chat.from_user_id, file_name) {
+            ivFile.isHidden = false
+            ivBgView.isHidden = true
+            ivFile.accessibilityValue = url
+            
+            Utility.downloadImage(url) { (image, _) in
+                guard let image = image else {
+                    return
+                }
+                self.ivFile.image = image
+                let height = self.ivFile.bounds.width * image.getCropRatio() + self.lbName.bounds.height + self.lbDate.bounds.height + 6 + 16
+                print("height : \(height)")
+                chat.height = Double(height)
+                self.didClickedClosure?(height, 100)
+            }
+        }
     }
-    func getTmpLabel() -> UILabel {
-        if let lbtmp = svContent.viewWithTag(1111) as? UILabel {
-            lbtmp.removeFromSuperview()
+    
+    @objc func tapGesuterHandler(_ gesture:UITapGestureRecognizer) {
+        if gesture.view == ivFile {
+            self.didClickedClosure?(ivFile.accessibilityValue, 1)
         }
-        let lb = UILabel.init()
-        lb.tag = 1111
-        lb.setContentHuggingPriority(UILayoutPriority(1), for: .horizontal)
-        lb.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
-        lb.text = ""
-        return lb
     }
 }

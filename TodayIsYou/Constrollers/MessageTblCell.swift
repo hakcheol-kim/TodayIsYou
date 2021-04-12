@@ -65,16 +65,10 @@ class MessageTblCell: UITableViewCell {
             ivProfile.image = UIImage(named: Gender.femail.avatar())
         }
         if let imgUrl = Utility.thumbnailUrl(user_id, talk_img) {
-            ivProfile.setImageCache(url: imgUrl, placeholderImgName: nil)
+            ivProfile.setImageCache(imgUrl)
         }
         ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
         
-//        ivThumb.isHidden = true
-//        if let imgUrl = Utility.thumbnailUrl(user_id, user_img) {
-//            ivThumb.isHidden = false
-//            ivThumb.setImageCache(url: imgUrl, placeholderImgName: nil)
-//        }
-//        ivThumb.layer.cornerRadius = ivThumb.bounds.height/2
         
         lbTitle.text = memo
         let result = "\(user_name), \(user_age), \(user_sex)"

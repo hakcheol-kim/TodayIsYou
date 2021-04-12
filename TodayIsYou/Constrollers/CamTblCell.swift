@@ -64,14 +64,14 @@ class CamTblCell: UITableViewCell {
             ivProfile.image = UIImage(named: Gender.femail.avatar())
         }
         if let imgUrl = Utility.thumbnailUrl(user_id, file_name) {
-            ivProfile.setImageCache(url: imgUrl, placeholderImgName: nil)
+            ivProfile.setImageCache(imgUrl)
         }
         ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
         
         ivThumb.isHidden = true
         if let imgUrl = Utility.thumbnailUrl(user_id, user_image) {
             ivThumb.isHidden = false
-            ivThumb.setImageCache(url: imgUrl, placeholderImgName: nil)
+            ivThumb.setImageCache(imgUrl)
         }
         ivThumb.layer.cornerRadius = ivThumb.bounds.height/2
         

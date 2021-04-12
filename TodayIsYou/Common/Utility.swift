@@ -7,6 +7,7 @@
 
 import UIKit
 import CryptoSwift
+import Photos
 
 class Utility: NSObject {
     class func isEdgePhone() -> Bool {
@@ -41,4 +42,39 @@ class Utility: NSObject {
         return dateStr
     }
     
+    class func getThumnailImage(with asset:PHAsset, _ completion:@escaping(_ image:UIImage?) -> Void) {
+        var imageRequestOptions: PHImageRequestOptions {
+               let options = PHImageRequestOptions()
+               options.version = .current
+               options.resizeMode = .exact
+               options.deliveryMode = .highQualityFormat
+               options.isNetworkAccessAllowed = true
+               options.isSynchronous = true
+               return options
+           }
+        
+        PHImageManager.default().requestImage(for: asset, targetSize: CGSize(width: 400, height: 400), contentMode:.aspectFit, options: imageRequestOptions) { (image, _)  in
+            guard let image = image else {
+                completion(nil)
+                return
+            }
+            return completion(image)
+        }
+    }
+    class func downloadImage(_ url:String, _ userInfo:[String:Any]? = nil, _ completion:@escaping(_ image:UIImage?, _ userInfo:[String:Any]?)->Void) {
+        guard let uurl =  URL(string: url) else {
+            completion(nil, userInfo)
+            return
+        }
+        
+        let request = URLRequest(url:uurl)
+        imgDownloader.download(request, completion:  { response in
+            if case .success(let image) = response.result {
+                completion(image, userInfo)
+            }
+            else {
+                completion(nil, userInfo)
+            }
+        })
+    }
 }

@@ -79,7 +79,7 @@ class LeftSideMenuViewController: UIViewController {
         
         ivProfile.image = Gender.defaultImg(ShareData.ins.mySex.rawValue)
         if let userImg = ShareData.ins.dfsObjectForKey(DfsKey.userImg) as? String, let url = Utility.thumbnailUrl(ShareData.ins.myId, userImg) {
-            ivProfile.setImageCache(url: url, placeholderImgName: nil)
+            ivProfile.setImageCache(url)
             ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
         }
     }

@@ -64,7 +64,7 @@ class RankDetailTblHeaderView: UIView {
             }
         }
         if let url = urls.first {
-            ivThumb.setImageCache(url: url, placeholderImgName: nil)
+            ivThumb.setImageCache(url)
         }
         
         lbName.text = user_name

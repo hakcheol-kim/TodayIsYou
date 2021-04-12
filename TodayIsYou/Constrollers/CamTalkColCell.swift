@@ -56,7 +56,7 @@ class CamTalkColCell: UICollectionViewCell {
         
         ivThumb.image = nil
         if let imgUrl = Utility.thumbnailUrl(user_id, file_name) {
-            ivThumb.setImageCache(url: imgUrl, placeholderImgName: nil)
+            ivThumb.setImageCache(imgUrl)
         }
         
         lbTitle.text = contents

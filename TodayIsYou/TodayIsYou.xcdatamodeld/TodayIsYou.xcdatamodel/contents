@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20D91" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+    <entity name="ChatMessage" representedClassName="ChatMessage" syncable="YES">
+        <attribute name="file_name" optional="YES" attributeType="String"/>
+        <attribute name="from_user_id" optional="YES" attributeType="String"/>
+        <attribute name="from_user_name" optional="YES" attributeType="String"/>
+        <attribute name="height" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="memo" optional="YES" attributeType="String"/>
+        <attribute name="message_key" optional="YES" attributeType="String"/>
+        <attribute name="profile_name" optional="YES" attributeType="String"/>
+        <attribute name="read_yn" optional="YES" attributeType="Boolean" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="reg_date" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="to_user_id" optional="YES" attributeType="String"/>
+        <attribute name="to_user_name" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <elements>
+        <element name="ChatMessage" positionX="-45" positionY="0" width="128" height="209"/>
+    </elements>
 </model>

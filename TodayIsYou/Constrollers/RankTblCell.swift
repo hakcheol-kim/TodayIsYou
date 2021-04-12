@@ -71,7 +71,7 @@ class RankTblCell: UITableViewCell {
         }
         
         if let url = urls.first {
-            ivThumb.setImageCache(url: url, placeholderImgName: nil)
+            ivThumb.setImageCache(url)
         }
         btnHartCnt.setTitle("\(orderby_num)", for: .normal)
     }

@@ -102,7 +102,7 @@ extension PhotoTalkWriteViewController: UICollectionViewDataSource, UICollection
         let user_id = item["user_id"].stringValue
         
         if let url = Utility.thumbnailUrl(user_id, img_name) {
-            cell.ivThumb.setImageCache(url: url, placeholderImgName: nil)
+            cell.ivThumb.setImageCache(url)
         }
         else {
             cell.ivThumb.image = UIImage(systemName: "person.fill")

@@ -35,12 +35,12 @@ class PopupListViewController: BaseViewController {
     var listData:[Any] = []
     var keys:[String]? = nil
     var type:PopupType = .normal
-    var vcTitle: String?
+    var vcTitle: Any?
     var fitHeight:CGFloat = 100
     
     var completion:((_ vcs: UIViewController, _ selItem:Any?, _ index:NSInteger) -> Void)?
     
-    static func initWithType(_ type: PopupType, _ title:String?, _ data:[Any], _ keys:[String]?, completion:((_ vcs: UIViewController, _ selItem:Any?, _ index:NSInteger) -> Void)?) -> PopupListViewController {
+    static func initWithType(_ type: PopupType, _ title:Any?, _ data:[Any], _ keys:[String]?, completion:((_ vcs: UIViewController, _ selItem:Any?, _ index:NSInteger) -> Void)?) -> PopupListViewController {
         
         let vc = PopupListViewController.instantiateFromStoryboard(.main)!
         vc.completion = completion
@@ -56,27 +56,26 @@ class PopupListViewController: BaseViewController {
         super.viewDidLoad()
         
         svTitle.isHidden = true
-        if let vcTitle = vcTitle {
+        if let vcTitle = vcTitle as? String {
             svTitle.isHidden = false
             lbTitle.text = vcTitle
         }
+        else if let vcTitle = vcTitle as? NSAttributedString {
+            svTitle.isHidden = false
+            lbTitle.attributedText = vcTitle
+        }
+        
         btnClose.imageView?.contentMode = .scaleAspectFill
         self.btnClose.addTarget(self, action: #selector(onClickedBtnActions(_ :)), for: .touchUpInside)
         
-
+        self.tblView.tableFooterView = UIView.init()
+        self.tblView.reloadData()
         self.view.layoutIfNeeded()
-        self.tblView.tableFooterView = UIView.init(frame: CGRect(x: 0, y: 0, width: tblView.bounds.width, height: 64))
-        
-        self.tblView.reloadData {
-            self.view.layoutIfNeeded()
-            self.fitHeight = self.tblView.contentSize.height
-            if self.svTitle.isHidden == false {
-                self.fitHeight += self.svTitle.bounds.height
-            }
-            self.fitHeight += self.view.window?.safeAreaInsets.bottom ?? 0
-            self.panModalSetNeedsLayoutUpdate()
-            self.panModalTransition(to: .shortForm)
+        self.fitHeight = self.tblView.contentSize.height
+        if self.svTitle.isHidden == false {
+            self.fitHeight += self.svTitle.bounds.height
         }
+        self.panModalSetNeedsLayoutUpdate()
     }
     
     @objc func onClickedBtnActions(_ sender: UIButton) {
@@ -120,14 +119,20 @@ extension PopupListViewController: PanModalPresentable {
     var panScrollable: UIScrollView? {
         return self.tblView
     }
-    var topOffset: CGFloat {
-        guard let window = AppDelegate.ins.window else {
-            return 100
-        }
-        return window.safeAreaInsets.top + 50
-    }
+//    var topOffset: CGFloat {
+//        guard let window = AppDelegate.ins.window else {
+//            return 100
+//        }
+//        return window.safeAreaInsets.top + 50
+//    }
+//    var shortFormHeight: PanModalHeight {
+//        return PanModalHeight.contentHeight(fitHeight)
+//    }
     var shortFormHeight: PanModalHeight {
-        return PanModalHeight.contentHeight(fitHeight)
+        return .contentHeight(fitHeight)
+    }
+    var longFormHeight: PanModalHeight {
+        return .maxHeightWithTopInset(40)
     }
     var cornerRadius : CGFloat {
         return 16.0

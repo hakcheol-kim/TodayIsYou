@@ -474,4 +474,30 @@ class ApiManager: NSObject {
             fail?(err)
         }
     }
+    //포인트 선물
+    func requestSendGiftPoint(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/giftSave.do", param, URLEncoding.queryString) { (res) in
+            success?(res)
+        } failure: { (err) in
+            fail?(err)
+        }
+    }
+    //채팅 메세지 보내기
+    func requestSendChattingMsg(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        if let _ = param["user_file"] as? UIImage {
+            NetworkManager.ins.requestFileUpload(.post, "/api/talk/insertChatMsg.json", param) { (res) in
+                success?(res)
+            } failure: { (err) in
+                fail?(err)
+            }
+        }
+        else {
+            NetworkManager.ins.request(.post, "/api/talk/insertChatMsg.do", param, URLEncoding.queryString) { (res) in
+                success?(res)
+            } failure: { (err) in
+                fail?(err)
+            }
+        }
+    }
+    
 }

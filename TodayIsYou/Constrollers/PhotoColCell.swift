@@ -51,7 +51,7 @@ class PhotoColCell: UICollectionViewCell {
         }
         
         if let imgUrl = Utility.thumbnailUrl(user_id, file_name) {
-            ivThumb.setImageCache(url: imgUrl, placeholderImgName: nil)
+            ivThumb.setImageCache(imgUrl)
         }
         else {
             let k = 0

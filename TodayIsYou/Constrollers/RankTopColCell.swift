@@ -61,7 +61,7 @@ class RankTopColCell: UICollectionViewCell {
         }
         
         if let url = urls.first {
-            ivThumb.setImageCache(url: url, placeholderImgName: nil)
+            ivThumb.setImageCache(url)
         }
         
         var i = 0
@@ -69,7 +69,7 @@ class RankTopColCell: UICollectionViewCell {
             let ivImg = ivImg as! UIImageViewAligned 
             if i < urls.count {
                 ivImg.isHidden = false
-                ivImg.setImageCache(url: urls[i], placeholderImgName: nil)
+                ivImg.setImageCache(urls[i])
             }
             else {
                 ivImg.isHidden = true

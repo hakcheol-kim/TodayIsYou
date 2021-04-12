@@ -66,7 +66,7 @@ class ProfileManagerViewController: BaseViewController {
         
         let ivProfile = btnProfile.viewWithTag(100) as! UIImageViewAligned
         if let url = Utility.thumbnailUrl(user_id, user_img) {
-            ivProfile.setImageCache(url: url, placeholderImgName: nil)
+            ivProfile.setImageCache(url)
             ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
             ivProfile.clipsToBounds = true
         }
