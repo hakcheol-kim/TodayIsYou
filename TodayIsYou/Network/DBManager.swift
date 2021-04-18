@@ -38,6 +38,69 @@ class DBManager: NSObject {
             completion(nil, error)
         }
     }
+    func getAllUnReadMessageCount(_ completion:@escaping(_ count:Int) ->Void) {
+        let isRead = NSNumber.init(booleanLiteral: false)
+        let predicate = NSPredicate.init(format: "(%K = %@)", "read_yn", isRead)
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: DBName.chatmessage.rawValue)
+        request.predicate = predicate
+        
+        viewcontext.refreshAllObjects()
+        do {
+            let result = try viewcontext.fetch(request) as? [ChatMessage]
+            if let result = result, result.isEmpty == false {
+                completion(result.count)
+            }
+            else {
+                completion(0)
+            }
+        } catch {
+            completion(0)
+        }
+    }
+    func getUnReadMessageCount(messageKey:String, _ completion:@escaping(_ count:Int) ->Void) {
+        self.getUnReadChatMessage(messageKey: messageKey) { (result, error) in
+            if let result = result, result.isEmpty == false {
+                completion(result.count)
+            }
+            else {
+                completion(0)
+            }
+        }
+    }
+    private func getUnReadChatMessage(messageKey:String, _ completion:@escaping(_ messages:[ChatMessage]?, _ error:Error?) -> Void) {
+        let isRead = NSNumber.init(booleanLiteral: false)
+        let predicate = NSPredicate.init(format: "(%K = %@) AND (%K = %@)", "message_key", messageKey, "read_yn", isRead)
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: DBName.chatmessage.rawValue)
+        request.predicate = predicate
+        
+        viewcontext.refreshAllObjects()
+        do {
+            let result = try viewcontext.fetch(request) as? [ChatMessage]
+            completion(result, nil)
+        } catch let error {
+            completion(nil, error)
+        }
+    }
+    
+    func updateReadMessage(messageKey:String, _ completion:@escaping(_ success:Bool, _ error:Error?) ->Void) {
+        self.getUnReadChatMessage(messageKey: messageKey) { (result, error) in
+            if let result = result, result.isEmpty == false {
+                for item in result {
+                    item.read_yn = true
+                }
+                do {
+                    try self.viewcontext.save()
+                    completion(true, nil)
+                }
+                catch let error {
+                    completion(false, error)
+                }
+            }
+            else {
+                completion(true, nil)
+            }
+        }
+    }
     
     func insertChatMessage(_ param:[String:Any], _ completion:@escaping(_ success:Bool, _ error:Error?) -> Void) {
         guard let message_key = param["message_key"] as? String else {

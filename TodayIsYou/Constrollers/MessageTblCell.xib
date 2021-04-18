@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -84,10 +85,28 @@
                         </subviews>
                         <edgeInsets key="layoutMargins" top="8" left="16" bottom="8" right="16"/>
                     </stackView>
+                    <label opaque="NO" userInteractionEnabled="NO" tag="103" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hnh-GQ-GLu" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                        <rect key="frame" x="339.5" y="32.5" width="6.5" height="12"/>
+                        <color key="backgroundColor" name="AccentColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="insetTB">
+                                <real key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="insetLR">
+                                <real key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="halfCornerRadius" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="rgc-Ec-oOD" secondAttribute="trailing" id="HZQ-gW-pZX"/>
+                    <constraint firstItem="hnh-GQ-GLu" firstAttribute="top" secondItem="Ke1-b9-Sh3" secondAttribute="top" id="NJl-7N-WTe"/>
                     <constraint firstItem="rgc-Ec-oOD" firstAttribute="leading" secondItem="Sik-Sb-d6R" secondAttribute="leading" id="klR-Db-xoT"/>
+                    <constraint firstItem="hnh-GQ-GLu" firstAttribute="trailing" secondItem="Ke1-b9-Sh3" secondAttribute="trailing" id="ksJ-C6-940"/>
                     <constraint firstAttribute="bottom" secondItem="rgc-Ec-oOD" secondAttribute="bottom" id="mOG-th-bH8"/>
                     <constraint firstItem="rgc-Ec-oOD" firstAttribute="top" secondItem="Sik-Sb-d6R" secondAttribute="top" id="nt0-fh-Kkw"/>
                 </constraints>
@@ -98,6 +117,7 @@
                 <outlet property="btnType" destination="Ke1-b9-Sh3" id="3UQ-gT-Pid"/>
                 <outlet property="ivProfile" destination="0tR-0j-Im5" id="V2z-DI-Qnq"/>
                 <outlet property="ivThumb" destination="TFy-4w-tP7" id="kdS-OI-LUF"/>
+                <outlet property="lbCount" destination="hnh-GQ-GLu" id="KGp-le-v4g"/>
                 <outlet property="lbMsg" destination="QDh-E0-mWX" id="0CE-aV-VtF"/>
                 <outlet property="lbSubTitle" destination="ubS-ex-1cl" id="Uwl-GM-qwa"/>
                 <outlet property="lbTitle" destination="MNS-fg-S8h" id="OpU-7d-7TC"/>
@@ -105,8 +125,16 @@
             <point key="canvasLocation" x="5.7971014492753632" y="52.566964285714285"/>
         </tableViewCell>
     </objects>
+    <designables>
+        <designable name="hnh-GQ-GLu">
+            <size key="intrinsicContentSize" width="6.5" height="12"/>
+        </designable>
+    </designables>
     <resources>
         <image name="message_black_48dp" width="96" height="96"/>
+        <namedColor name="AccentColor">
+            <color red="0.90200001001358032" green="0.3919999897480011" blue="0.3919999897480011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

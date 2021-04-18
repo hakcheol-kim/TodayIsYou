@@ -316,17 +316,17 @@ extension String {
         let predicate = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
         return predicate.evaluate(with: self)
     }
+//    public func validateKorPhoneNumber() -> Bool {
+//        let reg = "^[0-9]{3}[-]+[0-9]{4}[-]+[0-9]{4}$"
+////        let reg = "^[0-9]{3}+[0-9]{4}+[0-9]{4}$"
+//        let predicate = NSPredicate(format:"SELF MATCHES %@", reg)
+//        return predicate.evaluate(with: self)
+//    }
     public func validateKorPhoneNumber() -> Bool {
-        let reg = "^[0-9]{3}[-]+[0-9]{4}[-]+[0-9]{4}$"
-//        let reg = "^[0-9]{3}+[0-9]{4}+[0-9]{4}$"
-        let predicate = NSPredicate(format:"SELF MATCHES %@", reg)
+        let regx = "^[0-9]{3}+[0-9]{4}+[0-9]{4}$"
+        let predicate = NSPredicate(format: "SELF MATCHES %@", regx)
         return predicate.evaluate(with: self)
     }
-//    public func validateKorPhoneNumber(_ candidate: String?) -> Bool {
-//        let emailRegex = "^[0-9]{3}+[0-9]{4}+[0-9]{4}$"
-//        let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegex)
-//        return emailTest.evaluate(with: candidate)
-//    }
     // Password validation
     public func validatePassword() -> Bool {
 //        let passwordRegEx = "(?=.*[a-zA-Z])(?=.*[!@#$%^_*-])(?=.*[0-9]).{8,40}"
@@ -411,6 +411,17 @@ extension String {
     }
     func maskOfSuffixLenght(_ length:Int) -> String? {
         return String(repeating: "x", count: Swift.max(0, count-length)) + suffix(length)
+    }
+    func convertJsonStringToDict() -> [String:Any]? {
+        guard let data = self.data(using: .utf8) else {
+            return nil
+        }
+        do {
+            let json = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+            return json as? [String:Any]
+        } catch  {
+            return nil
+        }
     }
 }
 

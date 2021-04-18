@@ -117,7 +117,7 @@ class BaseViewController: UIViewController {
         }
         
         var heightBtn:Float = 0.0
-        let strH = conId.replacingOccurrences(of: "bottom", with: "", options: [.caseInsensitive, .regularExpression])
+        let strH = conId.replacingOccurrences(of: "bottom_", with: "", options: [.caseInsensitive, .regularExpression])
         heightBtn = Float(strH) ?? 0.0
         
         if notification.name == UIResponder.keyboardWillShowNotification {
@@ -126,7 +126,7 @@ class BaseViewController: UIViewController {
                 tabBarHeight = self.navigationController?.toolbar.bounds.height ?? 0.0
             }
             
-            let safeBottom:CGFloat = self.view.window?.safeAreaInsets.bottom ?? 0
+            let safeBottom:CGFloat = AppDelegate.ins.window?.safeAreaInsets.bottom ?? 0
             bottomCon.constant = heightKeyboard - safeBottom - tabBarHeight - CGFloat(heightBtn)
             UIView.animate(withDuration: TimeInterval(duration), animations: { [self] in
                 self.view.layoutIfNeeded()

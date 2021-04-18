@@ -7,20 +7,17 @@
 
 import UIKit
 import CoreData
-import NVActivityIndicatorView
-import KakaoSDKAuth
-import KakaoSDKCommon
 import Firebase
 import CryptoSwift
-import NaverThirdPartyLogin
-import FBSDKCoreKit
-import GoogleSignIn
 import FirebaseMessaging
+import SwiftyJSON
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var loadingView: UIView?
+    var pushHandler:PushMessageDelegate? = nil
+    
     static var ins: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
     }
@@ -33,37 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         FirebaseApp.configure()
-        GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
-        KakaoSDKCommon.initSDK(appKey: KakaoNativeAppKey)
+        self.registApnsPushKey()
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window!.overrideUserInterfaceStyle = .light
-        
-        //네이버
-        let naverThirdPartyLoginInstance = NaverThirdPartyLoginConnection.getSharedInstance()
-        // 네이버 앱으로 인증하는 방식을 활성화하려면 앱 델리게이트에 다음 코드를 추가합니다.
-        naverThirdPartyLoginInstance?.isNaverAppOauthEnable = true
-        // SafariViewContoller에서 인증하는 방식을 활성화하려면 앱 델리게이트에 다음 코드를 추가합니다.
-        naverThirdPartyLoginInstance?.isInAppOauthEnable = true
-        // 인증 화면을 iPhone의 세로 모드에서만 사용하려면 다음 코드를 추가합니다.
-        naverThirdPartyLoginInstance?.setOnlyPortraitSupportInIphone(true)
-        // 애플리케이션 이름
-        naverThirdPartyLoginInstance?.appName = Bundle.main.appName
-        // 콜백을 받을 URL Scheme
-        naverThirdPartyLoginInstance?.serviceUrlScheme = NAVER_URL_SCHEME
-        // 애플리케이션에서 사용하는 클라이언트 아이디
-        naverThirdPartyLoginInstance?.consumerKey = NAVER_CONSUMER_KEY
-        // 애플리케이션에서 사용하는 클라이언트 시크릿
-        naverThirdPartyLoginInstance?.consumerSecret = NAVER_CONSUMER_SECRET
-        
-        
-        ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
-//        self.callTempView()
-//        return true
 
         callIntroViewCtrl()
-        
-        self.registApnsPushKey()
         
         return true
     }
@@ -78,8 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = vc
         window?.makeKeyAndVisible()
     }
-    func callLoginViewCtrl() {
-        let vc = LoginViewController.instantiateFromStoryboard(.login)!
+    func callJoinTermVc() {
+        let vc = JoinTermsAgreeViewController.instantiateFromStoryboard(.login)!
         window?.rootViewController = BaseNavigationController.init(rootViewController: vc)
         window?.makeKeyAndVisible()
     }
@@ -118,53 +90,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func startIndicator() {
-        DispatchQueue.main.async {
+        DispatchQueue.main.async(execute: {
             if self.loadingView == nil {
                 self.loadingView = UIView(frame: UIScreen.main.bounds)
-                self.loadingView?.backgroundColor = RGBA(0, 0, 0, 0.2)
-                
-                let size:CGFloat = 35.0
-                let indicatorView = NVActivityIndicatorView(frame: CGRect(x: (self.loadingView!.bounds.width - size)/2, y: (self.loadingView!.bounds.height - size)/2, width: size, height: size), type:.ballSpinFadeLoader, color: RGB(230, 50, 70), padding: 0)
-                indicatorView.tag = 2001
-                
-                self.loadingView!.addSubview(indicatorView)
             }
-            
             self.window!.addSubview(self.loadingView!)
-            self.loadingView!.tag = 2000
+            self.loadingView?.tag = 100000
+            self.loadingView?.startAnimation(raduis: 25.0)
             
-            guard let indicatorView = self.loadingView!.viewWithTag(2001) as? NVActivityIndicatorView else {
-                return
+            //혹시라라도 indicator 계속 돌고 있으면 강제로 제거 해준다. 10초후에
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+60) {
+                if let loadingView = AppDelegate.ins.window!.viewWithTag(100000) {
+                    loadingView.removeFromSuperview()
+                }
             }
-            indicatorView.startAnimating()
-        }
+        })
     }
+    
     func stopIndicator() {
-        DispatchQueue.main.async {
-            guard let loadingView = self.loadingView, let indicatorView = self.loadingView!.viewWithTag(2001) as? NVActivityIndicatorView else {
-                return
+        DispatchQueue.main.async(execute: {
+            if self.loadingView != nil {
+                self.loadingView!.stopAnimation()
+                self.loadingView?.removeFromSuperview()
             }
-            indicatorView.stopAnimating()
-            loadingView.removeFromSuperview()
-        }
+        })
     }
+    
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        if (AuthApi.isKakaoTalkLoginUrl(url)) {
-            return AuthController.handleOpenUrl(url: url)
-        }
-        else if let scheme = url.scheme, scheme.hasPrefix("naverlogin") == true {
-            let result = NaverThirdPartyLoginConnection.getSharedInstance()?.receiveAccessToken(url)
-            if result == CANCELBYUSER {
-                print("result: \(String(describing: result))")
-                return false
-            }
-        }
-        else if let scheme = url.scheme, scheme.hasPrefix("fb") == true {
-            ApplicationDelegate.shared.application(app, open: url, sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String, annotation: options[UIApplication.OpenURLOptionsKey.annotation])
-        }
-        else if let scheme = url.scheme, scheme.hasPrefix("com.googleusercontent.apps") {
-            return GIDSignIn.sharedInstance().handle(url)
-        }
         return true
     }
     
@@ -175,7 +127,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         print("==== apns token:\(deviceToken.hexString)")
         //파이어베이스에 푸쉬토큰 등록
-        Messaging.messaging().apnsToken = deviceToken
+        Messaging.messaging().setAPNSToken(deviceToken, type: .prod)
     }
     
     // 앱이 백그라운드에있는 동안 알림 메시지를 받으면
@@ -183,6 +135,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         
         Messaging.messaging().appDidReceiveMessage(userInfo)
+        var topicStr = "todayisyou_w"
+        if "남" == ShareData.ins.mySex.rawValue {
+            topicStr = "todayisyou_m"
+        }
+        Messaging.messaging().subscribe(toTopic: topicStr)
     }
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("=== apn token regist failed")
@@ -210,34 +167,321 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        
+    }
+    
+    func setPushData(_ userInfo:[String:Any]) {
+        guard let aps = userInfo["aps"] as? [String:Any], let alert = aps["alert"] as? [String:Any], let body = alert["body"] as? String else {
+            return
+        }
+        
+        guard let json = body.convertJsonStringToDict() else {
+            return
+        }
+        guard  let info =  json["message"] as? [String:Any], let msg_cmd = info["msg_cmd"] as? String else {
+            return
+        }
+        
+        let sender = json["sender"]
+        let type:PushType = PushType.getPushType(msg_cmd)
+        
+        if type == .camNo { //거절
+            
+//            String from_user_id = jsonParse.get("from_user_id").toString();
+//            String no_msg = jsonParse.get("msg").toString();
+//
+//            DLog.d(DEBUG_TAG, "CAM_NO from_user_id : " + from_user_id);
+//            DLog.d(DEBUG_TAG, "CAM_NO no_msg : " + no_msg);
+//
+//            if("CAM_NO".equals(no_msg)){//거절
+//
+//                sendCamNoBroadcast("CAM_NO","CAM_NO");
+//
+//            }else if("CAM_CANCEL".equals(no_msg)){//취소
+//                sendCamNoBroadcast("CAM_CANCEL","CAM_NO");
+//            }
+        }
+        else if type == .reSend {
+            
+//            String from_user_id = jsonParse.get("from_user_id").toString();
+//
+//            DLog.d(DEBUG_TAG, "##superApp.myPushYn : " + superApp.myPushYn);
+//            if(!"N".equals(superApp.myPushYn)) {//푸쉬없음은 제외
+//
+//                boolean isForeground = Util.isForeground(mContext);
+//                boolean isAppIsInBackground = Util.isAppIsInBackground(mContext);
+//                DLog.d(DEBUG_TAG, "##isForeground: " + isForeground);
+//                DLog.d(DEBUG_TAG, "##isAppIsInBackground : " + isAppIsInBackground);
+//
+//                if(!isAppIsInBackground){//어플 실행중 아닐때(어플이 실행 되어 있지만)
+//                    sendRandomMsgBroadcast(msg,msg_cmd);
+//                }else{
+//                    notiMessage = "";
+//                    notiMessage = msg;
+//                    //알림.사진노출
+//                    getUserImg(from_user_id);
+//                }
+//            }
+        }
+        else if  type == .rdCam {
+            
+//            String message_key = jsonParse.get("message_key").toString();
+//            String from_user_id = jsonParse.get("from_user_id").toString();
+//            String room_key = jsonParse.get("room_key").toString();
+//            String user_id = jsonParse.get("user_id").toString();
+//
+//            //영상신청채팅로컬디비에저장
+//            ChatMsgVo vo = new ChatMsgVo();
+//            vo.setMemo("[CAM_TALK]저와 영상 채팅 해요 ^^");
+//            vo.setFrom_user_id(from_user_id);
+//            vo.setReg_date(Util.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
+//            vo.setTo_user_id(superApp.myUserId);
+//            vo.setMessage_key(message_key);
+//            vo.setRead_yn("Y");
+//
+//            //로컬디비저장
+//            superApp.mDbManager.setMessage(vo);
+//
+//            if((superApp.STRPACKAGENAME + ".view.RandomCamStartActivity").equals(Util.getTopActivity(this, superApp.STRPACKAGENAME))) {
+//                sendRandomCamBroadcast(msg);//from_user_id가 상대임
+//            }else{
+//                if(!"N".equals(superApp.myPushYn)) {
+//                    notiMessage = "";
+//                    notiMessage = msg;
+//                    //알림.사진노출
+//                    getUserImg(from_user_id);
+//
+//                }
+//
+//            }
+        }
+        else if type == .chat {
+            var param:[String:Any] = info
+            param["to_user_id"] = ShareData.ins.myId
+            param["point_user_id"] = ShareData.ins.myId
+            param["reg_date"] = Date()
+            param["type"] = 0
+            param["read_yn"] = false
+            
+            if let notiYn = ShareData.ins.dfsObjectForKey(DfsKey.notiYn) as? String, notiYn == "N" {
+                param["read_yn"] = true
+            }
+            DBManager.ins.insertChatMessage(param) { (success, error) in
+            }
+            AppDelegate.ins.mainViewCtrl.updateUnReadMessageCount()
+            if let handler = pushHandler {
+                handler.processPushMessage(type, param)
+            }
+        }
+        else if  type == .msgDel {//대화 삭제
+            //로컬 디비에서 삭제
+            guard let seq = info["seq"] as? String, let _ = info["to_user_id"] else {
+                return
+            }
+            DBManager.ins.deleteChatMessage(messageKey: seq) { (success, error) in
+            }
+            AppDelegate.ins.mainViewCtrl.updateUnReadMessageCount()
+            if let handler = pushHandler {
+                handler.processPushMessage(type, info)
+            }
+        }
+        else if "CAM" == msg_cmd {
+            
+//            String message_key = jsonParse.get("message_key").toString();
+//            String from_user_id = jsonParse.get("from_user_id").toString();
+//            String room_key = jsonParse.get("room_key").toString();
+//            String user_id = jsonParse.get("user_id").toString();
+//
+//            //영상신청채팅로컬디비에저장
+//            ChatMsgVo vo = new ChatMsgVo();
+//            vo.setMemo("[CAM_TALK]저와 영상 채팅 해요 ^^");
+//            vo.setFrom_user_id(from_user_id);
+//            vo.setReg_date(Util.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
+//            vo.setTo_user_id(superApp.myUserId);
+//            vo.setMessage_key(message_key);
+//            vo.setRead_yn("N");
+//
+//            //로컬디비저장
+//            superApp.mDbManager.setMessage(vo);
+//
+//            boolean isAppIsInBackground = Util.isAppIsInBackground(mContext);
+//
+//            DLog.d(DEBUG_TAG, "##CAM isAppIsInBackground : " + isAppIsInBackground);
+//            DLog.d(DEBUG_TAG, "##CAM superApp.myPushYn : " + superApp.myPushYn);
+//
+//            if(!"N".equals(superApp.myPushYn)) {
+//                if(!isAppIsInBackground) {//어플 실행중 아닐때(어플이 실행 되어 있지만)
+//                    sendRandomMsgBroadcast(msg, msg_cmd);
+//                }else{
+//                    notiMessage = "";
+//                    notiMessage = msg;
+//                    //알림.사진노출
+//                    getUserImg(from_user_id);
+//                }
+//
+//            }
+        }
+        else if "PHONE" == msg_cmd {
+            
+//            String message_key = jsonParse.get("message_key").toString();
+//            String from_user_id = jsonParse.get("from_user_id").toString();
+//            String room_key = jsonParse.get("room_key").toString();
+//            String user_id = jsonParse.get("user_id").toString();
+//
+//            //영상신청채팅로컬디비에저장
+//            ChatMsgVo vo = new ChatMsgVo();
+//            vo.setMemo("[PHONE_TALK]저와 음성 통화 해요 ^^");
+//            vo.setFrom_user_id(from_user_id);
+//            vo.setReg_date(Util.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
+//            vo.setTo_user_id(superApp.myUserId);
+//            vo.setMessage_key(message_key);
+//            vo.setRead_yn("N");
+//
+//            //로컬디비저장
+//            superApp.mDbManager.setMessage(vo);
+//
+//            boolean isAppIsInBackground = Util.isAppIsInBackground(mContext);
+//
+//            DLog.d(DEBUG_TAG, "##PHONE isAppIsInBackground : " + isAppIsInBackground);
+//            DLog.d(DEBUG_TAG, "##PHONE superApp.myPushYn : " + superApp.myPushYn);
+//
+//            if(!"N".equals(superApp.myPushYn)) {
+//                if(!isAppIsInBackground) {//어플 실행중 아닐때(어플이 실행 되어 있지만)
+//
+//                    DLog.d(DEBUG_TAG, "##PHONE 1");
+//
+//                    sendRandomMsgBroadcast(msg, msg_cmd);
+//                }else{
+//
+//                    DLog.d(DEBUG_TAG, "##PHONE 2");
+//
+//                    notiMessage = "";
+//                    notiMessage = msg;
+//                    //알림.사진노출
+//                    getUserImg(from_user_id);
+//                }
+//
+//            }
+        }
+        else if "NOTICE" == msg_cmd {
+            
+//            if(!"N".equals(superApp.myPushYn)) {//푸쉬없음은 제외
+//                String title = jsonParse.get("title").toString();
+//                String memo = jsonParse.get("memo").toString();
+//                getNoticeNoti("공지사항 알림", title, memo);
+//            }
+            
+        }
+        else if "QNA_Answer" == msg_cmd {
+            
+//            if(!"N".equals(superApp.myPushYn)) {//푸쉬없음은 제외
+//                getQnaNoti("메세지 알림","메세지가 있습니다.","Q&A 답변이 등록 되었습니다.");
+//            }
+            
+        }
+        else if "QNA_Manager" == msg_cmd {
+//
+//            if(!"N".equals(superApp.myPushYn)) {//푸쉬없음은 제외
+//                getQnaNoti("메세지 알림","메세지가 있습니다.","관리자 메세지가 있습니다.");
+//            }
+            
+        }
+        else if "COMMENT_MEMO" == msg_cmd {
+            
+//            if(!"N".equals(superApp.myPushYn)) {//푸쉬없음은 제외
+//                String memo = jsonParse.get("memo").toString();
+//                getCommentNoti("메세지 알림","메세지가 있습니다.",memo);
+//            }
+            
+        }
+        else if "COMMENT_GIFT" == msg_cmd {
+//
+//            if(!"N".equals(superApp.myPushYn)) {//푸쉬없음은 제외
+//                String memo = jsonParse.get("memo").toString();
+//                getCommentNoti("메세지 알림","메세지가 있습니다.",memo);
+//            }
+            
+        }
+        else if "BLOCK" == msg_cmd {
+            
+//            String block_memo = jsonParse.get("block_memo").toString();
+//            DLog.d(DEBUG_TAG, "##seq[1] : " + block_memo);
+//            getBlockNoti("메세지 알림","메세지가 있습니다.","관리자 전달 사항이 있습니다.",block_memo);
+//            superApp.isBlock = true;
+//
+//        }else if("CAM_MGS".equals(msg_cmd)){
+//
+//            DLog.d(DEBUG_TAG, "##msg : " + msg);
+//            sendBroadcast("room_out", "room_out");
+//
+//        }else if("CONNECT".equals(msg_cmd)){
+//            DLog.d(DEBUG_TAG, "##msg : " + msg);
+//            String user_id = jsonParse.get("user_id").toString();
+//            String user_name = jsonParse.get("user_name").toString();
+//            String user_sex = jsonParse.get("user_sex").toString();
+//            String user_age = jsonParse.get("user_age").toString();
+//
+//            String mesageStr = user_name+"," +user_sex+","+user_age+" 유저님이 접속 했습니다";
+//
+//            String user_img = jsonParse.get("user_img").toString();
+//            String talk_img = jsonParse.get("talk_user_img").toString();
+//            String cam_img = jsonParse.get("cam_user_img").toString();
+//            String  file_name = "";
+//            if("".equals(user_img)){
+//                if(!"".equals(cam_img)){
+//                    file_name = cam_img;
+//                }else{
+//                    file_name = talk_img;
+//                }
+//            }else{
+//                file_name = user_img;
+//            }
+//
+//            if ("".equals(file_name)) {
+//                mChatLargeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.titlebar_icon);
+//                getConnectNoti("유저접속알림", "새로운 유저가 접속했습니다", mesageStr);
+//
+//            }else {
+//
+//                String file_name_url = superApp.HOME_URL+"upload/talk/"+user_id+"/thum/crop_"+file_name;
+//
+//                Glide.with(mContext)
+//                    .asBitmap()
+//                    .load(file_name_url)
+//                    .listener(new RequestListener<Bitmap>() {
+//                        @Override
+//                        public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Bitmap> target, boolean b) {
+//                            mChatLargeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.titlebar_icon);
+//                            getConnectNoti("유저접속알림", "새로운 유저가 접속했습니다", mesageStr);
+//                            return false;
+//                        }
+//
+//                        @Override
+//                        public boolean onResourceReady(Bitmap bitmap, Object o, Target<Bitmap> target, DataSource dataSource, boolean b) {
+//                            mChatLargeIcon = Util.getCircularBitmap(bitmap);
+//                            getConnectNoti("유저접속알림", "새로운 유저가 접속했습니다", mesageStr);
+//                            return false;
+//                        }
+//                    }
+//                    ).submit();
+//            }
+        }
+    }
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
+  
     //앱이 켜진상태, Forground
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
-        let userInfo = notification.request.content.userInfo
-        guard let aps = userInfo["aps"] as? [String:Any], let alert = aps["alert"] as? [String:Any] else {
+        guard let userInfo = notification.request.content.userInfo as? [String:Any] else {
             return
         }
-        guard let title = alert["title"] as? String else {
-            return
-        }
+        self.setPushData(userInfo)
         print("push data: ==== \(userInfo)")
-        var message:String?
-        if let body = alert["body"] as? String {
-            message = body
-        }
-        else if let body = alert["body"] as? [String:Any] {
-            
-        }
         
-        guard let msg = message else {
-            return
-        }
-        
-        //        AlertView.showWithOk(title: title, message: msg) { (index) in
-        //        }
     }
     
     //앱이 백그라운드 들어갔을때 푸쉬온것을 누르면 여기 탄다.
@@ -247,10 +491,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         guard let aps = userInfo["aps"] as? [String:Any], let alert = aps["alert"] as? [String:Any] else {
             return
         }
+        
         //푸쉬 데이터를 어느화면으로 보낼지 판단 한고 보내 주는것 처리해야한다.
         //아직 화면 푸쉬 타입에 따른 화면 정리 안됨
-        ShareData.ins.dfsSetValue(userInfo, forKey: DfsKey.pushData)
+//        ShareData.ins.dfsSetValue(userInfo, forKey: DfsKey.pushData)
     }
+
+    
 }
 
 extension AppDelegate: MessagingDelegate {
@@ -264,10 +511,22 @@ extension AppDelegate: MessagingDelegate {
             return
         }
         let param = ["fcm_token":fcmToken, "user_id": userId]
-        ApiManager.ins.requestUpdateFcmToken(param: param) { (response) in
-            let isSuccess = response["isSuccess"].stringValue
-            if isSuccess == "01"{
-//                self.window?.makeToast("fcm token update success")
+//        ApiManager.ins.requestReigstPushToken(param: ["fcm_token":fcmToken]) { (res) in
+//
+//            if res["isSuccess"].stringValue == "01" {
+//                let fcm_cnt = res["fcm_cnt"].intValue
+//                if fcm_cnt > 1 {
+//                }
+//            }
+//            else {
+//                self.window?.makeToast("fcm token update error")
+//            }
+//        } failure: { (error) in
+//            self.window?.makeToast("fcm token update error")
+//        }
+
+        ApiManager.ins.requestUpdateFcmToken(param: param) { (res) in
+            if res["isSuccess"].stringValue == "01"{
             }
             else {
                 self.window?.makeToast("fcm token update error")

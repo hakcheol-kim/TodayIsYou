@@ -72,6 +72,7 @@ class MyFrendsListViewController: BaseViewController {
                         self.listData.append(contentsOf: result)
                     }
                 }
+                
                 self.tblView.cr.endHeaderRefresh()
                 if (self.listData.count > 0) {
                     self.tblView.isHidden = false
@@ -86,6 +87,22 @@ class MyFrendsListViewController: BaseViewController {
                 self.showErrorToast(response)
             }
         } failure: { (error) in
+            self.showErrorToast(error)
+        }
+    }
+    
+    func requestDeleteMyFriend() {
+//        /api/talk/myFriendDelete.do
+        let param = ["seq":1]
+        ApiManager.ins.requestDeleteMyFriend(param: param) { (res) in
+            let isSuccess = res["isSuccess"].stringValue
+            if isSuccess == "01" {
+                self.dataRest()
+            }
+            else {
+                self.showErrorToast(res)
+            }
+        } fail: { (error) in
             self.showErrorToast(error)
         }
     }

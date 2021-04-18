@@ -6,32 +6,11 @@
 //
 
 import UIKit
-import GoogleSignIn
-import FirebaseAuth
-class LoginViewController: SocialLoginViewController {
-
-    @IBOutlet weak var btnKako: CButton!
-    @IBOutlet weak var btnFacebook: CButton!
-    @IBOutlet weak var btnNaver: CButton!
-    @IBOutlet weak var btnApple: CButton!
-    
-    @IBOutlet weak var btnGoogleSignIn: GIDSignInButton!
+class LoginViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        btnGoogleSignIn.layer.cornerRadius = btnGoogleSignIn.bounds.height/2
-        btnGoogleSignIn.clipsToBounds = true
-        
-        GIDSignIn.sharedInstance()?.delegate = self
-        GIDSignIn.sharedInstance()?.presentingViewController = self
-        GIDSignIn.sharedInstance().signIn()
-        btnGoogleSignIn.style = .wide
-        
-        for subView in btnGoogleSignIn.subviews {
-            if let subView = subView as? UIImageView {
-                subView.isHidden = true
-            }
-        }
+     
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,45 +19,7 @@ class LoginViewController: SocialLoginViewController {
     }
     
     @IBAction func onClickedBtnAction(_ sender: UIButton) {
-        if sender == btnKako {
-            self.loginWithType(.kakao) { (user, error) in
-                guard let user = user, let joinType = user["joinType"], let userId = user["userId"] else {
-                    print("naver login fail:\(String(describing: error))")
-                    return
-                }
-                print("kakao login: joinType:\(joinType), userId:\(userId)")
-                self.checkNewUser(user)
-            }
-        }
-        else if sender == btnFacebook {
-            self.loginWithType(.facebook) { (user, error) in
-                guard let user = user, let joinType = user["joinType"], let userId = user["userId"] else {
-                    print("naver login fail:\(String(describing: error))")
-                    return
-                }
-                print("facebook login: joinType:\(joinType), userId:\(userId)")
-                self.checkNewUser(user)
-            }
-        }
-        else if sender == btnNaver {
-            self.loginWithType(.naver) { (user, error) in
-                guard let user = user, let _ = user["joinType"], let _ = user["userId"] else {
-                    print("naver login fail:\(String(describing: error))")
-                    return
-                }
-                self.checkNewUser(user)
-            }
-        }
-        else if sender == btnApple {
-            self.loginWithType(.apple) { (user, error) in
-                guard let user = user, let _ = user["joinType"], let _ = user["userId"] else {
-                    print("apple login fail:\(String(describing: error))")
-                    return
-                }
-                
-                self.checkNewUser(user)
-            }
-        }
+        
     }
     
     func checkNewUser(_ user:[String:Any]) {
@@ -110,37 +51,5 @@ class LoginViewController: SocialLoginViewController {
         } failure: { (error) in
             self.showErrorToast(error)
         }
-    }
-}
-
-extension LoginViewController: GIDSignInDelegate {
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error?) {
-        if let error = error {
-            return
-        }
-        
-        guard let authentication = user.authentication else {
-            return
-        }
-        let credential = GoogleAuthProvider.credential(withIDToken: authentication.idToken,
-                                                       accessToken: authentication.accessToken)
-        
-        var userInfo: [String:Any] = [:]
-        userInfo["joinType"] = "google"
-        userInfo["userId"] = user.userID!
-        if let idToken =  user.authentication.idToken {
-            userInfo["accessToken"] = idToken
-        }
-        if let fullName = user.profile.name {
-            userInfo["name"] = fullName
-        }
-        if let email = user.profile.email {
-            userInfo["email"] = email
-        }
-        print("google sigin userId:\(user.userID!), email:\(user.profile.email!)")
-        self.checkNewUser(userInfo)
-    }
-    func sign(_ signIn: GIDSignIn!, didDisconnectWith user: GIDGoogleUser!, withError error: Error!) {
-        
     }
 }

@@ -22,7 +22,7 @@ class PermissionsController: NSObject {
     var copyFailureBlock: PermissionVoidBlock?
     var copyDeniedBlock: PermissionVoidBlock?
     
-    func checkPermissionAccessForContacts(_ successBlock: PermissionVoidBlock?, _ failureBlock: PermissionVoidBlock?, _ deniedBlock: PermissionVoidBlock?) {
+    func checkPermissionAccessForContacts(successBlock: PermissionVoidBlock?, failureBlock: PermissionVoidBlock?, deniedBlock: PermissionVoidBlock?) {
         
         let authState = CNContactStore.authorizationStatus(for: .contacts)
         if authState == .notDetermined {

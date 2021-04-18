@@ -8,7 +8,8 @@
 import UIKit
 import SwiftyJSON
 
-class MessageListViewController: BaseViewController {
+class MessageListViewController: BaseViewController, PushMessageDelegate {
+    
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var btnDelAll: UIButton!
     @IBOutlet weak var btnJim: UIButton!
@@ -30,10 +31,18 @@ class MessageListViewController: BaseViewController {
         tblView.cr.addHeadRefresh { [weak self] in
             self?.dataRest()
         }
-
-        self.dataRest()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.dataRest()
+        AppDelegate.ins.mainViewCtrl.updateUnReadMessageCount()
+        AppDelegate.ins.pushHandler = self
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        AppDelegate.ins.pushHandler = nil
+    }
     func dataRest() {
         pageNum = 1
         pageEnd = false
@@ -114,6 +123,32 @@ class MessageListViewController: BaseViewController {
         else if sender == btnBlock {
             let vc = MyBlockListViewController.instantiateFromStoryboard(.main)!
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+        }
+    }
+    func processPushMessage(_ type:PushType, _ data: [String : Any]) {
+        if type == .chat {
+            self.dataRest()
+        }
+        else if type == .msgDel {
+            guard let seq = data["seq"] as? String, let _ = data["to_user_id"] else {
+                return
+            }
+            
+            var findUser:JSON? = nil
+            for item in listData {
+                let message_key = item["seq"].stringValue
+                if message_key == seq {
+                    findUser = item
+                    break
+                }
+            }
+            guard let user = findUser else {
+                return
+            }
+            
+            let user_name = user["user_name"].stringValue
+            self.showToastWindow("\(user_name)님이 대화방을 삭제했습니다.")
+            self.dataRest()
         }
     }
 }

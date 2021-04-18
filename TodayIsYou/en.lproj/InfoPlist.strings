@@ -1,0 +1,5 @@
+NSCameraUsageDescription = "It is required to add or change profile images." ;
+NSPhotoLibraryUsageDescription = "It is required to add or change profile images." ;
+NSContactsUsageDescription = "You will need it to get your contact information." ;
+NSMicrophoneUsageDescription = "Required for voice calls." ;
+NSSpeechRecognitionUsageDescription = "Required for voice calls." ;

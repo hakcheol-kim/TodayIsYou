@@ -33,14 +33,21 @@ class NetworkManager: NSObject {
     }
     
     func request(_ method: HTTPMethod, _ url: String, _ param:[String:Any]?, _ encoding:ParameterEncoding = JSONEncoding.default, success:ResSuccess?, failure:ResFailure?) {
-        let fullUrl = self.getFullUrl(url)
+        
+        var fullUrl = ""
+        if (url.hasPrefix("http") || url.hasPrefix("https")) {
+            fullUrl = url
+        }
+        else {
+            fullUrl = self.getFullUrl(url)
+        }
         
         guard let encodedUrl = fullUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             return
         }
         
         AppDelegate.ins.startIndicator()
-        let header: HTTPHeaders = [.contentType(ContentType.json.rawValue), .accept(ContentType.json.rawValue)]
+        let header: HTTPHeaders = [.contentType(ContentType.json.rawValue)]
         
         let request = AF.request(encodedUrl, method: method, parameters: param, encoding: encoding, headers: header)
         request.responseJSON { (response:AFDataResponse<Any>) in
@@ -56,7 +63,13 @@ class NetworkManager: NSObject {
             switch response.result {
             case .success(let value):
                 let json = JSON(value)
-                success?(json["Result"])
+                let reuslt = json["Result"]
+                if reuslt.isEmpty == false {
+                    success?(reuslt)
+                }
+                else {
+                    success?(json)
+                }
                 break
             case .failure(let error):
                 failure?(error)

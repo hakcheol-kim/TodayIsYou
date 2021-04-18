@@ -13,8 +13,10 @@ class IntroViewController: UIViewController {
         super.viewDidLoad()
         
         //1. 앱캐쉬에 저장되있닌지 찾는다.
-//        ShareData.ins.dfsSetValue("a52fd10c131f149663a64ab074d5b44b", forKey: DfsKey.userId)
-        
+//        c4f3f037ff94f95fe144fc9aed76f0b6
+        ShareData.ins.dfsSetValue("c4f3f037ff94f95fe144fc9aed76f0b6", forKey: DfsKey.userId)
+//        KeychainItem.deleteUserIdentifierFromKeychain()
+//        ShareData.ins.dfsSetValue(nil, forKey: DfsKey.userId)
         if let userId = ShareData.ins.dfsObjectForKey(DfsKey.userId) as? String, userId.length > 0 {
             //유저 아이디 disk 저장되있는것을 메모리에 올린다.
             ShareData.ins.myId = userId
@@ -24,13 +26,15 @@ class IntroViewController: UIViewController {
             //2. 키체인 영역에 저장된 키가 있는지 찾는다. 있다면, userid 생성해서 저장하고 로그인한다.
             let userIdentifier = KeychainItem.currentUserIdentifier
             if (userIdentifier.isEmpty == false) {
-                let userInfo = CipherManager.aes128Decrypt(toHex: userIdentifier)
-                let userId = Utility.createUserId(userInfo)
+                let arrInfo = userIdentifier.components(separatedBy: "|")
+//                let joinType = arrInfo.first!
+                let id = arrInfo.last!
+                let userId = Utility.createUserId(id)
                 ShareData.ins.myId = userId
                 self.requestUserInfo()
             }
             else {
-                AppDelegate.ins.callLoginViewCtrl()
+                AppDelegate.ins.callJoinTermVc()
             }
         }
     }
@@ -46,7 +50,7 @@ class IntroViewController: UIViewController {
             
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "00" {
-                AppDelegate.ins.callLoginViewCtrl()
+                AppDelegate.ins.callJoinTermVc()
             }
             else if isSuccess == "01" {
                 let use_yn = response["use_yn"].stringValue
@@ -65,7 +69,7 @@ class IntroViewController: UIViewController {
                         CAlertViewController.show(type: .alert,title: "안 내", message: msg, actions: [.cancel, .ok]) { (vcs, item, index) in
                             vcs.dismiss(animated: true, completion: nil)
                             if index == 1 {
-                                AppDelegate.ins.callLoginViewCtrl()
+                                AppDelegate.ins.callJoinTermVc()
                             }
                         }
                     }
@@ -81,14 +85,29 @@ class IntroViewController: UIViewController {
                 }
                 else {
                     ShareData.ins.setUserInfo(response)
+//                    self.requestPushMessage()
                     AppDelegate.ins.callMainViewCtrl()
+                    
                 }
             }
         } failure: { (error) in
             self.showErrorToast(error)
         }
     }
-    
+    func requestPushMessage() {
+        let param = ["app_type":appType, "user_id":ShareData.ins.myId]
+        ApiManager.ins.requestPushMessage(param: param) { (res) in
+            let isSuccess = res["isSuccess"].stringValue
+            if isSuccess == "01" {
+                
+            }
+            else {
+                
+            }
+        } fail: { (error) in
+            self.showErrorToast(error)
+        }
+    }
     func requestCheckUserBlock() {
         let param = ["user_id":ShareData.ins.myId]
         ApiManager.ins.requestCheckBlockUser(param: param) { (res) in
@@ -102,7 +121,7 @@ class IntroViewController: UIViewController {
                 }
             }
             else {
-                AppDelegate.ins.callLoginViewCtrl()
+                AppDelegate.ins.callJoinTermVc()
             }
         } failure: { (error) in
             self.showErrorToast(error)

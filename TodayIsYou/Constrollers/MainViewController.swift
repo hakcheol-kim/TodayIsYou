@@ -47,7 +47,6 @@ class MainViewController: BaseViewController {
                 }
             }
             
-            
             if oldSelIndex != selIndex {
                 if let selectedVc = selectedVc {
                     self.myRemoveChildViewController(childViewController: selectedVc)
@@ -136,9 +135,11 @@ class MainViewController: BaseViewController {
         setupSideMenu()
         updateMenus()
         self.requestMyHomePoint()
-        self.requestGetUserInfo()
-
         
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.updateUnReadMessageCount()
     }
     func requestGetUserInfo() {
         let param = ["app_type": appType, "user_id":ShareData.ins.myId]
@@ -242,6 +243,30 @@ class MainViewController: BaseViewController {
         }
         CNavigationBar.drawRight(self, nil, pointS, TAG_NAVI_S_COINT, nil)
     }
+    
+    func updateUnReadMessageCount() {
+        var findLabel:UILabel?
+        for btn in btnTabs {
+            if btn.tag == 4, let lbCount = btn.viewWithTag(103) as? UILabel {
+                findLabel = lbCount
+                break
+            }
+        }
+        guard let lbCatMsgCnt = findLabel else {
+            return
+        }
+        
+        DBManager.ins.getAllUnReadMessageCount { (count) in
+            if count > 0 {
+                lbCatMsgCnt.isHidden = false
+                lbCatMsgCnt.text = "\(count)"
+            }
+            else {
+                lbCatMsgCnt.isHidden = true
+            }
+        }
+    }
+    
 }
 
 extension MainViewController: UIGestureRecognizerDelegate {

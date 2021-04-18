@@ -499,5 +499,45 @@ class ApiManager: NSObject {
             }
         }
     }
+    //채팅방 메시지 삭제 및 방폭파
+    func requestDeleteChatMessage(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/messageDelete.do", param, URLEncoding.queryString) { (res) in
+            success?(res)
+        } failure: { (error) in
+            fail?(error)
+        }
+    }
+    //
+    func requestPushMessage(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/pushMessage.json", clientPara(param)) { (res) in
+            success?(res)
+        } failure: { (error) in
+            fail?(error)
+        }
+    }
+    ///sms 인증 요청
+    func requestSmsAuthCode(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.get, "http://todayisyou.co.kr/app/sms/sms_send_todayisyou.php", param, URLEncoding.queryString) { (res) in
+            success?(res)
+        } failure: { (err) in
+            fail?(err)
+        }
+    }
+    ///partner code 등록
+    func requestRegistPartnerCode(param:[String:Any], succcess:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.get, "http://todayisyou.co.kr/app/member/member_partner.php", param, URLEncoding.queryString) { (res) in
+            succcess?(res)
+        } failure: { (erro) in
+            fail?(erro)
+        }
+    }
+    //찜목록 삭제
+    func requestDeleteMyFriend(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "api/talk/myFriendDelete.do", param, URLEncoding.queryString) { (res) in
+            success?(res)
+        } failure: { (err) in
+            fail?(err)
+        }
+    }
     
 }

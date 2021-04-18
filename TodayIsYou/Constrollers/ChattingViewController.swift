@@ -10,7 +10,8 @@ import SwiftyJSON
 import BSImagePicker
 import Photos
 
-class ChattingViewController: MainActionViewController {
+class ChattingViewController: MainActionViewController, PushMessageDelegate {
+    
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var keyboardAccoryView: UIView!
     @IBOutlet weak var tvChatting: CTextView!
@@ -55,9 +56,9 @@ class ChattingViewController: MainActionViewController {
         CNavigationBar.drawRight(self, nil, "차단", 2000, #selector(onClickedBtnActions(_:)))
         CNavigationBar.drawRight(self, nil, "삭제", 2001, #selector(onClickedBtnActions(_:)))
         CNavigationBar.drawRight(self, nil, "영상", 2002, #selector(onClickedBtnActions(_:)))
-        if "남" == ShareData.ins.mySex.rawValue  {
-            CNavigationBar.drawRight(self, nil, "선물", 2003, #selector(onClickedBtnActions(_:)))
-        }
+//        if "남" == ShareData.ins.mySex.rawValue  {
+//            CNavigationBar.drawRight(self, nil, "선물", 2003, #selector(onClickedBtnActions(_:)))
+//        }
         
         let tap = UITapGestureRecognizer.init(target: self, action: #selector(didTapHandler(_ :)))
         self.view.addGestureRecognizer(tap)
@@ -65,7 +66,7 @@ class ChattingViewController: MainActionViewController {
         self.view.layoutIfNeeded()
       
         
-        let lbHeader = UILabel.init()
+        let lbHeader = UILabel.init(frame: CGRect(x: 0, y: 0, width: tblView.bounds.width, height: 20))
         lbHeader.font = UIFont.systemFont(ofSize: 12)
         lbHeader.textColor = RGB(230, 100, 100)
         lbHeader.textAlignment = .center
@@ -92,11 +93,15 @@ class ChattingViewController: MainActionViewController {
         super.viewWillAppear(animated)
         self.addKeyboardNotification()
         self.resetKeyboadDown()
+        self.updateDBReadMessage()
+        
+        AppDelegate.ins.pushHandler = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.removeKeyboardNotification()
+        AppDelegate.ins.pushHandler = nil
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -105,7 +110,13 @@ class ChattingViewController: MainActionViewController {
         }
         headerView.frame = CGRect(x: headerView.frame.origin.x, y: headerView.frame.origin.y, width: tblView.bounds.width, height: 30)
     }
-    
+    func updateDBReadMessage() {
+        DBManager.ins.updateReadMessage(messageKey: messageKey!) { (success, error) in
+            if success {
+                
+            }
+        }
+    }
     func relaodUi() {
         if self.isMyBlock {
             CNavigationBar.drawRight(self, nil, "차단해제", 2000, #selector(self.onClickedBtnActions(_:)))
@@ -143,6 +154,8 @@ class ChattingViewController: MainActionViewController {
         var arrSec:NSMutableArray!
         var preDate:Date? = nil
         
+        listData.removeAll()
+        
         for item in list {
             let curDate = item.reg_date
             if preDate == nil || (preDate != nil && curDate != nil && ((curDate! - preDate!).day ?? 0) > 1) {
@@ -160,11 +173,10 @@ class ChattingViewController: MainActionViewController {
             }
             preDate = curDate
         }
-        print(listData)
     }
     func getChatMessageFromDB() {
         DBManager.ins.getChatMessage(messageKey: messageKey, { (result, error) in
-            if let result = result {
+            if let result = result, result.isEmpty == false {
                 self.makeGroupingGapOneDay(result)
             }
             else {
@@ -282,6 +294,21 @@ class ChattingViewController: MainActionViewController {
             }
         }
     }
+    func requestDeleteChatMsg() {
+        let param = ["seq":messageKey!, "to_user_id":toUserId!]
+        ApiManager.ins.requestDeleteChatMessage(param: param) { (res) in
+            let isSuccess = res["isSuccess"].stringValue
+            if isSuccess == "01" {
+                DBManager.ins.deleteChatMessage(messageKey: self.messageKey) { (success, error) in
+                    
+                }
+                self.navigationController?.popViewController(animated: true)
+            }
+        } fail: { (error) in
+            self.showErrorToast(error)
+        }
+
+    }
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         if sender.tag == 2000 {
             print("차단")
@@ -299,11 +326,7 @@ class ChattingViewController: MainActionViewController {
             CAlertViewController.show(type: .alert, title: "대화 삭제", message: "모든 대화가 삭제됩니다.", actions: [.cancel, .ok]) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 if index == 1 {
-                    DBManager.ins.deleteChatMessage(messageKey: self.messageKey) { (success, error) in
-                        if success {
-                            self.getChatMessageFromDB()
-                        }
-                    }
+                    self.requestDeleteChatMsg()
                 }
             }
         }
@@ -494,7 +517,6 @@ class ChattingViewController: MainActionViewController {
             }
             var param:[String:Any] = [:]
             param["message_key"] = messageKey
-            param["type"] = 1
             param["from_user_id"] = ShareData.ins.myId
             param["to_user_id"] = toUserId!
             param["point_user_id"] = passData["point_user_id"].stringValue
@@ -516,6 +538,7 @@ class ChattingViewController: MainActionViewController {
                 data["to_user_name"] = self.toUserName!
                 data["from_user_name"] = ""
                 data["profile_name"] = self.passData["talk_img"].stringValue
+                data["type"] = 1
                 
                 self.tvChatting.text = ""
                 DBManager.ins.insertChatMessage(data) { (success, error) in
@@ -606,8 +629,24 @@ class ChattingViewController: MainActionViewController {
                 isShowKeyboard = false
             }
         }
-        
     }
+    func processPushMessage(_ type:PushType, _ data: [String : Any]) {
+        if type == .chat {
+            guard let message_key = data["message_key"] as? String else {
+                return
+            }
+            if self.messageKey == message_key {
+                self.updateDBReadMessage()
+                self.requestChartMsgList()
+            }
+        }
+        else if type == .msgDel {
+            self.showToastWindow("\(toUserName!)님이 대화방을 나갔습니다.")
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    
 }
 
 extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {

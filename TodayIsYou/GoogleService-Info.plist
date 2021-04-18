@@ -3,21 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>926574312014-n9e23mncbmivh842bclfgm0bino0vf2a.apps.googleusercontent.com</string>
+	<string>886973359520-i29at1a65h9utc6a5hj417c8o3fbm9ta.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.926574312014-n9e23mncbmivh842bclfgm0bino0vf2a</string>
+	<string>com.googleusercontent.apps.886973359520-i29at1a65h9utc6a5hj417c8o3fbm9ta</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>886973359520-q5ons147rv0hed95ccpmege4ell7f3ev.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDTXeSndMum47v5LEtnygppJ_S07HduLrs</string>
+	<string>AIzaSyAxnrNDVp5f8KlLTRwy4Qp6uf4__W_Souo</string>
 	<key>GCM_SENDER_ID</key>
-	<string>926574312014</string>
+	<string>886973359520</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.Iruri.TodayIsYou</string>
+	<string>kr.app.todayis.you</string>
 	<key>PROJECT_ID</key>
-	<string>todayisyou-1ad29</string>
+	<string>todayisyou-17408</string>
 	<key>STORAGE_BUCKET</key>
-	<string>todayisyou-1ad29.appspot.com</string>
+	<string>todayisyou-17408.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +31,8 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:926574312014:ios:a6d9e370b0fa0f1189a11f</string>
+	<string>1:886973359520:ios:6b612197181b1779b270c5</string>
+	<key>DATABASE_URL</key>
+	<string>https://todayisyou-17408.firebaseio.com</string>
 </dict>
 </plist>

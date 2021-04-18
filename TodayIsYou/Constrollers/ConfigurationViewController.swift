@@ -160,7 +160,9 @@ class ConfigurationViewController: BaseViewController {
         ApiManager.ins.requestUpdateUserSetting(param: param) { (response) in
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
-                self.showToast("설정변경 완료되었습니다.")
+                self.showToast("설정 변경 완료되었습니다.")
+                ShareData.ins.dfsSetValue(notiYn, forKey: DfsKey.notiYn)
+                ShareData.ins.dfsSetValue(connectPush, forKey: DfsKey.connectPush)
             }
             else {
                 self.showErrorToast(response)

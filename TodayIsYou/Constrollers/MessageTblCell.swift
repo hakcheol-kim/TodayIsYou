@@ -16,7 +16,7 @@ class MessageTblCell: UITableViewCell {
     @IBOutlet weak var lbMsg: UILabel!
     @IBOutlet weak var ivThumb: UIImageViewAligned!
     @IBOutlet weak var btnType: CButton!
-    
+    @IBOutlet weak var lbCount: Clabel!
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -106,6 +106,16 @@ class MessageTblCell: UITableViewCell {
                 tStr = String(format: "%02ld초전", second)
             }
             lbMsg.text = tStr
+        }
+        
+        DBManager.ins.getUnReadMessageCount(messageKey: "\(seq)") { (count) in
+            if count > 0 {
+                self.lbCount.isHidden = false
+                self.lbCount.text = "\(count)"
+            }
+            else {
+                self.lbCount.isHidden = true
+            }
         }
     }
     

@@ -101,9 +101,9 @@ class CAlertViewController: UIViewController {
             titleView.isHidden = false
             lbTitle.text = aletTitle
         }
+        btnIcon.isHidden = true
         
         if titleView.isHidden == false {
-            btnIcon.isHidden = true
             if iconImgName.isEmpty == false {
                 svTitle.layoutMargins = UIEdgeInsets(top: 40, left: 16, bottom: 8, right: 8)
                 lbTitle.font = UIFont.systemFont(ofSize: 15, weight: .medium)

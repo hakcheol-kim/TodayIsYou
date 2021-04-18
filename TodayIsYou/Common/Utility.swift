@@ -77,4 +77,8 @@ class Utility: NSObject {
             }
         })
     }
+    class func randomSms5digit() -> String {
+        let number = Int.random(in: 10000..<100000)
+        return String(format: "%0ld", number)
+    }
 }

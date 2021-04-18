@@ -22,7 +22,7 @@ class JoinTermsAgreeViewController: BaseViewController {
         CNavigationBar.drawBackButton(self, "약관 동의", #selector(actionNaviBack))
         safeView.isHidden = !Utility.isEdgePhone()
         
-        let attr = NSAttributedString.init(string: "보 기", attributes:[NSAttributedString.Key.underlineStyle : NSUnderlineStyle.thick.rawValue])
+        let attr = NSAttributedString.init(string: "보 기", attributes:[NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue])
         btnSeviceShow.setAttributedTitle(attr, for: .normal)
         btnPrivacyShow.setAttributedTitle(attr, for: .normal)
     }

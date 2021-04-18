@@ -1,0 +1,5 @@
+NSCameraUsageDescription = "프로파일 이미지를 추가, 변경 하기 위해 필요합니다." ;
+NSPhotoLibraryUsageDescription = "프로파일 이미지를 추가, 변경 하기 위해 필요합니다." ;
+NSContactsUsageDescription = "연락처 정보를 가져오기 위해 필요합니다." ;
+NSMicrophoneUsageDescription = "음성 통화를 위해 필요합니다." ;
+NSSpeechRecognitionUsageDescription = "음성 통화를 위해 필요합니다." ;

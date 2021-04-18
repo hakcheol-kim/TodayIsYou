@@ -37,12 +37,11 @@ struct AppColor {
 
 let IsShowTutorial = "IsShowTutorial"
 let kPushSetting = "PushSetting"
-
+let PUSH_DATA = "PUSH_DATA"
 
 struct DfsKey {
     static let joinType = "joinType"
     static let identifier = "identifier"
-    static let pushData = "PushUserData"
     static let userId = "user_id"
     static let userSex = "user_sex"
     static let userName = "user_name"
@@ -79,10 +78,6 @@ struct DfsKey {
     static let camMsgOutPoint =  "cam_msg_out_point"
     static let camPlayPoint =  "cam_play_point"
     static let userBbsPoint = "user_bbs_point"
-}
-struct NotiName {
-    static let pushData = "pushData"
-    
 }
 
 enum SortedType: String {
@@ -159,4 +154,70 @@ enum PhotoManageType: Int {
 enum Storyboard: String {
     case main = "Main"
     case login = "Login"
+}
+
+protocol PushMessageDelegate {
+    func processPushMessage(_ type:PushType, _ data:[String:Any])
+}
+
+enum PushType: String {
+    case empty = ""
+    case camNo = "CAM_NO"
+    case reSend = "RDSEND"
+    case rdCam = "RDCAM"
+    case chat = "CHAT"
+    case msgDel = "MSG_DEL"
+    case cam = "CAM"
+    case phone = "PHONE"
+    case notice = "NOTICE"
+    case qnaAnswer = "QNA_Answer"
+    case qnaManager = "QNA_Manager"
+    case commentMemo = "COMMENT_MEMO"
+    case commentGift = "COMMENT_GIFT"
+    case block = "BLOCK"
+    
+    static func getPushType(_ str:String) -> PushType {
+        if str  == "CAM_NO" {
+            return .camNo
+        }
+        else if str  == "RDSEND" {
+            return .reSend
+        }
+        else if str  == "RDCAM" {
+            return .rdCam
+        }
+        else if str  == "CHAT" {
+            return .chat
+        }
+        else if str  == "MSG_DEL" {
+            return .msgDel
+        }
+        else if str  == "CAM" {
+            return .cam
+        }
+        else if str  == "PHONE" {
+            return .phone
+        }
+        else if str  == "NOTICE" {
+            return .notice
+        }
+        else if str  == "QNA_Answer" {
+            return .qnaAnswer
+        }
+        else if str  == "QNA_Manager" {
+            return .qnaManager
+        }
+        else if str  == "COMMENT_MEMO" {
+            return .commentMemo
+        }
+        else if str  == "COMMENT_GIFT" {
+            return .commentGift
+        }
+        else if str  == "BLOCK" {
+            return .block
+        }
+        else {
+            return .empty
+        }
+    }
 }
