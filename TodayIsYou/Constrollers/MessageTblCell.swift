@@ -38,7 +38,7 @@ class MessageTblCell: UITableViewCell {
         let confirm = data["confirm"].stringValue //Y;
         let days = data["days"].intValue //2;
         let locale = data["locale"].stringValue //"";
-        let memo = data["memo"].stringValue //Hi;
+        var memo = data["memo"].stringValue //Hi;
         let mode = data["mode"].stringValue //;
         let msg_cnt = data["msg_cnt"].intValue //0;
         let msg_reg_date = data["msg_reg_date"].stringValue//"04:09:45.626 PM 03/11/2021";
@@ -69,7 +69,8 @@ class MessageTblCell: UITableViewCell {
         }
         ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
         
-        
+        memo = memo.replacingOccurrences(of: "[CAM_TALK]", with: "")
+        memo = memo.replacingOccurrences(of: "[PHONE_TALK]", with: "")
         lbTitle.text = memo
         let result = "\(user_name), \(user_age), \(user_sex)"
         let attr = NSMutableAttributedString.init(string: result)

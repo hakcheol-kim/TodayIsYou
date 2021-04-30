@@ -10,7 +10,7 @@ import SwiftyJSON
 import BSImagePicker
 import Photos
 
-class ChattingViewController: MainActionViewController, PushMessageDelegate {
+class ChattingViewController: MainActionViewController {
     
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var keyboardAccoryView: UIView!
@@ -95,13 +95,13 @@ class ChattingViewController: MainActionViewController, PushMessageDelegate {
         self.resetKeyboadDown()
         self.updateDBReadMessage()
         
-        AppDelegate.ins.pushHandler = self
+        NotificationCenter.default.addObserver(self, selector: #selector(notificationHandler(_:)), name: Notification.Name(PUSH_DATA), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.removeKeyboardNotification()
-        AppDelegate.ins.pushHandler = nil
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(PUSH_DATA), object: nil)
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
@@ -111,11 +111,7 @@ class ChattingViewController: MainActionViewController, PushMessageDelegate {
         headerView.frame = CGRect(x: headerView.frame.origin.x, y: headerView.frame.origin.y, width: tblView.bounds.width, height: 30)
     }
     func updateDBReadMessage() {
-        DBManager.ins.updateReadMessage(messageKey: messageKey!) { (success, error) in
-            if success {
-                
-            }
-        }
+        DBManager.ins.updateReadMessage(messageKey: messageKey!, nil)
     }
     func relaodUi() {
         if self.isMyBlock {
@@ -158,6 +154,9 @@ class ChattingViewController: MainActionViewController, PushMessageDelegate {
         
         for item in list {
             let curDate = item.reg_date
+            if curDate == nil {
+                continue
+            }
             if preDate == nil || (preDate != nil && curDate != nil && ((curDate! - preDate!).day ?? 0) > 1) {
                 let tmpDic = NSMutableDictionary()
                 listData.append(tmpDic)
@@ -299,9 +298,7 @@ class ChattingViewController: MainActionViewController, PushMessageDelegate {
         ApiManager.ins.requestDeleteChatMessage(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
-                DBManager.ins.deleteChatMessage(messageKey: self.messageKey) { (success, error) in
-                    
-                }
+                DBManager.ins.deleteChatMessage(messageKey: self.messageKey, nil)
                 self.navigationController?.popViewController(animated: true)
             }
         } fail: { (error) in
@@ -528,6 +525,11 @@ class ChattingViewController: MainActionViewController, PushMessageDelegate {
     }
     
     func requestSendMessage(_ param:[String:Any]) {
+        if self.isBlocked == true {
+            self.showToast("상대가 차단했습니다!!")
+            return
+        }
+        
         ApiManager.ins.requestSendChattingMsg(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
@@ -537,7 +539,6 @@ class ChattingViewController: MainActionViewController, PushMessageDelegate {
                 data["read_yn"] = true
                 data["to_user_name"] = self.toUserName!
                 data["from_user_name"] = ""
-                data["profile_name"] = self.passData["talk_img"].stringValue
                 data["type"] = 1
                 
                 self.tvChatting.text = ""
@@ -556,7 +557,10 @@ class ChattingViewController: MainActionViewController, PushMessageDelegate {
     }
     
     func aniKeyboardAccoryView(_ isShow:Bool, duration:CGFloat) {
-        if isShow {
+        if toUserId! == "manager" {
+            bottomSafeKeybardAccoryView.constant = -(keyboardAccoryView.bounds.height)
+        }
+        else if isShow {
             heightKeyboardAccoryview.constant = heightKeyboard
             let safeBottom:CGFloat = self.view.window?.safeAreaInsets.bottom ?? 0
             bottomSafeKeybardAccoryView.constant = -safeBottom
@@ -568,47 +572,6 @@ class ChattingViewController: MainActionViewController, PushMessageDelegate {
         UIView.animate(withDuration: TimeInterval(duration)) {
             self.view.layoutIfNeeded()
         }
-    }
-    
-    //overide method 
-    override func actionAlertPhoneCall() {
-        
-    }
-    override func actionAlertCamTalkCall() {
-        
-    }
-    override func actionBlockAlert() {
-        let user_name = self.selUser["user_name"].stringValue
-        let user_id = self.selUser["user_id"].stringValue
-        
-        let alert = CAlertViewController.init(type: .alert, title: "\(user_name)님 신고하기", message: nil, actions: [.cancel, .ok]) { (vcs, selItem, index) in
-            
-            if (index == 1) {
-                guard let text = vcs.arrTextView.first?.text, text.isEmpty == false else {
-                    return
-                }
-                vcs.dismiss(animated: true, completion: nil)
-                let param = ["user_name":user_name, "to_user_id":user_id, "user_id":ShareData.ins.myId, "memo":text]
-                ApiManager.ins.requestReport(param: param) { (res) in
-                    let isSuccess = res["isSuccess"].stringValue
-                    if isSuccess == "01" {
-                        self.showToast("신고가 완료되었습니다.")
-                    }
-                    else {
-                        self.showErrorToast(res)
-                    }
-                } failure: { (error) in
-                    self.showErrorToast(error)
-                }
-            }
-            else {
-                vcs.dismiss(animated: true, completion: nil)
-            }
-        }
-        alert.iconImg = UIImage(named: "warning")
-        alert.addTextView("신고 내용을 입력해주세요.", UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
-        
-        self.present(alert, animated: true, completion: nil)
     }
     
     //MARK:: notification handler
@@ -629,24 +592,24 @@ class ChattingViewController: MainActionViewController, PushMessageDelegate {
                 isShowKeyboard = false
             }
         }
-    }
-    func processPushMessage(_ type:PushType, _ data: [String : Any]) {
-        if type == .chat {
-            guard let message_key = data["message_key"] as? String else {
+        else if notification.name == Notification.Name(rawValue: PUSH_DATA) {
+            guard let info = notification.object as? JSON else {
                 return
             }
-            if self.messageKey == message_key {
-                self.updateDBReadMessage()
-                self.requestChartMsgList()
+            let type = info["msg_cmd"].stringValue
+            if type == "CHAT" {
+                let message_key = info["message_key"].stringValue
+                if self.messageKey == message_key {
+                    self.updateDBReadMessage()
+                    self.requestChartMsgList()
+                }
+            }
+            else if type == "MSG_DEL" {
+                self.showToastWindow("\(toUserName!)님이 대화방을 나갔습니다.")
+                self.navigationController?.popViewController(animated: true)
             }
         }
-        else if type == .msgDel {
-            self.showToastWindow("\(toUserName!)님이 대화방을 나갔습니다.")
-            self.navigationController?.popViewController(animated: true)
-        }
     }
-    
-    
 }
 
 extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
@@ -673,7 +636,8 @@ extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
             if tmpCell == nil {
                 tmpCell = Bundle.main.loadNibNamed(ChattingLeftCell.identifier, owner: nil, options: nil)?.first as? ChattingLeftCell
             }
-            tmpCell?.configurationData(chat)
+            let profile_name = self.passData["talk_img"].stringValue
+            tmpCell?.configurationData(chat, profile_name)
             
             tmpCell?.didClickedClosure = {(selItem, index) ->Void in
                 if let selItem = selItem as? String, index == 1 {

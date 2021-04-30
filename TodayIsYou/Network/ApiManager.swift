@@ -533,11 +533,42 @@ class ApiManager: NSObject {
     }
     //찜목록 삭제
     func requestDeleteMyFriend(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
-        NetworkManager.ins.request(.post, "api/talk/myFriendDelete.do", param, URLEncoding.queryString) { (res) in
+        NetworkManager.ins.request(.post, "/api/talk/myFriendDelete.do", param, URLEncoding.queryString) { (res) in
             success?(res)
         } failure: { (err) in
             fail?(err)
         }
     }
-    
+    ///영상통화 신청
+    func requestCamCallInsertMsg(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/insertVcChatMsg.do", param, URLEncoding.queryString) { (res) in
+            success?(res)
+        } failure: { (error) in
+            fail?(error)
+        }
+    }
+    ///폰통화 신청
+    func requestPhoneCallInsertMsg(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/insertVcPhoneMsg.do", param, URLEncoding.queryString) { (res) in
+            success?(res)
+        } failure: { (error) in
+            fail?(error)
+        }
+    }
+    ///유저이미지 톡 정보
+    func requestGetUserImgTalk(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/getUserImgTalk.json", clientPara(param)) { (res) in
+            success?(res)
+        } failure: { (error) in
+            fail?(error)
+        }
+    }
+    //영상통화 거절, 음성통화 거절
+    func requestRejectPhoneTalk(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/sendNo.json", clientPara(param)) { (res) in
+            success?(res)
+        } failure: { (error) in
+            fail?(error)
+        }
+    }
 }

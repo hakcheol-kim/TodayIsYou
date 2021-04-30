@@ -8,7 +8,7 @@
 import UIKit
 import SwiftyJSON
 
-class MessageListViewController: BaseViewController, PushMessageDelegate {
+class MessageListViewController: BaseViewController {
     
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var btnDelAll: UIButton!
@@ -37,11 +37,11 @@ class MessageListViewController: BaseViewController, PushMessageDelegate {
         super.viewWillAppear(animated)
         self.dataRest()
         AppDelegate.ins.mainViewCtrl.updateUnReadMessageCount()
-        AppDelegate.ins.pushHandler = self
+        NotificationCenter.default.addObserver(self, selector: #selector(notificationHandler(_:)), name: Notification.Name(PUSH_DATA), object: nil)
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        AppDelegate.ins.pushHandler = nil
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(PUSH_DATA), object: nil)
     }
     func dataRest() {
         pageNum = 1
@@ -68,17 +68,17 @@ class MessageListViewController: BaseViewController, PushMessageDelegate {
             let result = response["result"].arrayValue
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
+                if self.pageNum == 1 {
+                    self.listData = result
+                }
+                else if result.isEmpty == false {
+                    self.listData.append(contentsOf: result)
+                }
+                
                 if result.count == 0 {
                     self.pageEnd = true
                 }
-                else {
-                    if self.pageNum == 1 {
-                        self.listData = result
-                    }
-                    else {
-                        self.listData.append(contentsOf: result)
-                    }
-                }
+                
                 self.tblView.cr.endHeaderRefresh()
                 if (self.listData.count > 0) {
                     self.tblView.isHidden = false
@@ -110,6 +110,7 @@ class MessageListViewController: BaseViewController, PushMessageDelegate {
                         let isSuccess = res["isSuccess"].stringValue
                         if isSuccess == "01" {
                             self.dataRest()
+                            DBManager.ins.deleteAllChatMessage(nil)
                         }
                         else {
                             self.showErrorToast(res)
@@ -125,30 +126,36 @@ class MessageListViewController: BaseViewController, PushMessageDelegate {
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
     }
-    func processPushMessage(_ type:PushType, _ data: [String : Any]) {
-        if type == .chat {
-            self.dataRest()
+    
+    override func notificationHandler(_ notification: NSNotification) {
+        guard let info = notification.object as? JSON else {
+            return
         }
-        else if type == .msgDel {
-            guard let seq = data["seq"] as? String, let _ = data["to_user_id"] else {
-                return
+        if (notification.name == Notification.Name(PUSH_DATA)) {
+            let type = info["msg_cmd"].stringValue
+            if type == "CHAT" {
+                self.dataRest()
             }
-            
-            var findUser:JSON? = nil
-            for item in listData {
-                let message_key = item["seq"].stringValue
-                if message_key == seq {
-                    findUser = item
-                    break
+            else if type == "MSG_DEL" {
+                let seq = info["seq"].stringValue
+                let to_user_id = info["to_user_id"].stringValue
+                
+                var findUser:JSON? = nil
+                for item in listData {
+                    let message_key = item["seq"].stringValue
+                    if message_key == seq {
+                        findUser = item
+                        break
+                    }
                 }
+                guard let user = findUser else {
+                    return
+                }
+                
+                let user_name = user["user_name"].stringValue
+                self.showToastWindow("\(user_name)님이 대화방을 삭제했습니다.")
+                self.dataRest()
             }
-            guard let user = findUser else {
-                return
-            }
-            
-            let user_name = user["user_name"].stringValue
-            self.showToastWindow("\(user_name)님이 대화방을 삭제했습니다.")
-            self.dataRest()
         }
     }
 }

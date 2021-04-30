@@ -46,6 +46,7 @@ extension UIViewController {
         let arrName = NSStringFromClass(self).components(separatedBy: ".")
         return storyboard.instantiateViewController(identifier: arrName.last!)
     }
+    
     func showErrorToast(_ data: Any?) {
         if let data = data as? JSON {
             var msg:String = ""
@@ -102,6 +103,17 @@ extension UIViewController {
 }
 //FIXME:: UIView
 extension UIView {
+    func addConstraintsSuperView(_ inset:UIEdgeInsets = .zero) {
+        guard let superview = self.superview else {
+            return
+        }
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.topAnchor.constraint(equalTo: superview.topAnchor, constant: inset.top).isActive = true
+        self.leadingAnchor.constraint(equalTo: superview.leadingAnchor, constant: inset.left).isActive = true
+        self.trailingAnchor.constraint(equalTo: superview.trailingAnchor, constant: -inset.right).isActive = true
+        self.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: -inset.bottom).isActive = true
+        
+    }
     func addShadow(offset:CGSize, color:UIColor, raduius: Float, opacity:Float) {
         self.layer.masksToBounds = false
         self.layer.shadowOffset = offset
@@ -412,7 +424,7 @@ extension String {
     func maskOfSuffixLenght(_ length:Int) -> String? {
         return String(repeating: "x", count: Swift.max(0, count-length)) + suffix(length)
     }
-    func convertJsonStringToDict() -> [String:Any]? {
+    func parsingJsonObject() -> [String:Any]? {
         guard let data = self.data(using: .utf8) else {
             return nil
         }

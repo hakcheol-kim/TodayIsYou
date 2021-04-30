@@ -22,6 +22,8 @@ class CamTblCell: UITableViewCell {
         super.awakeFromNib()
         let tap = UITapGestureRecognizer.init(target: self, action: #selector(onTapGesuterHandler(_ :)))
         ivThumb.addGestureRecognizer(tap)
+        let tap2 = UITapGestureRecognizer.init(target: self, action: #selector(onTapGesuterHandler(_ :)))
+        ivProfile.addGestureRecognizer(tap2)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -63,29 +65,41 @@ class CamTblCell: UITableViewCell {
         else {
             ivProfile.image = UIImage(named: Gender.femail.avatar())
         }
+        ivProfile.accessibilityValue = nil
         if let imgUrl = Utility.thumbnailUrl(user_id, file_name) {
             ivProfile.setImageCache(imgUrl)
+            ivProfile.accessibilityValue = imgUrl
         }
         ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
         
         ivThumb.isHidden = true
+        ivThumb.accessibilityValue = nil
         if let imgUrl = Utility.thumbnailUrl(user_id, user_image) {
             ivThumb.isHidden = false
             ivThumb.setImageCache(imgUrl)
+            ivThumb.accessibilityValue = imgUrl
         }
         ivThumb.layer.cornerRadius = ivThumb.bounds.height/2
         
         lbTitle.text = contents
         lbSubTitle.text = "\(user_name), \(user_sex) \(user_age)"
     }
+    
     @objc func onTapGesuterHandler(_ gesture: UIGestureRecognizer) {
-        if gesture.view == ivThumb {
-            didClickedClosure?(self.data, 100)
+        if gesture.view == ivProfile {
+            if let _ = gesture.view?.accessibilityValue {
+                didClickedClosure?(self.data, 100)
+            }
+        }
+        else if gesture.view == ivThumb {
+            if let _ = gesture.view?.accessibilityValue {
+                didClickedClosure?(self.data, 101)
+            }
         }
     }
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         if sender == btnType {
-            didClickedClosure?(self.data, 101)
+            didClickedClosure?(self.data, 102)
         }
     }
 }

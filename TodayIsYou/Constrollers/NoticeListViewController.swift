@@ -10,7 +10,6 @@ import SwiftyJSON
 
 class NoticeListViewController: BaseViewController {
     @IBOutlet weak var scrollView: UIScrollView!
-    
     @IBOutlet weak var svContent: UIStackView!
     
     var listData:[JSON] = []

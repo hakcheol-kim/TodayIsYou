@@ -13,8 +13,10 @@ class MainViewController: BaseViewController {
     @IBOutlet weak var tabView: UIView!
     @IBOutlet var btnTabs: [UIButton]!
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var btnPlus: CButton!
-    @IBOutlet weak var btnRocket: CButton!
+    @IBOutlet weak var floatRocket: CView!
+    @IBOutlet weak var floatPlus: CView!
+    @IBOutlet weak var btnPlus: UIButton!
+    @IBOutlet weak var btnRocket: UIButton!
     @IBOutlet weak var svItems: UIStackView!
     
     let colorTabBtnNor = RGB(248, 24, 148)
@@ -99,13 +101,13 @@ class MainViewController: BaseViewController {
             svItems.isHidden = true
             if selIndex == 0 {
                 svItems.isHidden = false
-                btnRocket.isHidden = false
-                btnPlus.isHidden = false
+                floatRocket.isHidden = false
+                floatPlus.isHidden = false
             }
             else if selIndex == 1 || selIndex == 2 {
                 svItems.isHidden = false
-                btnRocket.isHidden = true
-                btnPlus.isHidden = false
+                floatRocket.isHidden = true
+                floatPlus.isHidden = false
             }
             
             oldSelIndex = selIndex
@@ -135,6 +137,9 @@ class MainViewController: BaseViewController {
         setupSideMenu()
         updateMenus()
         self.requestMyHomePoint()
+        btnRocket.layer.cornerRadius = btnRocket.bounds.height/2
+        btnPlus.layer.cornerRadius = btnPlus.bounds.height/2
+        
         
     }
     override func viewWillAppear(_ animated: Bool) {

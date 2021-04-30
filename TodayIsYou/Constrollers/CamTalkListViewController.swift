@@ -275,14 +275,42 @@ extension CamTalkListViewController: UITableViewDataSource, UITableViewDelegate 
         if (indexPath.row < listData.count) {
             let item = listData[indexPath.row]
             cell?.configurationData(item)
-            cell?.didClickedClosure = {(_ selData, _ index)-> Void in
+            cell?.didClickedClosure = {(_ selData, _ action)-> Void in
                 guard let selData = selData else {
                     return
                 }
                 
-                if index == 100 {
+                switch action {
+                case 100:
+                    if let inappCnt = ShareData.ins.dfsObjectForKey(DfsKey.inappCnt) as? NSNumber, inappCnt.intValue > 0 {
+                        let user_id = selData["user_id"].stringValue
+                        let file_name = selData["file_name"].stringValue
+                        if let imgUrl = Utility.thumbnailUrl(user_id, file_name) {
+                            self.showPhoto(imgUrls: [imgUrl])
+                        }
+                    }
+                    else {
+                        self.showToast("1회 이상 결제한 유저님만 크게 볼 수 있습니다!!");
+                    }
+                    break
+                case 101:
+                    if let inappCnt = ShareData.ins.dfsObjectForKey(DfsKey.inappCnt) as? NSNumber, inappCnt.intValue > 0 {
+                        let user_id = selData["user_id"].stringValue
+                        let user_image = selData["user_image"].stringValue
+                        if let imgUrl = Utility.thumbnailUrl(user_id, user_image) {
+                            self.showPhoto(imgUrls: [imgUrl])
+                        }
+                    }
+                    else {
+                        self.showToast("1회 이상 결제한 유저님만 크게 볼 수 있습니다!!");
+                    }
+                    break
+                case 102:
                     self.selUser = selData
                     self.checkCamTalk()
+                    break
+                default:
+                    break
                 }
             }
         }

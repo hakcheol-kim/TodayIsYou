@@ -42,8 +42,7 @@ class ChattingLeftCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    
-    func configurationData(_ data: ChatMessage?) {
+    func configurationData(_ data: ChatMessage?, _ profile_name: String? = nil) {
         guard let chat = data else {
             lbMessage.text = ""
             lbDate.text = ""
@@ -56,7 +55,40 @@ class ChattingLeftCell: UITableViewCell {
         ivBgView.contentMode = .scaleToFill
         svSub.alignment = .leading
         lbName.text = chat.to_user_name
-        lbMessage.text = chat.memo
+        
+        lbMessage.attributedText = nil
+        
+        if let memo = chat.memo {
+            var attr:NSMutableAttributedString!
+            if memo.hasPrefix("[CAM_TALK]") == true {
+                let msg = memo.replacingOccurrences(of: "[CAM_TALK]", with: "")
+                attr = NSMutableAttributedString.init(string: msg)
+                
+                if let img = UIImage(named: "cam_icon")?.withRenderingMode(.alwaysTemplate) {
+                    let attatch = NSTextAttachment.init(image: img)
+                    attatch.bounds = CGRect(x: 0, y: -4, width: 16, height: 16)
+                    attr.append(NSAttributedString.init(string: " "))
+                    attr.append(NSAttributedString.init(attachment: attatch))
+                }
+            }
+            else if memo.hasPrefix("[PHONE_TALK]") == true {
+                let msg = memo.replacingOccurrences(of: "[PHONE_TALK]", with: "")
+                attr = NSMutableAttributedString.init(string: msg)
+                
+                if let img = UIImage(named: "phone")?.withRenderingMode(.alwaysTemplate) {
+                    let attatch = NSTextAttachment.init(image: img)
+                    attatch.bounds = CGRect(x: 0, y: -4, width: 16, height: 16)
+                    attr.append(NSAttributedString.init(string: " "))
+                    attr.append(NSAttributedString.init(attachment: attatch))
+                }
+            }
+            else {
+                attr = NSMutableAttributedString.init(string: memo)
+            }
+            
+            lbMessage.attributedText = attr
+        }
+        
         
         if let date = chat.reg_date {
             if calendar.isDateInToday(date) {
@@ -68,7 +100,7 @@ class ChattingLeftCell: UITableViewCell {
             lbDate.text = df.string(from: date)
         }
         ivIcon.image = UIImage(systemName: "person.fill")
-        if let url = Utility.thumbnailUrl(chat.to_user_id, chat.profile_name) {
+        if let url = Utility.thumbnailUrl(chat.from_user_id, profile_name) {
             ivIcon.setImageCache(url)
         }
         ivBgView.backgroundColor = UIColor.clear
@@ -82,12 +114,20 @@ class ChattingLeftCell: UITableViewCell {
         ivFile.isHidden = true
         ivBgView.isHidden = false
         
-        if let file_name = chat.file_name, file_name.isEmpty == false, let url = Utility.thumbnailUrl(chat.from_user_id, file_name) {
+        if let file_name = chat.file_name, file_name.isEmpty == false {
+            var thumbnailUrl = ""
+            if file_name.hasPrefix("http:") || file_name.hasPrefix("https:") {
+                thumbnailUrl = file_name
+            }
+            else if let url = Utility.thumbnailUrl(chat.from_user_id, file_name) {
+                thumbnailUrl = url
+            }
+           
             ivFile.isHidden = false
             ivBgView.isHidden = true
-            ivFile.accessibilityValue = url
+            ivFile.accessibilityValue = thumbnailUrl
             
-            Utility.downloadImage(url) { (image, _) in
+            Utility.downloadImage(thumbnailUrl) { (image, _) in
                 guard let image = image else {
                     return
                 }

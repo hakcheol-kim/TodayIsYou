@@ -15,16 +15,16 @@ class DBManager: NSObject {
     static let ins = DBManager()
     private let viewcontext = AppDelegate.ins.persistentContainer.viewContext
     
-    func getAllChatMessage(_ completion:@escaping(_ messages:[ChatMessage]?, _ error:Error?) -> Void) {
+    func getAllChatMessage(_ completion:((_ messages:[ChatMessage]?, _ error:Error?) -> Void)?) {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: DBName.chatmessage.rawValue)
         do {
             let result = try viewcontext.fetch(request) as? [ChatMessage]
-            completion(result, nil)
+            completion?(result, nil)
         } catch let error {
-            completion(nil, error)
+            completion?(nil, error)
         }
     }
-    func getChatMessage(messageKey:String, _ completion:@escaping(_ messages:[ChatMessage]?, _ error:Error?) -> Void) {
+    func getChatMessage(messageKey:String, _ completion:((_ messages:[ChatMessage]?, _ error:Error?) -> Void)?) {
         let predicate = NSPredicate.init(format: "%K = %@", "message_key", messageKey)
         let des = NSSortDescriptor.init(key: "reg_date", ascending: true)
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: DBName.chatmessage.rawValue)
@@ -33,12 +33,12 @@ class DBManager: NSObject {
         viewcontext.refreshAllObjects()
         do {
             let result = try viewcontext.fetch(request) as? [ChatMessage]
-            completion(result, nil)
+            completion?(result, nil)
         } catch let error {
-            completion(nil, error)
+            completion?(nil, error)
         }
     }
-    func getAllUnReadMessageCount(_ completion:@escaping(_ count:Int) ->Void) {
+    func getAllUnReadMessageCount(_ completion:((_ count:Int) ->Void)?) {
         let isRead = NSNumber.init(booleanLiteral: false)
         let predicate = NSPredicate.init(format: "(%K = %@)", "read_yn", isRead)
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: DBName.chatmessage.rawValue)
@@ -48,26 +48,26 @@ class DBManager: NSObject {
         do {
             let result = try viewcontext.fetch(request) as? [ChatMessage]
             if let result = result, result.isEmpty == false {
-                completion(result.count)
+                completion?(result.count)
             }
             else {
-                completion(0)
+                completion?(0)
             }
         } catch {
-            completion(0)
+            completion?(0)
         }
     }
-    func getUnReadMessageCount(messageKey:String, _ completion:@escaping(_ count:Int) ->Void) {
+    func getUnReadMessageCount(messageKey:String, _ completion:((_ count:Int) ->Void)?) {
         self.getUnReadChatMessage(messageKey: messageKey) { (result, error) in
             if let result = result, result.isEmpty == false {
-                completion(result.count)
+                completion?(result.count)
             }
             else {
-                completion(0)
+                completion?(0)
             }
         }
     }
-    private func getUnReadChatMessage(messageKey:String, _ completion:@escaping(_ messages:[ChatMessage]?, _ error:Error?) -> Void) {
+    private func getUnReadChatMessage(messageKey:String, _ completion:((_ messages:[ChatMessage]?, _ error:Error?) -> Void)?) {
         let isRead = NSNumber.init(booleanLiteral: false)
         let predicate = NSPredicate.init(format: "(%K = %@) AND (%K = %@)", "message_key", messageKey, "read_yn", isRead)
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: DBName.chatmessage.rawValue)
@@ -76,13 +76,13 @@ class DBManager: NSObject {
         viewcontext.refreshAllObjects()
         do {
             let result = try viewcontext.fetch(request) as? [ChatMessage]
-            completion(result, nil)
+            completion?(result, nil)
         } catch let error {
-            completion(nil, error)
+            completion?(nil, error)
         }
     }
     
-    func updateReadMessage(messageKey:String, _ completion:@escaping(_ success:Bool, _ error:Error?) ->Void) {
+    func updateReadMessage(messageKey:String, _ completion:((_ success:Bool, _ error:Error?) ->Void)?) {
         self.getUnReadChatMessage(messageKey: messageKey) { (result, error) in
             if let result = result, result.isEmpty == false {
                 for item in result {
@@ -90,19 +90,19 @@ class DBManager: NSObject {
                 }
                 do {
                     try self.viewcontext.save()
-                    completion(true, nil)
+                    completion?(true, nil)
                 }
                 catch let error {
-                    completion(false, error)
+                    completion?(false, error)
                 }
             }
             else {
-                completion(true, nil)
+                completion?(true, nil)
             }
         }
     }
     
-    func insertChatMessage(_ param:[String:Any], _ completion:@escaping(_ success:Bool, _ error:Error?) -> Void) {
+    func insertChatMessage(_ param:[String:Any], _ completion:((_ success:Bool, _ error:Error?) -> Void)?) {
         guard let message_key = param["message_key"] as? String else {
             return
         }
@@ -121,16 +121,16 @@ class DBManager: NSObject {
         
         do {
             try viewcontext.save()
-            completion(true, nil)
+            completion?(true, nil)
         } catch let error {
-            completion(false, error)
+            completion?(false, error)
         }
     }
     
-    func deleteChatMessage(messageKey:String, _ completion:@escaping(_ success:Bool, _ error:Error?) ->Void) {
+    func deleteChatMessage(messageKey:String, _ completion:((_ success:Bool, _ error:Error?) ->Void)?) {
         self.getChatMessage(messageKey: messageKey) { (chats, error) in
             guard let chats = chats, chats.isEmpty == false else {
-                completion(true, nil)
+                completion?(true, nil)
                 return
             }
             for chat in chats {
@@ -139,11 +139,22 @@ class DBManager: NSObject {
             
             do {
                 try self.viewcontext.save()
-                completion(true, nil)
+                completion?(true, nil)
             }
             catch let error {
-                completion(false, error)
+                completion?(false, error)
             }
+        }
+    }
+    func deleteAllChatMessage(_ completion:((_ success:Bool, _ error:Error?) ->Void)?) {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: DBName.chatmessage.rawValue)
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try viewcontext.execute(deleteRequest)
+            viewcontext.refreshAllObjects()
+            completion?(true, nil)
+        } catch let error {
+            completion?(false, error)
         }
     }
 }

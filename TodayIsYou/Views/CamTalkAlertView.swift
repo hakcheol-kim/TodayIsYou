@@ -42,7 +42,7 @@ class CamTalkAlertView: UIView {
             imgUrl = "icon_female"
         }
         
-        let keys:[String] = ["file_name", "user_img", "cam_user_img", "talk_user_img"]
+        let keys:[String] = ["cam_user_img"]// ["file_name", "user_img", "cam_user_img", "talk_user_img"]
         
         for key in keys {
             let value = data[key].stringValue

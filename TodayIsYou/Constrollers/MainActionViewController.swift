@@ -145,10 +145,13 @@ class MainActionViewController: BaseViewController {
         if let presentedVc = presentedViewController {
             presentedVc.dismiss(animated: false, completion: nil)
         }
-        guard let imgUrl = sender.accessibilityValue else {
-            return
-        }
-        self.showPhoto(imgUrls: [imgUrl])
+//        guard let imgUrl = sender.accessibilityValue else {
+//            return
+//        }
+//        self.showPhoto(imgUrls: [imgUrl])
+        let vc = RankDetailViewController.instantiateFromStoryboard(.main)!
+        vc.passData = self.selUser
+        AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
     }
     @objc private func actionAlertReport(_ sender: UIButton) {
         if let presentedVc = presentedViewController {
@@ -156,14 +159,93 @@ class MainActionViewController: BaseViewController {
         }
         self.actionBlockAlert()
     }
-    public func actionAlertPhoneCall() {
+    
+    //overide method
+    func actionAlertPhoneCall() {
+        var param:[String:Any] = [:]
+        param["room_key"] = Utility.roomKeyPhone()
         
+        param["from_user_id"] = ShareData.ins.myId
+        param["from_user_sex"] = ShareData.ins.mySex.rawValue
+        param["to_user_id"] = self.selUser["user_id"].stringValue
+        param["to_user_name"] = self.selUser["user_name"].stringValue
+        param["friend_mode"] = "N"
+        
+        if isMyFriend {
+            param["friend_mode"] = "Y"
+        }
+        
+        ApiManager.ins.requestPhoneCallInsertMsg(param: param) { (res) in
+            let isSuccess = res["isSuccess"].stringValue
+            if isSuccess == "01" {
+                ///
+            }
+            else {
+                self.showErrorToast(res)
+            }
+        } fail: { (error) in
+            self.showErrorToast(error)
+        }
     }
-    public func actionAlertCamTalkCall() {
+    func actionAlertCamTalkCall() {
+        var param:[String:Any] = [:]
+        param["room_key"] = Utility.roomKeyCam()
+        param["from_user_id"] = ShareData.ins.myId
+        param["from_user_sex"] = ShareData.ins.mySex.rawValue
+        param["to_user_id"] = self.selUser["user_id"].stringValue
+        param["to_user_name"] = self.selUser["user_name"].stringValue
+        param["friend_mode"] = "N"
         
+        if isMyFriend {
+            param["friend_mode"] = "Y"
+        }
+        
+        ApiManager.ins.requestCamCallInsertMsg(param: param) { (res) in
+            let isSuccess = res["isSuccess"].stringValue
+            if isSuccess == "01" {
+                let vc = CamCallViewController.instantiateFromStoryboard(.call)!
+                vc.data = res
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+            else {
+                self.showErrorToast(res)
+            }
+        } fail: { (error) in
+            self.showErrorToast(error)
+        }
     }
-    public func actionBlockAlert() {
+    func actionBlockAlert() {
+        let user_name = self.selUser["user_name"].stringValue
+        let user_id = self.selUser["user_id"].stringValue
         
+        let alert = CAlertViewController.init(type: .alert, title: "\(user_name)님 신고하기", message: nil, actions: [.cancel, .ok]) { (vcs, selItem, index) in
+            
+            if (index == 1) {
+                guard let text = vcs.arrTextView.first?.text, text.isEmpty == false else {
+                    return
+                }
+                vcs.dismiss(animated: true, completion: nil)
+                let param = ["user_name":user_name, "to_user_id":user_id, "user_id":ShareData.ins.myId, "memo":text]
+                ApiManager.ins.requestReport(param: param) { (res) in
+                    let isSuccess = res["isSuccess"].stringValue
+                    if isSuccess == "01" {
+                        self.showToast("신고가 완료되었습니다.")
+                    }
+                    else {
+                        self.showErrorToast(res)
+                    }
+                } failure: { (error) in
+                    self.showErrorToast(error)
+                }
+            }
+            else {
+                vcs.dismiss(animated: true, completion: nil)
+            }
+        }
+        alert.iconImg = UIImage(named: "warning")
+        alert.addTextView("신고 내용을 입력해주세요.", UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     public func checkAvaiableTalkMsg(_ toUserId:String, _ completion:@escaping () ->Void) {

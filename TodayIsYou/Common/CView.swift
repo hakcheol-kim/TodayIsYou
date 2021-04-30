@@ -21,7 +21,7 @@ class CView: UIView {
     }
     @IBInspectable var halfCornerRadius:Bool = false {
         didSet {
-            if halfCornerRadius {setNeedsDisplay()}
+            setNeedsDisplay()
         }
     }
     @IBInspectable var cornerRadius: CGFloat = 0.0 {
@@ -77,10 +77,10 @@ class CView: UIView {
             layer.shadowRadius = sdRadius
             layer.shadowOpacity = sdOpacity
             
-//            let backgroundCGColor = backgroundColor?.cgColor
-//            backgroundColor = nil
-//            layer.backgroundColor = backgroundCGColor
+            let backgroundCGColor = backgroundColor?.cgColor
             backgroundColor = nil
+            layer.backgroundColor = backgroundCGColor
+//            backgroundColor = nil
         }
 
     }

@@ -13,11 +13,12 @@ class ConfigurationViewController: BaseViewController {
     @IBOutlet weak var btnSound: UIButton!
     @IBOutlet weak var btnVibrate: UIButton!
     @IBOutlet weak var btnMute: UIButton!
+    @IBOutlet weak var btnOff: UIButton!
     @IBOutlet weak var btnUpdate: UIButton!
     @IBOutlet weak var btnExit: UIButton!
     
     var user: JSON!
-    
+    var notiYn:String = "A"
     override func viewDidLoad() {
         super.viewDidLoad()
         CNavigationBar.drawBackButton(self, "설정", #selector(actionNaviBack))
@@ -43,7 +44,7 @@ class ConfigurationViewController: BaseViewController {
     }
     func configurationData() {
         let connectPush = user["connect_push"].stringValue
-        let notiYn = user["noti_yn"].stringValue
+        notiYn = user["noti_yn"].stringValue
         
         btnNewUserAlarm.isSelected = false
         if connectPush == "Y" {
@@ -53,19 +54,19 @@ class ConfigurationViewController: BaseViewController {
         btnSound.isSelected = false
         btnVibrate.isSelected = false
         btnMute.isSelected = false
+        btnOff.isSelected = false
         
         if notiYn == "A" {
             btnSound.isSelected = true
-            btnVibrate.isSelected = true
-        }
-        else if notiYn == "S" {
             btnSound.isSelected = true
-        }
-        else if notiYn == "V" {
+        } else if notiYn == "S" {
+            btnSound.isSelected = true
+        } else if notiYn == "V" {
             btnVibrate.isSelected = true
-        }
-        else {
+        } else if notiYn == "M" {
             btnMute.isSelected = true
+        } else {
+            btnOff.isSelected = true
         }
         
         let version = Bundle.main.appVersion
@@ -80,22 +81,44 @@ class ConfigurationViewController: BaseViewController {
         }
         else if sender == btnSound {
             sender.isSelected = !sender.isSelected
-            if sender.isSelected {
-                btnMute.isSelected = false
+            btnMute.isSelected = false
+            btnOff.isSelected = false
+            
+            if btnSound.isSelected && btnVibrate.isSelected{
+                notiYn = "A"
             }
             else if btnSound.isSelected == false && btnVibrate.isSelected == false {
-                btnMute.isSelected = true
+                btnOff.isSelected = true
+                notiYn = "N"
+            }
+            else if btnSound.isSelected == true {
+                notiYn = "S"
+            }
+            else {
+                notiYn = "V"
             }
             self.requestUpdateSetting()
         }
         else if sender == btnVibrate {
             sender.isSelected = !sender.isSelected
-            if sender.isSelected {
-                btnMute.isSelected = false
+            
+            btnMute.isSelected = false
+            btnOff.isSelected = false
+            
+            if btnSound.isSelected && btnVibrate.isSelected{
+                notiYn = "A"
             }
             else if btnSound.isSelected == false && btnVibrate.isSelected == false {
-                btnMute.isSelected = true
+                btnOff.isSelected = true
+                notiYn = "N"
             }
+            else if btnVibrate.isSelected == true {
+                notiYn = "V"
+            }
+            else {
+                notiYn = "S"
+            }
+            
             self.requestUpdateSetting()
         }
         else if sender == btnMute {
@@ -103,7 +126,33 @@ class ConfigurationViewController: BaseViewController {
             if sender.isSelected {
                 btnSound.isSelected = false
                 btnVibrate.isSelected = false
+                btnOff.isSelected = false
+                notiYn = "M"
             }
+            else {
+                btnSound.isSelected = true
+                btnVibrate.isSelected = true
+                btnOff.isSelected = false
+                notiYn = "A"
+            }
+            
+            self.requestUpdateSetting()
+        }
+        else if sender == btnOff {
+            sender.isSelected = !sender.isSelected
+            if sender.isSelected {
+                btnSound.isSelected = false
+                btnVibrate.isSelected = false
+                btnMute.isSelected = false
+                notiYn = "N"
+            }
+            else {
+                btnSound.isSelected = true
+                btnVibrate.isSelected = true
+                btnMute.isSelected = false
+                notiYn = "A"
+            }
+            
             self.requestUpdateSetting()
         }
         else if sender == btnUpdate {
@@ -140,17 +189,6 @@ class ConfigurationViewController: BaseViewController {
             connectPush = "Y"
         }
         
-        var notiYn = "N"
-        if btnSound.isSelected && btnVibrate.isSelected {
-            notiYn = "A"
-        }
-        else if btnSound.isSelected {
-            notiYn = "S"
-        }
-        else if btnVibrate.isSelected {
-            notiYn = "V"
-        }
-        
         var param:[String:Any] = [:]
         param["user_id"] = ShareData.ins.myId
         param["recommend"] = "Y"
@@ -161,7 +199,7 @@ class ConfigurationViewController: BaseViewController {
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
                 self.showToast("설정 변경 완료되었습니다.")
-                ShareData.ins.dfsSetValue(notiYn, forKey: DfsKey.notiYn)
+                ShareData.ins.dfsSetValue(self.notiYn, forKey: DfsKey.notiYn)
                 ShareData.ins.dfsSetValue(connectPush, forKey: DfsKey.connectPush)
             }
             else {

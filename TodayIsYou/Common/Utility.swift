@@ -81,4 +81,14 @@ class Utility: NSObject {
         let number = Int.random(in: 10000..<100000)
         return String(format: "%0ld", number)
     }
+    class func roomKeyCam() -> String {
+        let date = Utility.getCurrentDate(format: "yyyyMMddHHmmss")
+        let random = Int.random(in: 0..<50)
+        return "CAM_\(date)_\(random)"
+    }
+    class func roomKeyPhone() -> String {
+        let date = Utility.getCurrentDate(format: "yyyyMMddHHmmss")
+        let random = Int.random(in: 0..<50)
+        return "PHONE_\(date)_\(random)"
+    }
 }

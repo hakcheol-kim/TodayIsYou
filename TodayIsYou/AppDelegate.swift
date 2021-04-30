@@ -11,12 +11,16 @@ import Firebase
 import CryptoSwift
 import FirebaseMessaging
 import SwiftyJSON
+import AVFoundation
+
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var loadingView: UIView?
-    var pushHandler:PushMessageDelegate? = nil
+    var audioPlayer: AVAudioPlayer!
+    var downTimer:Timer?
+    
     
     static var ins: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
@@ -34,9 +38,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window!.overrideUserInterfaceStyle = .light
-
+        
+        do {
+            let path = Bundle.main.path(forResource: "bell_30", ofType: ".mp3")
+            let url = URL(fileURLWithPath: path!)
+            self.audioPlayer = try AVAudioPlayer.init(contentsOf: url)
+            self.audioPlayer.setVolume(0.8, fadeDuration: 0.0)
+            
+            try AVAudioSession.sharedInstance().setCategory(.playback, options: .mixWithOthers)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch {
+        }
+        
         callIntroViewCtrl()
         
+//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1) {
+//            let vc = CallConnentionViewController.instantiateFromStoryboard(.call)!
+//            vc.modalPresentationStyle = .fullScreen
+////            vc.data = data
+//            self.window?.rootViewController!.present(vc, animated: true, completion: nil)
+//            vc.btnPhoneCall.isAnimated = true
+//        }
         return true
     }
  
@@ -140,6 +162,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             topicStr = "todayisyou_m"
         }
         Messaging.messaging().subscribe(toTopic: topicStr)
+        print("push data didReceiveRemoteNotification: ==== \(userInfo)")
     }
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         print("=== apn token regist failed")
@@ -172,95 +195,73 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
-    func setPushData(_ userInfo:[String:Any]) {
-        guard let aps = userInfo["aps"] as? [String:Any], let alert = aps["alert"] as? [String:Any], let body = alert["body"] as? String else {
+    func showCallingView(_ data:JSON) {
+        let callingView = window?.viewWithTag(TagCallingView)
+        if callingView != nil {
             return
         }
         
-        guard let json = body.convertJsonStringToDict() else {
+        CallingView.show(data) { (data, action) in
+            if (action == 100) {    //거절
+                self.removeCallingView()
+                var param:[String:Any] = [:]
+                param["from_user_id"] =  ShareData.ins.myId
+                param["to_user_id"] = data["from_user_id"].stringValue
+                param["msg"] = "CAM_NO"
+                ApiManager.ins.requestRejectPhoneTalk(param: param, success: nil, fail: nil)
+            }
+            else if action == 101 { //수락
+                self.removeCallingView()
+            }
+            else if action == 200 { //터치시 확장
+                self.removeCallingView()
+                
+                let vc = CallConnentionViewController.instantiateFromStoryboard(.call)!
+                vc.modalPresentationStyle = .fullScreen
+                vc.data = data
+                self.mainViewCtrl.present(vc, animated: true, completion: nil)
+                
+            }
+        }
+        //30초후에 삭제
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+30) {
+            self.removeCallingView()
+        }
+    }
+    
+    func removeCallingView() {
+        if let callingView = self.window?.viewWithTag(TagCallingView) as? CallingView {
+            self.audioPlayer.stop()
+            callingView.stopShakTimer()
+            callingView.removeFromSuperview()
+        }
+    }
+    
+    func setPushData(_ userInfo:[String:Any], _ isForground:Bool = false) {
+        let userInfo = JSON(userInfo)
+        let message = userInfo["message"].stringValue
+        
+        let info = JSON(parseJSON: message)
+        let msg_cmd = info["msg_cmd"].stringValue
+        guard msg_cmd.length > 0  else {
             return
         }
-        guard  let info =  json["message"] as? [String:Any], let msg_cmd = info["msg_cmd"] as? String else {
-            return
-        }
-        
-        let sender = json["sender"]
-        let type:PushType = PushType.getPushType(msg_cmd)
-        
-        if type == .camNo { //거절
+        let type = PushType.getPushType(msg_cmd)
+        if type == .chat {
+            var param:[String:Any] = [:]
+            param["message_key"] = info["message_key"].stringValue
+            param["from_user_id"] = info["from_user_id"].stringValue
             
-//            String from_user_id = jsonParse.get("from_user_id").toString();
-//            String no_msg = jsonParse.get("msg").toString();
-//
-//            DLog.d(DEBUG_TAG, "CAM_NO from_user_id : " + from_user_id);
-//            DLog.d(DEBUG_TAG, "CAM_NO no_msg : " + no_msg);
-//
-//            if("CAM_NO".equals(no_msg)){//거절
-//
-//                sendCamNoBroadcast("CAM_NO","CAM_NO");
-//
-//            }else if("CAM_CANCEL".equals(no_msg)){//취소
-//                sendCamNoBroadcast("CAM_CANCEL","CAM_NO");
-//            }
-        }
-        else if type == .reSend {
+            var memo = info["memo"].stringValue
+            if memo.hasPrefix("[FILE]") {
+                memo = memo.replacingOccurrences(of: "[FILE]", with: "")
+                param["file_name"] = memo
+            }
+            else {
+                param["memo"] = info["memo"].stringValue
+            }
             
-//            String from_user_id = jsonParse.get("from_user_id").toString();
-//
-//            DLog.d(DEBUG_TAG, "##superApp.myPushYn : " + superApp.myPushYn);
-//            if(!"N".equals(superApp.myPushYn)) {//푸쉬없음은 제외
-//
-//                boolean isForeground = Util.isForeground(mContext);
-//                boolean isAppIsInBackground = Util.isAppIsInBackground(mContext);
-//                DLog.d(DEBUG_TAG, "##isForeground: " + isForeground);
-//                DLog.d(DEBUG_TAG, "##isAppIsInBackground : " + isAppIsInBackground);
-//
-//                if(!isAppIsInBackground){//어플 실행중 아닐때(어플이 실행 되어 있지만)
-//                    sendRandomMsgBroadcast(msg,msg_cmd);
-//                }else{
-//                    notiMessage = "";
-//                    notiMessage = msg;
-//                    //알림.사진노출
-//                    getUserImg(from_user_id);
-//                }
-//            }
-        }
-        else if  type == .rdCam {
-            
-//            String message_key = jsonParse.get("message_key").toString();
-//            String from_user_id = jsonParse.get("from_user_id").toString();
-//            String room_key = jsonParse.get("room_key").toString();
-//            String user_id = jsonParse.get("user_id").toString();
-//
-//            //영상신청채팅로컬디비에저장
-//            ChatMsgVo vo = new ChatMsgVo();
-//            vo.setMemo("[CAM_TALK]저와 영상 채팅 해요 ^^");
-//            vo.setFrom_user_id(from_user_id);
-//            vo.setReg_date(Util.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
-//            vo.setTo_user_id(superApp.myUserId);
-//            vo.setMessage_key(message_key);
-//            vo.setRead_yn("Y");
-//
-//            //로컬디비저장
-//            superApp.mDbManager.setMessage(vo);
-//
-//            if((superApp.STRPACKAGENAME + ".view.RandomCamStartActivity").equals(Util.getTopActivity(this, superApp.STRPACKAGENAME))) {
-//                sendRandomCamBroadcast(msg);//from_user_id가 상대임
-//            }else{
-//                if(!"N".equals(superApp.myPushYn)) {
-//                    notiMessage = "";
-//                    notiMessage = msg;
-//                    //알림.사진노출
-//                    getUserImg(from_user_id);
-//
-//                }
-//
-//            }
-        }
-        else if type == .chat {
-            var param:[String:Any] = info
             param["to_user_id"] = ShareData.ins.myId
-            param["point_user_id"] = ShareData.ins.myId
             param["reg_date"] = Date()
             param["type"] = 0
             param["read_yn"] = false
@@ -268,206 +269,159 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let notiYn = ShareData.ins.dfsObjectForKey(DfsKey.notiYn) as? String, notiYn == "N" {
                 param["read_yn"] = true
             }
+            
             DBManager.ins.insertChatMessage(param) { (success, error) in
+                self.mainViewCtrl.updateUnReadMessageCount()
             }
+            
+            NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: info.dictionary)
+        }
+        else if type  == .msgDel {
+            let seq = info["seq"].stringValue
+            DBManager.ins.deleteChatMessage(messageKey: seq, nil)
             AppDelegate.ins.mainViewCtrl.updateUnReadMessageCount()
-            if let handler = pushHandler {
-                handler.processPushMessage(type, param)
+            NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: info.dictionary)
+        }
+        else if type == .cam {
+            var param:[String:Any] = [:]
+            param["message_key"] = info["message_key"].stringValue
+            param["from_user_id"] = info["from_user_id"].stringValue
+            param["room_key"] = info["room_key"].stringValue
+            let user_id = info["user_id"].stringValue
+            param["user_id"] = user_id
+            
+            param["memo"] = "[CAM_TALK]저와 영상 채팅 해요 ^^"
+            param["reg_date"] = Date()
+            param["read_yn"] = false
+            param["type"] = 0
+            let notiYn = ShareData.ins.dfsObjectForKey(DfsKey.notiYn) as! String
+            if notiYn == "N" {
+                param["read_yn"] = true
+            }
+            DBManager.ins.insertChatMessage(param) { (success, error) in
+                self.mainViewCtrl.updateUnReadMessageCount()
+            }
+            
+            if notiYn != "N" {
+                let req = ["user_id":user_id]
+                ApiManager.ins.requestGetUserImgTalk(param: req) { (res) in
+                    let isSuccess = res["isSuccess"].stringValue
+                    if isSuccess == "01" {
+                        var data = res
+                        data["message_key"] = info["message_key"]
+                        data["room_key"] = info["room_key"]
+                        data["from_user_id"] = info["from_user_id"]
+                        data["msg_cmd"] = "CAM"
+                        
+                        self.showCallingView(data)
+                    }
+                } fail: { (error) in
+                    
+                }
             }
         }
-        else if  type == .msgDel {//대화 삭제
-            //로컬 디비에서 삭제
-            guard let seq = info["seq"] as? String, let _ = info["to_user_id"] else {
+        else if msg_cmd  == "PHONE" {
+            var param:[String:Any] = [:]
+            param["message_key"] = info["message_key"].stringValue
+            param["from_user_id"] = info["from_user_id"].stringValue
+            param["room_key"] = info["room_key"].stringValue
+            let user_id = info["user_id"].stringValue
+            param["user_id"] = user_id
+            param["memo"] = "[PHONE_TALK]저와 음성 통화 해요 ^^"
+            param["reg_date"] = Date()
+            param["read_yn"] = false
+            param["type"] = 0
+            
+            let notiYn = ShareData.ins.dfsObjectForKey(DfsKey.notiYn) as! String
+            if notiYn == "N" {
+                param["read_yn"] = true
+            }
+            
+            DBManager.ins.insertChatMessage(param) { (success, error) in
+                self.mainViewCtrl.updateUnReadMessageCount()
+            }
+            
+            if notiYn != "N" {
+                let req = ["user_id":user_id]
+                ApiManager.ins.requestGetUserImgTalk(param: req) { (res) in
+                    let isSuccess = res["isSuccess"].stringValue
+                    if isSuccess == "01" {
+                        var data = res
+                        data["message_key"] = info["message_key"]
+                        data["room_key"] = info["room_key"]
+                        data["from_user_id"] = info["from_user_id"]
+                        data["msg_cmd"] = "PHONE"
+                        
+                        self.showCallingView(data)
+                    }
+                } fail: { (error) in
+                    
+                }
+            }
+        }
+        else if msg_cmd  == "CAM_NO" {
+            let msg = info["msg"].stringValue
+            if msg == "CAM_CANCEL" {
+                window?.makeToast("상대가 취소했습니다.")
+                NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: "CAM_CANCEL", userInfo: info.dictionary)
+            }
+            else {
+                window?.makeToast("상대가 거절했습니다.")
+                NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: info)
+            }
+            
+        }
+        else if msg_cmd  == "RDSEND" {
+//            message={"msg_cmd":"RDSEND","msg":"","from_user_name":"산딸기먹자","from_user_gender":"남","from_user_age":"50대","to_user_id":"a52fd10c131f149663a64ab074d5b44b","to_user_name":"오늘의주인공은나야","room_key":"CAM_202104271543516_4","from_user_id":"dfb72903a01f6de393cf4130a2b76638"}}
+            guard let notiYn = ShareData.ins.dfsObjectForKey(DfsKey.notiYn) as? String, notiYn != "N" else {
                 return
             }
-            DBManager.ins.deleteChatMessage(messageKey: seq) { (success, error) in
+            
+            var param:[String:Any] = [:]
+            param["message_key"] = info["message_key"].stringValue
+            param["from_user_id"] = info["from_user_id"].stringValue
+            param["room_key"] = info["room_key"].stringValue
+            let user_id = info["user_id"].stringValue
+            param["user_id"] = user_id
+            
+            param["memo"] = "[CAM_TALK]저와 영상 채팅 해요 ^^"
+            param["reg_date"] = Date()
+            param["read_yn"] = true
+            param["type"] = 0
+            
+            DBManager.ins.insertChatMessage(param) { (success, error) in
+                self.mainViewCtrl.updateUnReadMessageCount()
             }
-            AppDelegate.ins.mainViewCtrl.updateUnReadMessageCount()
-            if let handler = pushHandler {
-                handler.processPushMessage(type, info)
+            self.showCallingView(info)
+        }
+        else if msg_cmd  == "RDCAM" {
+            
+        }
+        else if msg_cmd  == "NOTICE" {
+            guard let notiYn = ShareData.ins.dfsObjectForKey(DfsKey.notiYn) as? String, notiYn != "N" else {
+                return
+            }
+            if (isForground) {
+                let vc = NoticeListViewController.instantiateFromStoryboard(.main)!
+                self.mainNavigationCtrl.pushViewController(vc, animated: true);
             }
         }
-        else if "CAM" == msg_cmd {
-            
-//            String message_key = jsonParse.get("message_key").toString();
-//            String from_user_id = jsonParse.get("from_user_id").toString();
-//            String room_key = jsonParse.get("room_key").toString();
-//            String user_id = jsonParse.get("user_id").toString();
-//
-//            //영상신청채팅로컬디비에저장
-//            ChatMsgVo vo = new ChatMsgVo();
-//            vo.setMemo("[CAM_TALK]저와 영상 채팅 해요 ^^");
-//            vo.setFrom_user_id(from_user_id);
-//            vo.setReg_date(Util.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
-//            vo.setTo_user_id(superApp.myUserId);
-//            vo.setMessage_key(message_key);
-//            vo.setRead_yn("N");
-//
-//            //로컬디비저장
-//            superApp.mDbManager.setMessage(vo);
-//
-//            boolean isAppIsInBackground = Util.isAppIsInBackground(mContext);
-//
-//            DLog.d(DEBUG_TAG, "##CAM isAppIsInBackground : " + isAppIsInBackground);
-//            DLog.d(DEBUG_TAG, "##CAM superApp.myPushYn : " + superApp.myPushYn);
-//
-//            if(!"N".equals(superApp.myPushYn)) {
-//                if(!isAppIsInBackground) {//어플 실행중 아닐때(어플이 실행 되어 있지만)
-//                    sendRandomMsgBroadcast(msg, msg_cmd);
-//                }else{
-//                    notiMessage = "";
-//                    notiMessage = msg;
-//                    //알림.사진노출
-//                    getUserImg(from_user_id);
-//                }
-//
-//            }
-        }
-        else if "PHONE" == msg_cmd {
-            
-//            String message_key = jsonParse.get("message_key").toString();
-//            String from_user_id = jsonParse.get("from_user_id").toString();
-//            String room_key = jsonParse.get("room_key").toString();
-//            String user_id = jsonParse.get("user_id").toString();
-//
-//            //영상신청채팅로컬디비에저장
-//            ChatMsgVo vo = new ChatMsgVo();
-//            vo.setMemo("[PHONE_TALK]저와 음성 통화 해요 ^^");
-//            vo.setFrom_user_id(from_user_id);
-//            vo.setReg_date(Util.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
-//            vo.setTo_user_id(superApp.myUserId);
-//            vo.setMessage_key(message_key);
-//            vo.setRead_yn("N");
-//
-//            //로컬디비저장
-//            superApp.mDbManager.setMessage(vo);
-//
-//            boolean isAppIsInBackground = Util.isAppIsInBackground(mContext);
-//
-//            DLog.d(DEBUG_TAG, "##PHONE isAppIsInBackground : " + isAppIsInBackground);
-//            DLog.d(DEBUG_TAG, "##PHONE superApp.myPushYn : " + superApp.myPushYn);
-//
-//            if(!"N".equals(superApp.myPushYn)) {
-//                if(!isAppIsInBackground) {//어플 실행중 아닐때(어플이 실행 되어 있지만)
-//
-//                    DLog.d(DEBUG_TAG, "##PHONE 1");
-//
-//                    sendRandomMsgBroadcast(msg, msg_cmd);
-//                }else{
-//
-//                    DLog.d(DEBUG_TAG, "##PHONE 2");
-//
-//                    notiMessage = "";
-//                    notiMessage = msg;
-//                    //알림.사진노출
-//                    getUserImg(from_user_id);
-//                }
-//
-//            }
-        }
-        else if "NOTICE" == msg_cmd {
-            
-//            if(!"N".equals(superApp.myPushYn)) {//푸쉬없음은 제외
-//                String title = jsonParse.get("title").toString();
-//                String memo = jsonParse.get("memo").toString();
-//                getNoticeNoti("공지사항 알림", title, memo);
-//            }
+        else if msg_cmd  == "QNA_Answer" {
             
         }
-        else if "QNA_Answer" == msg_cmd {
-            
-//            if(!"N".equals(superApp.myPushYn)) {//푸쉬없음은 제외
-//                getQnaNoti("메세지 알림","메세지가 있습니다.","Q&A 답변이 등록 되었습니다.");
-//            }
+        else if msg_cmd  == "QNA_Manager" {
             
         }
-        else if "QNA_Manager" == msg_cmd {
-//
-//            if(!"N".equals(superApp.myPushYn)) {//푸쉬없음은 제외
-//                getQnaNoti("메세지 알림","메세지가 있습니다.","관리자 메세지가 있습니다.");
-//            }
+        else if msg_cmd  == "COMMENT_MEMO" {
             
         }
-        else if "COMMENT_MEMO" == msg_cmd {
-            
-//            if(!"N".equals(superApp.myPushYn)) {//푸쉬없음은 제외
-//                String memo = jsonParse.get("memo").toString();
-//                getCommentNoti("메세지 알림","메세지가 있습니다.",memo);
-//            }
+        else if msg_cmd  == "COMMENT_GIFT" {
             
         }
-        else if "COMMENT_GIFT" == msg_cmd {
-//
-//            if(!"N".equals(superApp.myPushYn)) {//푸쉬없음은 제외
-//                String memo = jsonParse.get("memo").toString();
-//                getCommentNoti("메세지 알림","메세지가 있습니다.",memo);
-//            }
+        else if msg_cmd  == "BLOCK" {
             
         }
-        else if "BLOCK" == msg_cmd {
-            
-//            String block_memo = jsonParse.get("block_memo").toString();
-//            DLog.d(DEBUG_TAG, "##seq[1] : " + block_memo);
-//            getBlockNoti("메세지 알림","메세지가 있습니다.","관리자 전달 사항이 있습니다.",block_memo);
-//            superApp.isBlock = true;
-//
-//        }else if("CAM_MGS".equals(msg_cmd)){
-//
-//            DLog.d(DEBUG_TAG, "##msg : " + msg);
-//            sendBroadcast("room_out", "room_out");
-//
-//        }else if("CONNECT".equals(msg_cmd)){
-//            DLog.d(DEBUG_TAG, "##msg : " + msg);
-//            String user_id = jsonParse.get("user_id").toString();
-//            String user_name = jsonParse.get("user_name").toString();
-//            String user_sex = jsonParse.get("user_sex").toString();
-//            String user_age = jsonParse.get("user_age").toString();
-//
-//            String mesageStr = user_name+"," +user_sex+","+user_age+" 유저님이 접속 했습니다";
-//
-//            String user_img = jsonParse.get("user_img").toString();
-//            String talk_img = jsonParse.get("talk_user_img").toString();
-//            String cam_img = jsonParse.get("cam_user_img").toString();
-//            String  file_name = "";
-//            if("".equals(user_img)){
-//                if(!"".equals(cam_img)){
-//                    file_name = cam_img;
-//                }else{
-//                    file_name = talk_img;
-//                }
-//            }else{
-//                file_name = user_img;
-//            }
-//
-//            if ("".equals(file_name)) {
-//                mChatLargeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.titlebar_icon);
-//                getConnectNoti("유저접속알림", "새로운 유저가 접속했습니다", mesageStr);
-//
-//            }else {
-//
-//                String file_name_url = superApp.HOME_URL+"upload/talk/"+user_id+"/thum/crop_"+file_name;
-//
-//                Glide.with(mContext)
-//                    .asBitmap()
-//                    .load(file_name_url)
-//                    .listener(new RequestListener<Bitmap>() {
-//                        @Override
-//                        public boolean onLoadFailed(@Nullable GlideException e, Object o, Target<Bitmap> target, boolean b) {
-//                            mChatLargeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.titlebar_icon);
-//                            getConnectNoti("유저접속알림", "새로운 유저가 접속했습니다", mesageStr);
-//                            return false;
-//                        }
-//
-//                        @Override
-//                        public boolean onResourceReady(Bitmap bitmap, Object o, Target<Bitmap> target, DataSource dataSource, boolean b) {
-//                            mChatLargeIcon = Util.getCircularBitmap(bitmap);
-//                            getConnectNoti("유저접속알림", "새로운 유저가 접속했습니다", mesageStr);
-//                            return false;
-//                        }
-//                    }
-//                    ).submit();
-//            }
-        }
+    
     }
 }
 
@@ -479,15 +433,18 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         guard let userInfo = notification.request.content.userInfo as? [String:Any] else {
             return
         }
-        self.setPushData(userInfo)
-        print("push data: ==== \(userInfo)")
         
+        self.setPushData(userInfo, true)
+        print("push data willPresent: ==== \(userInfo)")
+        print("categoryIdentifier: \(notification.request.content.categoryIdentifier)")
+        completionHandler(.sound)
     }
     
     //앱이 백그라운드 들어갔을때 푸쉬온것을 누르면 여기 탄다.
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         
         let userInfo = response.notification.request.content.userInfo
+        print("push data didReceive: ==== \(userInfo)")
         guard let aps = userInfo["aps"] as? [String:Any], let alert = aps["alert"] as? [String:Any] else {
             return
         }

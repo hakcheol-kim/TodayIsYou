@@ -16,9 +16,16 @@ class TalkTblCell: UITableViewCell {
     @IBOutlet weak var lbMsg: UILabel!
     @IBOutlet weak var ivThumb: UIImageViewAligned!
     @IBOutlet weak var btnType: CButton!
+    var data:JSON!
+    var didClickedClosure:((_ selData:JSON?, _ action:NSInteger) ->Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        
+        let tap = UITapGestureRecognizer.init(target: self, action: #selector(onTapGesuterHandler(_ :)))
+        ivThumb.addGestureRecognizer(tap)
+        let tap2 = UITapGestureRecognizer.init(target: self, action: #selector(onTapGesuterHandler(_ :)))
+        ivProfile.addGestureRecognizer(tap2)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -33,7 +40,7 @@ class TalkTblCell: UITableViewCell {
             ivThumb.isHidden = true
             return
         }
-        
+        self.data = data
 //        let view_cnt = data["view_cnt"].intValue //: 0,
 //        let user_bbs_point = data["user_bbs_point"].intValue //: 0,
         let user_name = data["user_name"].stringValue //: "포커땜에",
@@ -59,15 +66,19 @@ class TalkTblCell: UITableViewCell {
         else {
             ivProfile.image = UIImage(named: Gender.femail.avatar())
         }
+        ivProfile.accessibilityValue = nil
         if let imgUrl = Utility.thumbnailUrl(user_id, talk_img) {
             ivProfile.setImageCache(imgUrl)
+            ivProfile.accessibilityValue = imgUrl
         }
         ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
         
         ivThumb.isHidden = true
+        ivThumb.accessibilityValue = nil
         if let imgUrl = Utility.thumbnailUrl(user_id, user_img) {
             ivThumb.isHidden = false
             ivThumb.setImageCache(imgUrl)
+            ivThumb.accessibilityValue = imgUrl
         }
         ivThumb.layer.cornerRadius = ivThumb.bounds.height/2
         
@@ -85,7 +96,6 @@ class TalkTblCell: UITableViewCell {
         if let regDate = df.date(from: reg_date) {
             let curDate = Date()
             let comps = curDate - regDate
-
             
             if let month = comps.month, month > 0 {
                 tStr = "\(month)달전"
@@ -105,7 +115,23 @@ class TalkTblCell: UITableViewCell {
         }
         lbMsg.text = "\(user_area), \(tStr)"
     }
+    
+    @objc func onTapGesuterHandler(_ gesture: UIGestureRecognizer) {
+        if gesture.view == ivProfile {
+            if let _ = gesture.view?.accessibilityValue {
+                didClickedClosure?(self.data, 100)
+            }
+        }
+        else if gesture.view == ivThumb {
+            if let _ = gesture.view?.accessibilityValue {
+                didClickedClosure?(self.data, 101)
+            }
+        }
+    }
+    
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
-        
+        if sender == btnType {
+            didClickedClosure?(self.data, 102)
+        }
     }
 }

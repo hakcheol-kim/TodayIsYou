@@ -39,14 +39,17 @@ class ChattingRightCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
     
-    func configurationData(_ data: ChatMessage?) {
+    func configurationData(_ data: ChatMessage?, _ profile_name: String? = nil) {
         guard let chat = data else {
             lbMessage.text = ""
             lbDate.text = ""
             return
         }
+        var memo = chat.memo
+        memo = memo?.replacingOccurrences(of: "[CAM_TALK]", with: "")
+        memo = memo?.replacingOccurrences(of: "[PHONE_TALK]", with: "")
         
-        lbMessage.text = chat.memo
+        lbMessage.text = memo
         if let date = chat.reg_date {
             if calendar.isDateInToday(date) {
                 df.dateFormat = "a hh:mm"

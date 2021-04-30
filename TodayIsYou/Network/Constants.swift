@@ -35,9 +35,11 @@ struct AppColor {
     static let borderGray = RGB(221, 221, 221)
 }
 
+let TagCallingView = 1000001
 let IsShowTutorial = "IsShowTutorial"
 let kPushSetting = "PushSetting"
 let PUSH_DATA = "PUSH_DATA"
+
 
 struct DfsKey {
     static let joinType = "joinType"
@@ -54,6 +56,7 @@ struct DfsKey {
     static let talkUserImg = "talk_user_img"
     static let camUserImg = "cam_user_img"
     static let connectPush = "connect_push"
+    static let inappCnt = "inapp_cnt"
     
     static let userPoint = "user_point"
     static let phoneOutStartPoint =  "phone_out_start_point"
@@ -154,34 +157,34 @@ enum PhotoManageType: Int {
 enum Storyboard: String {
     case main = "Main"
     case login = "Login"
-}
-
-protocol PushMessageDelegate {
-    func processPushMessage(_ type:PushType, _ data:[String:Any])
+    case call = "Call"
 }
 
 enum PushType: String {
     case empty = ""
-    case camNo = "CAM_NO"
-    case reSend = "RDSEND"
-    case rdCam = "RDCAM"
-    case chat = "CHAT"
-    case msgDel = "MSG_DEL"
-    case cam = "CAM"
-    case phone = "PHONE"
-    case notice = "NOTICE"
-    case qnaAnswer = "QNA_Answer"
-    case qnaManager = "QNA_Manager"
-    case commentMemo = "COMMENT_MEMO"
-    case commentGift = "COMMENT_GIFT"
-    case block = "BLOCK"
+    case camNo = "CAM_NO" //거절
+    case camCancel = "CAM_CANCEL" //거절
+    case rdSend = "RDSEND"  //램덤 콜
+    case rdCam = "RDCAM"    //램덤 콜
+    case chat = "CHAT"  //채팅
+    case cam = "CAM"    //영상채팅 신청
+    case phone = "PHONE"    //음성통화
+    case notice = "NOTICE" //공지사항
+    case qnaAnswer = "QNA_Answer"   //Q&A답볍
+    case qnaManager = "QNA_Manager" //q&a 관리자 답변
+    case commentMemo = "COMMENT_MEMO"  //메세지
+    case commentGift = "COMMENT_GIFT" //선물 코멘트
+    case msgDel = "MSG_DEL" //채팅방 삭제
+    case block = "BLOCK"    //관리자 전달사항
+    case camMsg = "CAM_MGS" //영상통화시 채팅
+    case connect = "CONNECT" //새로운 유저 접속 알림
     
     static func getPushType(_ str:String) -> PushType {
         if str  == "CAM_NO" {
             return .camNo
         }
         else if str  == "RDSEND" {
-            return .reSend
+            return .rdSend
         }
         else if str  == "RDCAM" {
             return .rdCam
@@ -220,4 +223,8 @@ enum PushType: String {
             return .empty
         }
     }
+}
+enum ConnectionType {
+    case answer
+    case offer
 }
