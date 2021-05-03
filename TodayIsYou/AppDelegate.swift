@@ -192,22 +192,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        
+        if let pushData = ShareData.ins.dfsGet(DfsKey.pushData) as? [String:Any] {
+            self.mainNavigationCtrl.popViewController(animated: false)
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5) {
+                guard let msg_cmd = pushData["msg_cmd"] as? String else {
+                    return
+                }
+                let type = PushType.find(msg_cmd)
+                NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: pushData)
+            }
+        }
+    }
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        UIApplication.shared.applicationIconBadgeNumber = 0
     }
     
-    func showCallingView(_ data:JSON) {
+    func showCallingView(_ type:PushType, _ data:JSON) {
         let callingView = window?.viewWithTag(TagCallingView)
         if callingView != nil {
             return
         }
         
-        CallingView.show(data) { (data, action) in
+        CallingView.show(type, data) { (data, action) in
             if (action == 100) {    //거절
                 self.removeCallingView()
+                
                 var param:[String:Any] = [:]
                 param["from_user_id"] =  ShareData.ins.myId
                 param["to_user_id"] = data["from_user_id"].stringValue
                 param["msg"] = "CAM_NO"
+                
                 ApiManager.ins.requestRejectPhoneTalk(param: param, success: nil, fail: nil)
             }
             else if action == 101 { //수락
@@ -215,12 +229,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             else if action == 200 { //터치시 확장
                 self.removeCallingView()
-                
-                let vc = CallConnentionViewController.instantiateFromStoryboard(.call)!
-                vc.modalPresentationStyle = .fullScreen
-                vc.data = data
-                self.mainViewCtrl.present(vc, animated: true, completion: nil)
-                
+                if type == .rdCam {
+                    let vc = CallConnentionViewController.instantiateFromStoryboard(.call)!
+                    vc.modalPresentationStyle = .fullScreen
+                    vc.data = data
+                    self.mainViewCtrl.present(vc, animated: true, completion: nil)
+                }
             }
         }
         //30초후에 삭제
@@ -237,7 +251,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func setPushData(_ userInfo:[String:Any], _ isForground:Bool = false) {
+    func setPushData(_ userInfo:[String:Any], _ isBackgroundMode:Bool = false) {
         let userInfo = JSON(userInfo)
         let message = userInfo["message"].stringValue
         
@@ -246,7 +260,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         guard msg_cmd.length > 0  else {
             return
         }
-        let type = PushType.getPushType(msg_cmd)
+        
+        if isBackgroundMode == true {
+            ShareData.ins.dfsSet(info.dictionaryObject, DfsKey.pushData)
+            return
+        }
+        
+        let type = PushType.find(msg_cmd)
         if type == .chat {
             var param:[String:Any] = [:]
             param["message_key"] = info["message_key"].stringValue
@@ -266,7 +286,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             param["type"] = 0
             param["read_yn"] = false
             
-            if let notiYn = ShareData.ins.dfsObjectForKey(DfsKey.notiYn) as? String, notiYn == "N" {
+            if let notiYn = ShareData.ins.dfsGet(DfsKey.notiYn) as? String, notiYn == "N" {
                 param["read_yn"] = true
             }
             
@@ -274,16 +294,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.mainViewCtrl.updateUnReadMessageCount()
             }
             
-            NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: info.dictionary)
+            NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: info.dictionaryObject)
         }
         else if type  == .msgDel {
             let seq = info["seq"].stringValue
             DBManager.ins.deleteChatMessage(messageKey: seq, nil)
             AppDelegate.ins.mainViewCtrl.updateUnReadMessageCount()
-            NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: info.dictionary)
+            NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: info.dictionaryObject)
         }
         else if type == .cam {
             var param:[String:Any] = [:]
+            
             param["message_key"] = info["message_key"].stringValue
             param["from_user_id"] = info["from_user_id"].stringValue
             param["room_key"] = info["room_key"].stringValue
@@ -294,10 +315,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             param["reg_date"] = Date()
             param["read_yn"] = false
             param["type"] = 0
-            let notiYn = ShareData.ins.dfsObjectForKey(DfsKey.notiYn) as! String
+            let notiYn = ShareData.ins.dfsGet(DfsKey.notiYn) as! String
             if notiYn == "N" {
                 param["read_yn"] = true
             }
+            
             DBManager.ins.insertChatMessage(param) { (success, error) in
                 self.mainViewCtrl.updateUnReadMessageCount()
             }
@@ -313,14 +335,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         data["from_user_id"] = info["from_user_id"]
                         data["msg_cmd"] = "CAM"
                         
-                        self.showCallingView(data)
+                        self.showCallingView(type, data)
                     }
                 } fail: { (error) in
                     
                 }
             }
         }
-        else if msg_cmd  == "PHONE" {
+        else if type == .phone {
             var param:[String:Any] = [:]
             param["message_key"] = info["message_key"].stringValue
             param["from_user_id"] = info["from_user_id"].stringValue
@@ -332,7 +354,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             param["read_yn"] = false
             param["type"] = 0
             
-            let notiYn = ShareData.ins.dfsObjectForKey(DfsKey.notiYn) as! String
+            let notiYn = ShareData.ins.dfsGet(DfsKey.notiYn) as! String
             if notiYn == "N" {
                 param["read_yn"] = true
             }
@@ -352,28 +374,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         data["from_user_id"] = info["from_user_id"]
                         data["msg_cmd"] = "PHONE"
                         
-                        self.showCallingView(data)
+                        self.showCallingView(type, data)
                     }
                 } fail: { (error) in
                     
                 }
             }
         }
-        else if msg_cmd  == "CAM_NO" {
+        else if type  == .camNo {
             let msg = info["msg"].stringValue
-            if msg == "CAM_CANCEL" {
-                window?.makeToast("상대가 취소했습니다.")
-                NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: "CAM_CANCEL", userInfo: info.dictionary)
-            }
-            else {
-                window?.makeToast("상대가 거절했습니다.")
-                NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: info)
+            guard let notiYn = ShareData.ins.dfsGet(DfsKey.notiYn) as? String, notiYn != "N" else {
+                return
             }
             
+            self.removeCallingView()
+            NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: info.dictionaryObject)
+            
+            if msg == "CAM_CANCEL" {
+                window?.makeBottomTost("상대가 취소했습니다.")
+            }
+            else {
+                window?.makeBottomTost("상대가 거절했습니다.")
+            }
         }
-        else if msg_cmd  == "RDSEND" {
+        else if type == .rdSend {
 //            message={"msg_cmd":"RDSEND","msg":"","from_user_name":"산딸기먹자","from_user_gender":"남","from_user_age":"50대","to_user_id":"a52fd10c131f149663a64ab074d5b44b","to_user_name":"오늘의주인공은나야","room_key":"CAM_202104271543516_4","from_user_id":"dfb72903a01f6de393cf4130a2b76638"}}
-            guard let notiYn = ShareData.ins.dfsObjectForKey(DfsKey.notiYn) as? String, notiYn != "N" else {
+            guard let notiYn = ShareData.ins.dfsGet(DfsKey.notiYn) as? String, notiYn != "N" else {
                 return
             }
             
@@ -392,41 +418,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             DBManager.ins.insertChatMessage(param) { (success, error) in
                 self.mainViewCtrl.updateUnReadMessageCount()
             }
-            self.showCallingView(info)
+            self.showCallingView(type, info)
         }
-        else if msg_cmd  == "RDCAM" {
+        else if type == .rdCam {
             
         }
-        else if msg_cmd  == "NOTICE" {
-            guard let notiYn = ShareData.ins.dfsObjectForKey(DfsKey.notiYn) as? String, notiYn != "N" else {
+        else if type == .notice {
+            guard let notiYn = ShareData.ins.dfsGet(DfsKey.notiYn) as? String, notiYn != "N" else {
                 return
             }
-            if (isForground) {
-                let vc = NoticeListViewController.instantiateFromStoryboard(.main)!
-                self.mainNavigationCtrl.pushViewController(vc, animated: true);
-            }
+            let vc = NoticeListViewController.instantiateFromStoryboard(.main)!
+            self.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
-        else if msg_cmd  == "QNA_Answer" {
+        else if type == .qnaAnswer {
             
         }
-        else if msg_cmd  == "QNA_Manager" {
+        else if type == .qnaManager {
             
         }
-        else if msg_cmd  == "COMMENT_MEMO" {
+        else if type == .commentMemo {
             
         }
-        else if msg_cmd  == "COMMENT_GIFT" {
+        else if type == .commentGift {
             
         }
-        else if msg_cmd  == "BLOCK" {
+        else if type == .block {
             
         }
-    
     }
+    
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
-  
+    
     //앱이 켜진상태, Forground
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         
@@ -434,26 +458,28 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
             return
         }
         
-        self.setPushData(userInfo, true)
+        self.setPushData(userInfo, false)
         print("push data willPresent: ==== \(userInfo)")
         print("categoryIdentifier: \(notification.request.content.categoryIdentifier)")
-        completionHandler(.sound)
+        completionHandler([.badge, .sound])
     }
     
     //앱이 백그라운드 들어갔을때 푸쉬온것을 누르면 여기 탄다.
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        
-        let userInfo = response.notification.request.content.userInfo
-        print("push data didReceive: ==== \(userInfo)")
-        guard let aps = userInfo["aps"] as? [String:Any], let alert = aps["alert"] as? [String:Any] else {
+
+        defer { completionHandler() }
+        guard response.actionIdentifier == UNNotificationDefaultActionIdentifier else {
             return
         }
+        let content = response.notification.request.content
+        print("push data didReceive: ==== \(content)")
+        print("title: \(content.title)")
+        print("body: \(content.body)")
         
-        //푸쉬 데이터를 어느화면으로 보낼지 판단 한고 보내 주는것 처리해야한다.
-        //아직 화면 푸쉬 타입에 따른 화면 정리 안됨
-//        ShareData.ins.dfsSetValue(userInfo, forKey: DfsKey.pushData)
+        if let userInfo = content.userInfo as? [String:Any] {
+            self.setPushData(userInfo, true)
+        }
     }
-
     
 }
 
@@ -464,7 +490,7 @@ extension AppDelegate: MessagingDelegate {
             return
         }
         print("==== fcm token: \(fcmToken)")
-        guard let userId = ShareData.ins.dfsObjectForKey(DfsKey.userId) else {
+        guard let userId = ShareData.ins.dfsGet(DfsKey.userId) else {
             return
         }
         let param = ["fcm_token":fcmToken, "user_id": userId]

@@ -31,7 +31,7 @@ class PhotoTalkWriteViewController: BaseViewController {
         collectionView.collectionViewLayout = layout
         
         lbMsg.text = "사진은 검증된 사진만 등록합니다."
-        if "남" == ShareData.ins.mySex.rawValue, let point = ShareData.ins.dfsObjectForKey(DfsKey.photoDayPoint) as? NSNumber, point.intValue > 0 {
+        if "남" == ShareData.ins.mySex.rawValue, let point = ShareData.ins.dfsGet(DfsKey.photoDayPoint) as? NSNumber, point.intValue > 0 {
             lbMsg.text = "사진은 검증된 사진만 등록 됩니다.\n사진 등록시 1일 1회 \(point.stringValue.addComma())P를 적립해 드립니다"
         }
     }

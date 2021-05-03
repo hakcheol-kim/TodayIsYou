@@ -282,7 +282,7 @@ extension CamTalkListViewController: UITableViewDataSource, UITableViewDelegate 
                 
                 switch action {
                 case 100:
-                    if let inappCnt = ShareData.ins.dfsObjectForKey(DfsKey.inappCnt) as? NSNumber, inappCnt.intValue > 0 {
+                    if let inappCnt = ShareData.ins.dfsGet(DfsKey.inappCnt) as? NSNumber, inappCnt.intValue > 0 {
                         let user_id = selData["user_id"].stringValue
                         let file_name = selData["file_name"].stringValue
                         if let imgUrl = Utility.thumbnailUrl(user_id, file_name) {
@@ -294,7 +294,7 @@ extension CamTalkListViewController: UITableViewDataSource, UITableViewDelegate 
                     }
                     break
                 case 101:
-                    if let inappCnt = ShareData.ins.dfsObjectForKey(DfsKey.inappCnt) as? NSNumber, inappCnt.intValue > 0 {
+                    if let inappCnt = ShareData.ins.dfsGet(DfsKey.inappCnt) as? NSNumber, inappCnt.intValue > 0 {
                         let user_id = selData["user_id"].stringValue
                         let user_image = selData["user_image"].stringValue
                         if let imgUrl = Utility.thumbnailUrl(user_id, user_image) {

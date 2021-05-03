@@ -128,15 +128,17 @@ class MessageListViewController: BaseViewController {
     }
     
     override func notificationHandler(_ notification: NSNotification) {
-        guard let info = notification.object as? JSON else {
-            return
-        }
+        
         if (notification.name == Notification.Name(PUSH_DATA)) {
-            let type = info["msg_cmd"].stringValue
-            if type == "CHAT" {
+            guard let type = notification.object as? PushType, let userInfo = notification.userInfo as?[String:Any] else {
+                return
+            }
+            
+            let info = JSON(userInfo)
+            if type == .chat {
                 self.dataRest()
             }
-            else if type == "MSG_DEL" {
+            else if type == .msgDel {
                 let seq = info["seq"].stringValue
                 let to_user_id = info["to_user_id"].stringValue
                 

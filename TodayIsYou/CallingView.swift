@@ -7,7 +7,6 @@
 
 import UIKit
 import SwiftyJSON
-import SwiftGifOrigin
 import AVFoundation
 
 class CallingView: UIView {
@@ -17,6 +16,7 @@ class CallingView: UIView {
     @IBOutlet weak var lbSubTitle: UILabel!
     @IBOutlet weak var btnReject: CButton!
     @IBOutlet weak var btnAccept: CButton!
+    @IBOutlet weak var svBtn: UIStackView!
     
     var player = AVAudioPlayer.init()
     
@@ -28,7 +28,7 @@ class CallingView: UIView {
     override class func awakeFromNib() {
         super.awakeFromNib()
     }
-    func configurationData(_ data:JSON, _ completion:((_ data: JSON, _ actionIndex:Int)->Void)?) {
+    func configurationData(_ type:PushType, _ data:JSON, _ completion:((_ data: JSON, _ actionIndex:Int)->Void)?) {
         self.data = data
         self.completion = completion
         
@@ -40,14 +40,17 @@ class CallingView: UIView {
         let user_age = data["user_age"].stringValue
        
         btnBell.isAnimated = true
+        if type == .rdCam {
+            svBtn.isHidden = true
+        }
         
-        if let notiYn = ShareData.ins.dfsObjectForKey(DfsKey.notiYn) as? String {
+        if let notiYn = ShareData.ins.dfsGet(DfsKey.notiYn) as? String {
             if notiYn == "A" || notiYn == "S" {
                 AppDelegate.ins.audioPlayer.play()
             }
         }
         
-        if let notiYn = ShareData.ins.dfsObjectForKey(DfsKey.notiYn) as? String {
+        if let notiYn = ShareData.ins.dfsGet(DfsKey.notiYn) as? String {
             if notiYn == "A" || notiYn == "V" {
                 self.stopShakTimer()
                 self.shakTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { (time) in
@@ -64,7 +67,7 @@ class CallingView: UIView {
         if msg_cmd == "CAM" {
             lbTitle.text = "\(user_name)님(\(user_sex), \(user_age))이 영상채팅을 신청했습니다."
             if "남" == ShareData.ins.mySex.rawValue {
-                let p = ShareData.ins.dfsObjectForKey(DfsKey.phoneOutUserPoint) as! NSNumber
+                let p = ShareData.ins.dfsGet(DfsKey.phoneOutUserPoint) as! NSNumber
                 lbSubTitle.text = "수락 시 10초당 \(p.stringValue) 포인트가 차감됩니다."
                 
             }
@@ -75,7 +78,7 @@ class CallingView: UIView {
         else {
             lbTitle.text = "\(user_name)님(\(user_sex), \(user_age))이 음성채팅을 신청했습니다."
             if "남" == ShareData.ins.mySex.rawValue {
-                let p = ShareData.ins.dfsObjectForKey(DfsKey.phoneOutUserPoint) as! NSNumber
+                let p = ShareData.ins.dfsGet(DfsKey.phoneOutUserPoint) as! NSNumber
                 lbSubTitle.text = "수락 시 10초당 \(p.stringValue) 포인트가 차감됩니다."
             }
             else {
@@ -96,7 +99,7 @@ class CallingView: UIView {
             completion?(data, 101)
         }
     }
-    class func show(_ data: JSON, _ completion:((_ data: JSON, _ actionIndex:Int)->Void)?) {
+    class func show(_ type:PushType, _ data: JSON, _ completion:((_ data: JSON, _ actionIndex:Int)->Void)?) {
         let window = AppDelegate.ins.window
         if let view = window?.viewWithTag(TagCallingView) {
             view.removeFromSuperview()
@@ -114,7 +117,7 @@ class CallingView: UIView {
         let top = window!.safeAreaInsets.top + 16
         callingview.svContent.layoutMargins = UIEdgeInsets(top: top, left: 16, bottom: 16, right: 16)
         
-        callingview.configurationData(data, completion)
+        callingview.configurationData(type, data, completion)
     }
     func stopShakTimer() {
         if let timer = shakTimer {

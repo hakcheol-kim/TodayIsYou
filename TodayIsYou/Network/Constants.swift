@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 let baseUrl = "http://211.233.15.31:8080"
-let soketUrl = "http://211.233.15.31:8081"
+let soketUrl = "http://211.233.15.31:8081/"
 let rootPath = "api"
 let cyberUrl = "https://www.cyber1388.kr:447"
 
@@ -39,7 +39,6 @@ let TagCallingView = 1000001
 let IsShowTutorial = "IsShowTutorial"
 let kPushSetting = "PushSetting"
 let PUSH_DATA = "PUSH_DATA"
-
 
 struct DfsKey {
     static let joinType = "joinType"
@@ -81,6 +80,8 @@ struct DfsKey {
     static let camMsgOutPoint =  "cam_msg_out_point"
     static let camPlayPoint =  "cam_play_point"
     static let userBbsPoint = "user_bbs_point"
+
+    static let pushData = "pushData"
 }
 
 enum SortedType: String {
@@ -179,7 +180,7 @@ enum PushType: String {
     case camMsg = "CAM_MGS" //영상통화시 채팅
     case connect = "CONNECT" //새로운 유저 접속 알림
     
-    static func getPushType(_ str:String) -> PushType {
+    static func find(_ str:String) -> PushType {
         if str  == "CAM_NO" {
             return .camNo
         }

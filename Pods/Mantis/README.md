@@ -10,67 +10,80 @@
 
 # Mantis
 
-   Mantis is a swift 5.0 library that mimics most interactions in the Photos.app on an iOS device. You can use the  CropViewController of Mantis with default buttons, or you can add your own buttons under the "customized" mode. 
+   Mantis is an open-source swift library that provides rich cropping interactions for your iOS/Mac app.
    
 <p align="center">
-    <img src="Images/p1.png" height="250" alt="Mantis" />
-    <img src="Images/p2.png" height="250" alt="Mantis" />
-    <img src="Images/p3.png" height="250" alt="Mantis" />
-    <img src="Images/p4.png" height="250" alt="Mantis" />
-    <img src="Images/p5.png" height="250" alt="Mantis" />
-    <img src="Images/p6.png" height="250" alt="Mantis" />
-    <img src="Images/p7.png" height="250" alt="Mantis" />
-    <img src="Images/p8.png" height="250" alt="Mantis" />
-    <img src="Images/p9.png" height="250" alt="Mantis" />
-    <img src="Images/p10.png" height="250" alt="Mantis" />
+    <img src="Images/Mantis on all devices.png" height="450" alt="Mantis" />
+</p>
+   
+   Mantis also provide rich crop shapes from basic cicle to polygon to arbitrary paths.
+<p align="center">
+    <img src="Images/cropshapes.png" height="450" alt="Mantis" />
 </p>
 
-## Credits
-The crop and rotation feature are strongly inspired by [TOCropViewController](https://github.com/TimOliver/TOCropViewController) and [IGRPhotoTweaks](https://github.com/IGRSoft/IGRPhotoTweaks).
-
-The rotation dial is inspired by [10clock](https://github.com/joedaniels29/10Clock)
-
-Thanks [Leo Dabus](https://stackoverflow.com/users/2303865/leo-dabus) for helping me to solve the problem of cropping an ellipse image with transparent background https://stackoverflow.com/a/59805317/288724
 
 ## Requirements
 * iOS 11.0+
+* MacOS 10.15+
 * Xcode 10.0+
 
 ## Install
 
-### CocoaPods
+<details>
+    <summary><strong>CocoaPods</strong></summary>
 
 ```ruby
-pod 'Mantis', '~> 1.5.1'
+pod 'Mantis', '~> 1.7.1'
 ```
+</details>
 
-### Carthage
+<details>
+ <summary><strong>Carthage</strong></summary>
 
 ```ruby
 github "guoyingtao/Mantis"
 ```
+</details>
+
+<details>
+ <summary><strong>Swift Packages</strong></summary>
+
+* Respository: https://github.com/guoyingtao/Mantis.git
+* Rules: Version - Exact - 1.6.2
+
+</details>
 
 ## Usage
 
-**Mantis doesn't dismiss CropViewController anymore since 1.2.0. You need to dismiss it by yourself.**
-**For CropViewControllerDelegate protocol, cropViewControllerDidCancel becomes non-optional, and cropViewControllerWillDismiss is deprecated**
+<details>
+<summary><strong>Basic</strong></summary>
 
 * Create a cropViewController in Mantis with default config and default mode
 
-**You need set (cropViewController or its navigation controller).modalPresentationStyle = .fullscreen for iOS 13 when the cropViewController is presented**
+**You need set (cropViewController or its navigation controller).modalPresentationStyle = .fullscreen for iOS 13+ when the cropViewController is presented**
 
-```swift
-let cropViewController = Mantis.cropViewController(image: <Your Image>)
+```Swift
+    let cropViewController = Mantis.cropViewController(image: <Your Image>)
+    cropViewController.delegate = self
+    <Your ViewController>.present(cropViewController, animated: true)
 ```
 
 * The caller needs to conform CropViewControllerDelegate
 ```swift
 public protocol CropViewControllerDelegate: class {
     func cropViewControllerDidCrop(_ cropViewController: CropViewController, cropped: UIImage, transformation: Transformation)
-    func cropViewControllerDidFailToCrop(_ cropViewController: CropViewController, original: UIImage) // optional
     func cropViewControllerDidCancel(_ cropViewController: CropViewController, original: UIImage)
+    
+    // The implementaion of the following functions are optional
+    func cropViewControllerDidFailToCrop(_ cropViewController: CropViewController, original: UIImage)     
+    func cropViewControllerDidBeginResize(_ cropViewController: CropViewController)
+    func cropViewControllerDidEndResize(_ cropViewController: CropViewController, original: UIImage, cropInfo: CropInfo)    
 }
 ```
+</details>
+    
+<details>
+<summary><strong>UI mode</strong></summary>
 
 * CropViewController has two modes:
 
@@ -97,7 +110,11 @@ let cropViewController = Mantis.cropViewController(image: <Your Image>)
 let cropViewController = Mantis.cropCustomizableViewController(image: <Your Image>)
 ```
 
-* Add your own ratio
+</details>
+
+<details>
+<summary><strong>Add your own ratio</strong></summary>
+
 ```swift
             // Add a custom ratio 1:2 for portrait orientation
             let config = Mantis.Config()
@@ -135,16 +152,28 @@ public enum RatioCandidatesShowType {
 // set a custom fixed ratio
 cropToolbarDelegate?.didSelectRatio(ratio: 9 / 16)
 ```
+</details>
 
+<details>
+<summary><strong>Crop shapes</strong></summary>
 
 * If you want to set different crop shape, set Mantis.Config.cropShapeType
 ```swift
 public enum CropShapeType {
     case rect
-    case ellipse(maskOnly: Bool = false)
-    case roundedRect(radiusToShortSide: CGFloat, maskOnly: Bool = false)
+    case square
+    case ellipse
+    case circle(maskOnly: Bool = false)
+    case diamond(maskOnly: Bool = false)
+    case heart(maskOnly: Bool = false)
+    case polygon(sides: Int, offset: CGFloat = 0, maskOnly: Bool = false)
+    case path(points: [CGPoint], maskOnly: Bool = false)
 }
 ```
+</details>
+
+<details>
+<summary><strong>Preset transformations</strong></summary>
 
 * If you want to apply transformations when showing an image, set Mantis.Config.presetTransformationType
 ```swift
@@ -156,21 +185,19 @@ public enum PresetTransformationType {
 ```
 Please use the transformation infomation obtained previously from delegate method cropViewControllerDidCrop(_ cropViewController: CropViewController, cropped: UIImage, transformation: Transformation).
 
-<p align="center">
-    <img src="Images/p1.png" height="250" alt="Mantis" />
-    <img src="Images/p7.png" height="250" alt="Mantis" />
-    <img src="Images/p9.png" height="250" alt="Mantis" />
-    <img src="Images/p8.png" height="250" alt="Mantis" />
-</p>
+</details>
+    
+### Demo projects
+Mantis provide two demo projects
+- MantisExample (using Storyboard)
+- MantisSwiftUIExample (using SwiftUI)
 
-### Demo code
+## Credits
+* The crop are strongly inspired by [TOCropViewController](https://github.com/TimOliver/TOCropViewController) 
+* The rotation feature is inspired by [IGRPhotoTweaks](https://github.com/IGRSoft/IGRPhotoTweaks)
+* The rotation dial is inspired by [10clock](https://github.com/joedaniels29/10Clock)
+* Thanks [Leo Dabus](https://stackoverflow.com/users/2303865/leo-dabus) for helping me to solve the problem of cropping an ellipse image with transparent background https://stackoverflow.com/a/59805317/288724
+* <div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
-```swift
-        let cropViewController = Mantis.cropViewController(image: <Your Image>)
-        cropViewController.delegate = self
-        <Your ViewController>.present(cropViewController, animated: true)
-```
-
-<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
 
 

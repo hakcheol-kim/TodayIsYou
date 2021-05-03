@@ -14,10 +14,10 @@ class IntroViewController: UIViewController {
         
         //1. 앱캐쉬에 저장되있닌지 찾는다.
 //        c4f3f037ff94f95fe144fc9aed76f0b6
-        ShareData.ins.dfsSetValue("c4f3f037ff94f95fe144fc9aed76f0b6", forKey: DfsKey.userId)
+        ShareData.ins.dfsSet("c4f3f037ff94f95fe144fc9aed76f0b6", DfsKey.userId)
 //        KeychainItem.deleteUserIdentifierFromKeychain()
 //        ShareData.ins.dfsSetValue(nil, forKey: DfsKey.userId)
-        if let userId = ShareData.ins.dfsObjectForKey(DfsKey.userId) as? String, userId.length > 0 {
+        if let userId = ShareData.ins.dfsGet(DfsKey.userId) as? String, userId.length > 0 {
             //유저 아이디 disk 저장되있는것을 메모리에 올린다.
             ShareData.ins.myId = userId
             self.requestUserInfo()

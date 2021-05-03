@@ -121,7 +121,7 @@ class MainActionViewController: BaseViewController {
                 var camPoint = "0"
                 var phonePoint = "0"
                 
-                if let p1 = ShareData.ins.dfsObjectForKey(DfsKey.camOutUserPoint) as? NSNumber, let p2 = ShareData.ins.dfsObjectForKey(DfsKey.phoneOutUserPoint) as? NSNumber {
+                if let p1 = ShareData.ins.dfsGet(DfsKey.camOutUserPoint) as? NSNumber, let p2 = ShareData.ins.dfsGet(DfsKey.phoneOutUserPoint) as? NSNumber {
                     camPoint = p1.stringValue.addComma()
                     phonePoint = p2.stringValue.addComma()
                 }
@@ -203,8 +203,11 @@ class MainActionViewController: BaseViewController {
         ApiManager.ins.requestCamCallInsertMsg(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
-                let vc = CamCallViewController.instantiateFromStoryboard(.call)!
-                vc.data = res
+                let to_user_name = res["to_user_name"].stringValue
+                let to_user_id = res["to_user_id"].stringValue
+                let room_key = res["room_key"].stringValue
+                let vc = CamCallViewController.initWithType(.offer, room_key, toUserId: to_user_id, toUserName: to_user_name, info: nil)
+                
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             else {

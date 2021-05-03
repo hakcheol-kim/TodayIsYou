@@ -147,6 +147,12 @@
                                 <color key="textColor" systemColor="systemYellowColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOW-c5-5aD">
+                                <rect key="frame" x="388.5" y="97" width="9.5" height="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="44p-iU-5a9">
                                 <rect key="frame" x="16" y="60" width="100" height="150"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -160,6 +166,7 @@
                         <constraints>
                             <constraint firstItem="dJg-Vx-J6i" firstAttribute="top" secondItem="MxO-Lx-5NW" secondAttribute="top" id="6lC-QC-Ksv"/>
                             <constraint firstItem="FP8-YS-CuJ" firstAttribute="trailing" secondItem="dJg-Vx-J6i" secondAttribute="trailing" id="8WK-Gz-MrB"/>
+                            <constraint firstItem="eOW-c5-5aD" firstAttribute="top" secondItem="E6K-KC-gMN" secondAttribute="bottom" constant="8" id="920-Sc-6E9"/>
                             <constraint firstItem="44p-iU-5a9" firstAttribute="leading" secondItem="FP8-YS-CuJ" secondAttribute="leading" constant="16" id="92P-E0-kUU"/>
                             <constraint firstItem="dJg-Vx-J6i" firstAttribute="leading" secondItem="FP8-YS-CuJ" secondAttribute="leading" id="D5c-73-yyf"/>
                             <constraint firstItem="FP8-YS-CuJ" firstAttribute="trailing" secondItem="E6K-KC-gMN" secondAttribute="trailing" constant="16" id="DMw-fT-ogh"/>
@@ -167,6 +174,7 @@
                             <constraint firstItem="FP8-YS-CuJ" firstAttribute="trailing" secondItem="j2X-n3-nsY" secondAttribute="trailing" constant="16" id="IXc-9N-ZN4"/>
                             <constraint firstAttribute="bottom" secondItem="dJg-Vx-J6i" secondAttribute="bottom" id="eTK-44-9L2"/>
                             <constraint firstItem="FP8-YS-CuJ" firstAttribute="bottom" secondItem="j2X-n3-nsY" secondAttribute="bottom" constant="24" id="iIv-kI-IRA"/>
+                            <constraint firstItem="eOW-c5-5aD" firstAttribute="trailing" secondItem="E6K-KC-gMN" secondAttribute="trailing" id="lVJ-qV-ylY"/>
                             <constraint firstItem="44p-iU-5a9" firstAttribute="top" secondItem="FP8-YS-CuJ" secondAttribute="top" constant="16" id="owg-ZF-xvN"/>
                         </constraints>
                     </view>
@@ -177,6 +185,7 @@
                         <outlet property="btnLike" destination="pI7-vZ-Dec" id="WS3-Kk-SnW"/>
                         <outlet property="btnMicroPhone" destination="mU1-uv-4I8" id="jQy-ll-F6I"/>
                         <outlet property="btnSound" destination="lXJ-mw-aOb" id="6zh-D5-7qe"/>
+                        <outlet property="lbCost" destination="eOW-c5-5aD" id="Qfn-Xg-7Jg"/>
                         <outlet property="lbTalkTime" destination="E6K-KC-gMN" id="pbF-p1-0gq"/>
                         <outlet property="locaVideo" destination="44p-iU-5a9" id="km1-eC-3d5"/>
                         <outlet property="mainVideo" destination="dJg-Vx-J6i" id="fs7-Np-iTq"/>

@@ -176,7 +176,7 @@ class RankDetailViewController: MainActionViewController {
     
     override func presentTalkMsgAlert() {
         var msg:String? = nil
-        if let bbsPoint = ShareData.ins.dfsObjectForKey(DfsKey.userBbsPoint) as? NSNumber, bbsPoint.intValue > 0 {
+        if let bbsPoint = ShareData.ins.dfsGet(DfsKey.userBbsPoint) as? NSNumber, bbsPoint.intValue > 0 {
             msg = "메세지 전송시 \(bbsPoint)P 소모됩니다."
         }
         
@@ -209,7 +209,7 @@ class RankDetailViewController: MainActionViewController {
             friend_mode = "Y"
         }
         var bbsPoint = 0
-        if let p = ShareData.ins.dfsObjectForKey(DfsKey.userBbsPoint) as? NSNumber {
+        if let p = ShareData.ins.dfsGet(DfsKey.userBbsPoint) as? NSNumber {
             bbsPoint = p.intValue
         }
         param["user_id"] = ShareData.ins.myId

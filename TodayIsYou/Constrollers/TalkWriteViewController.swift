@@ -94,12 +94,12 @@ class TalkWriteViewController: BaseViewController {
         
         lbMsg.text = "사진은 검증된 이미지만 등록 됩니다."
         if type == .cam {
-            if let camDayPoint = ShareData.ins.dfsObjectForKey(DfsKey.camDayPoint) as? NSNumber, camDayPoint.intValue > 0, "남" == ShareData.ins.mySex.rawValue {
+            if let camDayPoint = ShareData.ins.dfsGet(DfsKey.camDayPoint) as? NSNumber, camDayPoint.intValue > 0, "남" == ShareData.ins.mySex.rawValue {
                 lbMsg.text = "사진은 검증된 이미지만 등록 됩니다.\n1일 1회 토크 등록시 " + camDayPoint.stringValue + "P를 적립해 드립니다"
             }
         }
         else if type == .cam {
-            if let talkDayPoint = ShareData.ins.dfsObjectForKey(DfsKey.talkDayPoint) as? NSNumber, talkDayPoint.intValue > 0, "남" == ShareData.ins.mySex.rawValue {
+            if let talkDayPoint = ShareData.ins.dfsGet(DfsKey.talkDayPoint) as? NSNumber, talkDayPoint.intValue > 0, "남" == ShareData.ins.mySex.rawValue {
                 lbMsg.text = "사진은 검증된 이미지만 등록 됩니다.\n1일 1회 토크 등록시 " + talkDayPoint.stringValue + "P를 적립해 드립니다"
             }
         }
@@ -170,7 +170,7 @@ class TalkWriteViewController: BaseViewController {
                         }
                         else if "Y2" == point_save && "남" == ShareData.ins.mySex.rawValue {
                             var point = "0"
-                            if let p = ShareData.ins.dfsObjectForKey(DfsKey.dayLimitPoint) as? NSNumber {
+                            if let p = ShareData.ins.dfsGet(DfsKey.dayLimitPoint) as? NSNumber {
                                 point = p.stringValue
                             }
                             self.showToastWindow("보유한 포인트가 \(point.addComma()) 이하일때 적립 가능합니다.")
@@ -199,7 +199,7 @@ class TalkWriteViewController: BaseViewController {
                         }
                         else if "Y2" == point_save && "남" == ShareData.ins.mySex.rawValue {
                             var point = "0"
-                            if let p = ShareData.ins.dfsObjectForKey(DfsKey.dayLimitPoint) as? NSNumber {
+                            if let p = ShareData.ins.dfsGet(DfsKey.dayLimitPoint) as? NSNumber {
                                 point = p.stringValue
                             }
                             self.showToastWindow("\(point.addComma()) 포인트 이하일때 적립 가능합니다(금일은 적립 불가능 합니다.)")

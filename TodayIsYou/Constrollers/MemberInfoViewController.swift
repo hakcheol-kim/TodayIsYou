@@ -292,7 +292,7 @@ class MemberInfoViewController: BaseViewController {
                 if isSuccess == "01" {
                     let alert = CAlertViewController.init(type: .alert, title: nil, message: "회원가입이 완료되었습니다.", actions: [.ok]) { (vcs, selitem, index) in
                         vcs.dismiss(animated: true, completion: nil)
-                        ShareData.ins.dfsSetValue(userId, forKey: DfsKey.userId)
+                        ShareData.ins.dfsSet(userId, DfsKey.userId)
                         ShareData.ins.myId = userId
                         if gender == "남" {
                             ShareData.ins.mySex = .mail

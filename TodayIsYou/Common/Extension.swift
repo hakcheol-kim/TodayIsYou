@@ -501,3 +501,19 @@ extension Locale {
         return language
     }
 }
+extension NSNumber {
+    func toString(_ minDigit:Int = 0, _ maxDigit:Int = 2) -> String {
+        let nf = NumberFormatter.init()
+        nf.minimumFractionDigits = minDigit
+        nf.maximumFractionDigits = maxDigit
+        nf.roundingMode = .halfEven
+        nf.numberStyle = .decimal
+        nf.locale = Locale(identifier: "en_US")
+        
+        guard let result = nf.string(from: self) else {
+            return ""
+        }
+        return result
+    }
+   
+}

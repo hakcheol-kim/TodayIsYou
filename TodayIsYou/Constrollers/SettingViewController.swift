@@ -99,7 +99,7 @@ class SettingViewController: BaseViewController {
                         else if "Y2" == point_save {
                             if "남" == ShareData.ins.mySex.rawValue {
                                 var point = "0"
-                                if let p = ShareData.ins.dfsObjectForKey(DfsKey.dayLimitPoint) as? NSNumber {
+                                if let p = ShareData.ins.dfsGet(DfsKey.dayLimitPoint) as? NSNumber {
                                     point = p.stringValue
                                 }
                                 let msg = "보유한 포인트가 \(point.addComma()) 이하일때 적립 가능합니다"

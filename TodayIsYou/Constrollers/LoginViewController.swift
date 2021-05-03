@@ -34,7 +34,7 @@ class LoginViewController: BaseViewController {
         ApiManager.ins.requestUerInfo(param: ["user_id": newUserId]) { (res) in
             let isSuccess = res["isSuccess"]
             if isSuccess == "00" { //신규
-                ShareData.ins.dfsSetValue(newUserId, forKey: DfsKey.userId)
+                ShareData.ins.dfsSet(newUserId, DfsKey.userId)
                 ShareData.ins.myId = newUserId
                 let vc = JoinTermsAgreeViewController.instantiateFromStoryboard(.login)!
                 let info = ["user_id":newUserId]

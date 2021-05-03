@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		410FE2703639684E36203CCD /* Pods_TodayIsYou.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 884CA5E6C0BAFE8C84989B0D /* Pods_TodayIsYou.framework */; };
+		E902F5F8263BFF2F00DBE7E6 /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E902F5F7263BFF2F00DBE7E6 /* LocalNotificationManager.swift */; };
 		E9112DCD26353C90008984A2 /* CallingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9112DCC26353C90008984A2 /* CallingView.swift */; };
 		E9112DD026353CA5008984A2 /* CallingView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9112DCF26353CA5008984A2 /* CallingView.xib */; };
 		E9112DF4263557A9008984A2 /* PulseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9112DF3263557A9008984A2 /* PulseButton.swift */; };
@@ -176,6 +177,7 @@
 		5F76CA69147B26F5BE01C67C /* Pods-TodayIsYou.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayIsYou.debug.xcconfig"; path = "Target Support Files/Pods-TodayIsYou/Pods-TodayIsYou.debug.xcconfig"; sourceTree = "<group>"; };
 		65944D980C5B4B1DA98CC2F3 /* Pods-TodayIsYou.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodayIsYou.release.xcconfig"; path = "Target Support Files/Pods-TodayIsYou/Pods-TodayIsYou.release.xcconfig"; sourceTree = "<group>"; };
 		884CA5E6C0BAFE8C84989B0D /* Pods_TodayIsYou.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodayIsYou.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E902F5F7263BFF2F00DBE7E6 /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		E9112DCC26353C90008984A2 /* CallingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingView.swift; sourceTree = "<group>"; };
 		E9112DCF26353CA5008984A2 /* CallingView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CallingView.xib; sourceTree = "<group>"; };
 		E9112DF3263557A9008984A2 /* PulseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseButton.swift; sourceTree = "<group>"; };
@@ -665,6 +667,7 @@
 				E99C32182612B56C002E73CD /* SectionHeaderExapndFlowLayout.swift */,
 				E9DF8F6C262B390A008CC6C9 /* ContactsManager.swift */,
 				E9112DF3263557A9008984A2 /* PulseButton.swift */,
+				E902F5F7263BFF2F00DBE7E6 /* LocalNotificationManager.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -939,6 +942,7 @@
 				E985111E2639427D006A6C4D /* WebSocket.swift in Sources */,
 				E99199D625FDE53C00D6128A /* MyBlockListViewController.swift in Sources */,
 				E94AF90F2638F6B600DF1A56 /* IceCandidate.swift in Sources */,
+				E902F5F8263BFF2F00DBE7E6 /* LocalNotificationManager.swift in Sources */,
 				E99C32192612B56C002E73CD /* SectionHeaderExapndFlowLayout.swift in Sources */,
 				E9836F7B25FF2F3B0072F22F /* CameraOverlayView.swift in Sources */,
 				E9B12DE325FA03CB00FF7B11 /* RankTblCell.swift in Sources */,

@@ -593,18 +593,19 @@ class ChattingViewController: MainActionViewController {
             }
         }
         else if notification.name == Notification.Name(rawValue: PUSH_DATA) {
-            guard let info = notification.object as? JSON else {
+            guard let type = notification.object as? PushType, let userInfo = notification.userInfo as?[String:Any] else {
                 return
             }
-            let type = info["msg_cmd"].stringValue
-            if type == "CHAT" {
+            
+            let info = JSON(userInfo)
+            if type == .chat {
                 let message_key = info["message_key"].stringValue
                 if self.messageKey == message_key {
                     self.updateDBReadMessage()
                     self.requestChartMsgList()
                 }
             }
-            else if type == "MSG_DEL" {
+            else if type == .msgDel {
                 self.showToastWindow("\(toUserName!)님이 대화방을 나갔습니다.")
                 self.navigationController?.popViewController(animated: true)
             }

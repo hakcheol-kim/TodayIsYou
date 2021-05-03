@@ -58,7 +58,7 @@ class ConfigurationViewController: BaseViewController {
         
         if notiYn == "A" {
             btnSound.isSelected = true
-            btnSound.isSelected = true
+            btnVibrate.isSelected = true
         } else if notiYn == "S" {
             btnSound.isSelected = true
         } else if notiYn == "V" {
@@ -199,8 +199,8 @@ class ConfigurationViewController: BaseViewController {
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
                 self.showToast("설정 변경 완료되었습니다.")
-                ShareData.ins.dfsSetValue(self.notiYn, forKey: DfsKey.notiYn)
-                ShareData.ins.dfsSetValue(connectPush, forKey: DfsKey.connectPush)
+                ShareData.ins.dfsSet(self.notiYn, DfsKey.notiYn)
+                ShareData.ins.dfsSet(connectPush, DfsKey.connectPush)
             }
             else {
                 self.showErrorToast(response)

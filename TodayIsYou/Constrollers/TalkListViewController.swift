@@ -140,7 +140,7 @@ class TalkListViewController: MainActionViewController {
     
     override func presentTalkMsgAlert() {
         var msg:String? = nil
-        if let bbsPoint = ShareData.ins.dfsObjectForKey(DfsKey.userBbsPoint) as? NSNumber, bbsPoint.intValue > 0 {
+        if let bbsPoint = ShareData.ins.dfsGet(DfsKey.userBbsPoint) as? NSNumber, bbsPoint.intValue > 0 {
             msg = "메세지 전송시 \(bbsPoint)P 소모됩니다."
         }
     
@@ -174,7 +174,7 @@ class TalkListViewController: MainActionViewController {
             friend_mode = "Y"
         }
         var bbsPoint = 0
-        if let p = ShareData.ins.dfsObjectForKey(DfsKey.userBbsPoint) as? NSNumber {
+        if let p = ShareData.ins.dfsGet(DfsKey.userBbsPoint) as? NSNumber {
             bbsPoint = p.intValue
         }
         param["user_id"] = ShareData.ins.myId
@@ -236,7 +236,7 @@ extension TalkListViewController: UITableViewDelegate, UITableViewDataSource {
             
             switch action {
             case 100:
-                if let inappCnt = ShareData.ins.dfsObjectForKey(DfsKey.inappCnt) as? NSNumber, inappCnt.intValue > 0 {
+                if let inappCnt = ShareData.ins.dfsGet(DfsKey.inappCnt) as? NSNumber, inappCnt.intValue > 0 {
                     let user_id = selData["user_id"].stringValue
                     let file_name = selData["file_name"].stringValue
                     if let imgUrl = Utility.thumbnailUrl(user_id, file_name) {
@@ -248,7 +248,7 @@ extension TalkListViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 break
             case 101:
-                if let inappCnt = ShareData.ins.dfsObjectForKey(DfsKey.inappCnt) as? NSNumber, inappCnt.intValue > 0 {
+                if let inappCnt = ShareData.ins.dfsGet(DfsKey.inappCnt) as? NSNumber, inappCnt.intValue > 0 {
                     let user_id = selData["user_id"].stringValue
                     let user_image = selData["user_image"].stringValue
                     if let imgUrl = Utility.thumbnailUrl(user_id, user_image) {

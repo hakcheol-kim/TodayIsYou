@@ -243,7 +243,7 @@ class MainViewController: BaseViewController {
         CNavigationBar.drawRight(self, nil, pointP, TAG_NAVI_P_COINT, nil)
 
         var pointS = "0 S"
-        if let sPoint = ShareData.ins.dfsObjectForKey(DfsKey.userR) as? NSNumber {
+        if let sPoint = ShareData.ins.dfsGet(DfsKey.userR) as? NSNumber {
             pointS = "\(sPoint.stringValue.addComma()) S"
         }
         CNavigationBar.drawRight(self, nil, pointS, TAG_NAVI_S_COINT, nil)

@@ -15,7 +15,7 @@ struct MSG: Codable {
 }
 
 
-protocol SignalClientDelegate: class {
+protocol SignalClientDelegate: AnyObject {
     func signalClientDidConnect(_ signalClient: SignalingClient)
     func signalClientDidDisconnect(_ signalClient: SignalingClient)
     func signalClient(_ signalClient: SignalingClient, didReceiveRemoteSdp sdp: RTCSessionDescription)
@@ -27,7 +27,7 @@ protocol SignalClientDelegate: class {
     func signalClientChatMessage(_ signalClient: SignalingClient, msg: String)
 }
 
-protocol CallPushSender: class {
+protocol CallPushSender: AnyObject {
     func requestSendPushMessage(to id: String, _ name: String, roomKey: String)
 }
 
@@ -218,12 +218,12 @@ final class SignalingClient {
     
     // MARK --
     
-    func connect() {
+    public func connect() {
         self.webSocket.delegate = self
         self.webSocket.connect()
     }
     
-    func disconnect() {
+    public func disconnect() {
         self.webSocket.disconnect()
     }
     
@@ -293,7 +293,7 @@ extension SignalingClient: CallPushSender {
             return
         }
         
-        guard let myName = ShareData.ins.dfsObjectForKey(DfsKey.userName) as? String else {
+        guard let myName = ShareData.ins.dfsGet(DfsKey.userName) as? String else {
             return
         }
         let myId = ShareData.ins.myId

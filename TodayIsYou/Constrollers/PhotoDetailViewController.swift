@@ -154,7 +154,7 @@ class PhotoDetailViewController: MainActionViewController {
     
     override func presentTalkMsgAlert() {
         var msg:String? = nil
-        if let bbsPoint = ShareData.ins.dfsObjectForKey(DfsKey.userBbsPoint) as? NSNumber, bbsPoint.intValue > 0 {
+        if let bbsPoint = ShareData.ins.dfsGet(DfsKey.userBbsPoint) as? NSNumber, bbsPoint.intValue > 0 {
             msg = "메세지 전송시 \(bbsPoint)P 소모됩니다."
         }
     
@@ -187,7 +187,7 @@ class PhotoDetailViewController: MainActionViewController {
             friend_mode = "Y"
         }
         var bbsPoint = 0
-        if let p = ShareData.ins.dfsObjectForKey(DfsKey.userBbsPoint) as? NSNumber {
+        if let p = ShareData.ins.dfsGet(DfsKey.userBbsPoint) as? NSNumber {
             bbsPoint = p.intValue
         }
         param["user_id"] = ShareData.ins.myId
@@ -303,7 +303,7 @@ extension PhotoDetailViewController: UICollectionViewDelegate, UICollectionViewD
         
         var end_date = checkInfo["end_date"].stringValue
         let index = 3*indexPath.section + indexPath.row
-        let photoDayPoint = ShareData.ins.dfsObjectForKey(DfsKey.photoDayPoint) as! NSNumber
+        let photoDayPoint = ShareData.ins.dfsGet(DfsKey.photoDayPoint) as! NSNumber
         
         end_date = "3543"
         if index < maxShowPhoto { //전체 보기

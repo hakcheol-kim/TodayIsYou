@@ -15,15 +15,22 @@ class ShareData: NSObject {
     var myName:String = ""
     var userPoint: NSNumber? = nil
     
-    func dfsSetValue(_ value: Any?, forKey key: String) {
+    func dfsSet(_ value: Any?, _ key: String?) {
+        guard let key = key, let value = value  else {
+            return
+        }
         UserDefaults.standard.setValue(value, forKey: key)
         UserDefaults.standard.synchronize()
         if key == DfsKey.userPoint {
             userPoint = value as? NSNumber
         }
     }
-    func dfsObjectForKey(_ key: String) -> Any? {
+    func dfsGet(_ key: String) -> Any? {
         return UserDefaults.standard.object(forKey: key)
+    }
+    func dfsRemove(_ key:String) {
+        UserDefaults.standard.removeObject(forKey: key)
+        UserDefaults.standard.synchronize()
     }
     
     func setUserInfo(_ user:JSON) {
