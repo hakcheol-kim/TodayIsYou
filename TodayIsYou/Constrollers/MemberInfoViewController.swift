@@ -39,7 +39,7 @@ class MemberInfoViewController: BaseViewController {
     let toolbar = CToolbar.init(barItems: [.keyboardDown])
     var authCode:String = ""
     
-    let TIMEOUT_MIN:Double = 3
+    
     var timer:Timer?
     var selGender: String = "" {
         didSet {
@@ -71,6 +71,7 @@ class MemberInfoViewController: BaseViewController {
         tfNickName.inputAccessoryView = toolbar
         tfPhoneNumber.inputAccessoryView = toolbar
         tfPartnerCode.inputAccessoryView = toolbar
+        tfAuthCode.inputAccessoryView = toolbar
         
         toolbar.addTarget(self, selctor: #selector(actionKeybardDown))
         self.addTapGestureKeyBoardDown()
@@ -338,7 +339,7 @@ class MemberInfoViewController: BaseViewController {
     }
     
     func setDownTimer() {
-        let endTimer = Date.timeIntervalSinceReferenceDate+(TIMEOUT_MIN * 60)
+        let endTimer = Date.timeIntervalSinceReferenceDate+(AUTH_TIMEOUT_MIN * 60)
         let diff:Int = Int(endTimer - Date.timeIntervalSinceReferenceDate)
         let minute = diff/60
         let second = (diff%60)

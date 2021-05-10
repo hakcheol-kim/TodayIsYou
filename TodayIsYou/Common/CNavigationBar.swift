@@ -55,7 +55,7 @@ class CNavigationBar: UINavigationBar {
         
         let naviBar = controller.navigationController?.navigationBar
         naviBar?.isTranslucent = true
-        let img = UIImage.image(from: ColorNaviBar)!
+        let img = UIImage.color(from: ColorNaviBar)!
         naviBar?.tintColor = UIColor.white
         naviBar?.barTintColor = UIColor.white
         naviBar?.setBackgroundImage(img, for: UIBarMetrics.default)
@@ -92,7 +92,7 @@ class CNavigationBar: UINavigationBar {
         let naviBar = controller.navigationController?.navigationBar
         button.tintColor = UIColor.white
         naviBar?.isTranslucent = true
-        let img = UIImage.image(from: ColorNaviBar)!
+        let img = UIImage.color(from: ColorNaviBar)!
         naviBar?.tintColor = UIColor.white
         naviBar?.barTintColor = UIColor.white
         naviBar?.setBackgroundImage(img, for: UIBarMetrics.default)
@@ -155,7 +155,7 @@ class CNavigationBar: UINavigationBar {
         button.setTitleColor(button.tintColor, for: .normal)
         
         naviBar?.isTranslucent = true
-        let img = UIImage.image(from: ColorNaviBar)
+        let img = UIImage.color(from: ColorNaviBar)
         naviBar?.tintColor = UIColor.white
         naviBar?.barTintColor = UIColor.white
         naviBar?.setBackgroundImage(img, for: UIBarMetrics.default)

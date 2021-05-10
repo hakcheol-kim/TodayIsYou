@@ -32,26 +32,21 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
-		<key>NSAllowsLocalNetworking</key>
-		<true/>
-		<key>NSAllowsArbitraryLoadsForMedia</key>
-		<true/>
-		<key>NSAllowsArbitraryLoadsInWebContent</key>
-		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>프로파일 이미지 추가하기위해 캘러리 접근을 허용해주세요.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>이 앱에서는 영상채팅중 당신의 목소리를 상대방에게 전달하기 위하여 마이크에 접근하려고 합니다.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>프로파일 이미지 추가하기위해 캘러리 접근을 허용해주세요.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>프로파일 이미지 추가하기위해 캘러리 접근을 허용해주세요.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>이 앱에서는 영상채팅중 당신의 목소리를 상대방에게 전달하기 위하여 마이크에 접근하려고 합니다.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>
+		<string>voip</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

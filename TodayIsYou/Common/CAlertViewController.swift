@@ -308,7 +308,13 @@ class CAlertViewController: UIViewController {
             }
         }
         else if sender.tag < 200 { //ok, cancel
-            self.completion?(self, nil, sender.tag-100)
+            if arrBtnCheck.count > 0 || arrTextView.count > 0 {
+                self.completion?(self, nil, sender.tag-100)
+            }
+            else {
+                self.dismiss(animated: true, completion: nil)
+                self.completion?(self, nil, sender.tag-100)
+            }
         }
         else if sender.tag < 300 {
             sender.isSelected = !sender.isSelected

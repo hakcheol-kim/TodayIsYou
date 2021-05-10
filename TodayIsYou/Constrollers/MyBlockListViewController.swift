@@ -110,18 +110,17 @@ class MyBlockListViewController: BaseViewController {
             let result = response["result"].arrayValue
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
-                if result.count == 0 {
-                    self.pageEnd = true
+                if self.pageNum == 1 {
                     self.listData = result
                 }
-                else {
-                    if self.pageNum == 1 {
-                        self.listData = result
-                    }
-                    else {
-                        self.listData.append(contentsOf: result)
-                    }
+                else if result.isEmpty == false {
+                    self.listData.append(contentsOf: result)
                 }
+                
+                if result.count == 0 {
+                    self.pageEnd = true
+                }
+                
                 self.tblView.cr.endHeaderRefresh()
                 if (self.listData.count > 0) {
                     self.tblView.isHidden = false

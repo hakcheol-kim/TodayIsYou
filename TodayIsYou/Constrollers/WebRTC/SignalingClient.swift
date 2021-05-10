@@ -20,6 +20,7 @@ protocol SignalClientDelegate: AnyObject {
     func signalClientDidDisconnect(_ signalClient: SignalingClient)
     func signalClient(_ signalClient: SignalingClient, didReceiveRemoteSdp sdp: RTCSessionDescription)
     func signalClient(_ signalClient: SignalingClient, didReceiveCandidate candidate: RTCIceCandidate)
+    
     func signalClientDidReady(_ signalClient: SignalingClient)
     func signalClientDidRoomOut(_ signalClient: SignalingClient)
     func signalClientDidToRoomOut(_ signalClient: SignalingClient)
@@ -81,7 +82,7 @@ final class SignalingClient {
                 // 발신할 경우
                 self.callYn(to: self.userId, self.userName, roomKey: self.roomKey)
                 // 푸시 요청
-                self.requestSendPushMessage(to: self.userId, self.userName, roomKey: self.roomKey)
+//                self.requestSendPushMessage(to: self.userId, self.userName, roomKey: self.roomKey)
             } else {
                 print(">>> send call_ok")
                 // 수신할 경우
@@ -107,7 +108,7 @@ final class SignalingClient {
         
         socket?.on("room_user_cnt") {data, ack in
             print("room_user_cnt <<<")
-            self.delegate?.signalClientDidRoomOut(self)
+            self.delegate?.signalClientDidToRoomOut(self)
             // TODO 채팅 신청 취소 user cnt == 0
         }
         
@@ -289,7 +290,7 @@ extension SignalingClient: WebSocketProviderDelegate {
 // MARK -- Push for calling message when offering
 extension SignalingClient: CallPushSender {
     func requestSendPushMessage(to id: String, _ name: String, roomKey: String) {
-        guard let url = URL(string: "http://snsncam.com/api/talk/insertVcChatMsg.do") else {
+        guard let url = URL(string: "http://211.233.15.31:8080/api/talk/insertVcChatMsg.do") else {
             return
         }
         

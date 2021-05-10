@@ -137,83 +137,6 @@ class TalkListViewController: MainActionViewController {
             self.presentPanModal(vc)
         }
     }
-    
-    override func presentTalkMsgAlert() {
-        var msg:String? = nil
-        if let bbsPoint = ShareData.ins.dfsGet(DfsKey.userBbsPoint) as? NSNumber, bbsPoint.intValue > 0 {
-            msg = "메세지 전송시 \(bbsPoint)P 소모됩니다."
-        }
-    
-        let alert = CAlertViewController.init(type: .alert, title: "메세지 전송", message: msg, actions: [.cancel, .ok]) { (vcs, selItem, index)  in
-            
-            if index == 1 {
-                guard let text = vcs.arrTextView.first?.text, text.isEmpty == false else {
-                    self.showToast("내용을 입력해주세요.")
-                    return
-                }
-                self.requestSendMsg(text)
-                vcs.dismiss(animated: true, completion: nil)
-            }
-            else {
-                vcs.dismiss(animated: true, completion: nil)
-            }
-        }
-        
-        alert.iconImg = UIImage(systemName: "envelope.fill")
-        alert.addTextView("입력해주세요.")
-        alert.reloadUI()
-        self.present(alert, animated: true, completion: nil)
-    }
-    
-    func requestSendMsg(_ content:String) {
-        
-        var param:[String:Any] = [:]
-            
-        var friend_mode = "N"
-        if isMyFriend {
-            friend_mode = "Y"
-        }
-        var bbsPoint = 0
-        if let p = ShareData.ins.dfsGet(DfsKey.userBbsPoint) as? NSNumber {
-            bbsPoint = p.intValue
-        }
-        param["user_id"] = ShareData.ins.myId
-        param["from_user_id"] = ShareData.ins.myId
-        param["from_user_sex"] = ShareData.ins.mySex.rawValue
-        param["to_user_id"] = self.selUser["user_id"].stringValue
-        param["to_user_name"] = self.selUser["user_name"].stringValue
-        param["memo"] = content
-        param["user_bbs_point"] = bbsPoint
-        param["point_user_id"] = ShareData.ins.myId
-        param["friend_mode"] = friend_mode
-        
-        ApiManager.ins.requestSendTalkMsg(param: param) { (res) in
-            let isSuccess = res["isSuccess"].stringValue
-            if isSuccess == "00" {
-                let errorCode = res["errorCode"].stringValue
-                if errorCode == "0002" {
-                    self.showToast("탈퇴한 회원 입니다")
-                }
-                else if errorCode == "0003" {
-                    self.showToast("차단 상태인 회원 입니다")
-                }
-                else {
-                    self.showToast("오류!!")
-                }
-            }
-            else {
-                self.showToast("쪽지 전송 완료");
-                let message_key = res["message_key"].stringValue
-                param["message_key"] = message_key
-                param["read_yn"] = true
-                param["reg_date"] = Date()
-                param["type"] = 1   //내가보낸것 
-                DBManager.ins.insertChatMessage(param, nil)
-            }
-        } failure: { (error) in
-            self.showErrorToast(error)
-        }
-    }
 }
 
 extension TalkListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -235,7 +158,7 @@ extension TalkListViewController: UITableViewDelegate, UITableViewDataSource {
             }
             
             switch action {
-            case 100:
+            case 100:   //뒤에 이미지 터치 액션
                 if let inappCnt = ShareData.ins.dfsGet(DfsKey.inappCnt) as? NSNumber, inappCnt.intValue > 0 {
                     let user_id = selData["user_id"].stringValue
                     let file_name = selData["file_name"].stringValue
@@ -247,7 +170,7 @@ extension TalkListViewController: UITableViewDelegate, UITableViewDataSource {
                     self.showToast("1회 이상 결제한 유저님만 크게 볼 수 있습니다!!");
                 }
                 break
-            case 101:
+            case 101: //프로파일 터치
                 if let inappCnt = ShareData.ins.dfsGet(DfsKey.inappCnt) as? NSNumber, inappCnt.intValue > 0 {
                     let user_id = selData["user_id"].stringValue
                     let user_image = selData["user_image"].stringValue
@@ -259,9 +182,9 @@ extension TalkListViewController: UITableViewDelegate, UITableViewDataSource {
                     self.showToast("1회 이상 결제한 유저님만 크게 볼 수 있습니다!!");
                 }
                 break
-            case 102:
+            case 102:   //메세지 아이콘
                 self.selUser = selData
-                self.checkCamTalk()
+                self.checkTalk()
                 break
             default:
                 break

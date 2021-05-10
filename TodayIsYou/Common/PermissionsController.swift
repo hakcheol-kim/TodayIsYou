@@ -13,6 +13,7 @@ import AVFoundation
 import AssetsLibrary
 import CoreBluetooth
 import CoreNFC
+import PhotosUI
 
 typealias PermissionVoidBlock = () -> Void
 class PermissionsController: NSObject {
@@ -48,7 +49,7 @@ class PermissionsController: NSObject {
         }
     }
     
-    func checkPermissionAccessForCameraAndGallery(_ successBlock: PermissionVoidBlock?, _ failureBlock: PermissionVoidBlock?, _ deniedBlock: PermissionVoidBlock?) {
+    func checkPermissionAccessForCamera(successBlock: PermissionVoidBlock?, failureBlock: PermissionVoidBlock?, deniedBlock: PermissionVoidBlock?) {
         let authStatus: AVAuthorizationStatus = AVCaptureDevice.authorizationStatus(for: AVMediaType.video)
         if authStatus == .authorized {
             successBlock?()
@@ -73,7 +74,60 @@ class PermissionsController: NSObject {
         }
     }
     
-    func checkPermissionAccessForCalendar(_ successBlock: PermissionVoidBlock?, _ failureBlock: PermissionVoidBlock?, _ deniedBlock: PermissionVoidBlock?) {
+    func checkPermissionAccessGallery(successBlock: PermissionVoidBlock?, failureBlock: PermissionVoidBlock?, deniedBlock: PermissionVoidBlock?) {
+        if #available(iOS 14, *) {
+            PHPhotoLibrary.requestAuthorization(for: .readWrite) { authStatus in
+                DispatchQueue.main.async {
+                    switch authStatus {
+                    case .authorized:  // User has authorized this application to access photos data.
+                        successBlock?()
+                        break
+                    case .notDetermined:  // User has not yet made a choice with regards to this application
+                        failureBlock?()
+                        break
+                    case .restricted:  // This application is not authorized to access photo data.
+                        failureBlock?()
+                        break
+                    case .limited:  //Us
+                        successBlock?()
+                        break
+                    case .denied:  // User has explicitly denied this application access to photos data.
+                        deniedBlock?()
+                        break
+                    @unknown default:
+                        fatalError()
+                    }
+                }
+            }
+        }
+        else {
+            PHPhotoLibrary.requestAuthorization { authStatus in
+                DispatchQueue.main.async {
+                    switch authStatus {
+                    case .authorized:  // User has authorized this application to access photos data.
+                        successBlock?()
+                        break
+                    case .notDetermined:  // User has not yet made a choice with regards to this application
+                        failureBlock?()
+                        break
+                    case .restricted:  // This application is not authorized to access photo data.
+                        failureBlock?()
+                        break
+                    case .limited:  //Us
+                        successBlock?()
+                        break
+                    case .denied:  // User has explicitly denied this application access to photos data.
+                        deniedBlock?()
+                        break
+                    @unknown default:
+                        fatalError()
+                    }
+                }
+            }
+        }
+    }
+    
+    func checkPermissionAccessForCalendar(successBlock: PermissionVoidBlock?, failureBlock: PermissionVoidBlock?, deniedBlock: PermissionVoidBlock?) {
         
         let authStatus: EKAuthorizationStatus = EKEventStore.authorizationStatus(for: .event)
         if authStatus == .authorized {
@@ -99,7 +153,7 @@ class PermissionsController: NSObject {
         }
     }
     
-    func checkPermissionAccessMicrophone(_ successBlock: PermissionVoidBlock?, _ failureBlock: PermissionVoidBlock?, _ deniedBlock: PermissionVoidBlock?) {
+    func checkPermissionAccessMicrophone(successBlock: PermissionVoidBlock?, failureBlock: PermissionVoidBlock?, deniedBlock: PermissionVoidBlock?) {
         let authStatus = AVAudioSession.sharedInstance().recordPermission
         if authStatus == .granted {
             successBlock?()
@@ -121,7 +175,7 @@ class PermissionsController: NSObject {
         }
     }
     
-    func checkPermissionAccessForLocation(_ successBlock: @escaping PermissionVoidBlock, _ failureBlock: @escaping PermissionVoidBlock, _ deniedBlock: @escaping PermissionVoidBlock) {
+    func checkPermissionAccessForLocation(successBlock: @escaping PermissionVoidBlock, failureBlock: @escaping PermissionVoidBlock, deniedBlock: @escaping PermissionVoidBlock) {
         
         if CLLocationManager.locationServicesEnabled() {
             self.copySuccesBlock = successBlock
@@ -140,7 +194,7 @@ class PermissionsController: NSObject {
 }
 
 extension PermissionsController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    func locationManager(manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch (status) {
         case .authorizedAlways:
             manager.stopUpdatingLocation()
@@ -164,7 +218,7 @@ extension PermissionsController: CLLocationManagerDelegate {
             break
         }
     }
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: Error) {
         print("locationManager delegate didFailed")
     }
     

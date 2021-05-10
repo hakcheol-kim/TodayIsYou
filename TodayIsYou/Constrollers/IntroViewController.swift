@@ -12,29 +12,34 @@ class IntroViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        #if DEBUG
         //1. 앱캐쉬에 저장되있닌지 찾는다.
 //        c4f3f037ff94f95fe144fc9aed76f0b6
         ShareData.ins.dfsSet("c4f3f037ff94f95fe144fc9aed76f0b6", DfsKey.userId)
-//        KeychainItem.deleteUserIdentifierFromKeychain()
-//        ShareData.ins.dfsSetValue(nil, forKey: DfsKey.userId)
+//            KeychainItem.deleteUserIdentifierFromKeychain()
+//            ShareData.ins.dfsRemove(DfsKey.userId)
+        #endif
         if let userId = ShareData.ins.dfsGet(DfsKey.userId) as? String, userId.length > 0 {
             //유저 아이디 disk 저장되있는것을 메모리에 올린다.
             ShareData.ins.myId = userId
             self.requestUserInfo()
         }
         else {
-            //2. 키체인 영역에 저장된 키가 있는지 찾는다. 있다면, userid 생성해서 저장하고 로그인한다.
+            //2. 키체인 영역에 저장된 전화번호 꺼내와 userid 만들어 회원인지 찔러 본다.
+            //3. 회원이면 메인, 아니면 로그인 뷰 보냄
             let userIdentifier = KeychainItem.currentUserIdentifier
-            if (userIdentifier.isEmpty == false) {
-                let arrInfo = userIdentifier.components(separatedBy: "|")
-//                let joinType = arrInfo.first!
-                let id = arrInfo.last!
-                let userId = Utility.createUserId(id)
+            if userIdentifier.isEmpty == false {
+                let userId = Utility.createUserId(userIdentifier)
                 ShareData.ins.myId = userId
                 self.requestUserInfo()
             }
             else {
-                AppDelegate.ins.callJoinTermVc()
+                if let checkPermission = ShareData.ins.dfsGet(DfsKey.checkPermission) as? Bool, checkPermission == true {
+                    AppDelegate.ins.callLoginVC()
+                }
+                else {
+                    AppDelegate.ins.callPermissioVc()
+                }
             }
         }
     }

@@ -126,7 +126,7 @@ class SettingViewController: BaseViewController {
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnPoint {
-            let vc = PointChargeViewController.instantiateFromStoryboard(.main)!
+            let vc = PointPurchaseViewController.instantiateFromStoryboard(.main)!
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnExchange {

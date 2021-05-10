@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 let baseUrl = "http://211.233.15.31:8080"
-let soketUrl = "http://211.233.15.31:8081/"
+let soketUrl = "http://211.233.15.31:8081"
 let rootPath = "api"
 let cyberUrl = "https://www.cyber1388.kr:447"
 
@@ -39,7 +39,7 @@ let TagCallingView = 1000001
 let IsShowTutorial = "IsShowTutorial"
 let kPushSetting = "PushSetting"
 let PUSH_DATA = "PUSH_DATA"
-
+let AUTH_TIMEOUT_MIN: Double = 3
 struct DfsKey {
     static let joinType = "joinType"
     static let identifier = "identifier"
@@ -82,6 +82,7 @@ struct DfsKey {
     static let userBbsPoint = "user_bbs_point"
 
     static let pushData = "pushData"
+    static let checkPermission = "checkPermission"
 }
 
 enum SortedType: String {
@@ -125,12 +126,12 @@ enum Gender: String {
         }
     }
     
-    func avatar() -> String {
+    func avatar() -> UIImage? {
         if self == .mail {
-            return "icon_man"
+            return UIImage(named: "icon_man")
         }
         else {
-            return "icon_female"
+            return UIImage(named: "icon_female")
         }
     }
     

@@ -9,7 +9,7 @@ import UIKit
 import UIImageViewAlignedSwift
 import SwiftyJSON
 
-class MessageTblCell: UITableViewCell {
+class ChattingCell: UITableViewCell {
     @IBOutlet weak var ivProfile: UIImageViewAligned!
     @IBOutlet weak var lbTitle: UILabel!
     @IBOutlet weak var lbSubTitle: UILabel!
@@ -59,10 +59,10 @@ class MessageTblCell: UITableViewCell {
 
         
         if Gender.mail.rawValue == (user_sex as? String) {
-            ivProfile.image = UIImage(named: Gender.mail.avatar())
+            ivProfile.image = Gender.mail.avatar()
         }
         else {
-            ivProfile.image = UIImage(named: Gender.femail.avatar())
+            ivProfile.image = Gender.femail.avatar()
         }
         if let imgUrl = Utility.thumbnailUrl(user_id, talk_img) {
             ivProfile.setImageCache(imgUrl)

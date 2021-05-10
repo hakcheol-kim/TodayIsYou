@@ -61,10 +61,10 @@ class TalkTblCell: UITableViewCell {
 //        let seq = data["seq"].intValue //: 5931
 
         if Gender.mail.rawValue == user_sex {
-            ivProfile.image = UIImage(named: Gender.mail.avatar())
+            ivProfile.image =  Gender.mail.avatar()
         }
         else {
-            ivProfile.image = UIImage(named: Gender.femail.avatar())
+            ivProfile.image = Gender.femail.avatar()
         }
         ivProfile.accessibilityValue = nil
         if let imgUrl = Utility.thumbnailUrl(user_id, talk_img) {

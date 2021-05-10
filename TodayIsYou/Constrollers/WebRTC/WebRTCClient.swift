@@ -12,6 +12,8 @@ protocol WebRTCClientDelegate: AnyObject {
     func webRTCClient(_ client: WebRTCClient, didReceiveData data: Data)
     func webRTCClient(_ client: WebRTCClient, didAdd stream: RTCMediaStream)
     func webRTCClient(_ client: WebRTCClient, didRemove stream: RTCMediaStream)
+    
+    func webRTCClient(_ client: WebRTCClient, didReceiveLocalVideoTrack videoTrack: RTCVideoTrack)
 }
 
 final class WebRTCClient: NSObject {
@@ -187,7 +189,7 @@ final class WebRTCClient: NSObject {
         return audioTrack
     }
     
-    private func createVideoTrack() -> RTCVideoTrack {
+    private func createVideoTrack(_ isFront:Bool = true) -> RTCVideoTrack {
         let videoSource = WebRTCClient.factory.videoSource()
         
         #if TARGET_OS_SIMULATOR
@@ -195,8 +197,13 @@ final class WebRTCClient: NSObject {
         #else
         self.videoCapturer = RTCCameraVideoCapturer(delegate: videoSource)
         #endif
-        
-        let videoTrack = WebRTCClient.factory.videoTrack(with: videoSource, trackId: "video0")
+        var videoTrack:RTCVideoTrack!
+        if isFront {
+            videoTrack = WebRTCClient.factory.videoTrack(with: videoSource, trackId: "video0")
+        }
+        else {
+            videoTrack = WebRTCClient.factory.videoTrack(with: videoSource, trackId: "video")
+        }
         return videoTrack
     }
     
@@ -264,11 +271,11 @@ extension WebRTCClient: RTCPeerConnectionDelegate {
 // MARK:- Audio control
 extension WebRTCClient {
     func muteAudio() {
-        self.setAudioEnabled(false)
+        self.setAudioMuted(true)
     }
-    
     func unmuteAudio() {
-        self.setAudioEnabled(true)
+        self.setAudioMuted(false)
+        
     }
     
     // Fallback to the default playing device: headphones/bluetooth/ear speaker
@@ -304,9 +311,31 @@ extension WebRTCClient {
         }
     }
     
-    private func setAudioEnabled(_ isEnabled: Bool) {
+    private func setAudioMuted(_ isMuted: Bool) {
         let audioTracks = self.peerConnection.transceivers.compactMap { return $0.sender.track as? RTCAudioTrack }
-        audioTracks.forEach { $0.isEnabled = isEnabled }
+        audioTracks.forEach { $0.isEnabled = isMuted }
+    }
+    
+    func swapCameraToFront() {
+        guard let localStream = peerConnection.localStreams.first else { return }
+        localStream.removeVideoTrack(localStream.videoTracks.first!)
+        
+        let localVideoTrack: RTCVideoTrack = createVideoTrack(true)
+        localStream.addVideoTrack(localVideoTrack)
+        delegate?.webRTCClient(self, didReceiveLocalVideoTrack: localVideoTrack)
+        peerConnection.remove(localStream)
+        peerConnection.add(localStream)
+    }
+
+    func swapCameraToBack() {
+        guard let localStream = peerConnection.localStreams.first else { return }
+        localStream.removeVideoTrack(localStream.videoTracks.first!)
+        
+        let localVideoTrack: RTCVideoTrack = createVideoTrack(false)
+        localStream.addVideoTrack(localVideoTrack)
+        delegate?.webRTCClient(self, didReceiveLocalVideoTrack: localVideoTrack)
+        peerConnection.remove(localStream)
+        peerConnection.add(localStream)
     }
 }
 

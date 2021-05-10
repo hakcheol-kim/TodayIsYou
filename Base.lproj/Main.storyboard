@@ -467,15 +467,15 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="7N2-X8-gcy">
                                                     <rect key="frame" x="0.0" y="0.0" width="375" height="36.666666666666664"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="900" verticalHuggingPriority="900" image="person" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="4Zm-UZ-Bl2" customClass="UIImageViewAligned" customModule="UIImageViewAlignedSwift">
-                                                            <rect key="frame" x="16" y="9.6666666666666643" width="18.666666666666671" height="18"/>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="900" verticalHuggingPriority="900" image="square.and.arrow.up" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="4Zm-UZ-Bl2" customClass="UIImageViewAligned" customModule="UIImageViewAlignedSwift">
+                                                            <rect key="frame" x="16" y="7" width="19" height="21.333333333333336"/>
                                                             <color key="tintColor" red="0.90196078430000004" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="boolean" keyPath="alignLeft" value="YES"/>
                                                             </userDefinedRuntimeAttributes>
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BXF-9C-v3G">
-                                                            <rect key="frame" x="42.666666666666657" y="8.0000000000000018" width="316.33333333333337" height="20.666666666666671"/>
+                                                            <rect key="frame" x="43" y="8.0000000000000018" width="316" height="20.666666666666671"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -831,10 +831,10 @@
             </objects>
             <point key="canvasLocation" x="3004" y="-196"/>
         </scene>
-        <!--Message List View Controller-->
+        <!--Chatting List View Controller-->
         <scene sceneID="Gsa-qX-H2w">
             <objects>
-                <viewController storyboardIdentifier="MessageListViewController" id="Yiu-0E-Jxq" customClass="MessageListViewController" customModule="TodayIsYou" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChattingListViewController" id="Yiu-0E-Jxq" customClass="ChattingListViewController" customModule="TodayIsYou" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="C4K-8A-vRq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1420,10 +1420,10 @@
             </objects>
             <point key="canvasLocation" x="5248.8000000000002" y="-996.05911330049264"/>
         </scene>
-        <!--Point Charge View Controller-->
+        <!--Point Purchase View Controller-->
         <scene sceneID="ZZL-k0-WCj">
             <objects>
-                <viewController storyboardIdentifier="PointChargeViewController" id="eh7-lv-tta" customClass="PointChargeViewController" customModule="TodayIsYou" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PointPurchaseViewController" id="eh7-lv-tta" customClass="PointPurchaseViewController" customModule="TodayIsYou" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Q1J-3C-JMg">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1635,14 +1635,14 @@
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="103" contentMode="scaleAspectFit" horizontalHuggingPriority="900" verticalHuggingPriority="900" image="crown" translatesAutoresizingMaskIntoConstraints="NO" id="OGe-rD-d4c">
                                                                         <rect key="frame" x="16" y="14" width="24" height="24"/>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="253" text="50,0000 P + 2000 P" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfK-hf-Etf">
-                                                                        <rect key="frame" x="48" y="17" width="147.33333333333334" height="18"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="253" text="50,000 P + 2,000 P" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hfK-hf-Etf">
+                                                                        <rect key="frame" x="48" y="17" width="141.33333333333334" height="18"/>
                                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                                         <color key="textColor" red="0.90196078430000004" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="110,000원" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MAP-J9-VWV">
-                                                                        <rect key="frame" x="203.33333333333334" y="17" width="107.66666666666666" height="18"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="109,000원" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MAP-J9-VWV">
+                                                                        <rect key="frame" x="197.33333333333334" y="17" width="113.66666666666666" height="18"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -1680,14 +1680,14 @@
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="103" contentMode="scaleAspectFit" horizontalHuggingPriority="900" verticalHuggingPriority="900" image="crown" translatesAutoresizingMaskIntoConstraints="NO" id="3Kn-dC-SB4">
                                                                         <rect key="frame" x="16" y="14" width="24" height="24"/>
                                                                     </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="253" text="100,0000 P + 5,000 P" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVk-vK-HPe">
-                                                                        <rect key="frame" x="48" y="17" width="159" height="18"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="253" text="100,000 P + 5,000 P" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVk-vK-HPe">
+                                                                        <rect key="frame" x="48" y="17" width="149" height="18"/>
                                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                                         <color key="textColor" red="0.90196078430000004" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="220,000원" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vyd-Kq-CmN">
-                                                                        <rect key="frame" x="215" y="17" width="96" height="18"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="219,000원" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vyd-Kq-CmN">
+                                                                        <rect key="frame" x="205" y="17" width="106" height="18"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
@@ -1777,6 +1777,7 @@
                     <navigationItem key="navigationItem" id="vig-n0-YHI"/>
                     <connections>
                         <outlet property="btnContactus" destination="Sk9-xn-Fyf" id="pUR-4Z-eSh"/>
+                        <outlet property="lbCurPoint" destination="kJZ-pA-PhZ" id="Xgc-T0-brl"/>
                         <outletCollection property="arrBtnPoint" destination="ayA-EA-POd" collectionClass="NSMutableArray" id="dHw-3E-5Zj"/>
                         <outletCollection property="arrBtnPoint" destination="Qol-jj-ekM" collectionClass="NSMutableArray" id="EQE-0T-9ew"/>
                         <outletCollection property="arrBtnPoint" destination="3lH-oi-qUx" collectionClass="NSMutableArray" id="gvS-Jl-t4O"/>
@@ -3956,7 +3957,7 @@
         <!--Side Menu Navigation Controller-->
         <scene sceneID="PWA-vn-d1b">
             <objects>
-                <navigationController storyboardIdentifier="LeftMenuNavigationController" navigationBarHidden="YES" id="auc-zT-7oS" customClass="SideMenuNavigationController" customModule="SideMenu" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="LeftMenuNavigationController" navigationBarHidden="YES" toolbarHidden="NO" id="auc-zT-7oS" customClass="SideMenuNavigationController" customModule="SideMenu" sceneMemberID="viewController">
                     <toolbarItems/>
                     <nil key="simulatedTopBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tiE-bu-xaf">
@@ -3965,6 +3966,11 @@
                     <nil name="viewControllers"/>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="boolean" keyPath="leftSide" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="enableTapToDismissGesture" value="YES"/>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="enableSwipeToDismissGesture" value="NO"/>
+                        <userDefinedRuntimeAttribute type="number" keyPath="menuWidth">
+                            <real key="value" value="200"/>
+                        </userDefinedRuntimeAttribute>
                     </userDefinedRuntimeAttributes>
                     <connections>
                         <segue destination="tzn-Mp-eEr" kind="relationship" relationship="rootViewController" id="BW1-w6-P8u"/>
@@ -5244,7 +5250,7 @@
             <size key="intrinsicContentSize" width="129" height="18.666666666666668"/>
         </designable>
         <designable name="4Zm-UZ-Bl2">
-            <size key="intrinsicContentSize" width="18.666666666666668" height="20.333333333333336"/>
+            <size key="intrinsicContentSize" width="19" height="20.333333333333332"/>
         </designable>
         <designable name="5rv-wC-09L">
             <size key="intrinsicContentSize" width="36.333333333333336" height="18.666666666666668"/>
@@ -5321,7 +5327,6 @@
         <image name="my_video" width="24" height="24"/>
         <image name="notice" width="32" height="32"/>
         <image name="paperplane.fill" catalog="system" width="128" height="118"/>
-        <image name="person" catalog="system" width="128" height="117"/>
         <image name="person.fill" catalog="system" width="128" height="120"/>
         <image name="person.fill.xmark.rtl" catalog="system" width="128" height="88"/>
         <image name="photo" catalog="system" width="128" height="93"/>
@@ -5335,6 +5340,7 @@
         <image name="ranking" width="24" height="24"/>
         <image name="speed_36" width="36" height="36"/>
         <image name="square" catalog="system" width="128" height="114"/>
+        <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <image name="squareshape" catalog="system" width="128" height="114"/>
         <image name="text.book.closed" catalog="system" width="115" height="128"/>
         <image name="video.fill" catalog="system" width="128" height="82"/>

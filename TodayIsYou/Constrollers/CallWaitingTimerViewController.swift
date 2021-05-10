@@ -13,20 +13,35 @@ class CallWaitingTimerViewController: BaseViewController {
     @IBOutlet weak var lbDownCount: UILabel!
     @IBOutlet weak var lbMsg: UILabel!
     @IBOutlet weak var btnCancel: UIButton!
+    @IBOutlet weak var lbSubMsg: UILabel!
     
+    var type:PushType = .cam
     var timer:Timer?
     var endTime:TimeInterval = 0
     var completion:(()->Void)?
-    
+    var message: String?
     static func instantiateFromStoryboard(_ completion:(() -> Void)?) ->CallWaitingTimerViewController {
         let vc = CallWaitingTimerViewController.instantiateFromStoryboard(.call)!
         vc.completion = completion
+        
         return vc
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.startTimer()
+        if type == .cam {
+            btnIcon.setImage(UIImage(systemName: "video.slash.fill"), for: .normal)
+        }
+        else if type == .phone {
+            btnIcon.setImage(UIImage(systemName: "phone.fill"), for: .normal)
+        }
+        lbSubMsg.isHidden = true
+        if let message = message {
+            lbSubMsg.isHidden = false
+            lbSubMsg.text = message
+        }
+        btnIcon.imageView?.contentMode = .scaleAspectFit
     }
     
     override func viewWillAppear(_ animated: Bool) {

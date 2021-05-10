@@ -94,6 +94,7 @@ PODS:
   - Socket.IO-Client-Swift (15.2.0):
     - Starscream (~> 3.1)
   - Starscream (3.1.1)
+  - SwiftyGif (5.4.0)
   - SwiftyJSON (4.3.0)
   - UIImageViewAlignedSwift (0.8.1)
 
@@ -112,6 +113,7 @@ DEPENDENCIES:
   - PanModal
   - SideMenu (~> 6.0)
   - Socket.IO-Client-Swift (~> 15.2.0)
+  - SwiftyGif
   - SwiftyJSON (~> 4.0)
   - UIImageViewAlignedSwift
 
@@ -144,6 +146,7 @@ SPEC REPOS:
     - SideMenu
     - Socket.IO-Client-Swift
     - Starscream
+    - SwiftyGif
     - SwiftyJSON
     - UIImageViewAlignedSwift
 
@@ -175,9 +178,10 @@ SPEC CHECKSUMS:
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
   Socket.IO-Client-Swift: 1e3e3a1f09f3312a167f0d781eb2f383d477357c
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
+  SwiftyGif: 5d4af95df24caf1c570dbbcb32a3b8a0763bc6d7
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   UIImageViewAlignedSwift: e4f83530f90860aa31b6840bf570034a681bd2c4
 
-PODFILE CHECKSUM: 8911904c4fea4332ef96383bec18432960211635
+PODFILE CHECKSUM: 8010dc6d9e16bed332c1a25d2548ac23ffeee5e7
 
 COCOAPODS: 1.10.1

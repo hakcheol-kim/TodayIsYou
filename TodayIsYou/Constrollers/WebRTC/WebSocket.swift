@@ -19,14 +19,16 @@ class WebSocket: NSObject, WebSocketProvider {
         self.url = url
         
         super.init()
-        
+        // ssl 인증하려면 secure을 true로 설정하고 서버
+        //ssl 인증서를 받아 리소스에 포함시키고 URLSessionDelegate 구현해줘야 함
+        //이놈 때문에 1일 꼬박 날림 ㅠㅠㅠ
         manager = SocketManager.init(
             socketURL: self.url,
             config: [
                 .log(true),
                 .reconnects(false),
                 .forceWebsockets(true),
-                .secure(true),
+                .secure(false),
                 .sessionDelegate(self)
         ])
         socket = manager.defaultSocket
@@ -71,7 +73,7 @@ extension WebSocket: URLSessionDelegate {
         
         // Interpret the data in the P12 data blob with
         // a little helper class called `PKCS12`.
-        let password = "todayisyou123#" // Obviously this should be stored or entered more securely.
+        let password = "todayisyou123!" // Obviously this should be stored or entered more securely.
         let p12Contents = PKCS12(pkcs12Data: p12Data, password: password)
         guard let identity = p12Contents.identity else {
             // Creating a PKCS12 never fails, but interpretting th contained data can. So again, no identity? We fall back to default.
@@ -85,6 +87,9 @@ extension WebSocket: URLSessionDelegate {
         let credential = URLCredential(identity: identity, certificates: nil, persistence: .none)
         challenge.sender?.use(credential, for: challenge)
         completionHandler(.useCredential, credential)
+    }
+    func urlSession(_ session: URLSession, didBecomeInvalidWithError error: Error?) {
+        print("error : \(error)")
     }
 }
 

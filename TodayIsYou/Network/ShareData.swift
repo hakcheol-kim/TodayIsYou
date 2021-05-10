@@ -13,7 +13,7 @@ class ShareData: NSObject {
     var myId: String = ""
     var mySex: Gender = .mail
     var myName:String = ""
-    var userPoint: NSNumber? = nil
+    var myPoint: NSNumber? = nil
     
     func dfsSet(_ value: Any?, _ key: String?) {
         guard let key = key, let value = value  else {
@@ -22,7 +22,7 @@ class ShareData: NSObject {
         UserDefaults.standard.setValue(value, forKey: key)
         UserDefaults.standard.synchronize()
         if key == DfsKey.userPoint {
-            userPoint = value as? NSNumber
+            myPoint = value as? NSNumber
         }
     }
     func dfsGet(_ key: String) -> Any? {
@@ -68,7 +68,7 @@ class ShareData: NSObject {
         dfs.setValue(inapp_cnt, forKey: DfsKey.inappCnt)
         
         self.myId = user_id
-        self.userPoint = user_point
+        self.myPoint = user_point
         self.myName = user_name
         
         if user_sex == "남" {

@@ -158,12 +158,6 @@ class MyFrendsListViewController: MainActionViewController {
         
     }
     
-    override func actionAlertPhoneCall() {
-        
-    }
-    override func actionAlertCamTalkCall() {
-        
-    }
     override func actionBlockAlert() {
         let user_name = self.selUser["user_name"].stringValue
         let user_id = self.selUser["user_id"].stringValue

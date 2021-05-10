@@ -51,14 +51,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         callIntroViewCtrl()
-        
-//        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1) {
-//            let vc = CallConnentionViewController.instantiateFromStoryboard(.call)!
-//            vc.modalPresentationStyle = .fullScreen
-////            vc.data = data
-//            self.window?.rootViewController!.present(vc, animated: true, completion: nil)
-//            vc.btnPhoneCall.isAnimated = true
-//        }
+
         return true
     }
  
@@ -70,6 +63,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func callIntroViewCtrl() {
         let vc = IntroViewController.instantiateFromStoryboard(.login)!
         window?.rootViewController = vc
+        window?.makeKeyAndVisible()
+    }
+    func callPermissioVc() {
+        let vc = AppPermissionViewCtroller.instantiateFromStoryboard(.login)!
+        window?.rootViewController = vc
+        window?.makeKeyAndVisible()
+    }
+    func callLoginVC() {
+        let vc = LoginViewController.instantiateFromStoryboard(.login)!
+        window?.rootViewController = BaseNavigationController.init(rootViewController: vc)
         window?.makeKeyAndVisible()
     }
     func callJoinTermVc() {
@@ -113,16 +116,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func startIndicator() {
         DispatchQueue.main.async(execute: {
-            if self.loadingView == nil {
-                self.loadingView = UIView(frame: UIScreen.main.bounds)
+            if let loadingView = AppDelegate.ins.window!.viewWithTag(215000) {
+                loadingView.removeFromSuperview()
             }
-            self.window!.addSubview(self.loadingView!)
-            self.loadingView?.tag = 100000
-            self.loadingView?.startAnimation(raduis: 25.0)
             
+            self.loadingView = UIView(frame: UIScreen.main.bounds)
+            self.window!.addSubview(self.loadingView!)
+            self.loadingView?.tag = 215000
+            self.loadingView?.backgroundColor = RGBA(0, 0, 0, 0.2)
+            let ivLoading = UIImageView.init()
+            self.loadingView?.addSubview(ivLoading)
+            ivLoading.translatesAutoresizingMaskIntoConstraints = false
+            
+            ivLoading.centerXAnchor.constraint(equalTo: self.loadingView!.centerXAnchor).isActive = true
+            ivLoading.centerYAnchor.constraint(equalTo: self.loadingView!.centerYAnchor).isActive = true
+            ivLoading.heightAnchor.constraint(equalToConstant: 50).isActive = true
+            ivLoading.widthAnchor.constraint(equalToConstant: 50).isActive = true
+            do {
+                let gif = try UIImage(gifName: "color_512.gif")
+                ivLoading.setGifImage(gif)
+            }
+            catch {
+                
+            }
             //혹시라라도 indicator 계속 돌고 있으면 강제로 제거 해준다. 10초후에
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+60) {
-                if let loadingView = AppDelegate.ins.window!.viewWithTag(100000) {
+                if let loadingView = AppDelegate.ins.window!.viewWithTag(215000) {
                     loadingView.removeFromSuperview()
                 }
             }
@@ -132,7 +151,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func stopIndicator() {
         DispatchQueue.main.async(execute: {
             if self.loadingView != nil {
-                self.loadingView!.stopAnimation()
+//                self.loadingView!.stopAnimation()
                 self.loadingView?.removeFromSuperview()
             }
         })
@@ -226,10 +245,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             else if action == 101 { //수락
                 self.removeCallingView()
+                let user_name = data["user_name"].stringValue
+                let room_key = data["room_key"].stringValue
+                let from_user_id = data["from_user_id"].stringValue
+                
+                let vc = CamCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
+                self.mainNavigationCtrl.pushViewController(vc, animated: true)
             }
             else if action == 200 { //터치시 확장
-                self.removeCallingView()
                 if type == .rdCam {
+                    self.removeCallingView()
                     let vc = CallConnentionViewController.instantiateFromStoryboard(.call)!
                     vc.modalPresentationStyle = .fullScreen
                     vc.data = data
@@ -398,7 +423,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         else if type == .rdSend {
-//            message={"msg_cmd":"RDSEND","msg":"","from_user_name":"산딸기먹자","from_user_gender":"남","from_user_age":"50대","to_user_id":"a52fd10c131f149663a64ab074d5b44b","to_user_name":"오늘의주인공은나야","room_key":"CAM_202104271543516_4","from_user_id":"dfb72903a01f6de393cf4130a2b76638"}}
             guard let notiYn = ShareData.ins.dfsGet(DfsKey.notiYn) as? String, notiYn != "N" else {
                 return
             }
@@ -421,7 +445,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.showCallingView(type, info)
         }
         else if type == .rdCam {
-            
+            guard let notiYn = ShareData.ins.dfsGet(DfsKey.notiYn) as? String, notiYn != "N" else {
+                return
+            }
+            NotificationCenter.default.post(name:Notification.Name(PUSH_DATA), object: type, userInfo: info.dictionaryObject)
         }
         else if type == .notice {
             guard let notiYn = ShareData.ins.dfsGet(DfsKey.notiYn) as? String, notiYn != "N" else {
@@ -447,6 +474,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func showScoreAlert(toUserId:String, toUserName:String?) {
+        let scoreView = Bundle.main.loadNibNamed("ScoreView", owner: nil, options: nil)?.first as! ScoreView
+        let vc = CAlertViewController.init(type: .custom, title:toUserName, message: nil,  actions: [.cancel, .ok]) { vcs, selItem, action in
+            vcs.dismiss(animated: true, completion: nil)
+            let score = scoreView.ratingView.rating
+            if action == 1 && score > 0 {
+                var param = [String:Any]()
+                param["user_id"] = ShareData.ins.myId
+                param["to_user_id"] = toUserId
+                param["to_user_score"] = score
+                self.requestScore(param)
+            }
+        }
+        vc.iconImg = UIImage(systemName: "hand.thumbsup.fill")
+        vc.addCustomView(scoreView)
+        self.window?.rootViewController?.present(vc, animated: true, completion: nil)
+        vc.btnFullClose.isUserInteractionEnabled = false
+    }
+    
+    func requestScore(_ param:[String:Any]) {
+        ApiManager.ins.requestGiveScore(param: param) { res in
+            let isSuccess = res["isSuccess"].stringValue
+            if isSuccess == "01" {
+                AppDelegate.ins.window?.makeToast("매너 점수 등록되었습니다.")
+            }
+            else {
+                print("give score error")
+            }
+        } fail: { error in
+            print("give score error")
+        }
+    }
+
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {

@@ -39,7 +39,8 @@ class LeftSideMenuViewController: UIViewController {
                                       ["title": "공지사항", "imgName": "bell"],
                                       ["title": "찜 목록", "imgName": "hand.tap"],
                                       ["title": "차단 목록", "imgName": "xmark.circle"],
-                                      ["title": "사용자 접속목록", "imgName": "person"]]
+                                      ["title": "사용자 접속목록", "imgName": "person"],
+                                      ["title": "로그아웃", "imgName": "arrow.backward.square"]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,8 +66,7 @@ class LeftSideMenuViewController: UIViewController {
         }
         
         
-        
-        let pPoint: String = "\(ShareData.ins.userPoint?.intValue ?? 0)".addComma()+"P"
+        let pPoint: String = "\(ShareData.ins.myPoint?.intValue ?? 0)".addComma()+"P"
         let sp = ShareData.ins.dfsGet(DfsKey.userR) as? NSNumber
         
         var sPoint = "0S"
@@ -111,10 +111,11 @@ extension LeftSideMenuViewController: UITableViewDelegate, UITableViewDataSource
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        
         self.dismiss(animated: true) {
             switch indexPath.row {
             case 0:
-                let vc = PointChargeViewController.instantiateFromStoryboard(.main)!
+                let vc = PointPurchaseViewController.instantiateFromStoryboard(.main)!
                 AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
                 break
             case 1:
@@ -132,6 +133,17 @@ extension LeftSideMenuViewController: UITableViewDelegate, UITableViewDataSource
             case 4:
                 let vc = ConnectUserListViewController.instantiateFromStoryboard(.main)!
                 AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+                break
+            case 5:
+                CAlertViewController.show(type: .alert, title: "로그아웃", message: "로그아웃 하시겠습니까?", actions: [.cancel, .ok]) { (vcs, selItem, action) in
+                    vcs.dismiss(animated: true, completion: nil)
+                    
+                    if action == 1 {
+                        ShareData.ins.dfsRemove(DfsKey.userId)
+                        KeychainItem.deleteUserIdentifierFromKeychain()
+                        AppDelegate.ins.callLoginVC()
+                    }
+                }
                 break
             default:
                 break

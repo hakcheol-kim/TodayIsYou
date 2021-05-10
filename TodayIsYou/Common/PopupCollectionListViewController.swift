@@ -85,7 +85,9 @@ class PopupCollectionListViewController: BaseViewController {
         }
         self.panModalSetNeedsLayoutUpdate()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
     @objc func onClickedBtnActions(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }

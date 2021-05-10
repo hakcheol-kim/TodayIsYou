@@ -1,5 +1,4 @@
-NSCameraUsageDescription = "프로파일 이미지를 추가, 변경 하기 위해 필요합니다." ;
-NSPhotoLibraryUsageDescription = "프로파일 이미지를 추가, 변경 하기 위해 필요합니다." ;
-NSContactsUsageDescription = "연락처 정보를 가져오기 위해 필요합니다." ;
-NSMicrophoneUsageDescription = "음성 통화를 위해 필요합니다." ;
-NSSpeechRecognitionUsageDescription = "음성 통화를 위해 필요합니다." ;
+NSCameraUsageDescription = "영상통화, 프로파일 추가, 변경을 위해 카메라 접근 권한이 필요합니다." ;
+NSPhotoLibraryUsageDescription = "프로파일 추가, 변경, 채팅 시 이미지 전달을 위해 필요합니다." ;
+NSMicrophoneUsageDescription = "영상채팅 중 당신의 목소리를 상대방에게 전달하기 위하여 마이크에 접근 권한이 필요합니다." ;
+NSSpeechRecognitionUsageDescription = "영상채팅 중 당신의 목소리를 상대방에게 전달하기 위하여 마이크에 접근 권한이 필요합니다." ;

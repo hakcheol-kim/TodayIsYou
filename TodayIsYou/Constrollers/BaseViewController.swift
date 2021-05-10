@@ -15,7 +15,7 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        return .default
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -106,36 +106,41 @@ class BaseViewController: UIViewController {
     }
     //키보드 노티 피케이션 핸들러
     @objc func notificationHandler(_ notification: NSNotification) {
-        let heightKeyboard = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as AnyObject).cgRectValue.size.height
-        let duration = CGFloat((notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.floatValue ?? 0.0)
         
-        let bottomConstraint = self.findBottomConstraint(self.view)
-        
-        
-        guard let bottomCon = bottomConstraint, let conId = bottomCon.identifier else {
-            return
-        }
-        
-        var heightBtn:Float = 0.0
-        let strH = conId.replacingOccurrences(of: "bottom_", with: "", options: [.caseInsensitive, .regularExpression])
-        heightBtn = Float(strH) ?? 0.0
-        
-        if notification.name == UIResponder.keyboardWillShowNotification {
-            var tabBarHeight:CGFloat = 0.0
-            if self.navigationController?.tabBarController?.tabBar.isHidden == false {
-                tabBarHeight = self.navigationController?.toolbar.bounds.height ?? 0.0
+        if notification.name == UIResponder.keyboardWillShowNotification
+            || notification.name == UIResponder.keyboardWillHideNotification {
+            
+            let heightKeyboard = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as AnyObject).cgRectValue.size.height
+            let duration = CGFloat((notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber)?.floatValue ?? 0.0)
+            
+            let bottomConstraint = self.findBottomConstraint(self.view)
+            
+            
+            guard let bottomCon = bottomConstraint, let conId = bottomCon.identifier else {
+                return
             }
             
-            let safeBottom:CGFloat = AppDelegate.ins.window?.safeAreaInsets.bottom ?? 0
-            bottomCon.constant = heightKeyboard - safeBottom - tabBarHeight - CGFloat(heightBtn)
-            UIView.animate(withDuration: TimeInterval(duration), animations: { [self] in
-                self.view.layoutIfNeeded()
-            })
-        }
-        else if notification.name == UIResponder.keyboardWillHideNotification {
-            bottomCon.constant = 0
-            UIView.animate(withDuration: TimeInterval(duration)) {
-                self.view.layoutIfNeeded()
+            var heightBtn:Float = 0.0
+            let strH = conId.replacingOccurrences(of: "bottom_", with: "", options: [.caseInsensitive, .regularExpression])
+            heightBtn = Float(strH) ?? 0.0
+            
+            if notification.name == UIResponder.keyboardWillShowNotification {
+                var tabBarHeight:CGFloat = 0.0
+                if self.navigationController?.tabBarController?.tabBar.isHidden == false {
+                    tabBarHeight = self.navigationController?.toolbar.bounds.height ?? 0.0
+                }
+                
+                let safeBottom:CGFloat = AppDelegate.ins.window?.safeAreaInsets.bottom ?? 0
+                bottomCon.constant = heightKeyboard - safeBottom - tabBarHeight - CGFloat(heightBtn)
+                UIView.animate(withDuration: TimeInterval(duration), animations: { [self] in
+                    self.view.layoutIfNeeded()
+                })
+            }
+            else if notification.name == UIResponder.keyboardWillHideNotification {
+                bottomCon.constant = 0
+                UIView.animate(withDuration: TimeInterval(duration)) {
+                    self.view.layoutIfNeeded()
+                }
             }
         }
     }

@@ -32,7 +32,7 @@ class NetworkManager: NSObject {
         return "\(baseUrl)\(url)"
     }
     
-    func request(_ method: HTTPMethod, _ url: String, _ param:[String:Any]?, _ encoding:ParameterEncoding = JSONEncoding.default, success:ResSuccess?, failure:ResFailure?) {
+    func request(_ method: HTTPMethod, _ url: String, _ param:[String:Any]?, _ encoding:ParameterEncoding = JSONEncoding.default, _ isStartIndicator:Bool = true,  success:ResSuccess?, failure:ResFailure?) {
         
         var fullUrl = ""
         if (url.hasPrefix("http") || url.hasPrefix("https")) {
@@ -45,8 +45,9 @@ class NetworkManager: NSObject {
         guard let encodedUrl = fullUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             return
         }
-        
-        AppDelegate.ins.startIndicator()
+        if isStartIndicator {
+            AppDelegate.ins.startIndicator()
+        }
         let header: HTTPHeaders = [.contentType(ContentType.json.rawValue)]
         
         let request = AF.request(encodedUrl, method: method, parameters: param, encoding: encoding, headers: header)
@@ -58,8 +59,9 @@ class NetworkManager: NSObject {
                 }
             }
 //            print("\n======= response ======= \n\(response)")
-            AppDelegate.ins.stopIndicator()
-            
+            if isStartIndicator {
+                AppDelegate.ins.stopIndicator()
+            }
             switch response.result {
             case .success(let value):
                 let json = JSON(value)

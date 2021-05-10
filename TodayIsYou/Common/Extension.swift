@@ -55,19 +55,19 @@ extension UIViewController {
             if message.isEmpty == false {
                 msg.append("\(message)\nerror code : \(code)")
             }
-            
+            print("==== error: \(data)")
             if msg.isEmpty == true {
                 return
             }
             
-            var findView:UIView = self.view
-            for subview in self.view.subviews {
-                if let subview = subview as? UIScrollView {
-                    findView = subview
-                    break
-                }
-            }
-            findView.makeToast(msg)
+//            var findView:UIView = self.view
+//            for subview in self.view.subviews {
+//                if let subview = subview as? UIScrollView {
+//                    findView = subview
+//                    break
+//                }
+//            }
+            AppDelegate.ins.window?.makeToast(msg)
         }
         else if let error = data as? Error, let msg = error.localizedDescription as String? {
             var findView:UIView = self.view
@@ -176,6 +176,15 @@ extension UIView {
             drawHierarchy(in: bounds, afterScreenUpdates: true)
         }
     }
+    
+    func removeConstraints() {
+        let constraints = self.superview?.constraints.filter {
+            $0.firstItem as? UIView == self || $0.secondItem as? UIView == self
+        } ?? []
+        
+        self.superview?.removeConstraints(constraints)
+        self.removeConstraints(self.constraints)
+    }
 }
 
 //FIXME:: UIImageView
@@ -253,7 +262,7 @@ extension UIColor {
 }
 //FIXME:: UIImage
 extension UIImage {
-    class func image(from color: UIColor?) -> UIImage? {
+    class func color(from color: UIColor?) -> UIImage? {
         let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()

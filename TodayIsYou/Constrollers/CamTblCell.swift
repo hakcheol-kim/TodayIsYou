@@ -60,10 +60,10 @@ class CamTblCell: UITableViewCell {
         let view_cnt = data["view_cnt"].stringValue //  = 0;
         
         if Gender.mail.rawValue == user_sex {
-            ivProfile.image = UIImage(named: Gender.mail.avatar())
+            ivProfile.image =  Gender.mail.avatar()
         }
         else {
-            ivProfile.image = UIImage(named: Gender.femail.avatar())
+            ivProfile.image = Gender.femail.avatar()
         }
         ivProfile.accessibilityValue = nil
         if let imgUrl = Utility.thumbnailUrl(user_id, file_name) {

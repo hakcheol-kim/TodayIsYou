@@ -8,25 +8,48 @@
 import UIKit
 import SwiftyJSON
 import WebRTC
-
-class CamCallViewController: BaseViewController {
+class MessageCell: UITableViewCell {
+    @IBOutlet weak var ivProfile: UIImageView!
+    @IBOutlet weak var lbMsg: UILabel!
     
-    @IBOutlet weak var lbTalkTime: UILabel!
+    static let identifier = "MessageCell"
+    
+    override class func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
+}
+class CamCallViewController: BaseViewController {
+    @IBOutlet weak var baseVideoView: UIView!
     @IBOutlet weak var locaVideo: UIView!
     @IBOutlet weak var mainVideo: UIView!
-    @IBOutlet weak var btnSound: CButton!
+    
+    @IBOutlet weak var lbTalkTime: UILabel!
+    @IBOutlet weak var btnSpeaker: CButton!
     @IBOutlet weak var btnCamera: CButton!
+    @IBOutlet weak var btnMsg: CButton!
     @IBOutlet weak var btnGift: CButton!
-    @IBOutlet weak var btnAddUser: CButton!
+    @IBOutlet weak var btnMyFriend: CButton!
     @IBOutlet weak var btnLike: CButton!
     @IBOutlet weak var btnMicroPhone: CButton!
     @IBOutlet weak var lbCost: UILabel!
+    @IBOutlet weak var btnBack: UIButton!
+    @IBOutlet weak var tblView: UITableView!
     
-    
+    var nowPoint:Int = 0
+
+    var listData:[String] = []
     var speakerOn:Bool = true
+    var targetVideoView:UIView?
+    let colorGreen = RGB(195, 255, 91)
+    let colorPurple = RGB(237, 109, 151)
+    let colorTint = UIColor.black
     
     private var watingTimerVc:CallWaitingTimerViewController!
     
+    var baseStartPoint = 0
+    var baseLivePoint = 0
+
     private lazy var signalClient: SignalingClient = {
         var client = SignalingClient(connectionType: connectionType, WebSocket(url: Config.default.signalingServerUrl), to: toUserId, toUserName, roomKey: self.roomKey)
         client.delegate = self
@@ -35,9 +58,7 @@ class CamCallViewController: BaseViewController {
     
     private lazy var webRtcClient: WebRTCClient = {
         var client = WebRTCClient(iceServers: Config.default.webRTCIceServers)
-        if self.speakerOn {
-            client.speakerOn()
-        }
+        client.speakerOn()
         client.delegate = self
         return client
     }()
@@ -46,80 +67,108 @@ class CamCallViewController: BaseViewController {
     private var signalingConnected: Bool = false
     private var hasLocalSdp: Bool = false
     private var localCandidateCount: Int = 0
-    
     private var hasRemoteSdp: Bool = false
     private var remoteCandidateCount: Int = 0
-    private var timer: Timer?
     
-    var tapVideoView:UIView!
+    private var timer: Timer?
     
     var roomKey:String!
     var toUserId:String!
     var toUserName:String!
     var info:JSON?
     var connectionType:ConnectionType = .answer
+    var completion:(() ->Void)?
+    var sPoint = CGPoint.zero
     
     var second: TimeInterval = 0.0 {
         didSet {
             if second == 0.0 {
-                lbTalkTime.text = "--:--"
+                lbTalkTime.text = "00:00:00"
                 return
             }
-            let min = Int(second / 60)
+            
+            var min = Int(second / 60)
+            let hour = Int(min/60)
             let sec = Int(second) % 60
-            lbTalkTime.text = String(format: "%02ld:%02ld", min, sec)
-            let num = NSNumber.init(integerLiteral: Int(second*15))
-            let strMoney = num.toString()
-            if strMoney.isEmpty == false {
-                lbCost.text = "₩\(num.toString())"
-            }
-            else {
-                lbCost.text = ""
-            }
+            min = min % 60
+            
+            lbTalkTime.text = String(format: "%02ld:%02ld:%02ld", hour, min, sec)
+//            let num = NSNumber.init(integerLiteral: Int(second*15))
+//            let strMoney = num.toString()
+//            if strMoney.isEmpty == false {
+//                lbCost.text = "₩\(num.toString())"
+//            }
+//            else {
+//                lbCost.text = ""
+//            }
         }
     }
     
-    static func initWithType(_ type:ConnectionType, _ roomKey:String, toUserId:String, toUserName:String?, info:JSON? = nil) -> CamCallViewController {
+    static func initWithType(_ type:ConnectionType, _ roomKey:String, _ toUserId:String, _ toUserName:String?, _ info:JSON? = nil, _ completion:(() ->Void)? = nil) -> CamCallViewController {
         let vc = CamCallViewController.instantiateFromStoryboard(.call)!
         vc.roomKey = roomKey
         vc.toUserId = toUserId
         vc.toUserName = toUserName
         vc.info = info
         vc.connectionType = type
+        vc.completion = completion
         return vc
     }
     
     //MARK:: life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         second = 0.0
-        self.tapVideoView = locaVideo
+        nowPoint = ShareData.ins.myPoint?.intValue ?? 0
+        lbCost.text = ""
+        if let startPoint = ShareData.ins.dfsGet(DfsKey.camOutStartPoint) as? NSNumber, startPoint.intValue > 0 {
+            baseStartPoint = startPoint.intValue
+        }
+        if let livePoint = ShareData.ins.dfsGet(DfsKey.camOutUserPoint) as? NSNumber, livePoint.intValue > 0 {
+            baseLivePoint = livePoint.intValue
+        }
+
         
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
-        NotificationCenter.default.addObserver(self, selector: #selector(notificationHandler(_:)), name: Notification.Name(PUSH_DATA), object: nil)
-        
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        locaVideo.accessibilityValue = "S"
+        mainVideo.accessibilityValue = "L"
         
         self.signalClient.connect()
         self.configureVideoRenderer()
         if connectionType == .offer {
             self.showWatingTimerVc()
         }
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
-        NotificationCenter.default.removeObserver(self, name: Notification.Name(PUSH_DATA), object: nil)
-        self.stopTimer()
-        removeWaitingChildVc()
+        
+
+        sPoint = CGPoint(x: 16, y: (baseVideoView.safeAreaInsets.top+locaVideo.bounds.width/2))
+
+        locaVideo.translatesAutoresizingMaskIntoConstraints = false
+        mainVideo.translatesAutoresizingMaskIntoConstraints = false
+    
+        tblView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        self.tblView.isHidden = true
+        
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        NotificationCenter.default.addObserver(self, selector: #selector(notificationHandler(_:)), name: Notification.Name(PUSH_DATA), object: nil)
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        NotificationCenter.default.removeObserver(self, name: Notification.Name(PUSH_DATA), object: nil)
+        removeWaitingChildVc()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
     private func configureVideoRenderer() {
         #if arch(arm64)
         // Using metal (arm64 only)
@@ -138,7 +187,6 @@ class CamCallViewController: BaseViewController {
         
         self.embedView(localRenderer, into: self.locaVideo)
         self.embedView(remoteRenderer, into: self.mainVideo)
-//        self.view.sendSubviewToBack(remoteRenderer)
     }
     
     private func embedView(_ view: UIView, into containerView: UIView) {
@@ -155,6 +203,7 @@ class CamCallViewController: BaseViewController {
                                                                     views: ["view":view]))
         containerView.layoutIfNeeded()
     }
+    
     private func showWatingTimerVc() {
         self.watingTimerVc = CallWaitingTimerViewController.instantiateFromStoryboard {
             self.myRemoveChildViewController(childViewController: self.watingTimerVc)
@@ -165,30 +214,415 @@ class CamCallViewController: BaseViewController {
             ApiManager.ins.requestRejectPhoneTalk(param: param, success: nil, fail: nil)
             self.navigationController?.popViewController(animated: true)
         }
+        if ShareData.ins.mySex.rawValue == "남" {
+            let sp = "\(baseStartPoint)".addComma()
+            let ep = "\(baseLivePoint)".addComma()
+            watingTimerVc.message = "상대가 수락하면 기본 1분 \(sp)포인트 1분 이후 10초에 \(ep)포인트 차감됩니다."
+        }
         myAddChildViewController(superView: self.view, childViewController: watingTimerVc)
     }
+    func requestPaymentStartPoint() {
+        var param = [String:Any]()
+        param["from_user_id"] = ShareData.ins.myId
+        param["from_user_sex"] = ShareData.ins.mySex.rawValue
+        param["to_user_id"] = toUserId!
+        param["out_point"] = baseStartPoint
+        param["room_key"] = roomKey!
+        
+        ApiManager.ins.requestCamCallPaymentStartPoint(param: param) { response in
+            let isSuccess = response["isSuccess"].stringValue
+            if isSuccess == "01" {
+                print("cam start point payment success: \(response)");
+            }
+            else {
+                print("cam start point payment error");
+            }
+        } fail: { error in
+            self.showErrorToast(error)
+        }
+    }
+    func requestPaymentEndPoint() {
+        var param = [String:Any]()
+        
+        param["from_user_id"] = ShareData.ins.myId
+        param["from_user_sex"] = ShareData.ins.mySex.rawValue
+        param["to_user_id"] = toUserId!
+        param["out_point_time"] = (Int(second)/10)*baseLivePoint
+        param["room_key"] = roomKey!
+        ApiManager.ins.requestCamCallPaymentEndPoint(param: param) { response in
+            let isSuccess = response["isSuccess"].stringValue
+            if isSuccess == "01" {
+                print("cam end point payment success: \(response)");
+                AppDelegate.ins.showScoreAlert(toUserId: self.toUserId!, toUserName: self.toUserName)
+            }
+            else {
+                print("cam end point payment fail");
+            }
+        } fail: { error in
+            print("cam end point payment fail");
+//            self.showErrorToast(error)
+        }
+    }
     func startTimer() {
-        self.stopTimer()
+        if let timer = timer {
+            timer.invalidate()
+            timer.fire()
+        }
+        self.requestPaymentStartPoint()
         self.timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] timer in
             self?.second += 1
         })
     }
     func stopTimer() {
-        if let timer = timer {
-            timer.invalidate()
-            timer.fire()
+        guard let timer = self.timer else {
+            return
         }
+        
+        timer.invalidate()
+        timer.fire()
+        self.timer = nil
+        self.signalClient.disconnect()
+        self.webRtcClient.close()
+        self.requestPaymentEndPoint()
     }
     func removeWaitingChildVc() {
         if let childVc = watingTimerVc {
             self.myRemoveChildViewController(childViewController: childVc)
         }
     }
+    ///MARK:: pangestueHandler
+    @IBAction func pangestureHandeler(_ sender: UIPanGestureRecognizer) {
+        
+        guard let panView = sender.view, let value = panView.accessibilityValue, value == "S" else {
+            return
+        }
+        let transition = sender.translation(in: panView)
+        var x = panView.center.x + transition.x
+        var y = panView.center.y + transition.y
+        
+        if sender.state == .changed {
+            if x > (baseVideoView.bounds.width - panView.bounds.width/2) {
+                x = baseVideoView.bounds.width - panView.bounds.width/2
+            }
+            else if x < panView.bounds.width/2 {
+                x = panView.bounds.width/2
+            }
+            
+            if y > (baseVideoView.bounds.maxY - panView.bounds.height/2 - baseVideoView.safeAreaInsets.bottom) {
+                y = baseVideoView.bounds.maxY - panView.bounds.height/2  - baseVideoView.safeAreaInsets.bottom
+            }
+            else if y < panView.bounds.height/2 + baseVideoView.safeAreaInsets.top {
+                y = panView.bounds.height/2 + baseVideoView.safeAreaInsets.top
+            }
+            
+            panView.center = CGPoint(x: x, y: y)
+            sender.setTranslation(CGPoint.zero, in: panView)
+        }
+        else if sender.state == .ended {
+            let tPoint = baseVideoView.convert(panView.center, to: nil)
+            let sPoint = CGPoint(x: baseVideoView.bounds.size.width/2, y: baseVideoView.bounds.size.height/2)
+            
+            var posX: CGFloat = 0
+            var posY: CGFloat = 0
+            let maxX = baseVideoView.bounds.maxX
+            let maxY = baseVideoView.bounds.maxY
+            
+            let safetyInset = baseVideoView.safeAreaInsets
+            if tPoint.x > sPoint.x && tPoint.y < sPoint.y { //1사분구
+                if (maxX - tPoint.x) < (tPoint.y - safetyInset.top) {
+                    posX = maxX - panView.bounds.width/2
+                    posY = tPoint.y
+                }
+                else {
+                    posX = tPoint.x
+                    posY += safetyInset.top + panView.bounds.height/2
+                }
+            }
+            else if tPoint.x < sPoint.x && tPoint.y < sPoint.y { //2사분구
+                if tPoint.x < (tPoint.y - safetyInset.top) {
+                    posX = panView.bounds.width/2
+                    posY = tPoint.y
+                }
+                else {
+                    posX = tPoint.x
+                    posY += safetyInset.top + panView.bounds.height/2
+                }
+            }
+            else if tPoint.x < sPoint.x && tPoint.y > sPoint.y { //3사분구
+                if tPoint.x < ((maxY - safetyInset.bottom) - tPoint.y) {
+                    posX = panView.bounds.width/2
+                    posY = tPoint.y
+                }
+                else {
+                    posX = tPoint.x
+                    posY += maxY - safetyInset.bottom - panView.bounds.height/2
+                }
+            }
+            else if tPoint.x > sPoint.x && tPoint.y > sPoint.y { //4사분구
+                if (maxX - tPoint.x) < ((maxY - safetyInset.bottom) - tPoint.y) {
+                    posX = maxX - panView.bounds.width/2
+                    posY = tPoint.y
+                }
+                else {
+                    posX = tPoint.x
+                    posY += maxY - safetyInset.bottom - panView.bounds.height/2
+                }
+            }
+            self.sPoint = CGPoint(x: posX, y: posY)
+            UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseInOut) {
+                panView.center = self.sPoint
+            } completion: { finish in
+                
+            }
+        }
+    }
     
-    @IBAction func onClickedBtnActions(_ sender: UIButton) {
+    func findNearestEdge(_ targetView:UIView) -> CGPoint {
+        
+        
+        return CGPoint.zero
+    }
+    ///MARK:: tapgesturehandler
+    @IBAction func tapGestureHandeler(_ sender: UITapGestureRecognizer) {
+        guard let tapView = sender.view, let value = tapView.accessibilityValue, value == "S" else {
+            return
+        }
+        
+        if tapView == locaVideo {
+            locaVideo.accessibilityValue = "L"
+            mainVideo.accessibilityValue = "S"
+            self.translateExpand(from: locaVideo, to: mainVideo)
+        }
+        else if tapView == mainVideo {
+            locaVideo.accessibilityValue = "S"
+            mainVideo.accessibilityValue = "L"
+            self.translateExpand(from: mainVideo, to: locaVideo)
+        }
         
     }
     
+    func translateExpand(from targetView:UIView, to downSizeView:UIView) {
+        
+        targetView.removeConstraints()
+        downSizeView.removeConstraints()
+        
+        targetView.topAnchor.constraint(equalTo: self.baseVideoView.topAnchor, constant: 0).isActive = true
+        targetView.leadingAnchor.constraint(equalTo: self.baseVideoView.leadingAnchor, constant: 0).isActive = true
+        targetView.bottomAnchor.constraint(equalTo: self.baseVideoView.bottomAnchor, constant: 0).isActive = true
+        targetView.trailingAnchor.constraint(equalTo: self.baseVideoView.trailingAnchor, constant: 0).isActive = true
+        
+        if let subview = targetView.subviews.first {
+            targetView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
+                                                                     options: [],
+                                                                     metrics: nil,
+                                                                     views: ["view":subview]))
+            
+            targetView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|",
+                                                                     options: [],
+                                                                     metrics: nil,
+                                                                     views: ["view":subview]))
+        }
+        
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
+            self.view.layoutIfNeeded()
+        } completion: { finish in
+            
+            downSizeView.topAnchor.constraint(equalTo: self.baseVideoView.safeAreaLayoutGuide.topAnchor, constant: 56).isActive = true
+            downSizeView.leadingAnchor.constraint(equalTo: self.baseVideoView.leadingAnchor, constant: 16).isActive = true
+            downSizeView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+            downSizeView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+            self.view.layoutIfNeeded()
+            
+            if let subview = downSizeView.subviews.first {
+                downSizeView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[view]|",
+                                                                         options: [],
+                                                                         metrics: nil,
+                                                                         views: ["view":subview]))
+                
+                downSizeView.addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[view]|",
+                                                                         options: [],
+                                                                         metrics: nil,
+                                                                         views: ["view":subview]))
+            }
+            self.baseVideoView.bringSubviewToFront(downSizeView)
+        }
+    }
+    
+    @IBAction func onClickedBtnActions(_ sender: UIButton) {
+        if sender == btnBack {
+            CAlertViewController.show(type: .alert, title: nil, message: "영상 통화를 종료합니다.", actions: [.cancel, .ok]) { (vcs, selItem, action) in
+                vcs.dismiss(animated: true, completion: nil)
+                
+                if action == 1 {
+                    
+                    var param:[String:Any] = [:]
+                    param["from_user_id"] =  ShareData.ins.myId
+                    param["to_user_id"] = self.toUserId
+                    param["msg"] = "CAM_NO"
+                    ApiManager.ins.requestRejectPhoneTalk(param: param, success: nil, fail: nil)
+                    self.actionPopviewCtrl()
+                }
+            }
+        } else if sender == btnSpeaker {
+            sender.isSelected = !sender.isSelected
+            if sender.isSelected {
+                webRtcClient.speakerOn()
+                btnSpeaker.tintColor = colorGreen
+                btnSpeaker.backgroundColor = colorTint
+            }
+            else {
+                self.webRtcClient.speakerOff()
+                btnSpeaker.tintColor = colorTint
+                btnSpeaker.backgroundColor = colorGreen
+            }
+        } else if sender == btnCamera {
+            //카메라
+            sender.isSelected = !sender.isSelected
+            if sender.isSelected {
+                webRtcClient.swapCameraToBack()
+                btnCamera.tintColor = colorGreen
+                btnCamera.backgroundColor = colorTint
+            }
+            else {
+                webRtcClient.swapCameraToFront()
+                btnCamera.tintColor = colorTint
+                btnCamera.backgroundColor = colorGreen
+            }
+            
+        } else if sender == btnMsg {
+            let alert = CAlertViewController.init(type: .alert,title: nil, message: nil, actions: [.cancel, .ok]) { (vcs, selItem, action) in
+                vcs.dismiss(animated: false, completion: nil)
+                if action == 1 {
+                    guard let textView = vcs.arrTextView.first, let text = textView.text, text.isEmpty == false else {
+                        return
+                    }
+                    self.sendMessage(text)
+                }
+            }
+        
+            alert.addTextView("입력해주세요.")
+            alert.reloadUI()
+            self.present(alert, animated: false) {
+                guard let textView = alert.arrTextView.first else { return }
+                textView.becomeFirstResponder()
+            }
+            
+        } else if sender == btnGift {
+            print("선물")
+            
+            let strMyPoint = "\(nowPoint)".addComma()+"P"
+            let tmpStr = "보유 : \(strMyPoint)"
+            let title = "\(toUserName!)님에게 선물하기\n\(tmpStr)"
+            let paragraphic = NSMutableParagraphStyle.init()
+            paragraphic.lineSpacing = 5
+            let attr = NSMutableAttributedString.init(string: title)
+            attr.addAttribute(.font, value: UIFont.systemFont(ofSize: 20, weight: .semibold), range: NSMakeRange(0, title.length))
+            attr.addAttribute(.font, value: UIFont.systemFont(ofSize: 17, weight: .medium), range: (title as NSString).range(of: tmpStr))
+            attr.addAttribute(.foregroundColor, value: RGB(230, 100, 100), range: (title as NSString).range(of: tmpStr))
+            attr.addAttribute(.paragraphStyle, value: paragraphic, range: NSMakeRange(0, title.length))
+            
+            let data:[String] = ["100별(P)", "500별(P)", "1,000별(P)", "3,000별(P)", "5,000별(P)", "10,000별(P)"]
+            let vc = PopupCollectionListViewController.initWithType(.gift, attr, data, nil) { (vcs, item, index) in
+                vcs.dismiss(animated: true, completion: nil)
+                var giftPoint:Int = 0
+                if index == 0 {
+                    giftPoint = 100
+                }
+                else if index == 1 {
+                    giftPoint = 500
+                }
+                else if index == 2 {
+                    giftPoint = 1000
+                }
+                else if index == 3 {
+                    giftPoint = 3000
+                }
+                else if index == 4 {
+                    giftPoint = 5000
+                }
+                else if index == 5 {
+                    giftPoint = 10000
+                }
+                
+                if giftPoint > self.nowPoint  || self.nowPoint <= 200 {
+                    self.showToast("최소 200포인트가 있어야 선물 가능합니다")
+                    return
+                }
+                else {
+                    var param:[String:Any] = [:]
+                    param["to_user_id"] =  self.toUserId!
+                    param["user_id"] = ShareData.ins.myId
+                    param["seq"] = "NO"
+                    param["gift_point_str"] = "\(giftPoint)"
+                    param["gift_comment_write_str"] = "\(giftPoint)"
+                    
+                    ApiManager.ins.requestSendGiftPointCam(param:param) { (res) in
+                        let isSuccess = res["isSuccess"].stringValue
+                        if isSuccess == "01" {
+                            let msg = "\(self.toUserName!)님에게 선물"+"\(giftPoint)".addComma()+"를 선물했습니다."
+                            self.sendMessage(msg)
+                        }
+                        else {
+                            self.showErrorToast(res)
+                        }
+                    } fail: { (error) in
+                        self.showErrorToast(error)
+                    }
+                }
+            }
+            self.presentPanModal(vc)
+        } else if sender == btnMyFriend {
+            let param = ["user_id": toUserId!, "user_name": toUserName!, "my_id": ShareData.ins.myId]
+            
+            ApiManager.ins.requestSetMyFried(param: param) { res in
+                let isSuccess = res["isSuccess"].stringValue
+                if isSuccess == "01" {
+                    AppDelegate.ins.window?.makeToast("찜 등록 되었습니다.")
+                }
+                else {
+                    self.showErrorToast(res)
+                }
+            } fail: { error in
+                self.showErrorToast(error)
+            }
+
+        } else if sender == btnLike {
+            let param = ["user_id": toUserId! as Any, "my_user_id": ShareData.ins.myId]
+            ApiManager.ins.requesetUpdateGood(param: param) { (res) in
+                let isSuccess = res["isSuccess"].stringValue
+                if isSuccess == "01" {
+                    AppDelegate.ins.window?.makeToast("좋아요.")
+                }
+                else if isSuccess == "02" {
+                    AppDelegate.ins.window?.makeToast("좋아요는 1회만 가능합니다.")
+                }
+                else {
+                    self.showErrorToast(res)
+                }
+            } fail: { (error) in
+                self.showErrorToast(error)
+            }
+        } else if sender == btnMicroPhone {
+            sender.isSelected = !sender.isSelected
+            if sender.isSelected {
+                self.webRtcClient.unmuteAudio()
+            }
+            else {
+                self.webRtcClient.muteAudio()
+            }
+        }
+        
+    }
+    func sendMessage(_ msg:String) {
+        print("\(msg)")
+        appendMessage("나야: \(msg)")
+        self.signalClient.sendMessage(to: toUserId, message: msg, roomKey: roomKey)
+    }
+    func appendMessage(_ msg:String) {
+        listData.append(msg)
+        self.tblView.isHidden = false
+        self.tblView.reloadData()
+    }
     ///MARK::push handler
     override func notificationHandler(_ notification: NSNotification) {
         if notification.name == Notification.Name(PUSH_DATA) {
@@ -206,7 +640,12 @@ class CamCallViewController: BaseViewController {
         }
     }
 }
+
 extension CamCallViewController: WebRTCClientDelegate {
+    func webRTCClient(_ client: WebRTCClient, didReceiveLocalVideoTrack videoTrack: RTCVideoTrack) {
+        print("didReceiveLocalVideoTrack")
+    }
+    
     func webRTCClient(_ client: WebRTCClient, didDiscoverLocalCandidate candidate: RTCIceCandidate) {
         print("== webrtc didDiscoverLocalCandidate")
         self.localCandidateCount += 1
@@ -215,24 +654,27 @@ extension CamCallViewController: WebRTCClientDelegate {
     
     func webRTCClient(_ client: WebRTCClient, didChangeConnectionState state: RTCIceConnectionState) {
         print("== webrtc didChangeConnectionState")
-        
-        var textColor = UIColor.label
-        switch state {
-        case .connected, .completed:
-            textColor = .green
-            break
-        case .disconnected:
-            textColor = .orange
-            break
-        case .failed:
-            textColor = .red
-            break
-        case .new, .checking, .count:
-            textColor = .purple
-        default:
-            break
+        DispatchQueue.main.async {
+            var textColor = UIColor.label
+            switch state {
+            case .connected, .completed:
+                textColor = .green
+                AppDelegate.ins.window?.makeToast("수락")
+                break
+            case .disconnected:
+                textColor = .orange
+//                AppDelegate.ins.window?.makeToast("연결 끊김")
+                break
+            case .failed:
+                textColor = .red
+//                AppDelegate.ins.window?.makeToast("실패")
+                break
+            case .new, .checking, .count:
+                textColor = .purple
+            default:
+                break
+            }
         }
-        
     }
     
     func webRTCClient(_ client: WebRTCClient, didReceiveData data: Data) {
@@ -260,6 +702,10 @@ extension CamCallViewController: WebRTCClientDelegate {
         }
     }
     
+    func actionPopviewCtrl() {
+        self.navigationController?.popViewController(animated: false)
+        self.completion?()
+    }
 }
 
 extension CamCallViewController : SignalClientDelegate {
@@ -301,24 +747,68 @@ extension CamCallViewController : SignalClientDelegate {
     func signalClientDidRoomOut(_ signalClient: SignalingClient) {
         print("== signal signalClientDidRoomOut")
         self.removeWaitingChildVc()
-        AppDelegate.ins.window?.makeBottomTost("상대가 채팅방을 나갔습니다.")
+        AppDelegate.ins.window?.makeBottomTost("상대의 영상채팅을 종료하였습니다.!!")
+        self.stopTimer()
+        actionPopviewCtrl()
     }
     
     func signalClientDidToRoomOut(_ signalClient: SignalingClient) {
         print("== signal signalClientDidToRoomOut")
         self.removeWaitingChildVc()
-        AppDelegate.ins.window?.makeBottomTost("상대가 신청을 취소했습니다.")
+        AppDelegate.ins.window?.makeBottomTost("상대의 영상채팅을 종료하였습니다.!!")
+        self.stopTimer()
+        actionPopviewCtrl()
     }
     
     func signalClientDidCallNo(_ signalClient: SignalingClient) {
         print("== signal signalClientDidCallNo")
         self.removeWaitingChildVc()
-        AppDelegate.ins.window?.makeBottomTost("상대가 영상채팅을 거절 했습니다.")
+        AppDelegate.ins.window?.makeBottomTost("상대가 영상채팅을 거절했습니다.")
+        self.stopTimer()
+        actionPopviewCtrl()
     }
     
     func signalClientChatMessage(_ signalClient: SignalingClient, msg: String) {
         print("== signal signalClientChatMessage")
-        print(msg)
+        print("msg: \(msg)")
+        self.appendMessage(msg)
     }
-   
+}
+///MARK:: tableview datasouce, deletage
+extension CamCallViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return listData.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MessageCell.identifier) as? MessageCell else {
+            return UITableViewCell.init(style: .default, reuseIdentifier: MessageCell.identifier)
+        }
+        
+        cell.contentView.transform = CGAffineTransform(scaleX: 1, y: -1)
+        cell.ivProfile.layer.cornerRadius = cell.ivProfile.bounds.height/2
+        
+        if let msg = listData[indexPath.row] as? String, let comp = msg.components(separatedBy: ":") as? [String] {
+            if comp.first == "나야" {
+                cell.ivProfile.isHidden = true
+                if let str = comp.last?.trimmingCharacters(in: .whitespacesAndNewlines), let jonStr = str.components(separatedBy: CharacterSet.newlines).joined(separator: " ") as? String {
+                    cell.lbMsg.text = jonStr
+                }
+            }
+            else {
+                cell.ivProfile.isHidden = false
+                cell.ivProfile.image = ShareData.ins.mySex.transGender().avatar()
+                if let user_img = info?["user_img"].stringValue, let url = Utility.thumbnailUrl(toUserId, user_img) {
+                    cell.ivProfile.setImageCache(url)
+                }
+                if let str = comp.last?.trimmingCharacters(in: .whitespacesAndNewlines), let jonStr = str.components(separatedBy: CharacterSet.newlines).joined(separator: " ") as? String {
+                    cell.lbMsg.text = jonStr
+                }
+            }
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tblView.deselectRow(at: indexPath, animated: true)
+    }
 }

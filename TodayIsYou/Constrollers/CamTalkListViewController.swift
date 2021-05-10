@@ -55,8 +55,8 @@ class CamTalkListViewController: MainActionViewController {
         super.viewWillAppear(animated)
     }
     func decorationUI() {
-        let imgNor = UIImage.image(from: RGB(120, 120, 130))
-        let imgSel = UIImage.image(from: RGB(230, 100, 100))
+        let imgNor = UIImage.color(from: RGB(120, 120, 130))
+        let imgSel = UIImage.color(from: RGB(230, 100, 100))
         
         btnTotal.setBackgroundImage(imgNor, for: .normal)
         btnTotal.setBackgroundImage(imgSel, for: .selected)
@@ -222,12 +222,7 @@ class CamTalkListViewController: MainActionViewController {
     func checkPointPhone() {
         
     }
-    override func actionAlertPhoneCall() {
-        
-    }
-    override func actionAlertCamTalkCall() {
-        
-    }
+    
     override func actionBlockAlert() {
         let user_name = self.selUser["user_name"].stringValue
         let user_id = self.selUser["user_id"].stringValue

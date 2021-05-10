@@ -94,7 +94,7 @@ class ChattingViewController: MainActionViewController {
         self.addKeyboardNotification()
         self.resetKeyboadDown()
         self.updateDBReadMessage()
-        
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         NotificationCenter.default.addObserver(self, selector: #selector(notificationHandler(_:)), name: Notification.Name(PUSH_DATA), object: nil)
     }
     
@@ -336,8 +336,7 @@ class ChattingViewController: MainActionViewController {
         else if sender.tag == 2003 {
             self.resetKeyboadDown()
             print("선물")
-
-            var myPoint = ShareData.ins.userPoint?.intValue ?? 0
+            var myPoint = ShareData.ins.myPoint?.intValue ?? 0
             let strMyPoint = "\(myPoint)".addComma()+"P"
             let tmpStr = "보유 : \(strMyPoint)"
             let title = "\(toUserName!)님에게 선물하기\n\(tmpStr)"
@@ -376,7 +375,7 @@ class ChattingViewController: MainActionViewController {
                     CAlertViewController.show(type: .alert, title: "포인트 부족", message: "보유한 포인트가 부족합니다. 포인트를 충전하시겠습니까?", actions: [.cancel, .ok]) { (vcs, selItem, index) in
                         vcs.dismiss(animated: true, completion: nil)
                         if index == 1 {
-                            let vc = PointChargeViewController.instantiateFromStoryboard(.main)!
+                            let vc = PointPurchaseViewController.instantiateFromStoryboard(.main)!
                             self.navigationController?.pushViewController(vc, animated: true)
                         }
                     }
@@ -393,20 +392,6 @@ class ChattingViewController: MainActionViewController {
                     ApiManager.ins.requestSendGiftPoint(param:param) { (res) in
                         let isSuccess = res["isSuccess"].stringValue
                         if isSuccess == "01" {
-//                            DLog.d(DEBUG_TAG, "#### this.gift_point : " + gift_point);
-//                             ChatMsgVo vo = new ChatMsgVo();
-//                             vo.setMessage_key(seq);
-//                             vo.setType((byte) 1);
-//                             vo.setMemo("@@##$$|" + gift_point + " 별(P)를 선물 했습니다.");
-//                             vo.setFrom_user_id(superApp.myUserId);
-//                             vo.setReg_date(Util.getCurrentDate("yyyy-MM-dd HH:mm:ss"));
-//                             vo.setTo_user_id(to_user_id);
-//                             vo.setRead_yn("Y");
-//                             mDataList.add(vo);
-//                             chatAdapter.notifyDataSetChanged();
-//                             //로컬디비저장
-//                             superApp.mDbManager.setMessage(vo);
-//                             gift_point = "0";
                             let msg = "\(giftPoint)".addComma()+" 별(P)를 선물했습니다."
                             self.showToast(msg)
                         }

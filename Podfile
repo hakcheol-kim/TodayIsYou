@@ -19,7 +19,7 @@ target 'TodayIsYou' do
   pod 'Mantis'
   pod 'SideMenu', '~> 6.0'
   pod 'Lightbox'
-  
+  pod 'SwiftyGif'
   pod 'GoogleWebRTC'
   pod 'Socket.IO-Client-Swift', '~> 15.2.0'
   

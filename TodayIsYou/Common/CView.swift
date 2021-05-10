@@ -9,6 +9,7 @@
 import UIKit
 @IBDesignable
 class CView: UIView {
+    var data:Any? = nil
     @IBInspectable var borderWidth: CGFloat = 0.0 {
         didSet {
             if borderWidth > 0 {setNeedsDisplay()}

@@ -21,8 +21,13 @@ public extension UIView {
         if let btnToast = self.viewWithTag(tagTostView) as? UIButton {
             btnToast.removeFromSuperview()
         }
+        if let btnToast = AppDelegate.ins.window?.viewWithTag(tagTostView) as? UIButton {
+            btnToast.removeFromSuperview()
+        }
+        
         let btnToast = UIButton.init(type: .custom)
         btnToast.tag = tagTostView
+        
         self.addSubview(btnToast)
         btnToast.contentEdgeInsets = UIEdgeInsets(top: 8, left: 12, bottom: 8, right: 12)
         if let message = message as? NSAttributedString {
@@ -109,15 +114,6 @@ public extension UIView {
             }
         }
         AppDelegate.ins.window?.bringSubviewToFront(toast)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(onDismissBottomPopupView(_ :)))
-        self.addGestureRecognizer(tap)
     }
     
-    @objc func onDismissBottomPopupView(_ gesture:UIView) {
-        guard let view = gesture.viewWithTag(tagBottomTostView) else {
-            return
-        }
-        view.removeFromSuperview()
-    }
 }

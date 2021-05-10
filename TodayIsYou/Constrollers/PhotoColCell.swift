@@ -44,10 +44,10 @@ class PhotoColCell: UICollectionViewCell {
         let seq = data["seq"].intValue //: 44
         
         if user_sex == "남" {
-            ivThumb.image = UIImage(named: Gender.mail.avatar())
+            ivThumb.image = Gender.mail.avatar()
         }
         else {
-            ivThumb.image = UIImage(named: Gender.femail.avatar())
+            ivThumb.image = Gender.femail.avatar()
         }
         
         if let imgUrl = Utility.thumbnailUrl(user_id, file_name) {

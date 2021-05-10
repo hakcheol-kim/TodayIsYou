@@ -482,6 +482,14 @@ class ApiManager: NSObject {
             fail?(err)
         }
     }
+    //영상채팅 선물
+    func requestSendGiftPointCam(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/camGiftSave.do", param, URLEncoding.queryString) { res in
+            success?(res)
+        } failure: { err in
+            fail?(err)
+        }
+    }
     //채팅 메세지 보내기
     func requestSendChattingMsg(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
         if let _ = param["user_file"] as? UIImage {
@@ -568,6 +576,79 @@ class ApiManager: NSObject {
         NetworkManager.ins.request(.post, "/api/talk/sendNo.json", clientPara(param)) { (res) in
             success?(res)
         } failure: { (error) in
+            fail?(error)
+        }
+    }
+    //좋아요
+    func requesetUpdateGood(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/updateGood.json", clientPara(param)) { res in
+            success?(res)
+        } failure: { error in
+            fail?(error)
+        }
+    }
+    //포인트 충전 Payload 요청
+    func requestSaveInAppPayload(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/saveInAppPayload.do", param, URLEncoding.queryString) { (res) in
+            success?(res)
+        } failure: { (error) in
+            fail?(error)
+        }
+    }
+    //포인트 충전 요청
+    func requestSaveAppPoint(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/saveInAppPoint.do", param) { res in
+            success?(res)
+        } failure: { error in
+            fail?(error)
+        }
+    }
+    //영상통화 컨넥션 맺어지면 차감
+    func requestCamCallPaymentStartPoint(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/insertVcChatLiveStart.do", param, URLEncoding.queryString) { res in
+            success?(res)
+        } failure: { error in
+            fail?(error)
+        }
+    }
+    //영상통화 컨넥션 통화 끝났을때 차감
+    func requestCamCallPaymentEndPoint(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/insertVcChatLiveEnd.do", param, URLEncoding.queryString) { res in
+            success?(res)
+        } failure: { error in
+            fail?(error)
+        }
+    }
+    
+    //음성통화 컨넥션 맺어지면 차감
+    func requestPhoneCallPaymentStartPoint(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/insertVcPhoneLiveStart.do", param, URLEncoding.queryString) { res in
+            success?(res)
+        } failure: { error in
+            fail?(error)
+        }
+    }
+    //음성통화 컨넥션 통화 끝났을때 차감
+    func requestPhoneCallPaymentEndPoint(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/insertVcPhoneLiveEnd.do", param, URLEncoding.queryString) { res in
+            success?(res)
+        } failure: { error in
+            fail?(error)
+        }
+    }
+    //매너점수 주기
+    func requestGiveScore(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/insertScore.json", clientPara(param)) { res in
+            success?(res)
+        } failure: { error in
+            fail?(error)
+        }
+    }
+    ///램덤콜 요청
+    func requestRandomCall(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/randomSendMessage.do", param, URLEncoding.queryString, false) { res in
+            success?(res)
+        } failure: { error in
             fail?(error)
         }
     }

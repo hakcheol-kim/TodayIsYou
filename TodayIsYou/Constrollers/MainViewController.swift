@@ -82,7 +82,7 @@ class MainViewController: BaseViewController {
                     self.changeNaviTitle("인기순위")
                     break
                 case 4:
-                    let vc = MessageListViewController.instantiateFromStoryboard(.main)!
+                    let vc = ChattingListViewController.instantiateFromStoryboard(.main)!
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     self.selectedVc = vc
                     self.changeNaviTitle("쪽지함")
@@ -145,6 +145,7 @@ class MainViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateUnReadMessageCount()
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
     }
     func requestGetUserInfo() {
         let param = ["app_type": appType, "user_id":ShareData.ins.myId]
@@ -164,7 +165,7 @@ class MainViewController: BaseViewController {
     
     private func setupSideMenu() {
         SideMenuManager.default.leftMenuNavigationController = storyboard?.instantiateViewController(withIdentifier: "LeftMenuNavigationController") as? SideMenuNavigationController
-        SideMenuManager.default.addPanGestureToPresent(toView: navigationController!.navigationBar)
+//        SideMenuManager.default.addPanGestureToPresent(toView: navigationController!.navigationBar)
         SideMenuManager.default.addScreenEdgePanGesturesToPresent(toView: (AppDelegate.ins.window?.rootViewController?.view)!)
     }
     @IBAction func onclickedBtnActions(_ sender:UIButton) {
@@ -174,7 +175,7 @@ class MainViewController: BaseViewController {
             self.present(left, animated: true, completion: nil)
         }
         else if sender.tag == TAG_NAVI_POINT {
-            let vc = PointChargeViewController.instantiateFromStoryboard(.main)!
+            let vc = PointPurchaseViewController.instantiateFromStoryboard(.main)!
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if btnTabs.contains(sender) == true {
@@ -195,7 +196,15 @@ class MainViewController: BaseViewController {
             }
         }
         else if sender == btnRocket {
-            
+            CAlertViewController.show(type: .alert, title: "영상채팅 신청", message: "빠른 영상채팅 신청을 합니다.", actions: [.cancel, .ok]) { vcs, selItem, action in
+                vcs.dismiss(animated: true, completion: nil)
+                if action == 1 {
+                    let vc = RandomCallViewController.instantiateFromStoryboard(.call)!
+                    vc.modalPresentationStyle = .fullScreen
+                    self.present(vc, animated: true, completion: nil)
+//                    self.navigationController?.pushViewController(vc, animated: false)
+                }
+            }
         }
     }
    
@@ -237,8 +246,8 @@ class MainViewController: BaseViewController {
     
     func updateNaviPoint() {
         var pointP = "0 P"
-        if let userPoint = ShareData.ins.userPoint {
-            pointP = "\(userPoint.stringValue.addComma()) P"
+        if let myPoint = ShareData.ins.myPoint {
+            pointP = "\(myPoint.stringValue.addComma()) P"
         }
         CNavigationBar.drawRight(self, nil, pointP, TAG_NAVI_P_COINT, nil)
 

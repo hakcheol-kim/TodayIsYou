@@ -178,7 +178,12 @@ class MainActionViewController: BaseViewController {
         ApiManager.ins.requestPhoneCallInsertMsg(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
-                ///
+                let to_user_name = res["to_user_name"].stringValue
+                let to_user_id = res["to_user_id"].stringValue
+                let room_key = res["room_key"].stringValue
+                let vc = PhoneCallViewController.initWithType(.offer, room_key, to_user_id, to_user_name, self.selUser)
+                
+                self.navigationController?.pushViewController(vc, animated: true)
             }
             else {
                 self.showErrorToast(res)
@@ -206,8 +211,7 @@ class MainActionViewController: BaseViewController {
                 let to_user_name = res["to_user_name"].stringValue
                 let to_user_id = res["to_user_id"].stringValue
                 let room_key = res["room_key"].stringValue
-                let vc = CamCallViewController.initWithType(.offer, room_key, toUserId: to_user_id, toUserName: to_user_name, info: nil)
-                
+                let vc = CamCallViewController.initWithType(.offer, room_key, to_user_id, to_user_name, self.selUser)
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             else {
@@ -342,8 +346,91 @@ class MainActionViewController: BaseViewController {
     }
     
     //talk overide method
-    public func presentTalkMsgAlert() {
+    func presentTalkMsgAlert() {
+        var msg:String? = nil
+        if let bbsPoint = ShareData.ins.dfsGet(DfsKey.userBbsPoint) as? NSNumber, bbsPoint.intValue > 0 {
+            msg = "메세지 전송시 \(bbsPoint)P 소모됩니다."
+        }
+    
+        let alert = CAlertViewController.init(type: .alert, title: "메세지 전송", message: msg, actions: [.cancel, .ok]) { (vcs, selItem, index)  in
+            
+            if index == 1 {
+                guard let text = vcs.arrTextView.first?.text, text.isEmpty == false else {
+                    self.showToast("내용을 입력해주세요.")
+                    return
+                }
+                self.requestSendMsg(text)
+                vcs.dismiss(animated: true, completion: nil)
+            }
+            else {
+                vcs.dismiss(animated: true, completion: nil)
+            }
+        }
         
+        alert.iconImg = UIImage(systemName: "envelope.fill")
+        alert.addTextView("입력해주세요.")
+        alert.reloadUI()
+        self.present(alert, animated: true, completion: nil)
     }
-   
+    
+    func requestSendMsg(_ content:String) {
+        var param:[String:Any] = [:]
+            
+        var friend_mode = "N"
+        if isMyFriend {
+            friend_mode = "Y"
+        }
+        var bbsPoint = 0
+        if let p = ShareData.ins.dfsGet(DfsKey.userBbsPoint) as? NSNumber {
+            bbsPoint = p.intValue
+        }
+        param["user_id"] = ShareData.ins.myId
+        param["from_user_id"] = ShareData.ins.myId
+        param["from_user_sex"] = ShareData.ins.mySex.rawValue
+        param["to_user_id"] = self.selUser["user_id"].stringValue
+        param["to_user_name"] = self.selUser["user_name"].stringValue
+        param["memo"] = content
+        param["user_bbs_point"] = bbsPoint
+        param["point_user_id"] = ShareData.ins.myId
+        param["friend_mode"] = friend_mode
+        
+        ApiManager.ins.requestSendTalkMsg(param: param) { (res) in
+            let isSuccess = res["isSuccess"].stringValue
+            if isSuccess == "00" {
+                let errorCode = res["errorCode"].stringValue
+                if errorCode == "0002" {
+                    self.showToast("탈퇴한 회원 입니다")
+                }
+                else if errorCode == "0003" {
+                    self.showToast("차단 상태인 회원 입니다")
+                }
+                else {
+                    self.showToast("오류!!")
+                }
+            }
+            else {
+                self.showToast("쪽지 전송 완료");
+                let message_key = res["message_key"].stringValue
+                let memo = res["memo"].stringValue
+                
+                var param:[String:Any] = [:]
+                param["message_key"] = message_key
+                param["from_user_id"] = ShareData.ins.myId
+                param["to_user_id"] = self.selUser["user_id"].stringValue
+                param["point_user_id"] = self.selUser["point_user_id"].stringValue
+                param["out_chat_point"] = self.selUser["out_chat_point"].stringValue
+                param["memo"] = memo
+                
+                param["file_name"] = res["file_name"].stringValue
+                param["reg_date"] = Date()
+                param["read_yn"] = true
+                param["type"] = 1
+                
+                DBManager.ins.insertChatMessage(param, nil)
+            }
+        } failure: { (error) in
+            self.showErrorToast(error)
+        }
+    }
+
 }
