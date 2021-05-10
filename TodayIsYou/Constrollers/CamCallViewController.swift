@@ -18,7 +18,7 @@ class MessageCell: UITableViewCell {
         super.awakeFromNib()
     }
     
-}
+} 
 class CamCallViewController: BaseViewController {
     @IBOutlet weak var baseVideoView: UIView!
     @IBOutlet weak var locaVideo: UIView!
@@ -43,7 +43,6 @@ class CamCallViewController: BaseViewController {
     var targetVideoView:UIView?
     let colorGreen = RGB(195, 255, 91)
     let colorPurple = RGB(237, 109, 151)
-    let colorTint = UIColor.black
     
     private var watingTimerVc:CallWaitingTimerViewController!
     
@@ -177,7 +176,7 @@ class CamCallViewController: BaseViewController {
         localRenderer.videoContentMode = .scaleAspectFill
         remoteRenderer.videoContentMode = .scaleAspectFill
         #else
-        // Using OpenGLES for the rest
+//        // Using OpenGLES for the rest
         let localRenderer = RTCEAGLVideoView(frame: self.locaVideo.frame)
         let remoteRenderer = RTCEAGLVideoView(frame: self.mainVideo.frame)
         #endif
@@ -468,24 +467,30 @@ class CamCallViewController: BaseViewController {
             if sender.isSelected {
                 webRtcClient.speakerOn()
                 btnSpeaker.tintColor = colorGreen
-                btnSpeaker.backgroundColor = colorTint
+                btnSpeaker.backgroundColor = UIColor.white
             }
             else {
                 self.webRtcClient.speakerOff()
-                btnSpeaker.tintColor = colorTint
+                btnSpeaker.tintColor = UIColor.black
                 btnSpeaker.backgroundColor = colorGreen
             }
         } else if sender == btnCamera {
             //카메라
             sender.isSelected = !sender.isSelected
             if sender.isSelected {
-                webRtcClient.swapCameraToBack()
+                guard let localRender = locaVideo.subviews.first as? RTCMTLVideoView  else {
+                    return
+                }
+                webRtcClient.swapCameraToBack(localRender)
                 btnCamera.tintColor = colorGreen
-                btnCamera.backgroundColor = colorTint
+                btnCamera.backgroundColor = UIColor.white
             }
             else {
-                webRtcClient.swapCameraToFront()
-                btnCamera.tintColor = colorTint
+                guard let localRender = locaVideo.subviews.first as? RTCMTLVideoView  else {
+                    return
+                }
+                webRtcClient.swapCameraToFront(localRender)
+                btnCamera.tintColor = UIColor.black
                 btnCamera.backgroundColor = colorGreen
             }
             

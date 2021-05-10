@@ -39,6 +39,8 @@ final class WebRTCClient: NSObject {
     private var localDataChannel: RTCDataChannel?
     private var remoteDataChannel: RTCDataChannel?
     
+    private var cameraPosition: AVCaptureDevice.Position = .front
+    
     @available(*, unavailable)
     override init() {
         fatalError("WebRTCClient:init is unavailable")
@@ -111,7 +113,7 @@ final class WebRTCClient: NSObject {
     func startCaptureLocalVideo(renderer: RTCVideoRenderer) {
         guard let capturer = self.videoCapturer as? RTCCameraVideoCapturer else { return }
         
-        guard let frontCamera = (RTCCameraVideoCapturer.captureDevices().first { $0.position == .front }),
+        guard let frontCamera = (RTCCameraVideoCapturer.captureDevices().first { $0.position == cameraPosition }),
             
             // choose highest res
             let format = (RTCCameraVideoCapturer.supportedFormats(for: frontCamera).sorted { (f1, f2) -> Bool in
@@ -275,7 +277,6 @@ extension WebRTCClient {
     }
     func unmuteAudio() {
         self.setAudioMuted(false)
-        
     }
     
     // Fallback to the default playing device: headphones/bluetooth/ear speaker
@@ -316,26 +317,14 @@ extension WebRTCClient {
         audioTracks.forEach { $0.isEnabled = isMuted }
     }
     
-    func swapCameraToFront() {
-        guard let localStream = peerConnection.localStreams.first else { return }
-        localStream.removeVideoTrack(localStream.videoTracks.first!)
-        
-        let localVideoTrack: RTCVideoTrack = createVideoTrack(true)
-        localStream.addVideoTrack(localVideoTrack)
-        delegate?.webRTCClient(self, didReceiveLocalVideoTrack: localVideoTrack)
-        peerConnection.remove(localStream)
-        peerConnection.add(localStream)
+    func swapCameraToFront(_ render:RTCVideoRenderer) {
+        self.cameraPosition = .front
+        self.startCaptureLocalVideo(renderer: render)
     }
 
-    func swapCameraToBack() {
-        guard let localStream = peerConnection.localStreams.first else { return }
-        localStream.removeVideoTrack(localStream.videoTracks.first!)
-        
-        let localVideoTrack: RTCVideoTrack = createVideoTrack(false)
-        localStream.addVideoTrack(localVideoTrack)
-        delegate?.webRTCClient(self, didReceiveLocalVideoTrack: localVideoTrack)
-        peerConnection.remove(localStream)
-        peerConnection.add(localStream)
+    func swapCameraToBack(_ render:RTCVideoRenderer) {
+        self.cameraPosition = .back
+        self.startCaptureLocalVideo(renderer: render)
     }
 }
 
