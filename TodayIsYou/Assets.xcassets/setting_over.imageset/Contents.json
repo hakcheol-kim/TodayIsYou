@@ -1,15 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "speed_36.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "setting_over@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "setting_over@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
