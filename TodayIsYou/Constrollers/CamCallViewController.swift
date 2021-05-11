@@ -39,6 +39,7 @@ class CamCallViewController: BaseViewController {
     var nowPoint:Int = 0
 
     var listData:[String] = []
+    var originListData:[String] = []
     var speakerOn:Bool = true
     var targetVideoView:UIView?
     let colorGreen = RGB(195, 255, 91)
@@ -127,7 +128,6 @@ class CamCallViewController: BaseViewController {
         if let livePoint = ShareData.ins.dfsGet(DfsKey.camOutUserPoint) as? NSNumber, livePoint.intValue > 0 {
             baseLivePoint = livePoint.intValue
         }
-
         
         locaVideo.accessibilityValue = "S"
         mainVideo.accessibilityValue = "L"
@@ -138,7 +138,6 @@ class CamCallViewController: BaseViewController {
             self.showWatingTimerVc()
         }
         
-
         sPoint = CGPoint(x: 16, y: (baseVideoView.safeAreaInsets.top+locaVideo.bounds.width/2))
 
         locaVideo.translatesAutoresizingMaskIntoConstraints = false
@@ -146,7 +145,6 @@ class CamCallViewController: BaseViewController {
     
         tblView.transform = CGAffineTransform(scaleX: 1, y: -1)
         self.tblView.isHidden = true
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -231,13 +229,14 @@ class CamCallViewController: BaseViewController {
         ApiManager.ins.requestCamCallPaymentStartPoint(param: param) { response in
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
-                print("cam start point payment success: \(response)");
+                print("==== 1차 차감완료 \(response)");
             }
             else {
-                print("cam start point payment error");
+                print("==== 오류: 1차 차감: \(response)");
             }
         } fail: { error in
             self.showErrorToast(error)
+            print("==== 오류: 1차 차감: \(error)");
         }
     }
     func requestPaymentEndPoint() {
@@ -251,14 +250,13 @@ class CamCallViewController: BaseViewController {
         ApiManager.ins.requestCamCallPaymentEndPoint(param: param) { response in
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
-                print("cam end point payment success: \(response)");
-                AppDelegate.ins.showScoreAlert(toUserId: self.toUserId!, toUserName: self.toUserName)
+                print("==== 2차 차감완료 \(response)");
             }
             else {
-                print("cam end point payment fail");
+                print("==== 오류: 2차차감 오류 \(response)");
             }
         } fail: { error in
-            print("cam end point payment fail");
+            print("==== 오류: 2차차감 오류 \(error)");
 //            self.showErrorToast(error)
         }
     }
@@ -283,6 +281,10 @@ class CamCallViewController: BaseViewController {
         self.signalClient.disconnect()
         self.webRtcClient.close()
         self.requestPaymentEndPoint()
+        AppDelegate.ins.showScoreAlert(toUserId: self.toUserId!, toUserName: self.toUserName)
+        
+        self.completion?()
+        self.navigationController?.popViewController(animated: false)
     }
     func removeWaitingChildVc() {
         if let childVc = watingTimerVc {
@@ -459,7 +461,7 @@ class CamCallViewController: BaseViewController {
                     param["to_user_id"] = self.toUserId
                     param["msg"] = "CAM_NO"
                     ApiManager.ins.requestRejectPhoneTalk(param: param, success: nil, fail: nil)
-                    self.actionPopviewCtrl()
+                    self.stopTimer()
                 }
             }
         } else if sender == btnSpeaker {
@@ -564,7 +566,7 @@ class CamCallViewController: BaseViewController {
                     ApiManager.ins.requestSendGiftPointCam(param:param) { (res) in
                         let isSuccess = res["isSuccess"].stringValue
                         if isSuccess == "01" {
-                            let msg = "\(self.toUserName!)님에게 선물"+"\(giftPoint)".addComma()+"를 선물했습니다."
+                            let msg = "🎁 \(self.toUserName!)님에게 선물"+"\(giftPoint)".addComma()+"를 선물했습니다."
                             self.sendMessage(msg)
                         }
                         else {
@@ -624,7 +626,9 @@ class CamCallViewController: BaseViewController {
         self.signalClient.sendMessage(to: toUserId, message: msg, roomKey: roomKey)
     }
     func appendMessage(_ msg:String) {
-        listData.append(msg)
+        self.originListData.append(msg)
+        listData.removeAll()
+        listData = self.originListData.reversed()
         self.tblView.isHidden = false
         self.tblView.reloadData()
     }
@@ -640,8 +644,9 @@ class CamCallViewController: BaseViewController {
                     self.presentedViewController?.dismiss(animated: false, completion: nil)
                 }
                 self.navigationController?.popViewController(animated: true)
+                
+                AppDelegate.ins.window?.makeBottomTost("상대가 취소했습니다.")
             }
-            AppDelegate.ins.window?.makeBottomTost("상대가 취소했습니다.")
         }
     }
 }
@@ -707,10 +712,7 @@ extension CamCallViewController: WebRTCClientDelegate {
         }
     }
     
-    func actionPopviewCtrl() {
-        self.navigationController?.popViewController(animated: false)
-        self.completion?()
-    }
+    
 }
 
 extension CamCallViewController : SignalClientDelegate {
@@ -754,7 +756,6 @@ extension CamCallViewController : SignalClientDelegate {
         self.removeWaitingChildVc()
         AppDelegate.ins.window?.makeBottomTost("상대의 영상채팅을 종료하였습니다.!!")
         self.stopTimer()
-        actionPopviewCtrl()
     }
     
     func signalClientDidToRoomOut(_ signalClient: SignalingClient) {
@@ -762,7 +763,6 @@ extension CamCallViewController : SignalClientDelegate {
         self.removeWaitingChildVc()
         AppDelegate.ins.window?.makeBottomTost("상대의 영상채팅을 종료하였습니다.!!")
         self.stopTimer()
-        actionPopviewCtrl()
     }
     
     func signalClientDidCallNo(_ signalClient: SignalingClient) {
@@ -770,7 +770,6 @@ extension CamCallViewController : SignalClientDelegate {
         self.removeWaitingChildVc()
         AppDelegate.ins.window?.makeBottomTost("상대가 영상채팅을 거절했습니다.")
         self.stopTimer()
-        actionPopviewCtrl()
     }
     
     func signalClientChatMessage(_ signalClient: SignalingClient, msg: String) {

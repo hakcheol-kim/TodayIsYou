@@ -56,7 +56,7 @@ public extension UIView {
         }
     }
     
-    func makeBottomTost(_ message: Any?, duration: TimeInterval = 5, _ font:UIFont = UIFont.systemFont(ofSize: 15), _ titleColor:UIColor = .white, _ bgColor:UIColor = UIColor(red: 0.902, green: 0.392, blue: 0.392, alpha: 1.0)) {
+    func makeBottomTost(_ message: Any?, duration: TimeInterval = 3, _ font:UIFont = UIFont.systemFont(ofSize: 15), _ titleColor:UIColor = .white, _ bgColor:UIColor = UIColor(red: 0.902, green: 0.392, blue: 0.392, alpha: 1.0)) {
         guard let message = message else {
             return
         }

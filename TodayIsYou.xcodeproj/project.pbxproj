@@ -60,7 +60,6 @@
 		E98DB514264838E500E04584 /* box_loading_150.gif in Resources */ = {isa = PBXBuildFile; fileRef = E98DB513264838E500E04584 /* box_loading_150.gif */; };
 		E98DB5162648396300E04584 /* RandomCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98DB5152648396300E04584 /* RandomCallViewController.swift */; };
 		E98DB51826483CC300E04584 /* bubble_512.gif in Resources */ = {isa = PBXBuildFile; fileRef = E98DB51726483CC300E04584 /* bubble_512.gif */; };
-		E98DB51A26483F6C00E04584 /* color_512.gif in Resources */ = {isa = PBXBuildFile; fileRef = E98DB51926483F6C00E04584 /* color_512.gif */; };
 		E98F9A0526214F6F00BC75ED /* PopupCollectionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98F9A0426214F6F00BC75ED /* PopupCollectionListViewController.swift */; };
 		E98F9A512621B5BC00BC75ED /* TodayIsYou.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E98F9A4F2621B5BC00BC75ED /* TodayIsYou.xcdatamodeld */; };
 		E98F9A692621C09800BC75ED /* DBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98F9A682621C09800BC75ED /* DBManager.swift */; };
@@ -82,6 +81,7 @@
 		E9919A0425FE1D8600D6128A /* ContactusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9919A0325FE1D8600D6128A /* ContactusViewController.swift */; };
 		E9919A0725FE1DFB00D6128A /* ConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9919A0625FE1DFB00D6128A /* ConfigurationViewController.swift */; };
 		E9919A0A25FE1ECF00D6128A /* ProfileManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9919A0925FE1ECF00D6128A /* ProfileManagerViewController.swift */; };
+		E99BA9CB264A482A00E3A66A /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = E99BA9CA264A482A00E3A66A /* loading.gif */; };
 		E99BD64225FB621900B000FE /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = E99BD63625FB621900B000FE /* LICENSE */; };
 		E99BD64325FB621900B000FE /* README-OBJECTIVE-C.md in Resources */ = {isa = PBXBuildFile; fileRef = E99BD63725FB621900B000FE /* README-OBJECTIVE-C.md */; };
 		E99BD64525FB621900B000FE /* FSPageViewTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99BD63A25FB621900B000FE /* FSPageViewTransformer.swift */; };
@@ -241,7 +241,6 @@
 		E98DB513264838E500E04584 /* box_loading_150.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = box_loading_150.gif; sourceTree = "<group>"; };
 		E98DB5152648396300E04584 /* RandomCallViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomCallViewController.swift; sourceTree = "<group>"; };
 		E98DB51726483CC300E04584 /* bubble_512.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = bubble_512.gif; sourceTree = "<group>"; };
-		E98DB51926483F6C00E04584 /* color_512.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = color_512.gif; sourceTree = "<group>"; };
 		E98F9A0426214F6F00BC75ED /* PopupCollectionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopupCollectionListViewController.swift; sourceTree = "<group>"; };
 		E98F9A502621B5BC00BC75ED /* TodayIsYou.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TodayIsYou.xcdatamodel; sourceTree = "<group>"; };
 		E98F9A682621C09800BC75ED /* DBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBManager.swift; sourceTree = "<group>"; };
@@ -263,6 +262,7 @@
 		E9919A0325FE1D8600D6128A /* ContactusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactusViewController.swift; sourceTree = "<group>"; };
 		E9919A0625FE1DFB00D6128A /* ConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewController.swift; sourceTree = "<group>"; };
 		E9919A0925FE1ECF00D6128A /* ProfileManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManagerViewController.swift; sourceTree = "<group>"; };
+		E99BA9CA264A482A00E3A66A /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		E99BD52525FB490800B000FE /* TodayIsYou.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayIsYou.entitlements; sourceTree = "<group>"; };
 		E99BD63625FB621900B000FE /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		E99BD63725FB621900B000FE /* README-OBJECTIVE-C.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = "README-OBJECTIVE-C.md"; sourceTree = "<group>"; };
@@ -704,7 +704,7 @@
 		E9C2CEDD25F23E47002A1F95 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				E98DB51926483F6C00E04584 /* color_512.gif */,
+				E99BA9CA264A482A00E3A66A /* loading.gif */,
 				E98DB51726483CC300E04584 /* bubble_512.gif */,
 				E98DB513264838E500E04584 /* box_loading_150.gif */,
 				E9BF08982645B2620000F3A5 /* Configuration.storekit */,
@@ -846,11 +846,11 @@
 				E9112DF826356B0C008984A2 /* bell_1.mp3 in Resources */,
 				E985112526394B7E006A6C4D /* todayisyou.p12 in Resources */,
 				E9B97C2A2600FA0200F8D805 /* ContactusCell.xib in Resources */,
-				E98DB51A26483F6C00E04584 /* color_512.gif in Resources */,
 				E9B12DBF25F9B35700FF7B11 /* PhotoColCell.xib in Resources */,
 				E9C2CF1C25F28C9A002A1F95 /* CamTalkColCell.xib in Resources */,
 				E99C91F726144F04004A6528 /* RankTopColCell.xib in Resources */,
 				E98575AC261AB30F00754333 /* StaticData.plist in Resources */,
+				E99BA9CB264A482A00E3A66A /* loading.gif in Resources */,
 				E9FD43712647EBCC00065189 /* ScoreView.xib in Resources */,
 				E99199F725FE165000D6128A /* NoticeCellView.xib in Resources */,
 			);
@@ -1189,7 +1189,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.0.6;
+				CURRENT_PROJECT_VERSION = 1.0.0.9;
 				DEVELOPMENT_TEAM = KCYR65B299;
 				ENABLE_BITCODE = NO;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = NO;
@@ -1273,7 +1273,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.0.6;
+				CURRENT_PROJECT_VERSION = 1.0.0.9;
 				DEVELOPMENT_TEAM = KCYR65B299;
 				ENABLE_BITCODE = NO;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = NO;

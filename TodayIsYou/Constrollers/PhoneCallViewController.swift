@@ -178,13 +178,14 @@ class PhoneCallViewController: MainActionViewController {
         ApiManager.ins.requestPhoneCallPaymentStartPoint(param: param) { response in
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
-                print("phone start point payment success: \(response)");
+                print("==== 1차 차감 완료: \(response)");
             }
             else {
-                print("phone start point payment error");
+                print("==== 오류: 1차 차감: \(response)");
             }
         } fail: { error in
             self.showErrorToast(error)
+            print("==== 오류: 1차 차감: \(error)");
         }
     }
     func requestPaymentEndPoint() {
@@ -198,14 +199,14 @@ class PhoneCallViewController: MainActionViewController {
         ApiManager.ins.requestPhoneCallPaymentEndPoint(param: param) { response in
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
-                print("phone end point payment success: \(response)");
-                AppDelegate.ins.showScoreAlert(toUserId: self.toUserId!, toUserName: self.toUserName)
+                print("==== 2차 차감 완료: \(response)");
             }
             else {
-                print("phone end point payment fail");
+                print("==== 오류: 2차 차감: \(response)");
             }
         } fail: { error in
             self.showErrorToast(error)
+            print("==== 오류: 2차 차감: \(error)");
         }
     }
     
@@ -227,9 +228,15 @@ class PhoneCallViewController: MainActionViewController {
         timer.invalidate()
         timer.fire()
         self.timer = nil
+        
+        self.signalClient.disconnect()
+        self.webRtcClient.close()
         self.requestPaymentEndPoint()
+        AppDelegate.ins.showScoreAlert(toUserId: self.toUserId!, toUserName: self.toUserName)
+        
+        self.completion?()
+        self.navigationController?.popViewController(animated: false)
     }
-    
     func removeWaitingChildVc() {
         if let childVc = watingTimerVc {
             self.myRemoveChildViewController(childViewController: childVc)
@@ -292,16 +299,12 @@ class PhoneCallViewController: MainActionViewController {
                     param["to_user_id"] = self.toUserId
                     param["msg"] = "CAM_NO"
                     ApiManager.ins.requestRejectPhoneTalk(param: param, success: nil, fail: nil)
-                    self.actionPopviewCtrl()
+                    self.stopTimer()
                 }
             }
         }
     }
     
-    func actionPopviewCtrl() {
-        self.navigationController?.popViewController(animated: false)
-        self.completion?()
-    }
     
     ///MARK::push handler
     override func notificationHandler(_ notification: NSNotification) {
@@ -311,8 +314,6 @@ class PhoneCallViewController: MainActionViewController {
             }
             
             if type == .camNo || type == .camCancel {
-                self.stopTimer()
-                
                 if self.presentedViewController != nil {
                     self.presentedViewController?.dismiss(animated: false, completion: nil)
                 }
@@ -427,7 +428,6 @@ extension PhoneCallViewController: SignalClientDelegate {
         self.removeWaitingChildVc()
         AppDelegate.ins.window?.makeBottomTost("상대가 영상채팅 신청을 취소 했습니다!!")
         self.stopTimer()
-        actionPopviewCtrl()
     }
     
     func signalClientDidToRoomOut(_ signalClient: SignalingClient) {
@@ -435,7 +435,6 @@ extension PhoneCallViewController: SignalClientDelegate {
         self.removeWaitingChildVc()
         AppDelegate.ins.window?.makeBottomTost("상대의 영상이 종료 되었습니다!!")
         self.stopTimer()
-        actionPopviewCtrl()
     }
     
     func signalClientDidCallNo(_ signalClient: SignalingClient) {
@@ -443,7 +442,6 @@ extension PhoneCallViewController: SignalClientDelegate {
         self.removeWaitingChildVc()
         AppDelegate.ins.window?.makeBottomTost("상대가 영상채팅을 거절 했습니다.")
         self.stopTimer()
-        actionPopviewCtrl()
     }
     
     func signalClientChatMessage(_ signalClient: SignalingClient, msg: String) {

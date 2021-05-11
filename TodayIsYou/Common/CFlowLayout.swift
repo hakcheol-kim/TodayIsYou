@@ -32,6 +32,8 @@ class CFlowLayout: UICollectionViewFlowLayout {
         super.prepare()
         minimumLineSpacing = lineSpacing
         sectionInset = secInset
+        layoutCache.removeAll()
+        contentHeight = 0
         
         if (layoutCache.isEmpty) {
             let columnWidth = (width-secInset.left - secInset.right - CGFloat(numberOfColumns - 1) * minimumLineSpacing)/CGFloat(numberOfColumns)
@@ -54,7 +56,6 @@ class CFlowLayout: UICollectionViewFlowLayout {
                 let indexPath = IndexPath(item: item, section: 0)
                 
                 let height = delegate.collectionView(collectionView!, heightForItemAtIndexPath: indexPath as NSIndexPath)
-                
                 
                 if item < numberOfColumns {
                     yOffset[column] = yOffset[column] + sectionInset.top

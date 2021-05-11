@@ -102,10 +102,14 @@ class PhotoListViewController: BaseViewController {
                         self.listData.append(contentsOf: result)
                     }
                 }
+                
                 self.collectionView.cr.endHeaderRefresh()
                 if (self.listData.count > 0) {
+                    
                     self.collectionView.isHidden = false
                     self.collectionView.reloadData()
+                    
+                    print("photo list count \(self.listData.count)")
                 }
                 else {
                     self.collectionView.isHidden = true
@@ -150,10 +154,8 @@ extension PhotoListViewController: UICollectionViewDataSource, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoColCell", for: indexPath) as! PhotoColCell
         
-        if indexPath.row < listData.count {
-            let item = listData[indexPath.row]
-            cell.configurationData(item)
-        }
+        let item = listData[indexPath.row]
+        cell.configurationData(item)
         return cell
     }
     

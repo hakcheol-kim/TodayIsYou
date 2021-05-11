@@ -7,115 +7,248 @@
 
 import UIKit
 import SwiftyJSON
-
+import PanModal
 class ExchangeViewController: BaseViewController {
-   @IBOutlet weak var btnOk: UIButton!
-   @IBOutlet weak var safetyView: UIView!
-   @IBOutlet weak var tfMoney: CTextField!
-   @IBOutlet weak var btnBank: UIButton!
-   @IBOutlet weak var tfAccountNum: CTextField!
-   @IBOutlet weak var tfHolderName: CTextField!
-   @IBOutlet weak var tfIdentityNum1: CTextField!
-   @IBOutlet weak var tfIdentityNum2: CTextField!
-   @IBOutlet weak var tfAddress: CTextField!
-   @IBOutlet weak var tvTerm: CTextView!
-   @IBOutlet weak var heightTvTerm: NSLayoutConstraint!
+    @IBOutlet weak var lbStarNotiMsg: UILabel!
+    @IBOutlet weak var btnOk: UIButton!
+    @IBOutlet weak var safetyView: UIView!
+    @IBOutlet weak var tfMoney: CTextField!
+    @IBOutlet weak var lbHintMoney: UILabel!
+    @IBOutlet weak var btnBank: UIButton!
    
-   let toobar = CToolbar.init(barItems: [.up, .down, .keyboardDown])
-   var arrTf:[CTextField]!
-   var yk: String!
-   var tfFocus:CTextField! {
-      didSet {
-         let index:Int = arrTf.firstIndex(of: tfFocus)!
-         if index == 0 {
-            toobar.btnUp?.isEnabled = false
-         }
-         else if index == (arrTf.count-1) {
-            toobar.btnDown?.isEnabled = false
+    @IBOutlet weak var lbHintBank: UILabel!
+    @IBOutlet weak var tfAccountNum: CTextField!
+    @IBOutlet weak var lbHintAccountNum: UILabel!
+    
+    @IBOutlet weak var tfHolderName: CTextField!
+    @IBOutlet weak var lbHintHolderName: UILabel!
+    @IBOutlet weak var tfIdentityNum1: CTextField!
+    @IBOutlet weak var lbHintIdentifier: UILabel!
+    @IBOutlet weak var tfIdentityNum2: CTextField!
+    @IBOutlet weak var tfAddress: CTextField!
+    @IBOutlet weak var lbHintAddress: UILabel!
+    @IBOutlet weak var tvTerm: CTextView!
+    @IBOutlet weak var heightTvTerm: NSLayoutConstraint!
+    @IBOutlet weak var lbRPointMsg: UILabel!
+    @IBOutlet weak var btnCheck: UIButton!
+    @IBOutlet weak var tfBank: UITextField!
+    
+    
+    let toobar = CToolbar.init(barItems: [.up, .down, .keyboardDown])
+    var arrTf:[CTextField]!
+    var yk: String!
+   
+    var tfFocus:CTextField! {
+        didSet {
+            let index:Int = arrTf.firstIndex(of: tfFocus)!
+            if index == 0 {
+                toobar.btnUp?.isEnabled = false
+            }
+            else if index == (arrTf.count-1) {
+                toobar.btnDown?.isEnabled = false
+            }
+            else {
+                toobar.btnUp?.isEnabled = true
+                toobar.btnDown?.isEnabled = true
+            }
+        }
+    }
+    var rPoint:NSNumber = NSNumber(integerLiteral: 0)
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        CNavigationBar.drawBackButton(self, "별 환급 신청", #selector(actionNaviBack))
+        arrTf = [tfMoney, tfAccountNum, tfHolderName, tfIdentityNum1, tfIdentityNum2, tfAddress]
+        
+        
+        for tf in arrTf {
+            tf.inputAccessoryView = toobar
+            tf.delegate = self
+        }
+        
+        self.addTapGestureKeyBoardDown()
+        toobar.addTarget(self, selctor: #selector(onClickedToolbarActions(_:)))
+        requestTerm()
+        
+        if let rp = ShareData.ins.dfsGet(DfsKey.userR) as? NSNumber {
+            rPoint = rp
+        }
+        lbRPointMsg.text = "환급가능 별 : \(rPoint.stringValue.addComma())개(\(rPoint.stringValue.addComma())원)"
+        tfMoney.text = rPoint.stringValue.addComma()
+      
+        requestGetRPoint()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.addKeyboardNotification()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.removeKeyboardNotification()
+    }
+   func requestGetRPoint() {
+      ApiManager.ins.requestGetRPoint(param: ["user_id":ShareData.ins.myId]) { res in
+         let isSuccess = res["isSuccess"].stringValue
+         if isSuccess == "01" {
+            self.rPoint = res["user_r"].numberValue
+            self.tfMoney.text = self.rPoint.stringValue
          }
          else {
-            toobar.btnUp?.isEnabled = true
-            toobar.btnDown?.isEnabled = true
+            self.showErrorToast(res)
          }
-      }
-   }
-   
-   override func viewDidLoad() {
-      super.viewDidLoad()
-      CNavigationBar.drawBackButton(self, "별 환급 신청", #selector(actionNaviBack))
-      arrTf = [tfMoney, tfAccountNum, tfHolderName, tfIdentityNum1, tfIdentityNum2, tfAddress]
-      
-      for tf in arrTf {
-         tf.inputAccessoryView = toobar
-         tf.delegate = self
-      }
-      
-      self.addTapGestureKeyBoardDown()
-      toobar.addTarget(self, selctor: #selector(onClickedToolbarActions(_:)))
-      requestTerm()
-   }
-   
-   override func viewWillAppear(_ animated: Bool) {
-      super.viewWillAppear(animated)
-      self.addKeyboardNotification()
-   }
-   override func viewWillDisappear(_ animated: Bool) {
-      super.viewWillDisappear(animated)
-      self.removeKeyboardNotification()
-   }
-   
-   func requestTerm() {
-      ApiManager.ins.requestServiceTerms(mode: "yk3") { (response) in
-         let isSuccess = response["isSuccess"].stringValue
-         if (isSuccess == "01") {
-            self.yk = response["yk"].stringValue
-            self.decorationUI()
-         }
-         else {
-            self.showErrorToast(response)
-         }
-      } failure: { (error) in
+      } failure: { error in
          self.showErrorToast(error)
       }
-   }
-   func decorationUI() {
-      let newYk = yk.replacingOccurrences(of: "\r\n\r\n", with: "\n")
-      let attr = NSMutableAttributedString(string: newYk)
-      attr.addAttribute(.font, value: UIFont.systemFont(ofSize: tvTerm.font?.pointSize ?? 14), range: NSMakeRange(0, attr.string.length))
-      
-      let paragraph = NSMutableParagraphStyle.init()
-      paragraph.headIndent = 10
-      paragraph.paragraphSpacing = 5
-      attr.addAttribute(.paragraphStyle, value: paragraph, range: NSMakeRange(0, attr.string.length))
-      tvTerm.attributedText = attr
-      let height = tvTerm.sizeThatFits(CGSize(width: tvTerm.contentSize.width, height: CGFloat.greatestFiniteMagnitude)).height
-      heightTvTerm.constant = height + tvTerm.contentInset.top + tvTerm.contentInset.bottom
       
    }
-   @objc func onClickedToolbarActions(_ sender: UIBarButtonItem) {
-      if sender.tag == TAG_TOOL_BAR_UP {
-         let index:Int = arrTf.firstIndex(of: tfFocus)!
-         if (index > 0) {
-            let tf = arrTf[(index-1)]
-            tf.becomeFirstResponder()
-         }
-      }
-      else if sender.tag == TAG_TOOL_BAR_DOWN {
-         let index:Int = arrTf.firstIndex(of: tfFocus)!
-         if (index < arrTf.count) {
-            let tf = arrTf[(index+1)]
-            tf.becomeFirstResponder()
-         }
-      }
-      else if sender.tag == TAG_TOOL_KEYBOARD_DOWN {
-         self.view.endEditing(true)
-      }
-   }
+    func requestTerm() {
+        ApiManager.ins.requestServiceTerms(mode: "yk3") { (response) in
+            let isSuccess = response["isSuccess"].stringValue
+            if (isSuccess == "01") {
+                self.yk = response["yk"].stringValue
+                self.decorationUI()
+            }
+            else {
+                self.showErrorToast(response)
+            }
+        } failure: { (error) in
+            self.showErrorToast(error)
+        }
+    }
+    
+    func decorationUI() {
+        let newYk = yk.replacingOccurrences(of: "\r\n\r\n", with: "\n")
+        let attr = NSMutableAttributedString(string: newYk)
+        attr.addAttribute(.font, value: UIFont.systemFont(ofSize: tvTerm.font?.pointSize ?? 14), range: NSMakeRange(0, attr.string.length))
+        
+        let paragraph = NSMutableParagraphStyle.init()
+        paragraph.headIndent = 10
+        paragraph.paragraphSpacing = 5
+        attr.addAttribute(.paragraphStyle, value: paragraph, range: NSMakeRange(0, attr.string.length))
+        tvTerm.attributedText = attr
+        let height = tvTerm.sizeThatFits(CGSize(width: tvTerm.contentSize.width, height: CGFloat.greatestFiniteMagnitude)).height
+        heightTvTerm.constant = height + tvTerm.contentInset.top + tvTerm.contentInset.bottom
+        
+    }
+    @objc func onClickedToolbarActions(_ sender: UIBarButtonItem) {
+        if sender.tag == TAG_TOOL_BAR_UP {
+            let index:Int = arrTf.firstIndex(of: tfFocus)!
+            if (index > 0) {
+                let tf = arrTf[(index-1)]
+                tf.becomeFirstResponder()
+            }
+        }
+        else if sender.tag == TAG_TOOL_BAR_DOWN {
+            let index:Int = arrTf.firstIndex(of: tfFocus)!
+            if (index < arrTf.count) {
+                let tf = arrTf[(index+1)]
+                tf.becomeFirstResponder()
+            }
+        }
+        else if sender.tag == TAG_TOOL_KEYBOARD_DOWN {
+            self.view.endEditing(true)
+        }
+    }
    @IBAction func onClickedBtnActions(_ sender: UIButton) {
-      if sender == btnOk {
+      if sender == btnBank {
+         guard let banklist = ShareData.ins.getBankList() else {
+            return
+         }
+         let vc = PopupListViewController.initWithType(.normal, "은행을 선택해주세요.", banklist, nil) { vcs, selItem, index in
+            vcs.dismiss(animated: true, completion: nil)
+            guard let selItem = selItem as? String else {
+               return
+            }
+            self.tfBank.text = selItem
+         }
+         self.presentPanModal(vc)
          
       }
+      else if sender == btnCheck {
+         sender.isSelected = !sender.isSelected
+      }
+      else if sender == btnOk {
+         lbHintMoney.text = "환급가능 별 개수를 입력해주세요."
+         lbHintMoney.isHidden = true
+         lbHintBank.isHidden = true
+         lbHintAccountNum.isHidden = true
+         lbHintIdentifier.text = "* 주민번호 및 주소는 세금 신고시에만 사용됩니다."
+         lbHintIdentifier.textColor = RGB(125, 125, 125)
+         lbHintHolderName.isHidden = true
+         
+         guard let text = tfMoney.text, text.isEmpty == false else {
+            lbHintMoney.isHidden = false
+            return
+         }
+         let point:Int = Int(text.getNumberString()!) ?? 0
+         if point > rPoint.intValue {
+            lbHintMoney.text = "보유한 별 개수보다 적게 입력해주세요."
+            lbHintMoney.isHidden = false
+            return
+         }
+         else if point < 10000 {
+            lbHintMoney.isHidden = false
+            return
+         }
+         
+         guard let bankName = tfBank.text, bankName.isEmpty == false else {
+            lbHintBank.isHidden = false
+            return
+         }
+         guard let accountNumer = tfAccountNum.text, accountNumer.isEmpty == false else {
+            lbHintAccountNum.isHidden = false
+            return
+         }
+        guard let holderName = tfHolderName.text, holderName.isEmpty == false else {
+           lbHintHolderName.isHidden = false
+           return
+        }
+         guard let id1 = tfIdentityNum1.text, id1.isEmpty == false else {
+            lbHintIdentifier.text = "주민번호 앞자리를 입력해주세요."
+            lbHintIdentifier.textColor = .red
+            return
+         }
+         guard let id2 = tfIdentityNum1.text, id2.isEmpty == false else {
+            lbHintIdentifier.text = "주민번호 뒷자리를 입력해주세요."
+            lbHintIdentifier.textColor = .red
+            return
+         }
+         guard btnCheck.isSelected == true else {
+            self.showToast("약관을 확인해주세요.")
+            return
+         }
+         
+         var param = [String:Any]()
+         
+         param["user_id"] = ShareData.ins.myId
+         param["bank"] = bankName
+         param["bank_num"] = accountNumer
+         param["out_point"] = point
+         param["jumin1"] = id1
+         param["jumin2"] = id2
+         param["bank_name"] = holderName
+         param["user_addr"] = ""
+         if let user_addr = tfAddress.text {
+            param["user_addr"] = user_addr
+         }
+         
+         ApiManager.ins.requestExchangeCoinToMoney(param: param) { res in
+            let isSuccess = res["isSuccess"].stringValue
+            if isSuccess == "01" {
+               self.showToastWindow("환급 신청이 완료되었습니다.")
+               self.navigationController?.popViewController(animated: true)
+            }
+            else {
+               self.showErrorToast(res)
+            }
+         } failure: { error in
+            self.showErrorToast(error)
+         }
+
+      }
    }
+   
 }
 
 extension ExchangeViewController: UITextFieldDelegate {

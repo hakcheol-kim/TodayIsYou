@@ -33,24 +33,24 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="RsA-4k-pWy">
-                                <rect key="frame" x="84" y="27.5" width="166" height="50"/>
+                                <rect key="frame" x="84" y="27.5" width="214" height="50"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ㅁㅁㅁ" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MNS-fg-S8h">
-                                        <rect key="frame" x="0.0" y="0.0" width="166" height="18"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="214" height="18"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="b4m-HH-V2a">
-                                        <rect key="frame" x="0.0" y="21" width="166" height="29"/>
+                                        <rect key="frame" x="0.0" y="21" width="214" height="29"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="여," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ubS-ex-1cl">
-                                                <rect key="frame" x="0.0" y="0.0" width="166" height="14.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="214" height="14.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="여," textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QDh-E0-mWX">
-                                                <rect key="frame" x="0.0" y="14.5" width="166" height="14.5"/>
+                                                <rect key="frame" x="0.0" y="14.5" width="214" height="14.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <color key="textColor" red="0.57045853140000002" green="0.57047235969999999" blue="0.57046490910000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -59,8 +59,8 @@
                                     </stackView>
                                 </subviews>
                             </stackView>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TFy-4w-tP7" customClass="UIImageViewAligned" customModule="UIImageViewAlignedSwift">
-                                <rect key="frame" x="258" y="32.5" width="40" height="40"/>
+                            <imageView hidden="YES" clipsSubviews="YES" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TFy-4w-tP7" customClass="UIImageViewAligned" customModule="UIImageViewAlignedSwift">
+                                <rect key="frame" x="302" y="32.5" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="ILl-D4-0AF"/>
                                     <constraint firstAttribute="width" secondItem="TFy-4w-tP7" secondAttribute="height" multiplier="1:1" id="gCA-ra-pf9"/>
@@ -71,13 +71,13 @@
                             </imageView>
                             <button opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ke1-b9-Sh3" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
                                 <rect key="frame" x="306" y="32.5" width="40" height="40"/>
-                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Ke1-b9-Sh3" secondAttribute="height" multiplier="1:1" id="Ltg-wo-4ws"/>
                                     <constraint firstAttribute="height" constant="40" id="dNd-lZ-Jts"/>
                                 </constraints>
                                 <inset key="contentEdgeInsets" minX="8" minY="8" maxX="8" maxY="8"/>
-                                <state key="normal" image="message_black_48dp"/>
+                                <state key="normal" image="message_over"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="halfCornerRadius" value="YES"/>
                                 </userDefinedRuntimeAttributes>
@@ -131,7 +131,7 @@
         </designable>
     </designables>
     <resources>
-        <image name="message_black_48dp" width="96" height="96"/>
+        <image name="message_over" width="45" height="45"/>
         <namedColor name="AccentColor">
             <color red="0.90200001001358032" green="0.3919999897480011" blue="0.3919999897480011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

@@ -59,8 +59,14 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
     }
     private func validationCheckTransaction(transaction:SKPaymentTransaction) {
         if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
-            FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
-
+           FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
+//            서버에서 영수증 데이터, 비밀번호 (영수증에 자동 갱신 구독이 포함 된 경우) 및 requestBody에 자세히 설명 된
+//            exclude-old-transactions 키를 사용하여 JSON 객체를 생성합니다. 이 JSON 객체를 HTTP POST 요청의 페이로드로 제출합니다.
+//            샌드 박스에서 앱을 테스트 할 때와 애플리케이션을 검토하는 동안 테스트 환경
+//            URL https://sandbox.itunes.apple.com/verifyReceipt를 사용하십시오. 앱이 App Store에 게시되면 프로덕션
+//            URL https://buy.itunes.apple.com/verifyReceipt를 사용하세요. 이러한 엔드 포인트에 대한 자세한 내용은 verifyReceipt를 참조하세요.
+            
+           
             do {
                 let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
                 print(receiptData)
@@ -69,6 +75,13 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
                 guard let orderId = transaction.transactionIdentifier, receiptString.isEmpty == false  else {
                     return
                 }
+                
+                #if DEBUG
+                let url: String = "https://sandbox.itunes.apple.com/verifyReceipt"
+                #else
+                let url: String = "https://buy.itunes.apple.com/verifyReceipt"
+                #endif
+                
                 
                 let param = ["transactionId": orderId, "receipt": receiptString]
                 self.completion?(param)

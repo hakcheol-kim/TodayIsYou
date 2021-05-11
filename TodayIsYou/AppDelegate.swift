@@ -133,7 +133,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             ivLoading.heightAnchor.constraint(equalToConstant: 50).isActive = true
             ivLoading.widthAnchor.constraint(equalToConstant: 50).isActive = true
             do {
-                let gif = try UIImage(gifName: "color_512.gif")
+                let gif = try UIImage(gifName: "loading.gif")
                 ivLoading.setGifImage(gif)
             }
             catch {
@@ -249,8 +249,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let room_key = data["room_key"].stringValue
                 let from_user_id = data["from_user_id"].stringValue
                 
-                let vc = CamCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
-                self.mainNavigationCtrl.pushViewController(vc, animated: true)
+                if type == .cam {
+                    let vc = CamCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
+                    self.mainNavigationCtrl.pushViewController(vc, animated: true)
+                }
+                else  {
+                    let vc = PhoneCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
+                    self.mainNavigationCtrl.pushViewController(vc, animated: true)
+                }
             }
             else if action == 200 { //터치시 확장
                 if type == .rdCam {
@@ -328,13 +334,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: info.dictionaryObject)
         }
         else if type == .cam {
-            var param:[String:Any] = [:]
             
+            let from_user_id = info["from_user_id"].stringValue
+            var param:[String:Any] = [:]
             param["message_key"] = info["message_key"].stringValue
             param["from_user_id"] = info["from_user_id"].stringValue
             param["room_key"] = info["room_key"].stringValue
-            let user_id = info["user_id"].stringValue
-            param["user_id"] = user_id
+            param["user_id"] =  info["user_id"].stringValue
             
             param["memo"] = "[CAM_TALK]저와 영상 채팅 해요 ^^"
             param["reg_date"] = Date()
@@ -350,7 +356,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
             if notiYn != "N" {
-                let req = ["user_id":user_id]
+                let req = ["user_id":from_user_id]
                 ApiManager.ins.requestGetUserImgTalk(param: req) { (res) in
                     let isSuccess = res["isSuccess"].stringValue
                     if isSuccess == "01" {
@@ -368,12 +374,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         else if type == .phone {
+            let from_user_id = info["from_user_id"].stringValue
+            
             var param:[String:Any] = [:]
             param["message_key"] = info["message_key"].stringValue
             param["from_user_id"] = info["from_user_id"].stringValue
             param["room_key"] = info["room_key"].stringValue
-            let user_id = info["user_id"].stringValue
-            param["user_id"] = user_id
+            param["user_id"] = info["user_id"].stringValue
             param["memo"] = "[PHONE_TALK]저와 음성 통화 해요 ^^"
             param["reg_date"] = Date()
             param["read_yn"] = false
@@ -389,7 +396,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             
             if notiYn != "N" {
-                let req = ["user_id":user_id]
+                let req = ["user_id":from_user_id]
                 ApiManager.ins.requestGetUserImgTalk(param: req) { (res) in
                     let isSuccess = res["isSuccess"].stringValue
                     if isSuccess == "01" {

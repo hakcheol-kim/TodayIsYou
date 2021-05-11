@@ -174,7 +174,19 @@ extension ChattingListViewController: UITableViewDelegate, UITableViewDataSource
         }
         if indexPath.row < listData.count {
             let item = listData[indexPath.row]
-            cell?.configurationData(item)
+            cell?.configurationData(item, completion: { selItem, action in
+                guard let selItem = selItem as? JSON else {
+                    return
+                }
+                if action == 100 {
+                    let vc = RankDetailViewController.instantiateFromStoryboard(.main)!
+                    vc.passData = selItem
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                else {
+                    
+                }
+            })
         }
         
         return cell!

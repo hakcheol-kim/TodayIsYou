@@ -14,8 +14,9 @@ class IntroViewController: UIViewController {
         
         #if DEBUG
         //1. 앱캐쉬에 저장되있닌지 찾는다.
-//        c4f3f037ff94f95fe144fc9aed76f0b6
-        ShareData.ins.dfsSet("c4f3f037ff94f95fe144fc9aed76f0b6", DfsKey.userId)
+        //a52fd10c131f149663a64ab074d5b44b
+        //c4f3f037ff94f95fe144fc9aed76f0b6
+//        ShareData.ins.dfsSet("a52fd10c131f149663a64ab074d5b44b", DfsKey.userId)
 //            KeychainItem.deleteUserIdentifierFromKeychain()
 //            ShareData.ins.dfsRemove(DfsKey.userId)
         #endif
@@ -27,20 +28,21 @@ class IntroViewController: UIViewController {
         else {
             //2. 키체인 영역에 저장된 전화번호 꺼내와 userid 만들어 회원인지 찔러 본다.
             //3. 회원이면 메인, 아니면 로그인 뷰 보냄
-            let userIdentifier = KeychainItem.currentUserIdentifier
-            if userIdentifier.isEmpty == false {
-                let userId = Utility.createUserId(userIdentifier)
-                ShareData.ins.myId = userId
-                self.requestUserInfo()
-            }
-            else {
+            //키체인에 저장하지 않는다. 로그인화면이 있어 빼버림
+//            let userIdentifier = KeychainItem.currentUserIdentifier
+//            if userIdentifier.isEmpty == false {
+//                let userId = Utility.createUserId(userIdentifier)
+//                ShareData.ins.myId = userId
+//                self.requestUserInfo()
+//            }
+//            else {
                 if let checkPermission = ShareData.ins.dfsGet(DfsKey.checkPermission) as? Bool, checkPermission == true {
                     AppDelegate.ins.callLoginVC()
                 }
                 else {
                     AppDelegate.ins.callPermissioVc()
                 }
-            }
+//            }
         }
     }
     

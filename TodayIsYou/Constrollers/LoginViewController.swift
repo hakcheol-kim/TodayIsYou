@@ -199,9 +199,10 @@ class LoginViewController: BaseViewController {
                 self.showToast("존재하지 않는 회원입니다.")
             }
             else if isSuccess == "01" {
-                let userIdentifier = CipherManager.aes128EncrpytToHex(phoneNumber)
-                KeychainItem.saveUserInKeychain(userIdentifier)
-                
+//                let userIdentifier = CipherManager.aes128EncrpytToHex(phoneNumber)
+//                KeychainItem.saveUserInKeychain(userIdentifier)
+                ShareData.ins.dfsSet(newUserId, DfsKey.userId)
+                ShareData.ins.myId = newUserId
                 ShareData.ins.setUserInfo(res)
                 AppDelegate.ins.callMainViewCtrl()
             }

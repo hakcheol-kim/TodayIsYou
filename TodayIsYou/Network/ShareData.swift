@@ -158,4 +158,12 @@ class ShareData: NSObject {
         }
         return array
     }
+    func getBankList() ->[String]? {
+        guard let filePath = Bundle.main.path(forResource: "StaticData", ofType: "plist"),
+              let rootDic = NSDictionary(contentsOfFile: filePath) as? Dictionary<String, Any>,
+              let age = rootDic["bank"] as? [String] else {
+            return nil
+        }
+        return age
+    }
 }

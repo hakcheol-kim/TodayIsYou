@@ -140,7 +140,7 @@ extension LeftSideMenuViewController: UITableViewDelegate, UITableViewDataSource
                     
                     if action == 1 {
                         ShareData.ins.dfsRemove(DfsKey.userId)
-                        KeychainItem.deleteUserIdentifierFromKeychain()
+//                        KeychainItem.deleteUserIdentifierFromKeychain()
                         AppDelegate.ins.callLoginVC()
                     }
                 }

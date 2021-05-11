@@ -18,23 +18,33 @@ class ChattingCell: UITableViewCell {
     @IBOutlet weak var ivThumb: UIImageViewAligned!
     @IBOutlet weak var btnType: CButton!
     @IBOutlet weak var lbCount: Clabel!
+    
+    var data:JSON!
+    var completion:((_ selItem:Any?, _ action:Int) ->Void)?
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        let tap = UITapGestureRecognizer.init(target: self, action: #selector(tapGuestureHandler(_ :)))
+        ivProfile.addGestureRecognizer(tap)
+        
+        let tap2 = UITapGestureRecognizer.init(target: self, action: #selector(tapGuestureHandler(_ :)))
+        ivThumb.addGestureRecognizer(tap2)
     }
-
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
     }
     
-    func configurationData(_ data: JSON?) {
+    func configurationData(_ data: JSON?, completion:@escaping(_ selItem:Any?, _ action:Int) ->Void) {
         guard let data = data else {
             lbTitle.text = ""
             lbSubTitle.text = ""
             ivThumb.isHidden = true
             return
         }
+        self.data = data
         
+        self.completion = completion
         let chat_point = data["chat_point"].intValue //0;
         let confirm = data["confirm"].stringValue //Y;
         let days = data["days"].intValue //2;
@@ -86,7 +96,7 @@ class ChattingCell: UITableViewCell {
 //        yyyy-MM-dd'T'HH:mm:ss.SSS'Z
         
         lbMsg.text = ""
-        
+        ivThumb.isHidden = true
         if let regDate = df.date(from: msg_reg_date) {
             var tStr = ""
             let curDate = Date()
@@ -120,5 +130,16 @@ class ChattingCell: UITableViewCell {
             }
         }
     }
-    
+
+    @objc func tapGuestureHandler(_ gesture:UITapGestureRecognizer) {
+        guard let tapView = gesture.view  else {
+            return
+        }
+        if tapView == ivProfile {
+            self.completion?(self.data, 100)
+        }
+        else if tapView == ivThumb {
+            self.completion?(self.data, 101)
+        }
+    }
 }

@@ -19,8 +19,6 @@ class MainViewController: BaseViewController {
     @IBOutlet weak var btnRocket: UIButton!
     @IBOutlet weak var svItems: UIStackView!
     
-    let colorTabBtnNor = RGB(248, 24, 148)
-    let colorTabBtnSel = RGB(253, 165, 15)
     var oldSelIndex: Int = -1
     var selectedVc: UIViewController?
     var videoSortType: SortedType = .total
@@ -30,21 +28,66 @@ class MainViewController: BaseViewController {
         didSet {
             for btn in btnTabs {
                 if let ivIcon = btn.viewWithTag(100) as? UIImageView {
-                    ivIcon.image = ivIcon.image!.withRenderingMode(UIImage.RenderingMode.alwaysTemplate)
+                    
                     if (selIndex == btn.tag) {
-                        ivIcon.tintColor = colorTabBtnSel
+//                        ivIcon.tintColor = colorTabBtnSel
+                        switch btn.tag {
+                            case 0:
+                                ivIcon.image = UIImage(named: "cam_call_over")
+                                break
+                            case 1:
+                                ivIcon.image = UIImage(named: "talk_over")
+                                break
+                            case 2:
+                                ivIcon.image = UIImage(named: "photo_over")
+                                break
+                            case 3:
+                                ivIcon.image = UIImage(named: "rank_over")
+                                break
+                            case 4:
+                                ivIcon.image = UIImage(named: "message_over")
+                                break
+                            case 5:
+                                ivIcon.image = UIImage(named: "setting_over")
+                                break
+                            default:
+                                break
+                        }
                     }
                     else {
-                        ivIcon.tintColor = colorTabBtnNor
+//                        ivIcon.tintColor = colorTabBtnNor
+                        
+                        switch btn.tag {
+                            case 0:
+                                ivIcon.image = UIImage(named: "cam_call")
+                                break
+                            case 1:
+                                ivIcon.image = UIImage(named: "talk")
+                                break
+                            case 2:
+                                ivIcon.image = UIImage(named: "photo")
+                                break
+                            case 3:
+                                ivIcon.image = UIImage(named: "rank")
+                                break
+                            case 4:
+                                ivIcon.image = UIImage(named: "message")
+                                break
+                            case 5:
+                                ivIcon.image = UIImage(named: "setting")
+                                break
+                            default:
+                                break
+                        }
                     }
                     
                 }
                 if let lbTitle = btn.viewWithTag(101) as? UILabel {
                     if selIndex == btn.tag {
-                        lbTitle.textColor = colorTabBtnSel
+                        lbTitle.textColor = RGB(230, 100, 100)
                     }
                     else {
-                        lbTitle.textColor = colorTabBtnNor
+                        lbTitle.textColor = UIColor.label
                     }
                 }
             }
@@ -137,9 +180,10 @@ class MainViewController: BaseViewController {
         setupSideMenu()
         updateMenus()
         self.requestMyHomePoint()
+        
+        
         btnRocket.layer.cornerRadius = btnRocket.bounds.height/2
         btnPlus.layer.cornerRadius = btnPlus.bounds.height/2
-        
         
     }
     override func viewWillAppear(_ animated: Bool) {

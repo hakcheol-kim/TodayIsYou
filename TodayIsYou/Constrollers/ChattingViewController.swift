@@ -27,6 +27,7 @@ class ChattingViewController: MainActionViewController {
     @IBOutlet weak var heightKeyboardAccoryview: NSLayoutConstraint!
     @IBOutlet weak var bottomSafeKeybardAccoryView: NSLayoutConstraint!
     @IBOutlet weak var heightTextView: NSLayoutConstraint!
+    @IBOutlet weak var btnGift: UIButton!
     
     var passData:JSON!
     var listData:[Any] = []
@@ -56,9 +57,11 @@ class ChattingViewController: MainActionViewController {
         CNavigationBar.drawRight(self, nil, "차단", 2000, #selector(onClickedBtnActions(_:)))
         CNavigationBar.drawRight(self, nil, "삭제", 2001, #selector(onClickedBtnActions(_:)))
         CNavigationBar.drawRight(self, nil, "영상", 2002, #selector(onClickedBtnActions(_:)))
-//        if "남" == ShareData.ins.mySex.rawValue  {
-//            CNavigationBar.drawRight(self, nil, "선물", 2003, #selector(onClickedBtnActions(_:)))
-//        }
+        
+        btnGift.isHidden = true
+        if "남" == ShareData.ins.mySex.rawValue  {
+            btnGift.isHidden = false
+        }
         
         let tap = UITapGestureRecognizer.init(target: self, action: #selector(didTapHandler(_ :)))
         self.view.addGestureRecognizer(tap)
@@ -333,7 +336,7 @@ class ChattingViewController: MainActionViewController {
             self.selUser = passData
             self.checkCamTalk()
         }
-        else if sender.tag == 2003 {
+        else if sender == btnGift {
             self.resetKeyboadDown()
             print("선물")
             var myPoint = ShareData.ins.myPoint?.intValue ?? 0
@@ -394,6 +397,19 @@ class ChattingViewController: MainActionViewController {
                         if isSuccess == "01" {
                             let msg = "\(giftPoint)".addComma()+" 별(P)를 선물했습니다."
                             self.showToast(msg)
+                            
+                            param["reg_date"] = Date()
+                            param["read_yn"] = true
+                            param["to_user_name"] = self.toUserName!
+                            param["from_user_name"] = ""
+                            param["memo"] = "🎁 \(msg)"
+                            param["type"] = 1
+                            param["message_key"] = self.messageKey
+                            DBManager.ins.insertChatMessage(param) { (success, error) in
+                                if success {
+                                    self.getChatMessageFromDB()
+                                }
+                            }
                         }
                         else {
                             self.showErrorToast(res)
@@ -634,6 +650,11 @@ extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
 //                    chat.height = Double(height)
                     self.tblView.beginUpdates()
                     self.tblView.endUpdates()
+                }
+                else if index == 101 || index == 102 {
+                    self.resetKeyboadDown()
+                    self.selUser = self.passData
+                    self.checkCamTalk()
                 }
             }
             cell = tmpCell

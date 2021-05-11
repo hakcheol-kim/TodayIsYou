@@ -25,7 +25,7 @@ class ChattingLeftCell: UITableViewCell {
     
     let calendar = Calendar.init(identifier: .gregorian)
     let df = CDateFormatter()
-
+    var chat:ChatMessage!
     var didClickedClosure:((_ selData:Any?, _ actionIdx: Int) -> Void)?
     
     override func awakeFromNib() {
@@ -37,18 +37,22 @@ class ChattingLeftCell: UITableViewCell {
         
         ivFile.layer.cornerRadius = 16
         ivFile.clipsToBounds = true
+        
+        let tap2 = UITapGestureRecognizer.init(target: self, action: #selector(tapGesuterHandler(_ :)))
+        ivBgView.addGestureRecognizer(tap2)
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+    
     func configurationData(_ data: ChatMessage?, _ profile_name: String? = nil) {
         guard let chat = data else {
             lbMessage.text = ""
             lbDate.text = ""
             return
         }
-        
+        self.chat = chat
         ivIcon.layer.cornerRadius = 18
         
         ivBgView.backgroundColor = UIColor.clear
@@ -58,12 +62,13 @@ class ChattingLeftCell: UITableViewCell {
         
         lbMessage.attributedText = nil
         
+        ivBgView.accessibilityValue = nil
         if let memo = chat.memo {
             var attr:NSMutableAttributedString!
             if memo.hasPrefix("[CAM_TALK]") == true {
                 let msg = memo.replacingOccurrences(of: "[CAM_TALK]", with: "")
                 attr = NSMutableAttributedString.init(string: msg)
-                
+                ivBgView.accessibilityValue = "CAM_TALK"
                 if let img = UIImage(named: "cam_icon")?.withRenderingMode(.alwaysTemplate) {
                     let attatch = NSTextAttachment.init(image: img)
                     attatch.bounds = CGRect(x: 0, y: -4, width: 16, height: 16)
@@ -74,7 +79,7 @@ class ChattingLeftCell: UITableViewCell {
             else if memo.hasPrefix("[PHONE_TALK]") == true {
                 let msg = memo.replacingOccurrences(of: "[PHONE_TALK]", with: "")
                 attr = NSMutableAttributedString.init(string: msg)
-                
+                ivBgView.accessibilityValue = "PHONE_TALK"
                 if let img = UIImage(named: "phone")?.withRenderingMode(.alwaysTemplate) {
                     let attatch = NSTextAttachment.init(image: img)
                     attatch.bounds = CGRect(x: 0, y: -4, width: 16, height: 16)
@@ -144,5 +149,18 @@ class ChattingLeftCell: UITableViewCell {
         if gesture.view == ivFile {
             self.didClickedClosure?(ivFile.accessibilityValue, 1)
         }
+        else if gesture.view == ivBgView {
+            guard let value = gesture.view?.accessibilityValue, value.isEmpty == false else {
+                return
+            }
+            
+            if value == "CAM_TALK" {
+                self.didClickedClosure?(value, 101)
+            }
+            else if value == "PHONE_TALK" {
+                self.didClickedClosure?(value, 102)
+            }
+        }
     }
+    
 }

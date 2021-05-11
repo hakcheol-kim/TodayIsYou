@@ -206,15 +206,25 @@ class ApiManager: NSObject {
             failure?(error)
         }
     }
-    /// 별 환급 요청
+    /// R Point 조회
     ///- user_id:
-    func requestExchangeCoinToMoney(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+    func requestGetRPoint(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
         NetworkManager.ins.request(.post, "/api/talk/getR.json", clientPara(param)) { (response) in
             success?(response)
         } failure: { (error) in
             failure?(error)
         }
     }
+    /// 별 환급 요청
+    ///- user_id:
+    func requestExchangeCoinToMoney(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/insertBank.do", param, URLEncoding.queryString) { (response) in
+            success?(response)
+        } failure: { (error) in
+            failure?(error)
+        }
+    }
+    
     /// 신고하기
     ///- user_id:, to_user_id:, to_user_name, memo: o - 설정에서 입력<br/>ㅇ
     func requestReport(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
@@ -597,7 +607,7 @@ class ApiManager: NSObject {
     }
     //포인트 충전 요청
     func requestSaveAppPoint(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
-        NetworkManager.ins.request(.post, "/api/talk/saveInAppPoint.do", param) { res in
+        NetworkManager.ins.request(.post, "/api/talk/saveInAppPoint.do", param, URLEncoding.queryString) { res in
             success?(res)
         } failure: { error in
             fail?(error)

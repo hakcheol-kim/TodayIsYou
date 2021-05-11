@@ -64,15 +64,14 @@ class PointPurchaseViewController: BaseViewController {
                 return
             }
 
-            
             var param = [String:Any]()
-            param["user_id"] = ShareData.ins.myId
-            param["app_type"] = appType
-            param["productId"] = product.rawValue
-            param["developerPayload"] = payload
-            param["orderId"] = transactionId
-            param["purchaseToken"] = receipt
-            param["packageName"] = Bundle.main.bundleIdentifier
+            param["user_id"]  = ShareData.ins.myId
+            param["productId"]  = product.rawValue  //삼품코드
+            param["app_type"]  = appType //어플종류
+            param["point_key"]  = "GPA.\(transactionId)" //주문번호 아이폰은 GPA. 붙인다 서버 구분하기 위해
+            param["developerPayload"]  = payload //서버에서 생성한 payload sequence
+            param["purchaseToken"]  = receipt
+            param["packageName"]  = Bundle.main.bundleIdentifier
             
             self?.requestSaveInAppPoint(param)
         }
