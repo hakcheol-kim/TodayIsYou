@@ -11,8 +11,7 @@ import CRRefresh
 
 class CamTalkListViewController: MainActionViewController {
     
-    @IBOutlet weak var centerSelMarkView: NSLayoutConstraint!
-    @IBOutlet weak var btnListType: CButton!
+    @IBOutlet weak var btnListType: UIButton!
     @IBOutlet weak var btnFemail: CButton!
     @IBOutlet weak var btnMail: CButton!
     @IBOutlet weak var btnTotal: CButton!
@@ -35,6 +34,12 @@ class CamTalkListViewController: MainActionViewController {
         super.viewDidLoad()
         
         self.view.layoutIfNeeded()
+        
+        
+        self.listType = AppDelegate.ins.mainViewCtrl.videoListType
+        if self.listType == .collection {
+            btnListType.isSelected = true
+        }
         
         decorationUI()
         toggleListType()
@@ -97,16 +102,18 @@ class CamTalkListViewController: MainActionViewController {
         }
     }
     func toggleListType() {
+        //메모리 세이브 리스트 타입
+        
         if listType == .collection {
-            btnListType.isSelected = true
-            centerSelMarkView.constant = 15
+//            btnListType.isSelected = true
+//            centerSelMarkView.constant = 15
             
             collectionView.isHidden = false
             tblView.isHidden = true
         }
         else {
-            btnListType.isSelected = false
-            centerSelMarkView.constant = -15
+//            btnListType.isSelected = false
+//            centerSelMarkView.constant = -15
             
             collectionView.isHidden = true
             tblView.isHidden = false
@@ -117,14 +124,15 @@ class CamTalkListViewController: MainActionViewController {
     
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         if (sender == btnListType) {
-            btnListType.isSelected = !sender.isSelected
+            sender.isSelected = !sender.isSelected
             if (btnListType.isSelected) {
                 self.listType = .collection
             }
             else {
                 self.listType = .table
             }
-            toggleListType()
+            AppDelegate.ins.mainViewCtrl.videoListType = self.listType
+            self.toggleListType()
             self.dataRest()
         }
         else if (sender == btnTotal) {
@@ -148,11 +156,12 @@ class CamTalkListViewController: MainActionViewController {
         pageNum = 1
         pageEnd = false
         requestCamTalkList()
-        if self.listType == .table, listData.count > 0 {
-            self.tblView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+        if self.listType == .table {
+            self.tblView.setContentOffset(CGPoint.zero, animated: true)
         }
         else if listData.count > 0 {
-            self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+            self.collectionView.setContentOffset(CGPoint.zero, animated: true)
+//            self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         }
     }
     func addData() {

@@ -17,12 +17,12 @@ class ConfigurationViewController: BaseViewController {
     @IBOutlet weak var btnUpdate: UIButton!
     @IBOutlet weak var btnExit: UIButton!
     
+    @IBOutlet weak var testSwitch: UISwitch!
     var user: JSON!
     var notiYn:String = "A"
     override func viewDidLoad() {
         super.viewDidLoad()
         CNavigationBar.drawBackButton(self, "설정", #selector(actionNaviBack))
-        
         self.reqeustGetUserInfo()
     }
     
