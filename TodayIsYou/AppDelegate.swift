@@ -551,18 +551,35 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 }
 
 extension AppDelegate: MessagingDelegate {
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        guard let fcmToken = fcmToken else {
-            print("===== error: fcm token key not receive")
-            return
-        }
-        print("==== fcm token: \(fcmToken)")
-        guard let userId = ShareData.ins.dfsGet(DfsKey.userId) else {
+    func requestUpdateFcmToken() {
+        guard let userId = ShareData.ins.dfsGet(DfsKey.userId), let fcmToken = Messaging.messaging().fcmToken else {
             return
         }
         let param = ["fcm_token":fcmToken, "user_id": userId]
+        ApiManager.ins.requestUpdateFcmToken(param: param) { (res) in
+            if res["isSuccess"].stringValue == "01"{
+            }
+            else {
+                self.window?.makeToast("fcm token update error")
+            }
+        } failure: { (error) in
+            self.window?.makeToast("fcm token update error")
+        }
+    }
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        guard let _ = fcmToken else {
+            print("===== error: fcm token key not receive")
+            return
+        }
+        
+        guard let _ = ShareData.ins.dfsGet(DfsKey.userId) else {
+            return
+        }
+        self.requestUpdateFcmToken()
+        
+//        print("==== fcm token: \(fcmToken)")
 //        ApiManager.ins.requestReigstPushToken(param: ["fcm_token":fcmToken]) { (res) in
-//
 //            if res["isSuccess"].stringValue == "01" {
 //                let fcm_cnt = res["fcm_cnt"].intValue
 //                if fcm_cnt > 1 {
@@ -574,16 +591,6 @@ extension AppDelegate: MessagingDelegate {
 //        } failure: { (error) in
 //            self.window?.makeToast("fcm token update error")
 //        }
-
-        ApiManager.ins.requestUpdateFcmToken(param: param) { (res) in
-            if res["isSuccess"].stringValue == "01"{
-            }
-            else {
-                self.window?.makeToast("fcm token update error")
-            }
-        } failure: { (error) in
-            self.window?.makeToast("fcm token update error")
-        }
     }
 }
 

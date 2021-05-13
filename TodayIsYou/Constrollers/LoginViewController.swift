@@ -6,21 +6,25 @@
 //
 
 import UIKit
-class LoginViewController: BaseViewController {
+class LoginViewController: SocialLoginViewController {
+    @IBOutlet weak var svPhoneLogin: UIStackView!
+    @IBOutlet weak var svSocialLogin: UIStackView!
     
     @IBOutlet weak var tfPhone: UITextField!
     @IBOutlet weak var btnPhone: UIButton!
     @IBOutlet weak var lbHintPhone: UILabel!
     @IBOutlet weak var underLinePhone: UIView!
-    
     @IBOutlet weak var tfAuth: UITextField!
     @IBOutlet weak var btnAuth: UIButton!
     @IBOutlet weak var lbHintAuth: UILabel!
     @IBOutlet weak var underLineAuth: UIView!
     @IBOutlet weak var btnSignup: CButton!
     @IBOutlet weak var btnReset: CButton!
-    
     @IBOutlet weak var btnSignin: CButton!
+    
+    @IBOutlet weak var btnApple: CButton!
+    
+    var isKr = false
     let toolBar = CToolbar.init(barItems: [.keyboardDown])
     var timer: Timer?
     var authCode:String!
@@ -29,27 +33,41 @@ class LoginViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tfPhone.inputAccessoryView = toolBar
-        tfAuth.inputAccessoryView = toolBar
-        toolBar.addTarget(self, selctor: #selector(onClickedBtnAction(_:)))
-        lbHintPhone.text = ""
-        lbHintAuth.text = ""
+        if Locale.current.languageCode == "ko" {
+            isKr = true
+        }
         
-        self.addTapGestureKeyBoardDown()
-        btnPhone.titleLabel?.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: .regular)
+        if isKr {
+            svPhoneLogin.isHidden = false
+            svSocialLogin.isHidden = true
+            tfPhone.inputAccessoryView = toolBar
+            tfAuth.inputAccessoryView = toolBar
+            toolBar.addTarget(self, selctor: #selector(onClickedBtnAction(_:)))
+            lbHintPhone.text = ""
+            lbHintAuth.text = ""
+            self.addTapGestureKeyBoardDown()
+            btnPhone.titleLabel?.font = UIFont.monospacedDigitSystemFont(ofSize: 13, weight: .regular)
+        }
+        else {
+            svPhoneLogin.isHidden = true
+            svSocialLogin.isHidden = false
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.isHidden = true
-        self.addKeyboardNotification()
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        if isKr {
+            self.addKeyboardNotification()
+        }
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.removeKeyboardNotification()
-        self.stopTimer()
+        if isKr {
+            self.removeKeyboardNotification()
+            self.stopTimer()
+        }
     }
-    
     
     func stopTimer() {
         if let timer = self.timer {
@@ -171,7 +189,6 @@ class LoginViewController: BaseViewController {
                 self.btnAuth.backgroundColor = RGB(230, 230, 230)
                 
                 AppDelegate.ins.stopIndicator()
-                
 //                self.btnSignin.sendActions(for: .touchUpInside)
             }
         }
@@ -182,21 +199,54 @@ class LoginViewController: BaseViewController {
                 return
             }
             
-            self.checkNewUser(phoneNumber)
+            let user = ["joinType": "phone", "userId":phoneNumber]
+            self.checkNewUser(user)
         }
         else if sender == btnSignup {
+            var user = [String:Any]()
+            if isKr {
+                user = ["joinType": "phone"]
+            }
             let vc = JoinTermsAgreeViewController.instantiateFromStoryboard(.login)!
+            vc.user = user
             self.navigationController?.pushViewController(vc, animated: true)
+        }
+        else if sender == btnApple {
+            self.loginWithType(.apple) { [weak self] (user, error) in
+                guard let user = user, let _ = user["joinType"] as? String, let _ = user["userId"] as? String else {
+                    return
+                }
+                
+                self?.checkNewUser(user)
+            }
         }
     }
     
-    func checkNewUser(_ phoneNumber:String) {
-        let newUserId = Utility.createUserId(phoneNumber)
+    func checkNewUser(_ user:[String:Any]) {
+        
+        let joinType = user["joinType"] as! String
+        let userId = user["userId"] as! String
+        
+        var newUserId = ""
+        if joinType == "phone" {
+            newUserId = Utility.createUserId(userId)
+        }
+        else {
+            let id = "\(joinType)|\(userId)"
+            newUserId = Utility.createUserId(id)
+        }
+        
         ApiManager.ins.requestUerInfo(param: ["user_id": newUserId]) { (res) in
             let isSuccess = res["isSuccess"]
             if isSuccess == "00" { //신규
-//                CAlertViewController.show(type: .alert, title: nil, message: "존재하지 않는 회원입니다.", actions: [.ok], completion: nil)
-                self.showToast("존재하지 않는 회원입니다.")
+                if joinType == "phone" {
+                    self.showToast("존재하지 않는 회원입니다.")
+                }
+                else {
+                    let vc = JoinTermsAgreeViewController.instantiateFromStoryboard(.login)!
+                    vc.user = user
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
             }
             else if isSuccess == "01" {
 //                let userIdentifier = CipherManager.aes128EncrpytToHex(phoneNumber)

@@ -29,7 +29,7 @@ class JoinTermsAgreeViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     
     @IBAction func onClickedBtnActions(_ sender: UIButton) {

@@ -181,7 +181,7 @@ class MainViewController: BaseViewController {
         updateMenus()
         self.requestMyHomePoint()
         
-        
+        AppDelegate.ins.requestUpdateFcmToken()
         btnRocket.layer.cornerRadius = btnRocket.bounds.height/2
         btnPlus.layer.cornerRadius = btnPlus.bounds.height/2
         

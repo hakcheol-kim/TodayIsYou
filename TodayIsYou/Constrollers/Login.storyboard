@@ -43,25 +43,25 @@
                                                 <edgeInsets key="layoutMargins" top="30" left="20" bottom="30" right="20"/>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7Oe-ml-yeO">
-                                                <rect key="frame" x="0.0" y="112.33333333333331" width="375" height="621.66666666666674"/>
+                                                <rect key="frame" x="0.0" y="112.33333333333337" width="375" height="519"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zJS-CR-hBf">
-                                                        <rect key="frame" x="20" y="20" width="335" height="305.33333333333331"/>
+                                                        <rect key="frame" x="24" y="24" width="327" height="305.33333333333331"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Jyy-0S-Ibw">
-                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="81.666666666666671"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="327" height="81.666666666666671"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전화번호" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vij-TX-CLC">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="15.666666666666666"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="327" height="15.666666666666666"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gYx-kk-WmO">
-                                                                        <rect key="frame" x="0.0" y="15.666666666666657" width="335" height="45"/>
+                                                                        <rect key="frame" x="0.0" y="15.666666666666657" width="327" height="45"/>
                                                                         <subviews>
                                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="- 없이 입력해주세요." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="dUU-2I-Bpv">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="257" height="45"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="249" height="45"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" priority="999" constant="45" id="csM-mj-MbK"/>
                                                                                 </constraints>
@@ -72,10 +72,10 @@
                                                                                 </connections>
                                                                             </textField>
                                                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="64G-by-0IB">
-                                                                                <rect key="frame" x="265" y="4.6666666666666572" width="70" height="36"/>
+                                                                                <rect key="frame" x="257" y="4.6666666666666572" width="70" height="36"/>
                                                                                 <color key="backgroundColor" name="AccentColor"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="width" constant="70" id="jaZ-kR-c7s"/>
+                                                                                    <constraint firstAttribute="width" priority="999" constant="70" id="jaZ-kR-c7s"/>
                                                                                 </constraints>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                 <inset key="contentEdgeInsets" minX="12" minY="10" maxX="12" maxY="10"/>
@@ -96,14 +96,14 @@
                                                                         </constraints>
                                                                     </stackView>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L1v-8n-JLj">
-                                                                        <rect key="frame" x="0.0" y="60.666666666666657" width="335" height="1"/>
+                                                                        <rect key="frame" x="0.0" y="60.666666666666657" width="327" height="1"/>
                                                                         <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" priority="999" constant="1" id="5rF-Su-x9W"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전화번호를 입력해주세요." textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sk1-wo-gPQ">
-                                                                        <rect key="frame" x="0.0" y="61.666666666666657" width="335" height="20"/>
+                                                                        <rect key="frame" x="0.0" y="61.666666666666657" width="327" height="20"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" priority="999" constant="20" id="Aae-kx-kJl"/>
                                                                         </constraints>
@@ -114,19 +114,19 @@
                                                                 </subviews>
                                                             </stackView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Pcf-sO-AO8">
-                                                                <rect key="frame" x="0.0" y="81.666666666666657" width="335" height="97.666666666666657"/>
+                                                                <rect key="frame" x="0.0" y="81.666666666666657" width="327" height="97.666666666666657"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="인증번호" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gP6-uv-REj">
-                                                                        <rect key="frame" x="0.0" y="16" width="335" height="15.666666666666664"/>
+                                                                        <rect key="frame" x="0.0" y="16" width="327" height="15.666666666666664"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ijd-ch-xC5">
-                                                                        <rect key="frame" x="0.0" y="31.666666666666686" width="335" height="45"/>
+                                                                        <rect key="frame" x="0.0" y="31.666666666666686" width="327" height="45"/>
                                                                         <subviews>
                                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="인증번호를 입력해주세요." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="LbA-7O-Jqv">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="257" height="45"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="249" height="45"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" priority="999" constant="45" id="YM3-0o-U3P"/>
                                                                                 </constraints>
@@ -137,10 +137,10 @@
                                                                                 </connections>
                                                                             </textField>
                                                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W6J-ED-L5b">
-                                                                                <rect key="frame" x="265" y="4.6666666666666288" width="70" height="36"/>
+                                                                                <rect key="frame" x="257" y="4.6666666666666288" width="70" height="36"/>
                                                                                 <color key="backgroundColor" name="AccentColor"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="width" constant="70" id="PDo-dJ-S1D"/>
+                                                                                    <constraint firstAttribute="width" priority="999" constant="70" id="PDo-dJ-S1D"/>
                                                                                 </constraints>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                                 <inset key="contentEdgeInsets" minX="12" minY="10" maxX="12" maxY="10"/>
@@ -157,18 +157,18 @@
                                                                             </button>
                                                                         </subviews>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" constant="45" id="2X4-0K-Qsf"/>
+                                                                            <constraint firstAttribute="height" priority="999" constant="45" id="2X4-0K-Qsf"/>
                                                                         </constraints>
                                                                     </stackView>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yau-vo-Ho5">
-                                                                        <rect key="frame" x="0.0" y="76.666666666666686" width="335" height="1"/>
+                                                                        <rect key="frame" x="0.0" y="76.666666666666686" width="327" height="1"/>
                                                                         <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" priority="999" constant="1" id="U7z-Zd-o6S"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="인증번호가 유효하지 않습니다." textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V9b-ft-mqC">
-                                                                        <rect key="frame" x="0.0" y="77.666666666666686" width="335" height="20"/>
+                                                                        <rect key="frame" x="0.0" y="77.666666666666686" width="327" height="20"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" priority="999" constant="20" id="jov-gU-gpc"/>
                                                                         </constraints>
@@ -180,20 +180,20 @@
                                                                 <edgeInsets key="layoutMargins" top="16" left="0.0" bottom="0.0" right="0.0"/>
                                                             </stackView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="4v8-ck-k9v">
-                                                                <rect key="frame" x="0.0" y="179.33333333333334" width="335" height="78.000000000000028"/>
+                                                                <rect key="frame" x="0.0" y="179.33333333333334" width="327" height="78.000000000000028"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kdn-MF-Z6N">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="227" height="44"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="219" height="44"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ur-RD-Fs1" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
-                                                                        <rect key="frame" x="235" y="0.0" width="100" height="44"/>
+                                                                        <rect key="frame" x="227" y="0.0" width="100" height="44"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="width" constant="100" id="oIX-BB-6aw"/>
-                                                                            <constraint firstAttribute="height" constant="44" id="oYk-HA-Jao"/>
+                                                                            <constraint firstAttribute="width" priority="999" constant="100" id="oIX-BB-6aw"/>
+                                                                            <constraint firstAttribute="height" priority="999" constant="44" id="oYk-HA-Jao"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                         <color key="tintColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -212,7 +212,7 @@
                                                                 <edgeInsets key="layoutMargins" top="0.0" left="0.0" bottom="34" right="0.0"/>
                                                             </stackView>
                                                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NWQ-E5-Sfn" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="257.33333333333337" width="335" height="48"/>
+                                                                <rect key="frame" x="0.0" y="257.33333333333337" width="327" height="48"/>
                                                                 <color key="backgroundColor" red="0.91372549020000005" green="0.37254901959999998" blue="0.36862745099999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="48" id="lcl-Gf-fdH"/>
@@ -231,19 +231,19 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="GnX-dq-u09">
-                                                        <rect key="frame" x="20" y="325.33333333333337" width="335" height="155.66666666666663"/>
+                                                        <rect key="frame" x="24" y="329.33333333333337" width="327" height="155.66666666666663"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="아직 회원이 아니신가요?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hn2-8y-SbC">
-                                                                <rect key="frame" x="0.0" y="79.999999999999943" width="335" height="15.666666666666671"/>
+                                                                <rect key="frame" x="0.0" y="79.999999999999943" width="327" height="15.666666666666671"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                                 <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wlP-aj-DCB" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
-                                                                <rect key="frame" x="0.0" y="107.66666666666669" width="335" height="48"/>
+                                                                <rect key="frame" x="0.0" y="107.66666666666669" width="327" height="48"/>
                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="height" constant="48" id="8EX-VG-clM"/>
+                                                                    <constraint firstAttribute="height" priority="999" constant="48" id="8EX-VG-clM"/>
                                                                 </constraints>
                                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                                 <state key="normal" title="회원가입">
@@ -266,15 +266,39 @@
                                                         </subviews>
                                                         <edgeInsets key="layoutMargins" top="80" left="0.0" bottom="0.0" right="0.0"/>
                                                     </stackView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u97-J6-Ouh">
-                                                        <rect key="frame" x="20" y="481.00000000000006" width="335" height="106.66666666666669"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
                                                 </subviews>
-                                                <edgeInsets key="layoutMargins" top="20" left="20" bottom="34" right="20"/>
+                                                <edgeInsets key="layoutMargins" top="24" left="24" bottom="34" right="24"/>
                                             </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="KmY-Y6-WLd">
+                                                <rect key="frame" x="0.0" y="631.33333333333337" width="375" height="96"/>
+                                                <subviews>
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wL-lL-BYu" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
+                                                        <rect key="frame" x="24" y="24" width="327" height="48"/>
+                                                        <color key="backgroundColor" systemColor="labelColor"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" priority="999" constant="48" id="0eg-tf-2CT"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                        <inset key="imageEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        <state key="normal" title="애플 로그인" image="ico_apple">
+                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="halfCornerRadius" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="onClickedBtnAction:" destination="kVx-3f-niI" eventType="touchUpInside" id="zX3-YG-k01"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <edgeInsets key="layoutMargins" top="24" left="24" bottom="24" right="24"/>
+                                            </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u97-J6-Ouh">
+                                                <rect key="frame" x="0.0" y="727.33333333333337" width="375" height="6.6666666666666288"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                     </stackView>
                                 </subviews>
@@ -299,6 +323,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="btnApple" destination="4wL-lL-BYu" id="Msx-aO-hQh"/>
                         <outlet property="btnAuth" destination="W6J-ED-L5b" id="fDN-Vc-cj3"/>
                         <outlet property="btnPhone" destination="64G-by-0IB" id="cqq-xE-dNx"/>
                         <outlet property="btnReset" destination="0ur-RD-Fs1" id="NZs-eT-HdQ"/>
@@ -306,6 +331,8 @@
                         <outlet property="btnSignup" destination="wlP-aj-DCB" id="FGV-oC-dhH"/>
                         <outlet property="lbHintAuth" destination="V9b-ft-mqC" id="thq-Qk-RfP"/>
                         <outlet property="lbHintPhone" destination="sk1-wo-gPQ" id="91L-1l-hP7"/>
+                        <outlet property="svPhoneLogin" destination="7Oe-ml-yeO" id="BZy-Ls-CsV"/>
+                        <outlet property="svSocialLogin" destination="KmY-Y6-WLd" id="pDL-ks-BaZ"/>
                         <outlet property="tfAuth" destination="LbA-7O-Jqv" id="9df-qi-bgU"/>
                         <outlet property="tfPhone" destination="dUU-2I-Bpv" id="PMs-TH-Eoa"/>
                         <outlet property="underLineAuth" destination="yau-vo-Ho5" id="v3a-S2-LId"/>
@@ -1292,7 +1319,8 @@
                         <outlet property="lineAuthCode" destination="f5R-7d-RWg" id="yXT-sA-qxV"/>
                         <outlet property="linePhoneNumber" destination="RNX-ip-dze" id="IIC-LM-Q0s"/>
                         <outlet property="safeView" destination="lHN-9Q-Aoy" id="Ptp-1e-8te"/>
-                        <outlet property="svAuthCode" destination="oKg-eJ-jcB" id="JRx-C5-AyY"/>
+                        <outlet property="svAuthCode" destination="oKg-eJ-jcB" id="8oN-3B-NjB"/>
+                        <outlet property="svPhoneNumber" destination="auP-wL-wAj" id="6NW-mQ-CMM"/>
                         <outlet property="tfAuthCode" destination="QJN-Ja-7OI" id="Fqc-pv-zTQ"/>
                         <outlet property="tfNickName" destination="zXp-ND-NGz" id="BxK-1q-QbP"/>
                         <outlet property="tfPartnerCode" destination="o1R-A8-91d" id="lxq-qB-41f"/>
@@ -1317,6 +1345,7 @@
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="checkmark.square" catalog="system" width="128" height="114"/>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
+        <image name="ico_apple" width="14" height="18"/>
         <image name="logo" width="720" height="1280"/>
         <image name="mic" catalog="system" width="108" height="128"/>
         <image name="photo" catalog="system" width="128" height="93"/>

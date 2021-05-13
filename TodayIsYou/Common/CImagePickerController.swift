@@ -29,7 +29,7 @@ class CImagePickerController: UIImagePickerController {
             self.modalTransitionStyle = .crossDissolve
             self.delegate = self
             self.sourceType = UIImagePickerController.SourceType.camera
-            self.navigationController?.navigationBar.isHidden = true
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
             self.toolbar.isHidden = true
             self.allowsEditing = false
             self.showsCameraControls = false

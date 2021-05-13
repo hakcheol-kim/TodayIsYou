@@ -51,6 +51,8 @@ class LeftSideMenuViewController: UIViewController {
 //        if let img = UIImage(named: "img_back2.jpg") {
 //            headerView.backgroundColor = UIColor(patternImage: img)
 //        }
+        lbNickName.text = ""
+        lbUserInfo.text = ""
         headerView.addGradient(RGB(230, 50, 70), end: UIColor.white, sPoint: CGPoint(x: 1, y:0), ePoint: CGPoint(x: 1, y: 1))
         headerView.clipsToBounds = true
         

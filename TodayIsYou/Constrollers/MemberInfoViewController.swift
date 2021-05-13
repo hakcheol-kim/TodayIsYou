@@ -24,6 +24,7 @@ class MemberInfoViewController: BaseViewController {
     @IBOutlet weak var safeView: UIView!
     @IBOutlet weak var btnOk: UIButton!
     
+    @IBOutlet weak var svPhoneNumber: UIStackView!
     @IBOutlet weak var svAuthCode: UIStackView!
     @IBOutlet weak var tfAuthCode: UITextField!
     @IBOutlet weak var btnAuthComfirm: UIButton!
@@ -38,7 +39,6 @@ class MemberInfoViewController: BaseViewController {
     var user:[String:Any] = [:]
     let toolbar = CToolbar.init(barItems: [.keyboardDown])
     var authCode:String = ""
-    
     
     var timer:Timer?
     var selGender: String = "" {
@@ -64,9 +64,11 @@ class MemberInfoViewController: BaseViewController {
     }
     
     var isCheckedAuth = false
+    var joinType:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         CNavigationBar.drawBackButton(self, "회원가입", #selector(actionNaviBack))
         tfNickName.inputAccessoryView = toolbar
         tfPhoneNumber.inputAccessoryView = toolbar
@@ -92,6 +94,15 @@ class MemberInfoViewController: BaseViewController {
         btnAuthComfirm.setAttributedTitle(attrN, for: .normal)
         btnAuthComfirm.setAttributedTitle(attrS, for: .disabled)
         
+        
+        self.joinType = user["joinType"] as! String
+        
+        svPhoneNumber.isHidden = true
+        svAuthCode.isHidden = true
+        if joinType == "phone" {
+            svPhoneNumber.isHidden = false
+            svAuthCode.isHidden = false
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -220,24 +231,36 @@ class MemberInfoViewController: BaseViewController {
         }
         else if sender == btnOk {
             
-            lbHintPhone.text = ""
-            lbHintAuthCode.text = ""
+            if joinType == "phone" {
+                lbHintPhone.text = ""
+                lbHintAuthCode.text = ""
+                
+                guard let phone = tfPhoneNumber.text, phone.isEmpty == false else {
+                    lbHintPhone.text = "전화번호를 입력해주세요."
+                    return
+                }
+                guard phone.validateKorPhoneNumber() == true else {
+                    lbHintPhone.text = "전화번호 형식이 아닙니다."
+                    return
+                }
+                
+                if isCheckedAuth == false {
+                    lbHintAuthCode.text = "전화번호 인증번호 확인을 해주세요."
+                    return
+                }
+                
+                let userId = phone.md5()
+                user["user_id"] = userId
+                user["user_phone"] = tfPhoneNumber.text!
+            }
+            else {
+                let userId = user["userId"] as! String
+                let newUserId = "\(self.joinType)|\(userId)"
+                user["user_id"] = Utility.createUserId(newUserId)
+            }
+            
             lbHintNickname.text = ""
             lbHintInfo.text = ""
-            
-            guard let phone = tfPhoneNumber.text, phone.isEmpty == false else {
-                lbHintPhone.text = "전화번호를 입력해주세요."
-                return
-            }
-            guard phone.validateKorPhoneNumber() == true else {
-                lbHintPhone.text = "전화번호 형식이 아닙니다."
-                return
-            }
-            
-            if isCheckedAuth == false {
-                lbHintAuthCode.text = "전화번호 인증번호 확인을 해주세요."
-                return
-            }
             
             if let nickname = tfNickName.text, nickname.isEmpty == true {
                 lbHintNickname.text = "닉네임을 입력해주세요."
@@ -273,8 +296,6 @@ class MemberInfoViewController: BaseViewController {
                 notiYn = "V"
             }
             
-            let userId = phone.md5()
-            user["user_id"] = userId
             user["app_type"] = appType
             user["save_type"] = "G"
             user["version_code"] = Bundle.main.appVersion
@@ -284,10 +305,9 @@ class MemberInfoViewController: BaseViewController {
             user["user_age"] = age
             user["user_area"] = area
             user["noti_yn"] = notiYn
-            user["user_phone"] = tfPhoneNumber.text!
             
-            let joinType = "phone"      //쇼셜로그인 혹시 붙일수 있어서 타입을 설정함
-            let id = phone              //키체인에 저장할 정보
+            let userId = user["user_id"] as! String
+            
             ApiManager.ins.requestMemberRegist(param: user) { (response) in
                 let isSuccess = response["isSuccess"].stringValue
                 if isSuccess == "01" {
@@ -301,8 +321,6 @@ class MemberInfoViewController: BaseViewController {
                         else {
                             ShareData.ins.mySex = .femail
                         }
-                        let userInfo = "\(joinType)|\(id)"  //키체인에 저장
-                        KeychainItem.saveUserInKeychain(userInfo)
                         AppDelegate.ins.callMainViewCtrl()
                     }
                     self.present(alert, animated: true, completion: nil)
