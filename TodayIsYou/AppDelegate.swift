@@ -15,7 +15,9 @@ import AVFoundation
 
 
 @main
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
+
     var window: UIWindow?
     var loadingView: UIView?
     var audioPlayer: AVAudioPlayer!

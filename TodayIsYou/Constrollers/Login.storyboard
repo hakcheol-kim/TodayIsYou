@@ -272,22 +272,22 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="KmY-Y6-WLd">
                                                 <rect key="frame" x="0.0" y="631.33333333333337" width="375" height="96"/>
                                                 <subviews>
-                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4wL-lL-BYu" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="L4J-ie-diB" customClass="CButton" customModule="PetChart" customModuleProvider="target">
                                                         <rect key="frame" x="24" y="24" width="327" height="48"/>
-                                                        <color key="backgroundColor" systemColor="labelColor"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" priority="999" constant="48" id="0eg-tf-2CT"/>
+                                                            <constraint firstAttribute="height" constant="48" id="7tr-kI-1JH"/>
                                                         </constraints>
-                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                        <inset key="imageEdgeInsets" minX="-12" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                        <state key="normal" title="애플 로그인" image="ico_apple">
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                        <inset key="imageEdgeInsets" minX="-10" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        <state key="normal" title="Sign in with Apple" image="ico_apple">
                                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         </state>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="boolean" keyPath="halfCornerRadius" value="YES"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
-                                                            <action selector="onClickedBtnAction:" destination="kVx-3f-niI" eventType="touchUpInside" id="zX3-YG-k01"/>
+                                                            <action selector="onClickedBtnAction:" destination="kVx-3f-niI" eventType="touchUpInside" id="6zy-jw-Hz7"/>
                                                         </connections>
                                                     </button>
                                                 </subviews>
@@ -323,7 +323,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="btnApple" destination="4wL-lL-BYu" id="Msx-aO-hQh"/>
+                        <outlet property="btnApple" destination="L4J-ie-diB" id="MAL-8G-fR1"/>
                         <outlet property="btnAuth" destination="W6J-ED-L5b" id="fDN-Vc-cj3"/>
                         <outlet property="btnPhone" destination="64G-by-0IB" id="cqq-xE-dNx"/>
                         <outlet property="btnReset" destination="0ur-RD-Fs1" id="NZs-eT-HdQ"/>

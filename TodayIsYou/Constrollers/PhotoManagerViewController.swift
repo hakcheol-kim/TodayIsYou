@@ -97,31 +97,49 @@ class PhotoManagerViewController: BaseViewController {
                 return
             }
             
-            let alert = UIAlertController.init(title:nil, message: nil, preferredStyle: .actionSheet)
-            alert.addAction(UIAlertAction.init(title: "카메라로 사진 촬영하기", style: .default, handler: { (action) in
+            var alertStyle = UIAlertController.Style.actionSheet
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                alertStyle = .alert
+            }
+            let alert = UIAlertController(title:nil, message: nil, preferredStyle: alertStyle)
+            
+            alert.addAction(UIAlertAction(title: "카메라로 사진 촬영하기", style: .default, handler: { (action) in
                 alert.dismiss(animated: true, completion: nil)
                 self.showCameraPicker(.camera)
             }))
-            alert.addAction(UIAlertAction.init(title: "갤러리에서 사진 가져오기", style: .default, handler: { (action) in
+            alert.addAction(UIAlertAction(title: "갤러리에서 사진 가져오기", style: .default, handler: { (action) in
                 alert.dismiss(animated: true, completion: nil)
                 self.showCameraPicker(.photoLibrary)
             }))
-            alert.addAction(UIAlertAction.init(title: "취소", style: .cancel, handler: { (action) in
+            alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: { (action) in
                 alert.dismiss(animated: true, completion: nil)
             }))
-            self.present(alert, animated: true, completion: nil)
+            
+            present(alert, animated: true, completion: nil)
         }
     }
     
     func showCameraPicker(_ sourceType: UIImagePickerController.SourceType) {
-        let picker = CImagePickerController.init(sourceType) { (orig, crop) in
+        if sourceType == .camera {
+            guard UIImagePickerController.isSourceTypeAvailable(sourceType) == true else {
+                let alertController = UIAlertController(title: nil, message: "Device has no camera.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Alright", style: .default, handler: { (alert: UIAlertAction!) in
+                })
+                alertController.addAction(okAction)
+                self.present(alertController, animated: true, completion: nil)
+                return
+            }
+        }
+        
+        let picker = CImagePickerController.init() { (orig, crop) in
             guard let orig = orig, let crop = crop else {
                 return
             }
             print("== orig: \(orig), crop:\(crop)")
-            
             self.showPhotoUsingAlert(orig, crop)
         }
+        
+        picker.sourceType = sourceType
         self.present(picker, animated: true, completion: nil)
     }
     

@@ -9,12 +9,29 @@ import Foundation
 import StoreKit
 
 enum Product: String, CaseIterable {
-    case point_0
-    case point_1
-    case point_2
-    case point_3
-    case point_4
-    case point_5
+    case point_000
+    case point_001
+    case point_002
+    case point_003
+    case point_004
+    case point_005
+    
+    func severProductId() -> String {
+        switch self {
+            case .point_000:
+            return "point_0"
+            case .point_001:
+            return "point_1"
+            case .point_002:
+            return "point_2"
+            case .point_003:
+            return "point_3"
+            case .point_004:
+            return "point_4"
+            case .point_005:
+            return "point_5"
+        }
+    }
 }
 
 struct PointModel {
@@ -66,29 +83,59 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
 //            URL https://sandbox.itunes.apple.com/verifyReceipt를 사용하십시오. 앱이 App Store에 게시되면 프로덕션
 //            URL https://buy.itunes.apple.com/verifyReceipt를 사용하세요. 이러한 엔드 포인트에 대한 자세한 내용은 verifyReceipt를 참조하세요.
             
-           
             do {
                 let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
                 print(receiptData)
                 
-                let receiptString = receiptData.base64EncodedString(options: [])
+                let receiptString = receiptData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
                 guard let orderId = transaction.transactionIdentifier, receiptString.isEmpty == false  else {
                     return
                 }
                 
                 #if DEBUG
-                let url: String = "https://sandbox.itunes.apple.com/verifyReceipt"
+//                let url: String = "https://sandbox.itunes.apple.com/verifyReceipt"
+                print("=== receipt: \(receiptString)")
                 #else
-                let url: String = "https://buy.itunes.apple.com/verifyReceipt"
+//                let url: String = "https://buy.itunes.apple.com/verifyReceipt"
                 #endif
+                var param = [String:Any]()
+                param["receipt-data"] = receiptString
+                param["password"] = "fd3920cace1942e187254a235ac658dc"
                 
-                
-                let param = ["transactionId": orderId, "receipt": receiptString]
-                self.completion?(param)
+                ApiManager.ins.requestAppleValidateRecipient(param: param) {[weak self] res in
+                    print(res)
+                    let status = res["status"].intValue
+                    if status == 0 {  //정상적인 거래 애플계정 거래
+                        let data = ["transactionId": orderId, "receipt": receiptString]
+                        self?.completion?(data)
+                    }
+                    else if status == 21007 {
+                        //샌드박스 계정인지 한번더 체크한다.
+                        ApiManager.ins.requestAppleValidateRecipientSandBox(param: param) { res in
+                            let status = res["status"].intValue
+                            if status == 0 {
+                                let data = ["transactionId": orderId, "receipt": receiptString]
+                                self?.completion?(data)
+                            }
+                            else {
+                                AppDelegate.ins.window?.makeToast("Sandbox 결제 실패")
+                            }
+                        } fail: { error in
+                            AppDelegate.ins.window?.makeToast("Sandbox 결제 실패")
+                        }
+                    }
+                    else {
+                        AppDelegate.ins.window?.makeToast("결제 실패")
+                    }
+                } fail: { error in
+                    AppDelegate.ins.window?.makeToast("결제 실패")
+                }
+
             }
             catch { print("Couldn't read receipt data with error: " + error.localizedDescription) }
         }
     }
+    
     
     ///MARK:: SKProductsRequestDelegate 앱스토어 설정한 상품정보 받음
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {

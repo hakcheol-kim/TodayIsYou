@@ -19,9 +19,9 @@ class CImagePickerController: UIImagePickerController {
     var isCrop:Bool = true
     var didFinish:DidFinishCImagePicker?
     
-    convenience init(_ sourceType: UIImagePickerController.SourceType, _ didFinish:DidFinishCImagePicker?) {
+    convenience init(_ didFinish:DidFinishCImagePicker?) {
         self.init()
-        self.sourceType = sourceType
+        
         self.didFinish = didFinish
         
         if sourceType == .camera {
@@ -66,11 +66,11 @@ class CImagePickerController: UIImagePickerController {
     func checkPermissionAfterShowImagePicker() {
         let authStatus = AVCaptureDevice.authorizationStatus(for: .video)
         if authStatus == AVAuthorizationStatus.denied {
-            let alert = UIAlertController.init(title: "Unable to access the Camera", message: "To enable access, go to Settings > Privacy > Camera and turn on Camera access for this app.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction.init(title: "취소", style: .cancel, handler: { (action) in
+            let alert = UIAlertController(title: "Unable to access the Camera", message: "To enable access, go to Settings > Privacy > Camera and turn on Camera access for this app.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: { (action) in
                 alert.dismiss(animated: false, completion: nil)
             }))
-            alert.addAction(UIAlertAction.init(title: "설정", style: .default, handler: { (action) in
+            alert.addAction(UIAlertAction(title: "설정", style: .default, handler: { (action) in
                 let settingsUrl = URL(string: UIApplication.openSettingsURLString)!
                 if UIApplication.shared.canOpenURL(settingsUrl) {
                     UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)

@@ -82,9 +82,9 @@ class SettingViewController: BaseViewController {
             let user_sex = userInfo["user_sex"].stringValue
             if user_sex == "남" {
                 let user_id = userInfo["user_id"].stringValue
-                let day_login_point = userInfo["day_login_point"].numberValue
+//                let day_login_point = userInfo["day_login_point"].numberValue
                 let now_date = Utility.getCurrentDate(format: "yyyy-MM-dd")
-                let param:[String : Any] = ["user_id":user_id, "user_point_type":day_login_point, "now_date":now_date]
+                let param:[String : Any] = ["user_id":user_id, "user_point_type":"day_login_point", "now_date":now_date]
                 ApiManager.ins.requestLoginCheck(param: param) { (res) in
                     let isSuccess = res["isSuccess"].stringValue
                     let point_save = res["point_save"].stringValue
@@ -106,7 +106,7 @@ class SettingViewController: BaseViewController {
                                 self.showToast(msg)
                             }
                         }
-                        else if "N" == ShareData.ins.mySex.rawValue {
+                        else if "N" == point_save {
                             self.showToast("이미 출석 체크를 했습니다")
                         }
                     }

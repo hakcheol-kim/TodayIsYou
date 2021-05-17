@@ -41,8 +41,10 @@ class PointPurchaseViewController: BaseViewController {
             lbCurPoint.text = "\(myPoint.stringValue.addComma()) Point"
         }
     }
+    
     func requestPayloadId(_ product:Product) {
-        let param = ["user_id":ShareData.ins.myId, "buy_key":product.rawValue]
+        let buyKey = product.severProductId()
+        let param = ["user_id":ShareData.ins.myId, "buy_key":buyKey]
         ApiManager.ins.requestSaveInAppPayload(param: param) { res in
             let isSuccess = res["isSuccess"].stringValue
             let payload = res["payload"].stringValue
@@ -58,20 +60,22 @@ class PointPurchaseViewController: BaseViewController {
         }
     }
     func inAppPayment(product:Product, _ payload:String, buy_key:String) {
+        
         IAPManager.shared.purchage(product: product) {[weak self] result in
             guard let transactionId = result["transactionId"],  let receipt = result["receipt"] else {
                 print("error: transactionIdentifiy, receipt empty")
                 return
             }
-
+            
+            let productId = product.severProductId()
             var param = [String:Any]()
-            param["user_id"]  = ShareData.ins.myId
-            param["productId"]  = product.rawValue  //삼품코드
-            param["app_type"]  = appType //어플종류
-            param["point_key"]  = "GPA.\(transactionId)" //주문번호 아이폰은 GPA. 붙인다 서버 구분하기 위해
-            param["developerPayload"]  = payload //서버에서 생성한 payload sequence
-            param["purchaseToken"]  = receipt
-            param["packageName"]  = Bundle.main.bundleIdentifier
+            param["user_id"] = ShareData.ins.myId
+            param["productId"] = productId  //삼품코드
+            param["app_type"] = appType //어플종류
+            param["point_key"] = "GPA.\(transactionId)" //주문번호 아이폰은 GPA. 붙인다 서버 구분하기 위해
+            param["developerPayload"] = payload //서버에서 생성한 payload sequence
+            param["purchaseToken"] = receipt
+            param["packageName"] = Bundle.main.bundleIdentifier
             
             self?.requestSaveInAppPoint(param)
         }
@@ -111,22 +115,22 @@ class PointPurchaseViewController: BaseViewController {
         else if arrBtnPoint.contains(sender as! CButton) {
             switch sender.tag {
             case 0:
-                self.requestPayloadId(.point_0)
+                self.requestPayloadId(.point_000)
                 break
             case 1:
-                self.requestPayloadId(.point_1)
+                self.requestPayloadId(.point_001)
                 break
             case 2:
-                self.requestPayloadId(.point_2)
+                self.requestPayloadId(.point_002)
                 break
             case 3:
-                self.requestPayloadId(.point_3)
+                self.requestPayloadId(.point_003)
                 break
             case 4:
-                self.requestPayloadId(.point_4)
+                self.requestPayloadId(.point_004)
                 break
             case 5:
-                self.requestPayloadId(.point_5)
+                self.requestPayloadId(.point_005)
                 break
             default:
                 break

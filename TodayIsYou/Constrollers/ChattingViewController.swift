@@ -463,7 +463,17 @@ class ChattingViewController: MainActionViewController {
             }
         }
         else if sender == btnCamera {
-            let picker = CImagePickerController.init(.camera) { (origin, crop) in
+            //시뮬레이터일때 죽는것 방지
+            guard UIImagePickerController.isSourceTypeAvailable(.camera) == true else {
+                let alertController = UIAlertController(title: nil, message: "Device has no camera.", preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Alright", style: .default, handler: { (alert: UIAlertAction!) in
+                })
+                alertController.addAction(okAction)
+                self.present(alertController, animated: true, completion: nil)
+                return
+            }
+            
+            let picker = CImagePickerController.init() { (origin, crop) in
                 guard let crop = crop else {
                     return
                 }
@@ -479,6 +489,7 @@ class ChattingViewController: MainActionViewController {
                 
                 self.requestSendMessage(param)
             }
+            picker.sourceType = .camera
             self.present(picker, animated: true, completion: nil)
         }
         else if sender == btnJim {

@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import AuthenticationServices
+
 class LoginViewController: SocialLoginViewController {
     @IBOutlet weak var svPhoneLogin: UIStackView!
     @IBOutlet weak var svSocialLogin: UIStackView!
@@ -21,7 +23,7 @@ class LoginViewController: SocialLoginViewController {
     @IBOutlet weak var btnSignup: CButton!
     @IBOutlet weak var btnReset: CButton!
     @IBOutlet weak var btnSignin: CButton!
-    
+
     @IBOutlet weak var btnApple: CButton!
     
     var isKr = false

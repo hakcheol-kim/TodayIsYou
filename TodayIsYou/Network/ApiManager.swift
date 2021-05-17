@@ -662,4 +662,20 @@ class ApiManager: NSObject {
             fail?(error)
         }
     }
+    
+    func requestAppleValidateRecipient(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "https://buy.itunes.apple.com/verifyReceipt", param) { res in
+            success?(res)
+        } failure: { error in
+            fail?(error)
+        }
+    }
+    //애플 샌드 박스
+    func requestAppleValidateRecipientSandBox(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.post, "https://sandbox.itunes.apple.com/verifyReceipt", param) { res in
+            success?(res)
+        } failure: { error in
+            fail?(error)
+        }
+    }
 }

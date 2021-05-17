@@ -99,7 +99,7 @@ class RankDetailViewController: MainActionViewController {
     func configurationUi() {
         tblView.tableFooterView = UIView.init(frame: CGRect(x: 0, y: 0, width: tblView.bounds.width, height: 150))
         
-        self.headerView = tblView.tableHeaderView as! RankDetailTblHeaderView
+        self.headerView = (tblView.tableHeaderView as! RankDetailTblHeaderView)
         tblView.tableHeaderView = nil
         tblView.addSubview(headerView)
         tblView.contentInset = UIEdgeInsets(top: headerHeight, left: 0, bottom: 0, right: 0)

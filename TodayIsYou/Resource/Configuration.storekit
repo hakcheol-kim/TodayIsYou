@@ -20,7 +20,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "point_0",
+      "productID" : "point_000",
       "referenceName" : "2500P",
       "type" : "Consumable"
     },
@@ -40,7 +40,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "point_1",
+      "productID" : "point_001",
       "referenceName" : "5000P",
       "type" : "Consumable"
     },
@@ -60,7 +60,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "point_2",
+      "productID" : "point_002",
       "referenceName" : "15000P",
       "type" : "Consumable"
     },
@@ -80,7 +80,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "point_3",
+      "productID" : "point_003",
       "referenceName" : "25,000P",
       "type" : "Consumable"
     },
@@ -100,7 +100,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "point_4",
+      "productID" : "point_004",
       "referenceName" : "50,000P + 2,000P",
       "type" : "Consumable"
     },
@@ -120,7 +120,7 @@
           "locale" : "en_US"
         }
       ],
-      "productID" : "point_5",
+      "productID" : "point_005",
       "referenceName" : "100,000P + 5,000P",
       "type" : "Consumable"
     }
