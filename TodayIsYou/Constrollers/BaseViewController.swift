@@ -25,8 +25,18 @@ class BaseViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
-    
-    func requestMyHomePoint() {
+    func requestMyInfo() {
+        let param = ["app_type": appType, "user_id":ShareData.ins.myId]
+        ApiManager.ins.requestUerInfo(param: param) { (response) in
+            let isSuccess = response["isSuccess"].stringValue
+            if isSuccess == "01" {
+                ShareData.ins.setUserInfo(response)
+            }
+        } failure: { (error) in
+            self.showErrorToast(error)
+        }
+    }
+    public func requestMyHomePoint() {
         let param = ["user_id": ShareData.ins.myId]
         
         ApiManager.ins.requestMyHomePoint(param:param) { (respone) in

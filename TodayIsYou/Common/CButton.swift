@@ -22,7 +22,15 @@ func imageFromColor(color: UIColor) -> UIImage {
 class CButton: UIButton {
     var borderLayer: CALayer?
     public var data: Any!
-    
+    @IBInspectable var localizedKey: String? {
+        didSet {
+            guard let localizedKey = localizedKey else { return }
+            UIView.performWithoutAnimation {
+                self.setTitle(localizedKey.localized, for: .normal)
+                layoutIfNeeded()
+            }
+        }
+    }
     @IBInspectable var isBoderBottom: Bool = false {
         didSet {
             if isBoderBottom == true { setNeedsDisplay() }

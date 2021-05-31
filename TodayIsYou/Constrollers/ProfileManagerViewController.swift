@@ -41,7 +41,7 @@ class ProfileManagerViewController: BaseViewController {
         super.removeKeyboardNotification()
     }
     
-    func requestMyInfo() {
+    override func requestMyInfo() {
         ApiManager.ins.requestUerInfo(param: ["user_id":ShareData.ins.myId]) { (response) in
             self.userInfo = response
             self.decorationUi()

@@ -104,37 +104,37 @@ class MainViewController: BaseViewController {
                     vc.listType = videoListType
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     self.selectedVc = vc
-                    self.changeNaviTitle("영상토크")
+                    self.changeNaviTitle("activity_txt299".localized)
                     break
                 case 1:
                     let vc = TalkListViewController.instantiateFromStoryboard(.main)!
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     self.selectedVc = vc
-                    self.changeNaviTitle("토크")
+                    self.changeNaviTitle("activity_txt300".localized)
                     break
                 case 2:
                     let vc = PhotoListViewController.instantiateFromStoryboard(.main)!
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     self.selectedVc = vc
-                    self.changeNaviTitle("포토토크")
+                    self.changeNaviTitle("activity_txt301".localized)
                     break
                 case 3:
                     let vc = RankListViewController.instantiateFromStoryboard(.main)!
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     self.selectedVc = vc
-                    self.changeNaviTitle("인기순위")
+                    self.changeNaviTitle("activity_txt302".localized)
                     break
                 case 4:
                     let vc = ChattingListViewController.instantiateFromStoryboard(.main)!
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     self.selectedVc = vc
-                    self.changeNaviTitle("쪽지함")
+                    self.changeNaviTitle("activity_txt303".localized)
                     break
                 case 5:
                     let vc = SettingViewController.instantiateFromStoryboard(.main)!
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     self.selectedVc = vc
-                    self.changeNaviTitle("설정")
+                    self.changeNaviTitle("activity_txt304".localized)
                     break
                 default:
                     break
@@ -160,7 +160,7 @@ class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        CNavigationBar.drawLeftBarItem(self, UIImage(systemName: "text.justify"), "영상토크", TAG_NAVI_TITLE, #selector(onclickedBtnActions(_ :)))
+        CNavigationBar.drawLeftBarItem(self, UIImage(systemName: "text.justify"), "activity_txt299".localized, TAG_NAVI_TITLE, #selector(onclickedBtnActions(_ :)))
         
         CNavigationBar.drawRight(self, nil, "0 P", TAG_NAVI_P_COINT, nil)
         CNavigationBar.drawRight(self, nil, "0 S", TAG_NAVI_S_COINT, nil)
@@ -180,7 +180,6 @@ class MainViewController: BaseViewController {
         setupSideMenu()
         updateMenus()
         self.requestMyHomePoint()
-        
         AppDelegate.ins.requestUpdateFcmToken()
         btnRocket.layer.cornerRadius = btnRocket.bounds.height/2
         btnPlus.layer.cornerRadius = btnPlus.bounds.height/2
@@ -190,18 +189,9 @@ class MainViewController: BaseViewController {
         super.viewWillAppear(animated)
         self.updateUnReadMessageCount()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.updateNaviPoint()
     }
-    func requestGetUserInfo() {
-        let param = ["app_type": appType, "user_id":ShareData.ins.myId]
-        ApiManager.ins.requestUerInfo(param: param) { (response) in
-            let isSuccess = response["isSuccess"].stringValue
-            if isSuccess == "01" {
-                ShareData.ins.setUserInfo(response)
-            }
-        } failure: { (error) in
-            self.showErrorToast(error)
-        }
-    }
+   
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let sideMenuNavigationController = segue.destination as? SideMenuNavigationController else { return }
         sideMenuNavigationController.settings = makeSettings()
@@ -240,7 +230,7 @@ class MainViewController: BaseViewController {
             }
         }
         else if sender == btnRocket {
-            CAlertViewController.show(type: .alert, title: "영상채팅 신청", message: "빠른 영상채팅 신청을 합니다.", actions: [.cancel, .ok]) { vcs, selItem, action in
+            CAlertViewController.show(type: .alert, title: NSLocalizedString("activity_txt118", comment: "빠른 영상채팅 신청"), message: NSLocalizedString("activity_txt122", comment: "빠른 영상채팅 신청을 합니다."), actions: [.cancel, .ok]) { vcs, selItem, action in
                 vcs.dismiss(animated: true, completion: nil)
                 if action == 1 {
                     let vc = RandomCallViewController.instantiateFromStoryboard(.call)!
@@ -284,8 +274,13 @@ class MainViewController: BaseViewController {
         guard let navibar = self.navigationController?.navigationBar, let btnMenu = navibar.viewWithTag(TAG_NAVI_TITLE) as? UIButton else {
             return
         }
-        
         btnMenu.setTitle(title, for: .normal)
+        
+        var width: CGFloat = btnMenu.sizeThatFits(CGSize.init(width: CGFloat.greatestFiniteMagnitude, height: btnMenu.frame.size.height)).width
+        if width > 250 {
+            width = 250
+        }
+        btnMenu.frame = CGRect.init(x: 0, y: 0, width: width + btnMenu.titleEdgeInsets.left, height: btnMenu.frame.size.height)
     }
     
     func updateNaviPoint() {

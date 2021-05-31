@@ -53,15 +53,13 @@ class PhotoColCell: UICollectionViewCell {
         if let imgUrl = Utility.thumbnailUrl(user_id, file_name) {
             ivThumb.setImageCache(imgUrl)
         }
-        else {
-            let k = 0
-        }
+        
         var subStr = "♀︎"
         if user_sex == "남" {
             subStr = "♂︎"
         }
         
-        subStr.append(" \(user_age)")
+        subStr.append(" \(Age.localizedString(user_age))")
         
         let reuslt = "\(user_name), \(subStr)"
         let attr = NSMutableAttributedString.init(string: reuslt)

@@ -8,7 +8,15 @@
 import UIKit
 @IBDesignable class CTextField: UITextField {
     var subLayer: CALayer?
-    
+    @IBInspectable var localizedPlaceHolder: String? {
+        didSet {
+            guard let localizedPlaceHolder = localizedPlaceHolder else { return }
+            UIView.performWithoutAnimation {
+                self.placeholder = localizedPlaceHolder.localized
+                layoutIfNeeded()
+            }
+        }
+    }
     @IBInspectable var insetT :CGFloat = 0.0 {
         didSet {
             if insetT > 0 { setNeedsDisplay() }

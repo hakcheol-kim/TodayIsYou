@@ -19,12 +19,14 @@ class JoinTermsAgreeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        CNavigationBar.drawBackButton(self, "약관 동의", #selector(actionNaviBack))
+        CNavigationBar.drawBackButton(self, "login_term_title".localized, #selector(actionNaviBack))
         safeView.isHidden = !Utility.isEdgePhone()
-        
-        let attr = NSAttributedString.init(string: "보 기", attributes:[NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue])
+        //약관보기
+        let attr = NSAttributedString.init(string: "layout_txt86".localized, attributes:[NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue])
         btnSeviceShow.setAttributedTitle(attr, for: .normal)
         btnPrivacyShow.setAttributedTitle(attr, for: .normal)
+        btnSeviceCheck.titleLabel?.numberOfLines = 0
+        btnPrivacyCheck.titleLabel?.numberOfLines = 0
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,7 +49,7 @@ class JoinTermsAgreeViewController: BaseViewController {
         }
         else if sender == btnOk {
             if btnSeviceCheck.isSelected == false || btnPrivacyCheck.isSelected == false {
-                self.view.makeToast("약관에 동의해 주세요.")
+                self.view.makeToast(NSLocalizedString("join_activity47", comment: "서비스ㅂ 이용약관에 동의하셔야 회원가입이 가능합니다."))
                 return
             }
             
@@ -62,14 +64,13 @@ class JoinTermsAgreeViewController: BaseViewController {
         
         ApiManager.ins.requestServiceTerms(mode: mode) { (response) in
             let yk = response["yk"].stringValue
-            let isSuccess = response["isSuccess"]
-            if isSuccess == "01", yk.isEmpty == false {
+            if yk.isEmpty == false {
                 let vc = TermsViewController.init()
                 if mode == "yk1" {
-                    vc.vcTitle = "서비스 이용약관"
+                    vc.vcTitle = NSLocalizedString("login_term", comment: "서비스 이용약관");
                 }
                 else {
-                    vc.vcTitle = "개인정보 취급방침"
+                    vc.vcTitle = NSLocalizedString("login_term", comment: "개인정보 취급방침")
                 }
                 vc.content = yk
                 self.navigationController?.pushViewController(vc, animated: true)

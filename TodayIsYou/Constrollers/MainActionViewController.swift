@@ -33,27 +33,27 @@ class MainActionViewController: BaseViewController {
         let user_id = selUser["user_id"].stringValue
         
         if user_id == ShareData.ins.myId {
-            self.showToast("본인입니다.")
+            self.showToast(NSLocalizedString("activity_txt01", comment: "본인입니다."))
             return
         }
         if user_sex == ShareData.ins.mySex.rawValue {
-            self.showToast("같은 성별은 영상 채팅이 불가능합니다!!")
+            self.showToast(NSLocalizedString("activity_txt03", comment: "같은 성별은 영상 채팅이 불가능합니다!!"))
             return
         }
         if status == "Y" {
-            self.showToast("영상 채팅 중입니다")
+            self.showToast(NSLocalizedString("activity_txt04", comment: "영상 채팅 중입니다"))
             return
         }
         self.checkAvaiableCamTalk(user_id) { (user) in
             self.selUser = user
             if  self.isBlocked && self.isMyBlock {
-                self.showToast("쌍방이 차단했습니다!!")
+                self.showToast(NSLocalizedString("both_black_list", comment: "쌍방이 차단했습니다!!"))
             }
             else if self.isBlocked {
-                self.showToast("상대가 차단 했습니다!!")
+                self.showToast(NSLocalizedString("activity_txt339", comment: "상대가 차단 했습니다!!"))
             }
             else if self.isMyBlock {
-                self.showToast("내가 차단 했습니다!!")
+                self.showToast(NSLocalizedString("activity_txt219", comment: "내가 차단 했습니다!!"))
             }
             else {
                 self.presentCamTalkAlert()
@@ -64,13 +64,13 @@ class MainActionViewController: BaseViewController {
         let user_id = selUser["user_id"].stringValue
         self.checkAvaiableTalkMsg(user_id) {
             if  self.isBlocked && self.isMyBlock {
-                self.showToast("쌍방이 차단했습니다!!")
+                self.showToast(NSLocalizedString("both_black_list", comment: "쌍방이 차단했습니다!!"))
             }
             else if self.isBlocked {
-                self.showToast("상대가 차단 했습니다!!")
+                self.showToast(NSLocalizedString("activity_txt339", comment: "상대가 차단 했습니다!!"))
             }
             else if self.isMyBlock {
-                self.showToast("내가 차단 했습니다!!")
+                self.showToast(NSLocalizedString("activity_txt219", comment: "내가 차단 했습니다!!"))
             }
             else {
                 self.presentTalkMsgAlert()
@@ -97,11 +97,9 @@ class MainActionViewController: BaseViewController {
         let vc = CAlertViewController.init(type: .custom, title: "", message: nil, actions: nil) { (vcs, selItem, index) in
             vcs.dismiss(animated: true, completion: nil)
             if index == 1 {
-                print("음성")
                 self.actionAlertPhoneCall()
             }
             else if index == 2 {
-                print("영상")
                 self.actionAlertCamTalkCall()
             }
         }
@@ -113,7 +111,7 @@ class MainActionViewController: BaseViewController {
         
         if ShareData.ins.mySex.rawValue == "남" {
             if isMyFriend {
-                customView.lbMsg1.text = "대화 목록에 있는 상대는 신청이 무료입니다"
+                customView.lbMsg1.text = NSLocalizedString("activity_txt215", comment: "대화 목록에 있는 상대는 신청이 무료입니다")
                 customView.lbMsg2.isHidden = true
             }
             else {
@@ -125,19 +123,19 @@ class MainActionViewController: BaseViewController {
                     camPoint = p1.stringValue.addComma()
                     phonePoint = p2.stringValue.addComma()
                 }
-                customView.lbMsg1.text = "영상 음성 채팅 신청시 \(0) 포인트가 차감 됩니다."
+                customView.lbMsg1.text = String(format: NSLocalizedString("popup_camtalk_point_notice", comment: ""), "0")
             }
         }
         else {
             customView.lbMsg2.isHidden = true
-            customView.lbMsg1.text = "무료로 이용 가능합니다."
+            customView.lbMsg1.text = NSLocalizedString("activity_txt216", comment: "무료로 이용 가능합니다.")
         }
         vc.reloadUI()
         customView.btnReport.addTarget(self, action: #selector(actionAlertReport(_ :)), for: .touchUpInside)
         vc.btnIcon.addTarget(self, action: #selector(actionAlertProfile), for: .touchUpInside)
-        vc.addAction(.cancel, "취소", UIImage(systemName: "xmark.circle.fill"), RGB(216, 216, 216))
-        vc.addAction(.ok, "음성", UIImage(systemName: "phone.fill.arrow.up.right"), RGB(230, 100, 100))
-        vc.addAction(.ok, "영상", UIImage(systemName: "arrow.up.right.video.fill"), RGB(230, 100, 100))
+        vc.addAction(.cancel, NSLocalizedString("activity_txt479", comment: "취소"), UIImage(systemName: "xmark.circle.fill"), RGB(216, 216, 216))
+        vc.addAction(.ok, NSLocalizedString("activity_txt210", comment: "음성"), UIImage(systemName: "phone.fill.arrow.up.right"), RGB(230, 100, 100))
+        vc.addAction(.ok, NSLocalizedString("activity_txt211", comment: "영상"), UIImage(systemName: "arrow.up.right.video.fill"), RGB(230, 100, 100))
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -225,7 +223,15 @@ class MainActionViewController: BaseViewController {
         let user_name = self.selUser["user_name"].stringValue
         let user_id = self.selUser["user_id"].stringValue
         
-        let alert = CAlertViewController.init(type: .alert, title: "\(user_name)님 신고하기", message: nil, actions: [.cancel, .ok]) { (vcs, selItem, index) in
+        var title = ""
+        if ShareData.ins.languageCode == "ko" {
+            title = "\(user_name)님 \(NSLocalizedString("activity_txt495", comment: "신고하기"))"
+        }
+        else {
+            title = "\(user_name) \(NSLocalizedString("activity_txt495", comment: "신고하기"))"
+        }
+        
+        let alert = CAlertViewController.init(type: .alert, title: title, message: nil, actions: [.cancel, .ok]) { (vcs, selItem, index) in
             
             if (index == 1) {
                 guard let text = vcs.arrTextView.first?.text, text.isEmpty == false else {
@@ -236,7 +242,7 @@ class MainActionViewController: BaseViewController {
                 ApiManager.ins.requestReport(param: param) { (res) in
                     let isSuccess = res["isSuccess"].stringValue
                     if isSuccess == "01" {
-                        self.showToast("신고가 완료되었습니다.")
+                        self.showToast(NSLocalizedString("activity_txt246", comment: "신고 완료"))
                     }
                     else {
                         self.showErrorToast(res)
@@ -250,7 +256,7 @@ class MainActionViewController: BaseViewController {
             }
         }
         alert.iconImg = UIImage(named: "warning")
-        alert.addTextView("신고 내용을 입력해주세요.", UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+        alert.addTextView(NSLocalizedString("activity_txt497", comment: "신고내용"), UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
         
         self.present(alert, animated: true, completion: nil)
     }
@@ -349,14 +355,15 @@ class MainActionViewController: BaseViewController {
     func presentTalkMsgAlert() {
         var msg:String? = nil
         if let bbsPoint = ShareData.ins.dfsGet(DfsKey.userBbsPoint) as? NSNumber, bbsPoint.intValue > 0 {
-            msg = "메세지 전송시 \(bbsPoint)P 소모됩니다."
+            msg = String(format: NSLocalizedString("popup_message_point_notice", comment: ""), bbsPoint)
+//            "메세지 전송시 \(bbsPoint)P 소모됩니다."
         }
     
-        let alert = CAlertViewController.init(type: .alert, title: "메세지 전송", message: msg, actions: [.cancel, .ok]) { (vcs, selItem, index)  in
+        let alert = CAlertViewController.init(type: .alert, title: NSLocalizedString("activity_txt332", comment: "메세지 전송"), message: msg, actions: [.cancel, .ok]) { (vcs, selItem, index)  in
             
             if index == 1 {
                 guard let text = vcs.arrTextView.first?.text, text.isEmpty == false else {
-                    self.showToast("내용을 입력해주세요.")
+                    self.showToast(NSLocalizedString("activity_txt202", comment: "내용을 입력해주세요."))
                     return
                 }
                 self.requestSendMsg(text)
@@ -368,9 +375,12 @@ class MainActionViewController: BaseViewController {
         }
         
         alert.iconImg = UIImage(systemName: "envelope.fill")
-        alert.addTextView("입력해주세요.")
+        alert.addTextView(NSLocalizedString("activity_txt202", comment: "내용을 입력해주세요."))
         alert.reloadUI()
         self.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.1) {
+            alert.arrTextView.first?.becomeFirstResponder()
+        }
     }
     
     func requestSendMsg(_ content:String) {
@@ -399,17 +409,17 @@ class MainActionViewController: BaseViewController {
             if isSuccess == "00" {
                 let errorCode = res["errorCode"].stringValue
                 if errorCode == "0002" {
-                    self.showToast("탈퇴한 회원 입니다")
+                    self.showToast(NSLocalizedString("activity_txt328", comment: "탈퇴한 회원 입니다"))
                 }
                 else if errorCode == "0003" {
-                    self.showToast("차단 상태인 회원 입니다")
+                    self.showToast(NSLocalizedString("activity_txt329", comment: "차단 상태인 회원 입니다"))
                 }
                 else {
-                    self.showToast("오류!!")
+                    self.showToast(NSLocalizedString("activity_txt86", comment: "오류!!"))
                 }
             }
             else {
-                self.showToast("쪽지 전송 완료");
+                self.showToast(NSLocalizedString("activity_txt331", comment: "쪽지 전송 완료"))
                 let message_key = res["message_key"].stringValue
                 let memo = res["memo"].stringValue
                 

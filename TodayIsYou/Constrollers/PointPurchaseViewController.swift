@@ -8,6 +8,7 @@
 import UIKit
 import StoreKit
 class PointPurchaseViewController: BaseViewController {
+    @IBOutlet weak var lbPointTitle: Clabel!
     @IBOutlet var arrBtnPoint: [CButton]!
     @IBOutlet weak var btnContactus: CButton!
     @IBOutlet weak var lbCurPoint: UILabel!
@@ -25,8 +26,8 @@ class PointPurchaseViewController: BaseViewController {
             btn.addTarget(self, action: #selector(onClickedBtnActions(_:)), for: .touchUpInside)
         }
         refreshUi()
-        CNavigationBar.drawBackButton(self, "포인트 충전", #selector(actionNaviBack))
-       
+        CNavigationBar.drawBackButton(self, "point_activity01".localized, #selector(actionNaviBack))
+        lbPointTitle.isHidden = false
     }
     
     override func viewWillAppear(_ animated: Bool) {

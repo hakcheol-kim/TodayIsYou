@@ -36,15 +36,23 @@ class TalkWriteViewController: BaseViewController {
         super.viewDidLoad()
         if type == .cam {
             CNavigationBar.drawBackButton(self, "영상토크 등록", #selector(actionNaviBack))
-            requestMyImgTalk()
             btnRegiTalk.setTitle("영상 토크 등록", for: .normal)
         }
         else {
             CNavigationBar.drawBackButton(self, "토크 등록", #selector(actionNaviBack))
-            requestMyTalk()
             btnRegiTalk.setTitle("토크 등록", for: .normal)
         }
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if type == .cam {
+            requestMyImgTalk()
+        }
+        else {
+            requestMyTalk()
+        }
+    }
+    
     //영상토크
     func requestMyImgTalk() {
         ApiManager.ins.requestMyImgTalk(param: ["user_id":ShareData.ins.myId]) { (res) in
@@ -143,9 +151,8 @@ class TalkWriteViewController: BaseViewController {
         }
         else if sender == btnLink {
             ApiManager.ins.requestServiceTerms(mode: "yk6") { (res) in
-                let isSuccess = res["isSuccess"].stringValue
                 let yk = res["yk"].stringValue
-                if isSuccess == "01", yk.isEmpty == false {
+                if yk.isEmpty == false {
                     let vc = TermsViewController.init()
                     vc.vcTitle = "포인트 적립 방법 안내"
                     vc.content = yk

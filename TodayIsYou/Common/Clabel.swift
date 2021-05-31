@@ -10,7 +10,15 @@ import UIKit
 @IBDesignable
 
 class Clabel: UILabel {
-    
+    @IBInspectable var localizedKey: String? {
+        didSet {
+            guard let localizedKey = localizedKey else { return }
+            UIView.performWithoutAnimation {
+                self.text = localizedKey.localized
+                layoutIfNeeded()
+            }
+        }
+    }
     @IBInspectable var insetTB :CGFloat = 0.0 {
         didSet {
             if insetTB > 0 { setNeedsDisplay() }
@@ -74,4 +82,5 @@ class Clabel: UILabel {
         let size:CGSize = super.intrinsicContentSize
         return CGSize.init(width: size.width + 2*insetLR, height: size.height + 2*insetTB)
     }
+    
 }

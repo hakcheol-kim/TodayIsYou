@@ -146,12 +146,23 @@ class ApiManager: NSObject {
     ///약관
     /// - mode: yk1(가입약관), yk2(개인정보취급방침), yk3(환급신청약관)
     func requestServiceTerms(mode:String, success:ResSuccess?, failure:ResFailure?) {
-        NetworkManager.ins.request(.post, "/api/talk/yk.do", ["mode": mode], URLEncoding.queryString) { (response) in
-            success?(response)
-        } failure: { (error) in
-            failure?(error)
+        if ShareData.ins.languageCode == "ko" {
+            NetworkManager.ins.request(.post, "/api/talk/yk.do", ["mode": mode], URLEncoding.queryString) { (response) in
+                success?(response)
+            } failure: { (error) in
+                failure?(error)
+            }
+        }
+        else {
+            let url = "\(baseUrlNew)/app/yk/yk.php?mode=\(mode)"
+            NetworkManager.ins.request(.get, url, nil) { res in
+                success?(res)
+            } failure: { error in
+                failure?(error)
+            }
         }
     }
+    
     /// 공지사항 리스트
     ///- user_id
     func requestNoticeList(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {

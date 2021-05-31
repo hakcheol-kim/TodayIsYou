@@ -14,7 +14,8 @@ class ShareData: NSObject {
     var mySex: Gender = .mail
     var myName:String = ""
     var myPoint: NSNumber? = nil
-    
+    var languageCode: String = ""
+
     func dfsSet(_ value: Any?, _ key: String?) {
         guard let key = key, let value = value  else {
             return
@@ -49,6 +50,7 @@ class ShareData: NSObject {
         let cam_user_img = user["cam_user_img"].stringValue
         let connect_push = user["connect_push"].stringValue
         let inapp_cnt = user["inapp_cnt"].numberValue
+        let user_r = user["user_r"].numberValue
         
         let dfs = UserDefaults.standard
         dfs.setValue(user_id, forKey: DfsKey.userId)
@@ -66,7 +68,7 @@ class ShareData: NSObject {
         dfs.setValue(cam_user_img, forKey: DfsKey.camUserImg)
         dfs.setValue(connect_push, forKey: DfsKey.connectPush)
         dfs.setValue(inapp_cnt, forKey: DfsKey.inappCnt)
-        
+        dfs.setValue(user_r, forKey: DfsKey.userR)
         self.myId = user_id
         self.myPoint = user_point
         self.myName = user_name

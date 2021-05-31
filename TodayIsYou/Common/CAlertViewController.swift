@@ -162,10 +162,10 @@ class CAlertViewController: UIViewController {
             arrBtn.removeAll()
             for action in actions {
                 if (action == .ok) {
-                    self.addAction(action, "확인")
+                    self.addAction(action, NSLocalizedString("activity_txt478", comment: "확인"))
                 }
                 else if (action == .cancel) {
-                    self.addAction(action, "취소")
+                    self.addAction(action, NSLocalizedString("activity_txt479", comment: "취소"))
                 }
             }
         }

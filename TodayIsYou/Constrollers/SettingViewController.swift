@@ -35,9 +35,10 @@ class SettingViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         requestMyInfo()
+        AppDelegate.ins.mainViewCtrl.updateNaviPoint()
     }
     
-    func requestMyInfo() {
+    override func requestMyInfo() {
         ApiManager.ins.requestUerInfo(param: ["user_id":ShareData.ins.myId]) { (response) in
             self.userInfo = response
             self.decorationUi()
@@ -146,9 +147,8 @@ class SettingViewController: BaseViewController {
         }
         else if sender == btnJoinTerm {
             ApiManager.ins.requestServiceTerms(mode: "yk1") { (response) in
-                let isSuccess = response["isSuccess"].stringValue
                 let yk = response["yk"].stringValue
-                if isSuccess == "01" {
+                if yk.isEmpty == false {
                     let vc = TermsViewController.init()
                     vc.vcTitle = "가입 약관";
                     vc.content = yk
@@ -160,9 +160,8 @@ class SettingViewController: BaseViewController {
         }
         else if sender == btnPrivacyTerm {
             ApiManager.ins.requestServiceTerms(mode: "yk2") { (response) in
-                let isSuccess = response["isSuccess"].stringValue
                 let yk = response["yk"].stringValue
-                if isSuccess == "01"  {
+                if yk.isEmpty == false {
                     let vc = TermsViewController.init()
                     vc.vcTitle = "개인정보 취급방침";
                     vc.content = yk;

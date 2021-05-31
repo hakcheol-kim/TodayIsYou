@@ -59,10 +59,18 @@ class PhotoListViewController: BaseViewController {
         if searchSex == .femail {
             segGender.selectedSegmentIndex = 1
         }
+        segSort.setTitle(NSLocalizedString("layout_txt103", comment: "인기"), forSegmentAt: 0)
+        segSort.setTitle(NSLocalizedString("layout_txt104", comment: "최신"), forSegmentAt: 1)
+        
+        segGender.setTitle(NSLocalizedString("root_display_txt21", comment: "남"), forSegmentAt: 0)
+        segGender.setTitle(NSLocalizedString("root_display_txt20", comment: "여"), forSegmentAt: 1)
         
         self.dataRest()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        AppDelegate.ins.mainViewCtrl.updateNaviPoint()
+    }
     func dataRest() {
         pageNum = 1
         pageEnd = false

@@ -18,12 +18,12 @@ class MemberInfoViewController: BaseViewController {
     @IBOutlet weak var btnGender: CButton!
     @IBOutlet weak var btnAge: CButton!
     @IBOutlet weak var btnArea: CButton!
-    @IBOutlet weak var btnSound: UIButton!
-    @IBOutlet weak var btnVibrate: UIButton!
-    @IBOutlet weak var btnMute: UIButton!
+    @IBOutlet weak var btnSound: CButton!
+    @IBOutlet weak var btnVibrate: CButton!
+    @IBOutlet weak var btnMute: CButton!
     @IBOutlet weak var safeView: UIView!
-    @IBOutlet weak var btnOk: UIButton!
-    
+    @IBOutlet weak var btnOk: CButton!
+    @IBOutlet weak var btnOff: CButton!
     @IBOutlet weak var svPhoneNumber: UIStackView!
     @IBOutlet weak var svAuthCode: UIStackView!
     @IBOutlet weak var tfAuthCode: UITextField!
@@ -39,29 +39,11 @@ class MemberInfoViewController: BaseViewController {
     var user:[String:Any] = [:]
     let toolbar = CToolbar.init(barItems: [.keyboardDown])
     var authCode:String = ""
-    
+    var notiYn = "N"
     var timer:Timer?
-    var selGender: String = "" {
-        didSet {
-            if let tfTitle = btnGender.viewWithTag(100) as? UITextField {
-                tfTitle.text = selGender
-            }
-        }
-    }
-    var selAge: String = "" {
-        didSet {
-            if let tfTitle = btnAge.viewWithTag(100) as? UITextField {
-                tfTitle.text = selAge
-            }
-        }
-    }
-    var selArea: String = "" {
-        didSet {
-            if let tfTitle = btnArea.viewWithTag(100) as? UITextField {
-                tfTitle.text = selArea
-            }
-        }
-    }
+    var selGender: String = ""
+    var selAge: String = ""
+    var selArea: String = ""
     
     var isCheckedAuth = false
     var joinType:String = ""
@@ -69,7 +51,7 @@ class MemberInfoViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        CNavigationBar.drawBackButton(self, "회원가입", #selector(actionNaviBack))
+        CNavigationBar.drawBackButton(self, NSLocalizedString("join_activity66", comment: "회원가입"), #selector(actionNaviBack))
         tfNickName.inputAccessoryView = toolbar
         tfPhoneNumber.inputAccessoryView = toolbar
         tfPartnerCode.inputAccessoryView = toolbar
@@ -87,8 +69,12 @@ class MemberInfoViewController: BaseViewController {
         lbHintNickname.text = ""
         lbHintInfo.text = ""
         
+        btnSound.titleLabel?.numberOfLines = 0
+        btnVibrate.titleLabel?.numberOfLines = 0
+        btnMute.titleLabel?.numberOfLines = 0
+        btnOff.titleLabel?.numberOfLines = 0
         
-        let text = "인증확인"
+        let text = NSLocalizedString("layout_txt54", comment: "인증확인")
         let attrN = NSAttributedString(string: text, attributes: [.foregroundColor: UIColor.label])
         let attrS = NSAttributedString(string: text, attributes: [.foregroundColor: RGB(125, 125, 125)])
         btnAuthComfirm.setAttributedTitle(attrN, for: .normal)
@@ -126,49 +112,71 @@ class MemberInfoViewController: BaseViewController {
         self.view.endEditing(true)
         
         if sender == btnGender {
-            let vc = PopupListViewController.initWithType(.normal, "성별을 선택해주세요.", [Gender.femail.rawValue, Gender.mail.rawValue], nil) { (vcs, item, index) in
+            let vc = PopupListViewController.initWithType(.normal, NSLocalizedString("join_activity07", comment: "성별을 선택해주세요."), ["root_display_txt21".localized, "root_display_txt20".localized], nil) { (vcs, item, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 guard let item = item as? String else {
                     return
                 }
-                self.selGender = item
+                if item == "Male" || item == "남" {
+                    self.selGender = "남"
+                }
+                else {
+                    self.selGender = "여"
+                }
+                if let tfTitle = self.btnGender.viewWithTag(100) as? CTextField {
+                    tfTitle.text = item
+                }
             }
             presentPanModal(vc)
         }
         else if sender == btnAge {
-            guard let ageRange = ShareData.ins.getAge() else {
-                return
+            var ages = [String]()
+            for i in 2..<9 {
+                let key = "age_\(i)"
+                ages.append(NSLocalizedString(key, comment: ""))
             }
-            let vc = PopupListViewController.initWithType(.normal, "연령 선택해주세요.", ageRange, nil) { (vcs, item, index) in
+            
+            let vc = PopupListViewController.initWithType(.normal, NSLocalizedString("activity_txt471", comment: "나이를 선택해주세요."), ages, nil) { (vcs, item, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 guard let item = item as? String else {
                     return
                 }
-                self.selAge = item
+                self.selAge = Age.severKey(item)
+                if let tfTitle = self.btnAge.viewWithTag(100) as? CTextField {
+                    tfTitle.text = item
+                }
             }
             presentPanModal(vc)
         }
         else if sender == btnArea {
-            guard let area = ShareData.ins.getArea() else {
-                return
+//            guard let area = ShareData.ins.getArea() else {
+//                return
+//            }
+            var areas = [String]()
+            for i in 0..<17 {
+                let key = "area_\(i)"
+                areas.append(key.localized)
             }
-            let vc = PopupListViewController.initWithType(.normal, "지역 선택해주세요.", area, nil) { (vcs, item, index) in
+            let vc = PopupListViewController.initWithType(.normal, NSLocalizedString("join_activity09", comment: "지역 선택해주세요."), areas, nil) { (vcs, item, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 guard let item = item as? String else {
                     return
                 }
-                self.selArea = item
+                self.selArea = Area.severKey(item)
+                if let tfTitle = self.btnArea.viewWithTag(100) as? UITextField {
+                    tfTitle.text = item
+                }
             }
             presentPanModal(vc)
         }
         else if sender == btnPhoneAuth {
             lbHintPhone.text = ""
             guard let text = tfPhoneNumber.text, text.isEmpty == false else {
-                lbHintPhone.text = "전화번호를 입력해주세요."
+                lbHintPhone.text = NSLocalizedString("login_erro_msg", comment: "전화번호를 입력해주세요.")
                 return
             }
             guard text.validateKorPhoneNumber() == true else {
-                lbHintPhone.text = "전화번호 형식이 아닙니다."
+                lbHintPhone.text = NSLocalizedString("login_code_erro1", comment: "전화번호 형식이 아닙니다.")
                 return
             }
             
@@ -193,11 +201,11 @@ class MemberInfoViewController: BaseViewController {
         else if sender == btnAuthComfirm {
             lbHintAuthCode.text = ""
             guard let code = tfAuthCode.text, code.isEmpty == false else {
-                lbHintAuthCode.text = "인증번호를 입력해주세요."
+                lbHintAuthCode.text = NSLocalizedString("join_activity01", comment: "인증번호를 입력해주세요.")
                 return
             }
             if code != authCode {
-                lbHintAuthCode.text = "인증번호가 일치하지 않습니다."
+                lbHintAuthCode.text = NSLocalizedString("login_code_error", comment: "인증번호가 일치하지 않습니다.")
                 return
             }
             
@@ -208,6 +216,75 @@ class MemberInfoViewController: BaseViewController {
                 self.tfAuthCode.isUserInteractionEnabled = false
                 self.btnAuthComfirm.isEnabled = false
                 AppDelegate.ins.stopIndicator()
+            }
+        }
+        else if sender == btnSound {
+            sender.isSelected = !sender.isSelected
+            btnMute.isSelected = false
+            btnOff.isSelected = false
+            
+            if btnSound.isSelected && btnVibrate.isSelected{
+                notiYn = "A"
+            }
+            else if btnSound.isSelected == false && btnVibrate.isSelected == false {
+                btnOff.isSelected = true
+                notiYn = "N"
+            }
+            else if btnSound.isSelected == true {
+                notiYn = "S"
+            }
+            else {
+                notiYn = "V"
+            }
+        }
+        else if sender == btnVibrate {
+            sender.isSelected = !sender.isSelected
+            
+            btnMute.isSelected = false
+            btnOff.isSelected = false
+            
+            if btnSound.isSelected && btnVibrate.isSelected{
+                notiYn = "A"
+            }
+            else if btnSound.isSelected == false && btnVibrate.isSelected == false {
+                btnOff.isSelected = true
+                notiYn = "N"
+            }
+            else if btnVibrate.isSelected == true {
+                notiYn = "V"
+            }
+            else {
+                notiYn = "S"
+            }
+        }
+        else if sender == btnMute {
+            sender.isSelected = !sender.isSelected
+            if sender.isSelected {
+                btnSound.isSelected = false
+                btnVibrate.isSelected = false
+                btnOff.isSelected = false
+                notiYn = "M"
+            }
+            else {
+                btnSound.isSelected = true
+                btnVibrate.isSelected = true
+                btnOff.isSelected = false
+                notiYn = "A"
+            }
+        }
+        else if sender == btnOff {
+            sender.isSelected = !sender.isSelected
+            if sender.isSelected {
+                btnSound.isSelected = false
+                btnVibrate.isSelected = false
+                btnMute.isSelected = false
+                notiYn = "N"
+            }
+            else {
+                btnSound.isSelected = true
+                btnVibrate.isSelected = true
+                btnMute.isSelected = false
+                notiYn = "A"
             }
         }
         else if sender == btnSound {
@@ -236,16 +313,16 @@ class MemberInfoViewController: BaseViewController {
                 lbHintAuthCode.text = ""
                 
                 guard let phone = tfPhoneNumber.text, phone.isEmpty == false else {
-                    lbHintPhone.text = "전화번호를 입력해주세요."
+                    lbHintPhone.text = NSLocalizedString("login_erro_msg", comment: "전화번호를 입력해주세요.")
                     return
                 }
                 guard phone.validateKorPhoneNumber() == true else {
-                    lbHintPhone.text = "전화번호 형식이 아닙니다."
+                    lbHintPhone.text = NSLocalizedString("login_code_erro1", comment: "전화번호 형식이 아닙니다.")
                     return
                 }
                 
                 if isCheckedAuth == false {
-                    lbHintAuthCode.text = "전화번호 인증번호 확인을 해주세요."
+                    lbHintAuthCode.text = NSLocalizedString("join_auth_code_comfirm", comment: "전화번호 인증번호 확인을 해주세요.")
                     return
                 }
                 
@@ -261,57 +338,70 @@ class MemberInfoViewController: BaseViewController {
             
             lbHintNickname.text = ""
             lbHintInfo.text = ""
-            
-            if let nickname = tfNickName.text, nickname.isEmpty == true {
-                lbHintNickname.text = "닉네임을 입력해주세요."
+            lbHintNickname.isHidden = true
+            guard let nickname = tfNickName.text, nickname.isEmpty == false else {
+                lbHintNickname.text = NSLocalizedString("join_activity06", comment: "닉네임을 입력해주세요.")
+                lbHintNickname.isHidden = false
+                return
             }
-            else if tfNickName.text!.length  < 3  {
-                lbHintNickname.text = "3글자 이상 닉넴임을 입력해주세요."
-            }
             
-            tfNickName.text = ProfanityFilter.ins.cleanUp(tfNickName.text!)
-
+            guard nickname.length  > 2 else {
+                lbHintNickname.text = NSLocalizedString("join_nickname_check", comment: "3글자 이상 닉넴임을 입력해주세요.")
+                lbHintNickname.isHidden = false
+                return
+            }
+            let profanNickname = ProfanityFilter.ins.cleanUp(nickname)
+            tfNickName.text = profanNickname
+            
             guard let tfGender = btnGender.viewWithTag(100) as? UITextField, let gender = tfGender.text, gender.isEmpty == false else {
-                lbHintInfo.text = "성별을 선택해주세요."
+                lbHintInfo.text = NSLocalizedString("join_activity07", comment: "성별을 선택해주세요.")
                 return
             }
             guard let tfAge = btnAge.viewWithTag(100) as? UITextField, let age = tfAge.text, age.isEmpty == false else {
-                lbHintInfo.text = "연령을 선택해주세요."
+                lbHintInfo.text = NSLocalizedString("activity_txt471", comment: "나이를 선택해주세요.")
                 return
             }
             guard let tfArea = btnArea.viewWithTag(100) as? UITextField, let area = tfArea.text, area.isEmpty == false else {
-                lbHintInfo.text = "지역을 선택해주세요."
+                lbHintInfo.text = NSLocalizedString("join_activity09", comment: "지역 선택해주세요.")
                 return
             }
+           
+//            {
+//                instantExperienceLaunched=,
+//                app_type=A1,
+//                forgn_lang=US,
+//                save_type=G,
+//                referrerClickTime=,
+//                user_name=미라클여,
+//                appInstallTime=,
+//                version_code=10,
+//                user_age=10대,
+//                locale=en,
+//                referrerUrl=,
+//                user_sex=여,
+//                user_mail=miraclebible7342@gmail.com,
+//                user_id=87374bf0400f17bc2000b773f63b11ce,
+//                user_area=해외, noti_yn=A,
+//                user_phone=01073424920
+//            }
             
-            
-            var notiYn = "N"
-            if btnSound.isSelected && btnVibrate.isSelected {
-                notiYn = "A"
-            }
-            else if btnSound.isSelected {
-                notiYn = "S"
-            }
-            else if btnVibrate.isSelected {
-                notiYn = "V"
-            }
             
             user["app_type"] = appType
             user["save_type"] = "G"
             user["version_code"] = Bundle.main.appVersion
             user["locale"] = Locale.current.languageCode
-            user["user_name"] = tfNickName.text!
-            user["user_sex"] = gender
-            user["user_age"] = age
-            user["user_area"] = area
+            user["user_name"] = profanNickname
+            user["user_sex"] = selGender
+            user["user_age"] = selAge
+            user["user_area"] = selArea
             user["noti_yn"] = notiYn
-            
+            user["forgn_lang"] = ShareData.ins.languageCode.uppercased()
             let userId = user["user_id"] as! String
             
             ApiManager.ins.requestMemberRegist(param: user) { (response) in
                 let isSuccess = response["isSuccess"].stringValue
                 if isSuccess == "01" {
-                    let alert = CAlertViewController.init(type: .alert, title: nil, message: "회원가입이 완료되었습니다.", actions: [.ok]) { (vcs, selitem, index) in
+                    let alert = CAlertViewController.init(type: .alert, title: nil, message: NSLocalizedString("join_completed", comment: "회원가입이 완료되었습니다."), actions: [.ok]) { (vcs, selitem, index) in
                         vcs.dismiss(animated: true, completion: nil)
                         ShareData.ins.dfsSet(userId, DfsKey.userId)
                         ShareData.ins.myId = userId
@@ -341,12 +431,12 @@ class MemberInfoViewController: BaseViewController {
                     }
                 }
                 else if isSuccess == "02" {
-                    CAlertViewController.show(type: .alert, title: nil, message: "닉네임이 중복 되었습니다.", actions: [.ok]) { (vcs, selItem, index) in
+                    CAlertViewController.show(type: .alert, title: nil, message: NSLocalizedString("join_activity16", comment: "닉네임 중복!!"), actions: [.ok]) { (vcs, selItem, index) in
                         vcs.dismiss(animated: true, completion: nil)
                     }
                 }
                 else {
-                    CAlertViewController.show(type: .alert, title: nil, message: "중복가입 유저입니다.", actions: [.ok]) { (vcs, selItem, index) in
+                    CAlertViewController.show(type: .alert, title: nil, message: NSLocalizedString("join_activity17", comment: "중복가입유저!!"), actions: [.ok]) { (vcs, selItem, index) in
                         vcs.dismiss(animated: true, completion: nil)
                     }
                 }

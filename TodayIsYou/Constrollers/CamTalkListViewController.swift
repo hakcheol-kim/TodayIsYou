@@ -58,6 +58,7 @@ class CamTalkListViewController: MainActionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        AppDelegate.ins.mainViewCtrl.updateNaviPoint()
     }
     func decorationUI() {
         let imgNor = UIImage.color(from: RGB(120, 120, 130))
@@ -235,8 +236,15 @@ class CamTalkListViewController: MainActionViewController {
     override func actionBlockAlert() {
         let user_name = self.selUser["user_name"].stringValue
         let user_id = self.selUser["user_id"].stringValue
+        var title = ""
+        if ShareData.ins.languageCode == "ko" {
+            title = "\(user_name)님 \("layout_txt28".localized)"
+        }
+        else {
+            title = "\(user_name) \("layout_txt28".localized)"
+        }
         
-        let alert = CAlertViewController.init(type: .alert, title: "\(user_name)님 신고하기", message: nil, actions: [.cancel, .ok]) { (vcs, selItem, index) in
+        let alert = CAlertViewController.init(type: .alert, title:title , message: nil, actions: [.cancel, .ok]) { (vcs, selItem, index) in
             
             if (index == 1) {
                 guard let text = vcs.arrTextView.first?.text, text.isEmpty == false else {
@@ -247,7 +255,7 @@ class CamTalkListViewController: MainActionViewController {
                 ApiManager.ins.requestReport(param: param) { (res) in
                     let isSuccess = res["isSuccess"].stringValue
                     if isSuccess == "01" {
-                        self.showToast("신고가 완료되었습니다.")
+                        self.showToast("activity_txt246".localized)
                     }
                     else {
                         self.showErrorToast(res)
@@ -261,7 +269,7 @@ class CamTalkListViewController: MainActionViewController {
             }
         }
         alert.iconImg = UIImage(named: "warning")
-        alert.addTextView("신고 내용을 입력해주세요.", UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+        alert.addTextView("activity_txt497".localized, UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
         
         self.present(alert, animated: true, completion: nil)
     }
@@ -294,7 +302,7 @@ extension CamTalkListViewController: UITableViewDataSource, UITableViewDelegate 
                         }
                     }
                     else {
-                        self.showToast("1회 이상 결제한 유저님만 크게 볼 수 있습니다!!");
+                        self.showToast(NSLocalizedString("activity_txt69", comment: "1회 이상 결제한 유저님만 크게 볼 수 있습니다!!"))
                     }
                     break
                 case 101:
@@ -306,7 +314,7 @@ extension CamTalkListViewController: UITableViewDataSource, UITableViewDelegate 
                         }
                     }
                     else {
-                        self.showToast("1회 이상 결제한 유저님만 크게 볼 수 있습니다!!");
+                        self.showToast(NSLocalizedString("activity_txt69", comment: "1회 이상 결제한 유저님만 크게 볼 수 있습니다!!"))
                     }
                     break
                 case 102:

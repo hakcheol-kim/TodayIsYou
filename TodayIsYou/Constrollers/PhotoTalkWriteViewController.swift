@@ -64,9 +64,8 @@ class PhotoTalkWriteViewController: BaseViewController {
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         if sender == btnLink {
             ApiManager.ins.requestServiceTerms(mode: "yk4") { (res) in
-                let isSuccess = res["isSuccess"].stringValue
                 let yk = res["yk"].stringValue
-                if isSuccess == "01", yk.isEmpty == false {
+                if yk.isEmpty == false {
                     let vc = TermsViewController.init()
                     vc.vcTitle = "안내"
                     vc.content = yk

@@ -33,14 +33,17 @@ class TalkListViewController: MainActionViewController {
         }
         
         if let lbGender = btnGender.viewWithTag(100) as? UILabel {
-            lbGender.text = searchSex
+            lbGender.text = Gender.localizedString(searchSex)
         }
         
         if let lbArea = btnArea.viewWithTag(100) as? UILabel {
-            lbArea.text = "전체"
+            lbArea.text = NSLocalizedString("root_display_txt23", comment: "전체")
         }
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.requestMyHomePoint()
+    }
     func dataRest() {
         pageNum = 1
         pageEnd = false
@@ -101,24 +104,32 @@ class TalkListViewController: MainActionViewController {
     
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         if sender == btnGender {
-            let vc = PopupListViewController.initWithType(.normal, "성별을 선택해주세요.", ["남", "여"], nil) { (vcs, selItem, index) in
+            let vc = PopupListViewController.initWithType(.normal, "join_activity07".localized, ["root_display_txt21".localized, "root_display_txt20".localized], nil) { (vcs, selItem, index) in
                 vcs.dismiss(animated: false, completion: nil)
                 
                 guard let selItem = selItem as? String, let lbGender = self.btnGender.viewWithTag(100) as? UILabel else {
                     return
                 }
                 lbGender.text = selItem
-                self.searchSex = selItem
+                if selItem == "Male" || selItem == "남" {
+                    self.searchSex = "남"
+                }
+                else {
+                    self.searchSex = "여"
+                }
                 self.dataRest()
             }
             self.presentPanModal(vc)
         }
         else if sender == btnArea {
-            guard var area = ShareData.ins.getArea() else {
-                return
+
+            var area = [String]()
+            for i in 0..<17 {
+                let key = "area_\(i)"
+                area.append(key.localized)
             }
-            area.insert("전체", at: 0)
-            let vc = PopupListViewController.initWithType(.normal, "지역을 선택해주세요.", area, nil) { (vcs, selItem, index) in
+            area.insert("root_display_txt19".localized, at: 0)
+            let vc = PopupListViewController.initWithType(.normal, "join_activity09".localized, area, nil) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 
                 guard let selItem = selItem as? String, let lbArea = self.btnArea.viewWithTag(100) as? UILabel  else {
@@ -126,11 +137,11 @@ class TalkListViewController: MainActionViewController {
                 }
                 
                 lbArea.text = selItem
-                if selItem == "전체" {
+                if selItem == "전체" || selItem == "All" {
                     self.searchArea = ""
                 }
                 else {
-                    self.searchArea = selItem
+                    self.searchArea = Area.severKey(selItem)
                 }
                 self.dataRest()
             }

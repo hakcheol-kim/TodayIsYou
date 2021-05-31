@@ -52,6 +52,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
         }
         
+        var languageCode = Locale.current.languageCode.localizedLowercase
+        if languageCode == "en" {
+            languageCode = "us"
+        }
+        ShareData.ins.dfsSet(languageCode, DfsKey.languageCode)
+        ShareData.ins.languageCode = languageCode
+        
         callIntroViewCtrl()
 
         return true
@@ -344,7 +351,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             param["room_key"] = info["room_key"].stringValue
             param["user_id"] =  info["user_id"].stringValue
             
-            param["memo"] = "[CAM_TALK]저와 영상 채팅 해요 ^^"
+            param["memo"] = NSLocalizedString("push_cam_talk", comment: "[CAM_TALK]저와 영상 채팅 해요 ^^")
             param["reg_date"] = Date()
             param["read_yn"] = false
             param["type"] = 0
@@ -383,7 +390,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             param["from_user_id"] = info["from_user_id"].stringValue
             param["room_key"] = info["room_key"].stringValue
             param["user_id"] = info["user_id"].stringValue
-            param["memo"] = "[PHONE_TALK]저와 음성 통화 해요 ^^"
+            param["memo"] = NSLocalizedString("push_phone_talk", comment: "[PHONE_TALK]저와 음성 통화 해요 ^^")
             param["reg_date"] = Date()
             param["read_yn"] = false
             param["type"] = 0
@@ -443,7 +450,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let user_id = info["user_id"].stringValue
             param["user_id"] = user_id
             
-            param["memo"] = "[CAM_TALK]저와 영상 채팅 해요 ^^"
+            param["memo"] = NSLocalizedString("push_cam_talk", comment: "[CAM_TALK]저와 영상 채팅 해요 ^^")
             param["reg_date"] = Date()
             param["read_yn"] = true
             param["type"] = 0

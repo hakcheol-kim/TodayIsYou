@@ -29,18 +29,19 @@ class LeftSideMenuCell: UITableViewCell {
 
 class LeftSideMenuViewController: UIViewController {
 
+    @IBOutlet weak var heightHeight: NSLayoutConstraint!
     @IBOutlet var headerView: UIView!
     @IBOutlet weak var tblView: UITableView!
     @IBOutlet weak var ivProfile: UIImageView!
     @IBOutlet weak var lbNickName: UILabel!
     @IBOutlet weak var lbUserInfo: UILabel!
     
-    let listData:[[String:String]] = [["title": "포인트 충전", "imgName": "pesetasign.circle"],
-                                      ["title": "공지사항", "imgName": "bell"],
-                                      ["title": "찜 목록", "imgName": "hand.tap"],
-                                      ["title": "차단 목록", "imgName": "xmark.circle"],
-                                      ["title": "사용자 접속목록", "imgName": "person"],
-                                      ["title": "로그아웃", "imgName": "arrow.backward.square"]]
+    let listData:[[String:String]] = [["title": NSLocalizedString("layout_txt26", comment: "포인트 충전"), "imgName": "pesetasign.circle"],
+                                      ["title": NSLocalizedString("layout_txt23", comment: "공지사항"), "imgName": "bell"],
+                                      ["title": NSLocalizedString("activity_txt291", comment: "찜 목록"), "imgName": "hand.tap"],
+                                      ["title": NSLocalizedString("activity_txt165", comment: "차단목록"), "imgName": "xmark.circle"],
+                                      ["title": NSLocalizedString("activity_txt284", comment: "사용자 접속목록"), "imgName": "person"],
+                                      ["title": NSLocalizedString("log_out", comment: "로그아웃"), "imgName": "arrow.backward.square"]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,22 +52,47 @@ class LeftSideMenuViewController: UIViewController {
 //        if let img = UIImage(named: "img_back2.jpg") {
 //            headerView.backgroundColor = UIColor(patternImage: img)
 //        }
-        lbNickName.text = ""
-        lbUserInfo.text = ""
         headerView.addGradient(RGB(230, 50, 70), end: UIColor.white, sPoint: CGPoint(x: 1, y:0), ePoint: CGPoint(x: 1, y: 1))
         headerView.clipsToBounds = true
         
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-       
-        ivProfile.clipsToBounds = true
+        self.requestMyInfo()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.updateHeaderView()
+        tblView.reloadData()
+    }
+    
+    func updateHeaderView() {
+        guard let headerView = tblView.tableHeaderView else {
+            return
+        }
+        lbNickName.translatesAutoresizingMaskIntoConstraints = false
+        let fitHeight = lbNickName.sizeThatFits(CGSize(width: lbNickName.bounds.width, height: CGFloat.greatestFiniteMagnitude)).height
+        heightHeight.constant = fitHeight
         
-        if let userName = ShareData.ins.dfsGet(DfsKey.userName) {
-            let gender = ShareData.ins.mySex.rawValue
-            lbNickName.text = "\(userName), \(gender)"
+        let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
+        headerView.frame = CGRect(x: headerView.frame.origin.x, y: headerView.frame.origin.y, width: headerView.frame.size.width, height: height)
+    }
+    func decorationUi() {
+        ivProfile.clipsToBounds = true
+        lbNickName.text = ""
+        lbUserInfo.text = ""
+        
+        var info = ""
+        if let userName = ShareData.ins.dfsGet(DfsKey.userName) as? String {
+            info = userName
+        }
+        if let age = ShareData.ins.dfsGet(DfsKey.userAge) as? String {
+            info.append(", \(Age.localizedString(age))")
         }
         
+        info.append(", \(Gender.localizedString(ShareData.ins.mySex.rawValue))")
+        lbNickName.text = info
+
         
         let pPoint: String = "\(ShareData.ins.myPoint?.intValue ?? 0)".addComma()+"P"
         let sp = ShareData.ins.dfsGet(DfsKey.userR) as? NSNumber
@@ -84,20 +110,22 @@ class LeftSideMenuViewController: UIViewController {
             ivProfile.setImageCache(url)
             ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
         }
+        self.updateFocusIfNeeded()
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        tblView.reloadData()
-    }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        guard let headerView = tblView.tableHeaderView else {
-            return
+    
+    func requestMyInfo() {
+        let param = ["app_type": appType, "user_id":ShareData.ins.myId]
+        ApiManager.ins.requestUerInfo(param: param) { (response) in
+            let isSuccess = response["isSuccess"].stringValue
+            if isSuccess == "01" {
+                ShareData.ins.setUserInfo(response)
+                self.decorationUi()
+            }
+        } failure: { (error) in
+            self.showErrorToast(error)
         }
-        
-        let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
-        headerView.frame = CGRect(x: headerView.frame.origin.x, y: headerView.frame.origin.y, width: headerView.frame.size.width, height: height)
     }
+    
 }
 
 extension LeftSideMenuViewController: UITableViewDelegate, UITableViewDataSource {
@@ -137,7 +165,7 @@ extension LeftSideMenuViewController: UITableViewDelegate, UITableViewDataSource
                 AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
                 break
             case 5:
-                CAlertViewController.show(type: .alert, title: "로그아웃", message: "로그아웃 하시겠습니까?", actions: [.cancel, .ok]) { (vcs, selItem, action) in
+                CAlertViewController.show(type: .alert, title: "log_out".localized, message: "log_out_msg".localized, actions: [.cancel, .ok]) { (vcs, selItem, action) in
                     vcs.dismiss(animated: true, completion: nil)
                     
                     if action == 1 {

@@ -39,7 +39,10 @@ class RankListViewController: BaseViewController {
         self.commitPagerView()
         self.dataRest()
     }
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        AppDelegate.ins.mainViewCtrl.updateNaviPoint()
+    }
     func commitPagerView() {
         
         pagerView.register(UINib(nibName: "RankTopColCell", bundle: nil), forCellWithReuseIdentifier: "RankTopColCell")

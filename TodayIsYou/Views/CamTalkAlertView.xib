@@ -73,7 +73,7 @@
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nIM-1M-DUf">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nIM-1M-DUf" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
                                     <rect key="frame" x="393" y="0.0" width="67" height="95"/>
                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
                                     <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="0.0" maxY="8"/>
@@ -81,6 +81,9 @@
                                     <state key="normal" title="신고" image="warning">
                                         <color key="titleColor" red="0.90196078430000004" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="activity_txt498"/>
+                                    </userDefinedRuntimeAttributes>
                                 </button>
                             </subviews>
                         </stackView>

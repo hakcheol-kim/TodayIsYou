@@ -71,7 +71,11 @@ class CamTblCell: UITableViewCell {
             ivProfile.accessibilityValue = imgUrl
         }
         ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
-        
+        ivProfile.layer.borderColor = UIColor.clear.cgColor
+        if user_id == ShareData.ins.myId {
+            ivProfile.layer.borderWidth = 1.0;
+            ivProfile.layer.borderColor = UIColor.red.cgColor
+        }
         ivThumb.isHidden = true
         ivThumb.accessibilityValue = nil
         if let imgUrl = Utility.thumbnailUrl(user_id, user_image) {
@@ -80,9 +84,13 @@ class CamTblCell: UITableViewCell {
             ivThumb.accessibilityValue = imgUrl
         }
         ivThumb.layer.cornerRadius = ivThumb.bounds.height/2
+        lbTitle.text = ""
         
-        lbTitle.text = contents
-        lbSubTitle.text = "\(user_name), \(user_sex) \(user_age)"
+        if let contents = contents as? String {
+            lbTitle.text = TalkMemo.localizedString(contents)
+        }
+        
+        lbSubTitle.text = "\(user_name), \(Gender.localizedString(user_sex)) \(Age.localizedString(user_age))"
     }
     
     @objc func onTapGesuterHandler(_ gesture: UIGestureRecognizer) {

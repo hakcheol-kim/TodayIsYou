@@ -72,6 +72,11 @@ class TalkTblCell: UITableViewCell {
             ivProfile.accessibilityValue = imgUrl
         }
         ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
+        ivProfile.layer.borderColor = UIColor.clear.cgColor
+        if user_id == ShareData.ins.myId {
+            ivProfile.layer.borderWidth = 1.0;
+            ivProfile.layer.borderColor = UIColor.red.cgColor
+        }
         
         ivThumb.isHidden = true
         ivThumb.accessibilityValue = nil
@@ -82,8 +87,8 @@ class TalkTblCell: UITableViewCell {
         }
         ivThumb.layer.cornerRadius = ivThumb.bounds.height/2
         
-        lbTitle.text = title
-        let result = "\(user_name), \(user_age), \(user_sex)"
+        lbTitle.text = TalkMemo.localizedString(title)
+        let result = "\(user_name), \(Age.localizedString(user_age)), \(Gender.localizedString(user_sex))"
         let attr = NSMutableAttributedString.init(string: result)
         attr.addAttribute(.foregroundColor, value: UIColor.label, range: NSMakeRange(0, result.length))
         attr.addAttribute(.foregroundColor, value: RGB(148, 17, 0), range: NSMakeRange(0, user_name.length))
@@ -97,23 +102,20 @@ class TalkTblCell: UITableViewCell {
             let curDate = Date()
             let comps = curDate - regDate
             
-            if let month = comps.month, month > 0 {
-                tStr = "\(month)달전"
-            }
-            else if let day = comps.day, day > 0 {
-                tStr = String(format: "%ld일전", day)
+            if let day = comps.day, day > 0 {
+                tStr = String(format: "%ld%@", day, NSLocalizedString("activity_txt24", comment: "일전"))
             }
             else if let hour = comps.hour, hour > 0 {
-                tStr = String(format: "%02ld시간 %02ld분전", hour, (comps.minute ?? 0))
+                tStr = String(format: "%02ld%@ %02ld%@", hour, NSLocalizedString("activity_txt66", comment: "시간"), (comps.minute ?? 0), NSLocalizedString("activity_txt30", comment: "분전"))
             }
             else if let minute = comps.minute, minute > 0 {
-                tStr = String(format: "%02ld분 %02ld초전", minute, (comps.second ?? 0))
+                tStr = String(format: "%02ld%@ %02ld%@", minute, NSLocalizedString("activity_txt27", comment: "분"), (comps.second ?? 0), NSLocalizedString("activity_txt28", comment: "초전"))
             }
             else if let second = comps.second, second > 0 {
-                tStr = String(format: "%02ld초전", second)
+                tStr = String(format: "%02ld%@", second, NSLocalizedString("activity_txt28", comment: "초전"))
             }
         }
-        lbMsg.text = "\(user_area), \(tStr)"
+        lbMsg.text = "\(Area.localizedString(user_area)), \(tStr)"
     }
     
     @objc func onTapGesuterHandler(_ gesture: UIGestureRecognizer) {

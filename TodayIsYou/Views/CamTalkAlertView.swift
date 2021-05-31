@@ -29,7 +29,8 @@ class CamTalkAlertView: UIView {
         let user_score = data["user_score"].doubleValue
         let contents = data["contents"].stringValue
 //        let user_sex = data["user_sex"].stringValue
-        lbMsg2.text = "*영상,음성 채팅시 차감되는 위 포인트는 상대와의 연결 여부와 상관 없이 차감되며 환불되지 않습니다.영상, 음성 신청시 이에 동의함으로 간주됩니다."
+        lbMsg2.text = NSLocalizedString("activity_txt214", comment: "")
+//            "*영상,음성 채팅시 차감되는 위 포인트는 상대와의 연결 여부와 상관 없이 차감되며 환불되지 않습니다.영상, 음성 신청시 이에 동의함으로 간주됩니다."
         lbTitle.text  = contents
         starRatingView.rating = user_score
     }

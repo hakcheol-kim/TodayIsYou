@@ -37,8 +37,10 @@ class ChattingListViewController: BaseViewController {
         super.viewWillAppear(animated)
         self.dataRest()
         AppDelegate.ins.mainViewCtrl.updateUnReadMessageCount()
+        AppDelegate.ins.mainViewCtrl.updateNaviPoint()
         NotificationCenter.default.addObserver(self, selector: #selector(notificationHandler(_:)), name: Notification.Name(PUSH_DATA), object: nil)
     }
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self, name: Notification.Name(PUSH_DATA), object: nil)

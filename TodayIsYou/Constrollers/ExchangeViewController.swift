@@ -102,20 +102,16 @@ class ExchangeViewController: BaseViewController {
       }
       
    }
-    func requestTerm() {
-        ApiManager.ins.requestServiceTerms(mode: "yk3") { (response) in
-            let isSuccess = response["isSuccess"].stringValue
-            if (isSuccess == "01") {
-                self.yk = response["yk"].stringValue
-                self.decorationUI()
-            }
-            else {
-                self.showErrorToast(response)
-            }
-        } failure: { (error) in
-            self.showErrorToast(error)
-        }
-    }
+   func requestTerm() {
+      ApiManager.ins.requestServiceTerms(mode: "yk3") { (response) in
+         self.yk = response["yk"].stringValue
+         if self.yk.isEmpty == false {
+            self.decorationUI()
+         }
+      } failure: { (error) in
+         self.showErrorToast(error)
+      }
+   }
     
     func decorationUI() {
         let newYk = yk.replacingOccurrences(of: "\r\n\r\n", with: "\n")

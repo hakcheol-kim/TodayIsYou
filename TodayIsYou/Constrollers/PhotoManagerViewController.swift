@@ -76,9 +76,8 @@ class PhotoManagerViewController: BaseViewController {
         }
         else if sender == btnShowTerm {
             ApiManager.ins.requestServiceTerms(mode: "yk8") { (response) in
-                let isSuccess = response["isSuccess"].stringValue
                 let yk = response["yk"].stringValue
-                if isSuccess == "01" {
+                if yk.isEmpty == false {
                     let vc = TermsViewController.init()
                     vc.content = yk
                     vc.type = .nomarl
@@ -213,7 +212,7 @@ class PhotoManagerViewController: BaseViewController {
         ApiManager.ins.requestChangePhotoTalk(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
-                AppDelegate.ins.window?.makeToast("이미지 등록")
+                AppDelegate.ins.window?.makeToast("이미지 등록완료")
                 self.navigationController?.popViewController(animated: true)
             }
             else {
@@ -227,7 +226,7 @@ class PhotoManagerViewController: BaseViewController {
         ApiManager.ins.requestModifyMyPhoto(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
-                AppDelegate.ins.window?.makeToast("이미지 등록")
+                AppDelegate.ins.window?.makeToast("이미지 등록완료")
                 self.navigationController?.popViewController(animated: true)
             }
             else {

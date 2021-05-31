@@ -58,9 +58,14 @@ class CamTalkColCell: UICollectionViewCell {
         if let imgUrl = Utility.thumbnailUrl(user_id, file_name) {
             ivThumb.setImageCache(imgUrl)
         }
+        ivThumb.layer.borderColor = UIColor.clear.cgColor
+        if user_id == ShareData.ins.myId {
+            ivThumb.layer.borderColor = UIColor.red.cgColor
+            ivThumb.layer.borderWidth = 1.0
+        }
         
-        lbTitle.text = contents
-        lbAge.text = user_age
+        lbTitle.text = TalkMemo.localizedString(contents)
+        lbAge.text = Age.localizedString(user_age)
         lbName.text = user_name
         btnHartCnt.setTitle("\(good_cnt)", for: .normal)
     }

@@ -35,10 +35,12 @@ class LoginViewController: SocialLoginViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if Locale.current.languageCode == "ko" {
-            isKr = true
+        if ShareData.ins.languageCode == "ko" {
+            isKr = false
         }
-        
+        #if DEBUG
+        isKr = true
+        #endif
         if isKr {
             svPhoneLogin.isHidden = false
             svSocialLogin.isHidden = true
@@ -111,7 +113,8 @@ class LoginViewController: SocialLoginViewController {
     func timeOut() {
         self.isCheckedAuth = false
         btnPhone.isUserInteractionEnabled = true
-        btnPhone.setTitle("문자인증", for: .normal)
+//        btnPhone.setTitle("문자인증", for: .normal)
+        btnPhone.setTitle("layout_txt51".localized, for: .normal)
         btnPhone.setTitleColor(UIColor.white, for: .normal)
         btnPhone.backgroundColor = RGB(230, 100, 100)
         tfPhone.isUserInteractionEnabled = true
@@ -126,11 +129,11 @@ class LoginViewController: SocialLoginViewController {
         else if sender == btnPhone {
             lbHintPhone.text = ""
             guard let phoneNum = tfPhone.text, phoneNum.isEmpty == false else {
-                lbHintPhone.text = "전화번호를 입력해주세요."
+                lbHintPhone.text =  "login_erro_msg".localized //"전화번호를 입력해주세요."
                 return
             }
             if phoneNum.validateKorPhoneNumber() == false {
-                lbHintPhone.text = "전화번호 형식이 아닙니다."
+                lbHintPhone.text = "login_code_erro1".localized //"전화번호 형식이 아닙니다."
                 return
             }
             
@@ -158,25 +161,27 @@ class LoginViewController: SocialLoginViewController {
             tfPhone.isUserInteractionEnabled = true
             btnPhone.isUserInteractionEnabled = true
             btnPhone.backgroundColor = RGB(230, 100, 100)
-            btnPhone.setTitle("문자인증", for: .normal)
+//            btnPhone.setTitle("문자인증", for: .normal)
+            btnPhone.setTitle("layout_txt51".localized, for: .normal)
             btnPhone.setTitleColor(UIColor.white, for: .normal)
             
             tfAuth.text = ""
             tfAuth.isUserInteractionEnabled = true
             btnAuth.isUserInteractionEnabled = true
             btnAuth.backgroundColor = RGB(230, 100, 100)
-            btnAuth.setTitle("인증확인", for: .normal)
+//            btnAuth.setTitle("인증확인", for: .normal)
+            btnAuth.setTitle("layout_txt54".localized, for: .normal)
             btnAuth.setTitleColor(UIColor.white, for: .normal)
             
         }
         else if sender == btnAuth {
             lbHintAuth.text = ""
             guard let code = tfAuth.text, code.isEmpty == false else {
-                lbHintAuth.text = "인증번호를 입력해주세요."
+                lbHintAuth.text = "join_activity01".localized //"인증번호를 입력해주세요."
                 return
             }
             if code != authCode {
-                lbHintAuth.text = "인증번호가 일치하지 않습니다."
+                lbHintAuth.text = "login_code_error".localized //"인증번호가 일치하지 않습니다."
                 return
             }
             
@@ -186,7 +191,8 @@ class LoginViewController: SocialLoginViewController {
                 self.isCheckedAuth = true
                 
                 self.tfAuth.isUserInteractionEnabled = false
-                self.btnAuth.setTitle("인증완료", for: .normal)
+//                "인증완료"
+                self.btnAuth.setTitle("login_sms_complete".localized, for: .normal)
                 self.btnAuth.setTitleColor(RGB(230, 100, 100), for: .normal)
                 self.btnAuth.backgroundColor = RGB(230, 230, 230)
                 
@@ -197,7 +203,7 @@ class LoginViewController: SocialLoginViewController {
         else if sender == btnSignin {
             self.view.endEditing(true)
             guard isCheckedAuth == true, let phoneNumber = tfPhone.text, phoneNumber.isEmpty == false else {
-                self.view.makeToast("로그인을 완료해주세요.")
+                self.view.makeToast("login_sms_complete_msg".localized) //"로그인을 완료해주세요."
                 return
             }
             
@@ -242,7 +248,7 @@ class LoginViewController: SocialLoginViewController {
             let isSuccess = res["isSuccess"]
             if isSuccess == "00" { //신규
                 if joinType == "phone" {
-                    self.showToast("존재하지 않는 회원입니다.")
+                    self.showToast("lgoin_no_member".localized) //"존재하지 않는 회원입니다."
                 }
                 else {
                     let vc = JoinTermsAgreeViewController.instantiateFromStoryboard(.login)!
