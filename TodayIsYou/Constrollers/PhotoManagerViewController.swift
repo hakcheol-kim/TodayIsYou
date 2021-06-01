@@ -27,7 +27,7 @@ class PhotoManagerViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        CNavigationBar.drawBackButton(self, "내 사진 관리", #selector(actionNaviBack))
+        CNavigationBar.drawBackButton(self, NSLocalizedString("activity_txt374", comment: "내 사진 관리"), #selector(actionNaviBack))
         
         let layout = UICollectionViewFlowLayout.init()
         layout.sectionInset = UIEdgeInsets(top: 4, left: 4, bottom: 4, right: 4)
@@ -37,9 +37,13 @@ class PhotoManagerViewController: BaseViewController {
         
         btnCheckTerm.isSelected = true
         reqeustGetMyPhotoList()
+        btnCheckTerm.titleLabel?.numberOfLines = 0
         
         collectionView.cr.addHeadRefresh { [weak self] in
             self?.reqeustGetMyPhotoList()
+        }
+        if let ivCirclePluse = btnAddPhoto.viewWithTag(200) as? UIImageView {
+            ivCirclePluse.layer.cornerRadius = ivCirclePluse.bounds.height/2;
         }
     }
     
@@ -92,7 +96,7 @@ class PhotoManagerViewController: BaseViewController {
         }
         else if sender == btnAddPhoto {
             if btnCheckTerm.isSelected == false {
-                self.showToast("사용자 제작 콘텐츠(UGC) 등록 약관에 동의 하세요.")
+                self.showToast(NSLocalizedString("activity_txt375", comment: "사용자 제작 콘텐츠(UGC) 등록 약관에 동의 하세요."))
                 return
             }
             
@@ -102,15 +106,15 @@ class PhotoManagerViewController: BaseViewController {
             }
             let alert = UIAlertController(title:nil, message: nil, preferredStyle: alertStyle)
             
-            alert.addAction(UIAlertAction(title: "카메라로 사진 촬영하기", style: .default, handler: { (action) in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("photo_take_camera", comment: "카메라로 사진 촬영하기"), style: .default, handler: { (action) in
                 alert.dismiss(animated: true, completion: nil)
                 self.showCameraPicker(.camera)
             }))
-            alert.addAction(UIAlertAction(title: "갤러리에서 사진 가져오기", style: .default, handler: { (action) in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("photo_take_gallery", comment: "갤러리에서 사진 가져오기"), style: .default, handler: { (action) in
                 alert.dismiss(animated: true, completion: nil)
                 self.showCameraPicker(.photoLibrary)
             }))
-            alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: { (action) in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("activity_txt479", comment: "취소"), style: .cancel, handler: { (action) in
                 alert.dismiss(animated: true, completion: nil)
             }))
             
@@ -145,7 +149,7 @@ class PhotoManagerViewController: BaseViewController {
     func showPhotoUsingAlert(_ orig:UIImage, _ crop: UIImage) {
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.2) { [weak self] in
-            let vc = CAlertViewController.init(type: .alert, title: "이미지 검증/등록 신청", message: "*선택 사항이 동시에 모두 등록 가능합니다.", actions: nil) { (vcs, selItem, index) in
+            let vc = CAlertViewController.init(type: .alert, title: NSLocalizedString("activity_txt378", comment: "이미지 검증/등록 신청"), message:NSLocalizedString("layout_txt94", comment: "*선택 사항이 동시에 모두 등록 가능합니다."), actions: nil) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil);
                 
                 if (index == 1) {
@@ -184,7 +188,7 @@ class PhotoManagerViewController: BaseViewController {
                     ApiManager.ins.requestRegistPhoto(param: param) { (res) in
                         let isSuccess = res["isSuccess"].stringValue
                         if isSuccess == "01" {
-                            self?.view.makeToast("등록 성공!!")
+                            self?.view.makeToast(NSLocalizedString("activity_txt356", comment: "등록완료!!"))
                             self?.reqeustGetMyPhotoList()
                         }
                         else {
@@ -196,11 +200,11 @@ class PhotoManagerViewController: BaseViewController {
                     }
                 }
             }
-            vc.addAction(.check, "프로필 이미지에 등록", nil, RGB(230, 100, 100), true)
-            vc.addAction(.check, "영상톡 이미지에 등록", nil, RGB(230, 100, 100), true)
-            vc.addAction(.check, "일반톡 이미지에 등록", nil, RGB(230, 100, 100), true)
-            vc.addAction(.cancel, "취소")
-            vc.addAction(.ok, "신청")
+            vc.addAction(.check, NSLocalizedString("layout_txt91", comment: "프로필 이미지에 등록"), nil, RGB(230, 100, 100), true)
+            vc.addAction(.check, NSLocalizedString("layout_txt92", comment: "영상톡 이미지에 등록"), nil, RGB(230, 100, 100), true)
+            vc.addAction(.check, NSLocalizedString("layout_txt93", comment: "일반톡 이미지에 등록"), nil, RGB(230, 100, 100), true)
+            vc.addAction(.cancel, NSLocalizedString("activity_txt479", comment: "취소"))
+            vc.addAction(.ok, NSLocalizedString("activity_txt478", comment: "확인"))
             vc.iconImg = UIImage(named: "ico_app_80")
             vc.fontMsg = UIFont.systemFont(ofSize: 13)
             vc.reloadUI()
@@ -212,7 +216,7 @@ class PhotoManagerViewController: BaseViewController {
         ApiManager.ins.requestChangePhotoTalk(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
-                AppDelegate.ins.window?.makeToast("이미지 등록완료")
+                AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt356", comment: "등록완료!!"))
                 self.navigationController?.popViewController(animated: true)
             }
             else {
@@ -226,7 +230,7 @@ class PhotoManagerViewController: BaseViewController {
         ApiManager.ins.requestModifyMyPhoto(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
-                AppDelegate.ins.window?.makeToast("이미지 등록완료")
+                AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt356", comment: "등록완료!!"))
                 self.navigationController?.popViewController(animated: true)
             }
             else {
@@ -275,11 +279,11 @@ extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionView
             cell.ivThumb.setImageCache(url)
         }
         if view_yn == "Y" {
-            cell.btnState.setTitle("검중완료", for: .normal)
+            cell.btnState.setTitle(NSLocalizedString("activity_txt41", comment: "검증완료"), for: .normal)
             cell.btnState.setTitleColor(RGB(255, 0, 0), for: .normal)
         }
         else {
-            cell.btnState.setTitle("검중중", for: .normal)
+            cell.btnState.setTitle(NSLocalizedString("layout_txt89", comment: "검증중"), for: .normal)
             cell.btnState.setTitleColor(RGB(255, 255, 0), for: .normal)
         }
         
@@ -296,7 +300,7 @@ extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionView
         let view_yn = item["view_yn"].stringValue
         
         if view_yn == "N" {
-            self.showToast("검증 완료 후 등록 삭제 보기가 가능합니다!!")
+            self.showToast(NSLocalizedString("activity_txt43", comment: "검증완료 후 등록 삭제 보기가 가능 합니다!!"))
         }
         else if type == .photo {
             
@@ -308,7 +312,7 @@ extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionView
                 return
             }
             
-            let vc = CAlertViewController.init(type: .alert, title: "사진 등록, 삭제, 보기", message:nil , actions: nil) { (vcs, selItem, index) in
+            let vc = CAlertViewController.init(type: .alert, title: NSLocalizedString("activity_txt422", comment: "사진 등록, 삭제, 보기"), message:nil , actions: nil) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 
                 if index == 1 {
@@ -333,21 +337,21 @@ extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionView
                     else {
                         param["user_id"] = ShareData.ins.myId
                         param["user_file"] = item["user_img"].stringValue
-                        param["image_profile_save"] = false
-                        param["image_cam_save"] = false
-                        param["image_talk_save"] = false
-                        param["image_photo_save"] = false
+                        param["image_profile_save"] = "false"
+                        param["image_cam_save"] = "false"
+                        param["image_talk_save"] = "false"
+                        param["image_photo_save"] = "false"
                         
                         self.requestChangeMyPhoto(param)
                     }
                 }
             }
-            vc.addAction(.check, "포토톡 사진 추가 등록", nil, RGB(230, 100, 100), true)
+            vc.addAction(.check, NSLocalizedString("layout_txt99", comment: "포토톡 사진 추가 등록"), nil, RGB(230, 100, 100), true)
             
-            vc.addAction(.cancel, "취소")
-            vc.addAction(.normal, "삭제")
-            vc.addAction(.normal, "보기")
-            vc.addAction(.ok, "확인")
+            vc.addAction(.cancel, NSLocalizedString("activity_txt479", comment: "취소"))
+            vc.addAction(.normal, NSLocalizedString("activity_txt55", comment: "삭제"))
+            vc.addAction(.normal, NSLocalizedString("activity_txt424", comment: "보기"))
+            vc.addAction(.ok, NSLocalizedString("activity_txt478", comment: "확인"))
             vc.iconImgName = url
             vc.fontMsg = UIFont.systemFont(ofSize: 13)
             vc.reloadUI()
@@ -362,7 +366,7 @@ extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionView
                 return
             }
             
-            let vc = CAlertViewController.init(type: .alert, title: "사진 등록, 삭제, 보기", message:"*상황에 맞도록 선택해주세요." , actions: nil) { (vcs, selItem, index) in
+            let vc = CAlertViewController.init(type: .alert, title: NSLocalizedString("activity_txt422", comment: "사진 등록, 삭제, 보기"), message:NSLocalizedString("layout_txt100", comment: "*상황에 맞도록 선택해주세요.") , actions: nil) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 
                 if index == 1 {
@@ -376,50 +380,50 @@ extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionView
                     var param:[String:Any] = [:]
                     param["user_file"] = item["user_img"].stringValue
                     param["user_id"] = ShareData.ins.myId
-                    
+                   
                     for i in 0..<vcs.arrBtnCheck.count {
                         let btn = vcs.arrBtnCheck[i]
                         if i == 0 {
-                            param["image_profile_save"] = btn.isSelected
+                            param["image_profile_save"] = (btn.isSelected ? "true": "false")
                         }
                         else if i == 1 {
-                            param["image_cam_save"] = btn.isSelected
+                            param["image_cam_save"] = (btn.isSelected ? "true":"false")
                         }
                         else {
-                            param["image_talk_save"] = btn.isSelected
+                            param["image_talk_save"] = (btn.isSelected ? "true": "false")
                         }
                     }
-                    param["image_photo_save"] = false
-                 
+                    param["image_photo_save"] = "false"
                     self.requestChangeMyPhoto(param)
                 }
             }
             
             if type == .cam {
-                vc.addAction(.check, "프로필 사진 변경 등록", nil, RGB(230, 100, 100), false)
-                vc.addAction(.check, "영상톡 사진 변경 등록", nil, RGB(230, 100, 100), true)
-                vc.addAction(.check, "일반톡 사진 변경 등록", nil, RGB(230, 100, 100), false)
+                vc.addAction(.check, NSLocalizedString("layout_txt96", comment: "프로필 사진 변경 등록"), nil, RGB(230, 100, 100), false)
+                vc.addAction(.check, NSLocalizedString("layout_txt97", comment: "영상톡 사진 변경 등록"), nil, RGB(230, 100, 100), true)
+                vc.addAction(.check, NSLocalizedString("layout_txt98", comment: "일반톡 사진 변경 등록"), nil, RGB(230, 100, 100), false)
             }
             else if type == .talk {
-                vc.addAction(.check, "프로필 사진 변경 등록", nil, RGB(230, 100, 100), false)
-                vc.addAction(.check, "영상톡 사진 변경 등록", nil, RGB(230, 100, 100), false)
-                vc.addAction(.check, "일반톡 사진 변경 등록", nil, RGB(230, 100, 100), true)
+                vc.addAction(.check, NSLocalizedString("layout_txt96", comment: "프로필 사진 변경 등록"), nil, RGB(230, 100, 100), false)
+                vc.addAction(.check, NSLocalizedString("layout_txt97", comment: "영상톡 사진 변경 등록"), nil, RGB(230, 100, 100), false)
+                vc.addAction(.check, NSLocalizedString("layout_txt98", comment: "일반톡 사진 변경 등록"), nil, RGB(230, 100, 100), true)
             }
             else if type == .profile {
-                vc.addAction(.check, "프로필 사진 변경 등록", nil, RGB(230, 100, 100), true)
-                vc.addAction(.check, "영상톡 사진 변경 등록", nil, RGB(230, 100, 100), false)
-                vc.addAction(.check, "일반톡 사진 변경 등록", nil, RGB(230, 100, 100), false)
+                vc.addAction(.check, NSLocalizedString("layout_txt96", comment: "프로필 사진 변경 등록"), nil, RGB(230, 100, 100), true)
+                vc.addAction(.check, NSLocalizedString("layout_txt97", comment: "영상톡 사진 변경 등록"), nil, RGB(230, 100, 100), false)
+                vc.addAction(.check, NSLocalizedString("layout_txt98", comment: "일반톡 사진 변경 등록"), nil, RGB(230, 100, 100), false)
             }
             else {
-                vc.addAction(.check, "프로필 사진 변경 등록", nil, RGB(230, 100, 100), true)
-                vc.addAction(.check, "영상톡 사진 변경 등록", nil, RGB(230, 100, 100), true)
-                vc.addAction(.check, "일반톡 사진 변경 등록", nil, RGB(230, 100, 100), true)
+                vc.addAction(.check, NSLocalizedString("layout_txt96", comment: "프로필 사진 변경 등록"), nil, RGB(230, 100, 100), true)
+                vc.addAction(.check, NSLocalizedString("layout_txt97", comment: "영상톡 사진 변경 등록"), nil, RGB(230, 100, 100), true)
+                vc.addAction(.check, NSLocalizedString("layout_txt98", comment: "일반톡 사진 변경 등록"), nil, RGB(230, 100, 100), true)
             }
             
-            vc.addAction(.cancel, "취소")
-            vc.addAction(.normal, "삭제")
-            vc.addAction(.normal, "보기")
-            vc.addAction(.ok, "확인")
+            vc.addAction(.cancel, NSLocalizedString("activity_txt479", comment: "취소"))
+            vc.addAction(.normal, NSLocalizedString("activity_txt55", comment: "삭제"))
+            vc.addAction(.normal, NSLocalizedString("activity_txt424", comment: "보기"))
+            vc.addAction(.ok, NSLocalizedString("activity_txt478", comment: "확인"))
+            
             vc.iconImgName = url
             vc.fontMsg = UIFont.systemFont(ofSize: 13)
             vc.reloadUI()

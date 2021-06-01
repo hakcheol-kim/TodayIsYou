@@ -10,12 +10,14 @@ import UIKit
 class PointGateViewController: BaseViewController {
     @IBOutlet weak var tblView: UITableView!
     
-    let listData:[[String]] = [["포인트 내역", "별 내역", "환급 목록"],
-                       ["환급 신청"]]
+    let listData:[[String]] = [[NSLocalizedString("layout_txt132", comment: "포인트 내역"),
+                                NSLocalizedString("layout_txt134", comment: "별 내역"),
+                                NSLocalizedString("layout_txt135", comment: "환급 목록")],
+                            [NSLocalizedString("layout_txt136", comment:"환급 신청")]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        CNavigationBar.drawBackButton(self, "별 환급신청", #selector(actionNaviBack))
+        CNavigationBar.drawBackButton(self, NSLocalizedString("activity_txt358", comment: "별 환급신청"), #selector(actionNaviBack))
     }
 }
 extension PointGateViewController: UITableViewDelegate, UITableViewDataSource {
@@ -40,9 +42,9 @@ extension PointGateViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case 0:
-            return "사용 내역"
+            return NSLocalizedString("point_use_history", comment: "사용 내역")
         case 1:
-            return "환급"
+            return NSLocalizedString("point_refund", comment: "환급")
         default:
             return ""
         }

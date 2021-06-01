@@ -431,7 +431,7 @@ extension String {
         }
     }
     func maskOfSuffixLenght(_ length:Int) -> String? {
-        return String(repeating: "x", count: Swift.max(0, count-length)) + suffix(length)
+        return String(repeating: "✱", count: Swift.max(0, count-length)) + suffix(length)
     }
     func parsingJsonObject() -> [String:Any]? {
         guard let data = self.data(using: .utf8) else {

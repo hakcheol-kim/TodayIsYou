@@ -68,7 +68,7 @@ class RankDetailTblHeaderView: UIView {
         }
         
         lbName.text = user_name
-        lbAge.text = user_age
+        lbAge.text = Age.localizedString(user_age)
         starRatingView.rating = user_score
     }
     

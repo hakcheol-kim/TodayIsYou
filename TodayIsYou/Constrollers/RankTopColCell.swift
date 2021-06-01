@@ -46,7 +46,7 @@ class RankTopColCell: UICollectionViewCell {
         let orderby_num = data["orderby_num"].intValue  //)" : 3,
         let user_status = data["user_status"].stringValue  // "ON"
         
-        lbInfo.text = "\(good_cnt), \(user_name), \(user_age)"
+        lbInfo.text = "\(good_cnt), \(user_name), \(Age.localizedString(user_age))"
         ratingview.rating = Double(user_score)
        
         ivThumb.image = Gender.defaultImg(user_sex)

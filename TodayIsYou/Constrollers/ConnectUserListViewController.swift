@@ -53,33 +53,30 @@ class ConnectUserCell: UITableViewCell {
         df.dateFormat = "yyyy-MM-dd HH:mm:ss" // "2021-03-11 07:35:32
         var tStr = ""
         var result = "\(user_name), "
+
         if let regDate = df.date(from: last_login) {
             let curDate = Date()
             let comps = curDate - regDate
             
-            if let month = comps.month, month > 0 {
-                tStr = "\(month)달전"
-            }
-            else if let day = comps.day, day > 0 {
-                tStr = String(format: "%ld일전", day)
+            if let day = comps.day, day > 0 {
+                tStr = String(format: "%ld%@", day, NSLocalizedString("activity_txt24", comment: "일전"))
             }
             else if let hour = comps.hour, hour > 0 {
-                tStr = String(format: "%02ld시간 %02ld분전", hour, (comps.minute ?? 0))
+                tStr = String(format: "%02ld%@ %02ld%@", hour, NSLocalizedString("activity_txt66", comment: "시간"), (comps.minute ?? 0), NSLocalizedString("activity_txt30", comment: "분전"))
             }
             else if let minute = comps.minute, minute > 0 {
-                tStr = String(format: "%02ld분 %02ld초전", minute, (comps.second ?? 0))
+                tStr = String(format: "%02ld%@ %02ld%@", minute, NSLocalizedString("activity_txt27", comment: "분"), (comps.second ?? 0), NSLocalizedString("activity_txt28", comment: "초전"))
             }
             else if let second = comps.second, second > 0 {
-                tStr = String(format: "%02ld초전", second)
+                tStr = String(format: "%02ld%@", second, NSLocalizedString("activity_txt28", comment: "초전"))
             }
         }
-        
         result.append(tStr)
         let attr = NSMutableAttributedString.init(string: result)
         attr.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: NSMakeRange(0, user_name.length))
         lbTitle.attributedText = attr
         
-        let result2 = "\(user_age), \(user_sex), \(user_area)"
+        let result2 = "\(Age.localizedString(user_age)), \(Gender.localizedString(user_sex)), \(Area.localizedString( user_area))"
         let attr2 = NSMutableAttributedString.init(string: result2)
         attr2.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: (result2 as NSString).range(of: user_sex))
         lbSubTitle.attributedText = attr2
@@ -104,14 +101,30 @@ class ConnectUserListViewController: BaseViewController {
     var searchSex:String = "성별" {
         didSet {
             if let lbGender = self.btnGender.viewWithTag(100) as? UILabel {
-                lbGender.text = searchSex
+                if searchSex == "남" {
+                    lbGender.text = NSLocalizedString("root_display_txt21", comment: "남")
+                }
+                else if searchSex == "여" {
+                    lbGender.text = NSLocalizedString("root_display_txt20", comment: "여")
+                }
+                else {
+                    lbGender.text = NSLocalizedString("activity_txt286", comment: "성별")
+                }
             }
         }
     }
     var searchState: String = "접속" {
         didSet {
             if let lbState = self.btnState.viewWithTag(100) as? UILabel {
-                lbState.text = searchState
+                if searchState == "ON" {
+                    lbState.text = searchState
+                }
+                else if searchState == "OFF" {
+                    lbState.text = searchState
+                }
+                else {
+                    lbState.text = NSLocalizedString("layout_txt42", comment: "접속")
+                }
             }
         }
     }
@@ -120,9 +133,9 @@ class ConnectUserListViewController: BaseViewController {
         super.viewDidLoad()
         self.view.layoutIfNeeded()
         
-        CNavigationBar.drawBackButton(self, "사용자 접속목록",  #selector(actionNaviBack))
+        CNavigationBar.drawBackButton(self, NSLocalizedString("activity_txt284", comment: "유저접속목록"),  #selector(actionNaviBack))
         self.tblView.tableFooterView = UIView.init()
-        self.searchSex = "성별"
+        self.searchSex =  "성별"
         self.searchState = "접속"
         
         self.dataRest()
@@ -158,6 +171,7 @@ class ConnectUserListViewController: BaseViewController {
         param["app_type"] = appType
         param["user_id"] = ShareData.ins.myId
         param["pageNum"] = pageNum
+        
         if searchSex == "성별" {
             param["search_sex"] = ""
         }
@@ -207,23 +221,51 @@ class ConnectUserListViewController: BaseViewController {
     }
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         if sender == btnGender {
-            let vc = PopupListViewController.initWithType(.normal, "성별을 선택해주세요.", ["성별", "남", "여"], nil) { (vcs, selItem, index) in
+            var list = [String]()
+            list.append(NSLocalizedString("activity_txt286", comment: "성별"))
+            list.append(NSLocalizedString("root_display_txt21", comment: "남"))
+            list.append(NSLocalizedString("root_display_txt20", comment: "여"))
+            
+            let vc = PopupListViewController.initWithType(.normal, NSLocalizedString("join_activity07", comment:"성별을 선택해주세요."), list , nil) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 guard let selItem = selItem as? String else {
                     return
                 }
-                self.searchSex = selItem
+                if (index == 0) {
+                    self.searchSex = "성별"
+                }
+                else if index == 1 {
+                    self.searchSex = "남"
+                }
+                else {
+                    self.searchSex = "여"
+                }
+                
                 self.dataRest()
             }
             self.presentPanModal(vc)
         }
         else if sender == btnState {
-            let vc = PopupListViewController.initWithType(.normal, "접속상태를 선택해주세요.", ["접속", "ON", "OFF"], nil) { (vcs, selItem, index) in
+            var list = [String]()
+            list.append(NSLocalizedString("layout_txt42", comment: "접속"))
+            list.append("ON")
+            list.append("OFF")
+            
+            let vc = PopupListViewController.initWithType(.normal, nil, list, nil) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 guard let selItem = selItem as? String else {
                     return
                 }
-                self.searchState = selItem
+                
+                if (index == 0) {
+                    self.searchState = "접속"
+                }
+                else if index == 1 {
+                    self.searchState = "ON"
+                }
+                else {
+                    self.searchState = "OFF"
+                }
                 self.dataRest()
             }
             self.presentPanModal(vc)

@@ -221,15 +221,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         if let pushData = ShareData.ins.dfsGet(DfsKey.pushData) as? [String:Any] {
-            self.mainNavigationCtrl.popViewController(animated: false)
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5) {
-                guard let msg_cmd = pushData["msg_cmd"] as? String else {
-                    return
-                }
+                
+                self.mainNavigationCtrl.popViewController(animated: false)
+                let data = JSON(pushData)
+                let msg_cmd = data["msg_cmd"].stringValue
                 let type = PushType.find(msg_cmd)
-                NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: pushData)
+                
+                if type == .cam || type == .phone {
+                    let room_key = data["room_key"].stringValue
+                    do {
+                        let arrTmp = room_key.components(separatedBy: "_") as! [String]
+                        let callingateStr = arrTmp[1]
+                        let df = CDateFormatter.init()
+                        df.dateFormat = "yyyyMMddHHmmss"
+                        let callingDate = df.date(from: callingateStr)!
+                        let curDate = Date()
+                        let comps = curDate - callingDate
+                        //30초 안이라면
+                        let min = comps.minute ?? 0
+                        let sec = comps.second ?? 0
+                        if min <= 0 && sec < 30 {
+                            let from_user_id = data["from_user_id"].stringValue
+                            let user_name = data["user_name"].stringValue
+                            
+                            if type == .cam {
+//                                ["message_key": 8813, "room_key": CAM_20210601132028_21, "from_user_id": a52fd10c131f149663a64ab074d5b44b, "msg_cmd": CAM, "user_id": c4f3f037ff94f95fe144fc9aed76f0b6]
+                                let vc = CamCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
+                                self.mainNavigationCtrl.pushViewController(vc, animated: true)
+                            }
+                            else  {
+                                let vc = PhoneCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
+                                self.mainNavigationCtrl.pushViewController(vc, animated: true)
+                            }
+                        }
+                        ShareData.ins.dfsRemove(DfsKey.pushData)
+                    }
+                    catch {
+                        
+                    }
+                }
+//                NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: pushData)
             }
         }
+        
+//        let bundleId = Bundle.main.bundleIdentifier
+//        ApiManager.ins.requestAppstoreConnect(bundleId: bundleId) { res in
+//            print("")
+//        } fail: { erro in
+//            
+//        }
     }
     func applicationDidEnterBackground(_ application: UIApplication) {
         UIApplication.shared.applicationIconBadgeNumber = 0
@@ -351,7 +392,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             param["room_key"] = info["room_key"].stringValue
             param["user_id"] =  info["user_id"].stringValue
             
-            param["memo"] = NSLocalizedString("push_cam_talk", comment: "[CAM_TALK]저와 영상 채팅 해요 ^^")
+            param["memo"] = NSLocalizedString("activity_txt102", comment: "[CAM_TALK]저와 영상 채팅 해요 ^^")
             param["reg_date"] = Date()
             param["read_yn"] = false
             param["type"] = 0
@@ -390,7 +431,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             param["from_user_id"] = info["from_user_id"].stringValue
             param["room_key"] = info["room_key"].stringValue
             param["user_id"] = info["user_id"].stringValue
-            param["memo"] = NSLocalizedString("push_phone_talk", comment: "[PHONE_TALK]저와 음성 통화 해요 ^^")
+            param["memo"] = NSLocalizedString("activity_txt103", comment: "[PHONE_TALK]저와 음성 통화 해요 ^^")
             param["reg_date"] = Date()
             param["read_yn"] = false
             param["type"] = 0
@@ -432,10 +473,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: info.dictionaryObject)
             
             if msg == "CAM_CANCEL" {
-                window?.makeBottomTost("상대가 취소했습니다.")
+                window?.makeBottomTost(NSLocalizedString("activity_txt198", comment: "상대가 취소했습니다."))
             }
             else {
-                window?.makeBottomTost("상대가 거절했습니다.")
+                window?.makeBottomTost(NSLocalizedString("activity_txt312", comment: "상대가 거절했습니다."))
             }
         }
         else if type == .rdSend {
@@ -450,7 +491,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let user_id = info["user_id"].stringValue
             param["user_id"] = user_id
             
-            param["memo"] = NSLocalizedString("push_cam_talk", comment: "[CAM_TALK]저와 영상 채팅 해요 ^^")
+            param["memo"] = NSLocalizedString("activity_txt102", comment: "[CAM_TALK]저와 영상 채팅 해요 ^^")
             param["reg_date"] = Date()
             param["read_yn"] = true
             param["type"] = 0
@@ -513,7 +554,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ApiManager.ins.requestGiveScore(param: param) { res in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
-                AppDelegate.ins.window?.makeToast("매너 점수 등록되었습니다.")
+                AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt356", comment: "등록완료!!"))
             }
             else {
                 print("give score error")
@@ -522,7 +563,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("give score error")
         }
     }
-
+    
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {

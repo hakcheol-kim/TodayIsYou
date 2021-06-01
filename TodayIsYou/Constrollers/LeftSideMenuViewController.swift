@@ -36,7 +36,7 @@ class LeftSideMenuViewController: UIViewController {
     @IBOutlet weak var lbNickName: UILabel!
     @IBOutlet weak var lbUserInfo: UILabel!
     
-    let listData:[[String:String]] = [["title": NSLocalizedString("layout_txt26", comment: "포인트 충전"), "imgName": "pesetasign.circle"],
+    let listData:[[String:String]] = [["title": NSLocalizedString("point_activity01", comment: "포인트 충전"), "imgName": "pesetasign.circle"],
                                       ["title": NSLocalizedString("layout_txt23", comment: "공지사항"), "imgName": "bell"],
                                       ["title": NSLocalizedString("activity_txt291", comment: "찜 목록"), "imgName": "hand.tap"],
                                       ["title": NSLocalizedString("activity_txt165", comment: "차단목록"), "imgName": "xmark.circle"],
@@ -120,6 +120,7 @@ class LeftSideMenuViewController: UIViewController {
             if isSuccess == "01" {
                 ShareData.ins.setUserInfo(response)
                 self.decorationUi()
+                print("myinfo : \(response)")
             }
         } failure: { (error) in
             self.showErrorToast(error)

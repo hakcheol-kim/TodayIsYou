@@ -32,7 +32,7 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="G5x-tX-c43">
-                                <rect key="frame" x="84" y="35" width="166" height="35.5"/>
+                                <rect key="frame" x="84" y="26" width="166" height="53"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ㅁㅁㅁ" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yPE-S5-Moe">
                                         <rect key="frame" x="0.0" y="0.0" width="166" height="18"/>
@@ -45,6 +45,15 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="채팅중" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ETe-FV-6XE" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="38.5" width="166" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="0.1843137255" green="0.61568627450000002" blue="0.1529411765" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="activity_txt09"/>
+                                        </userDefinedRuntimeAttributes>
                                     </label>
                                 </subviews>
                             </stackView>
@@ -90,6 +99,7 @@
                 <outlet property="btnType" destination="Izx-G2-TRj" id="Bcm-2r-kOr"/>
                 <outlet property="ivProfile" destination="SK0-f4-0RM" id="1fb-88-goD"/>
                 <outlet property="ivThumb" destination="qNB-Zm-ScJ" id="ADp-Jg-nRr"/>
+                <outlet property="lbState" destination="ETe-FV-6XE" id="Zix-3C-d95"/>
                 <outlet property="lbSubTitle" destination="vIk-XX-ZdL" id="JfM-b6-rYZ"/>
                 <outlet property="lbTitle" destination="yPE-S5-Moe" id="6Vx-RI-GjD"/>
             </connections>

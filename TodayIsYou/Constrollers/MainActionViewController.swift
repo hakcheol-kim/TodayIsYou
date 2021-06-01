@@ -123,7 +123,7 @@ class MainActionViewController: BaseViewController {
                     camPoint = p1.stringValue.addComma()
                     phonePoint = p2.stringValue.addComma()
                 }
-                customView.lbMsg1.text = String(format: NSLocalizedString("popup_camtalk_point_notice", comment: ""), "0")
+                customView.lbMsg1.text = NSLocalizedString("activity_txt212", comment: "영상 음성 채팅 신청시") + " \(0)" + NSLocalizedString("activity_txt213", comment: "포인트가 차감 됩니다.")
             }
         }
         else {
@@ -353,13 +353,21 @@ class MainActionViewController: BaseViewController {
     
     //talk overide method
     func presentTalkMsgAlert() {
-        var msg:String? = nil
-        if let bbsPoint = ShareData.ins.dfsGet(DfsKey.userBbsPoint) as? NSNumber, bbsPoint.intValue > 0 {
-            msg = String(format: NSLocalizedString("popup_message_point_notice", comment: ""), bbsPoint)
-//            "메세지 전송시 \(bbsPoint)P 소모됩니다."
+        
+        var attr: NSMutableAttributedString? = nil
+        if let bbsPoint = ShareData.ins.dfsGet(DfsKey.talkMsgOutPoint) as? NSNumber, bbsPoint.intValue > 0 {
+            let msg1 = NSLocalizedString("activity_txt333", comment: "쪽지 전송은 기본") + " \(bbsPoint.stringValue)" + NSLocalizedString("activity_txt213", comment: "포인트가 차감 됩니다.")
+            let msg2 = NSLocalizedString("activity_txt335", comment: "")
+            let result = "\(msg1)\n\(msg2)"
+            
+            attr = NSMutableAttributedString.init(string: result)
+            attr!.addAttribute(.font, value: UIFont.systemFont(ofSize: 14), range: NSMakeRange(0, result.length))
+            attr!.addAttribute(.font, value: UIFont.systemFont(ofSize: 12), range: (result as NSString).range(of: msg2))
+            attr!.addAttribute(.foregroundColor, value: UIColor.label, range: NSMakeRange(0, msg1.length))
+            attr!.addAttribute(.foregroundColor, value: RGB(125, 125, 125), range: (result as NSString).range(of: msg2))
         }
     
-        let alert = CAlertViewController.init(type: .alert, title: NSLocalizedString("activity_txt332", comment: "메세지 전송"), message: msg, actions: [.cancel, .ok]) { (vcs, selItem, index)  in
+        let alert = CAlertViewController.init(type: .alert, title: NSLocalizedString("activity_txt332", comment: "메세지 전송"), message: attr, actions: [.cancel, .ok]) { (vcs, selItem, index)  in
             
             if index == 1 {
                 guard let text = vcs.arrTextView.first?.text, text.isEmpty == false else {
@@ -373,10 +381,11 @@ class MainActionViewController: BaseViewController {
                 vcs.dismiss(animated: true, completion: nil)
             }
         }
-        
+        alert.lbMsgTextAligment = .natural
         alert.iconImg = UIImage(systemName: "envelope.fill")
         alert.addTextView(NSLocalizedString("activity_txt202", comment: "내용을 입력해주세요."))
         alert.reloadUI()
+        
         self.present(alert, animated: true, completion: nil)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.1) {
             alert.arrTextView.first?.becomeFirstResponder()

@@ -17,9 +17,9 @@ class ContactusViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        CNavigationBar.drawBackButton(self, "고객센터 문의", #selector(actionNaviBack))
+        CNavigationBar.drawBackButton(self, NSLocalizedString("contact_title", comment: "고객센터 문의"), #selector(actionNaviBack))
         self.addTapGestureKeyBoardDown()
-        
+        tvMsg.placeHolderString = NSLocalizedString("activity_txt202", comment: "")
         requestQnaList()
     }
     override func viewWillAppear(_ animated: Bool) {

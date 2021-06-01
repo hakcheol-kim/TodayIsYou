@@ -47,7 +47,7 @@ class MyBlockListCell: UITableViewCell {
             ivProfile.setImageCache(url)
         }
         lbTitle.text = user_name
-        let result = "\(user_age), \(user_sex)"
+        let result = "\(Age.localizedString(user_age)), \(Gender.localizedString(user_sex))"
         let attr = NSMutableAttributedString.init(string: result)
         attr.addAttribute(.foregroundColor, value: RGB(230, 100, 100), range: (result as NSString).range(of: user_sex))
         lbSubTitle.attributedText = attr
@@ -74,7 +74,7 @@ class MyBlockListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        CNavigationBar.drawBackButton(self, "차단목록", #selector(actionNaviBack))
+        CNavigationBar.drawBackButton(self, NSLocalizedString("activity_txt165", comment: "차단목록"), #selector(actionNaviBack))
         let footerview = UIView.init()
         footerview.backgroundColor = UIColor.systemGray6
         tblView.tableFooterView = footerview

@@ -65,23 +65,23 @@ class CallingView: UIView {
         }
         let msg_cmd = data["msg_cmd"].stringValue
         if msg_cmd == "CAM" {
-            lbTitle.text = "\(user_name)(\(user_sex), \(user_age))이 영상채팅을 신청했습니다."
+            lbTitle.text = "\(user_name)(\(user_sex), \(user_age)\(NSLocalizedString("activity_txt317", comment: ")이 영상채팅을 신청했습니다.!!"))"
             if "남" == ShareData.ins.mySex.rawValue {
                 let p = ShareData.ins.dfsGet(DfsKey.phoneOutUserPoint) as! NSNumber
-                lbSubTitle.text = "수락 시 10초당 \(p.stringValue) 포인트가 차감됩니다."
+                lbSubTitle.text = "\(NSLocalizedString("activity_txt205", comment: "수락 시 10초당")) \(p.stringValue) \(NSLocalizedString("activity_txt213", comment: "포인트가 차감됩니다."))"
             }
             else {
-                lbSubTitle.text = "수락(영상채팅) 시 여성은 별이 적립됩니다."
+                lbSubTitle.text = NSLocalizedString("activity_txt321", comment: "수락(음성채팅) 시 여성은 별이 적립됩니다.")
             }
         }
         else {
-            lbTitle.text = "\(user_name)(\(user_sex), \(user_age))이 음성채팅을 신청했습니다."
+            lbTitle.text = "\(user_name)(\(user_sex), \(user_age)\(NSLocalizedString("activity_txt323", comment: ")이 음성채팅을 신청 했습니다!!"))"
             if "남" == ShareData.ins.mySex.rawValue {
                 let p = ShareData.ins.dfsGet(DfsKey.phoneOutUserPoint) as! NSNumber
-                lbSubTitle.text = "수락 시 10초당 \(p.stringValue) 포인트가 차감됩니다."
+                lbSubTitle.text = "\(NSLocalizedString("activity_txt205", comment: "수락 시 10초당")) \(p.stringValue) \(NSLocalizedString("activity_txt213", comment: "포인트가 차감됩니다."))"
             }
             else {
-                lbSubTitle.text = "수락(음성채팅) 시 여성은 별이 적립됩니다."
+                lbSubTitle.text = NSLocalizedString("activity_txt321", comment: "수락(음성채팅) 시 여성은 별이 적립됩니다.")
             }
         }
     }

@@ -16,11 +16,12 @@ class NoticeListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        CNavigationBar.drawBackButton(self, "공지사항", #selector(actionNaviBack))
+        CNavigationBar.drawBackButton(self, NSLocalizedString("layout_txt23", comment: "공지사항"), #selector(actionNaviBack))
         requestNoticeList()
     }
     func requestNoticeList() {
-        ApiManager.ins.requestNoticeList(param: ["user_id": ShareData.ins.myId]) { (response) in
+        
+        ApiManager.ins.requestNoticeList(param: ["user_id": ShareData.ins.myId, "forgn_lang": ShareData.ins.languageCode.uppercased()]) { (response) in
             let isSuccess = response["isSuccess"].stringValue
             let result = response["result"].arrayValue
             if isSuccess == "01" {

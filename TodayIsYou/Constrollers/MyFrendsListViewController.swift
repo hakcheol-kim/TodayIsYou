@@ -44,7 +44,7 @@ class MyFrendsCell: UITableViewCell {
             ivProfile.setImageCache(url)
         }
         lbTitle.text = to_user_name
-        let result = "\(to_user_age), \(to_user_sex)"
+        let result = "\(Age.localizedString(to_user_age)), \(Gender.localizedString(to_user_sex))"
         let attr = NSMutableAttributedString.init(string: result)
         attr.addAttribute(.foregroundColor, value: RGB(230, 100, 100), range: (result as NSString).range(of: to_user_sex))
         lbSubTitle.attributedText = attr
@@ -69,7 +69,7 @@ class MyFrendsListViewController: MainActionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        CNavigationBar.drawBackButton(self, "찜목록", #selector(actionNaviBack))
+        CNavigationBar.drawBackButton(self, NSLocalizedString("activity_txt291", comment: "찜목록"), #selector(actionNaviBack))
         let footerview = UIView.init()
         footerview.backgroundColor = UIColor.systemGray6
         tblView.tableFooterView = footerview
@@ -162,7 +162,15 @@ class MyFrendsListViewController: MainActionViewController {
         let user_name = self.selUser["user_name"].stringValue
         let user_id = self.selUser["user_id"].stringValue
         
-        let alert = CAlertViewController.init(type: .alert, title: "\(user_name)님 신고하기", message: nil, actions: [.cancel, .ok]) { (vcs, selItem, index) in
+        var title = ""
+        if ShareData.ins.languageCode == "ko" {
+            title = "\(user_name)님 \(NSLocalizedString("activity_txt495", comment: "신고하기"))"
+        }
+        else {
+            title = "\(user_name) \(NSLocalizedString("activity_txt495", comment: "신고하기"))"
+        }
+        
+        let alert = CAlertViewController.init(type: .alert, title: title, message: nil, actions: [.cancel, .ok]) { (vcs, selItem, index) in
             
             if (index == 1) {
                 guard let text = vcs.arrTextView.first?.text, text.isEmpty == false else {
@@ -173,7 +181,7 @@ class MyFrendsListViewController: MainActionViewController {
                 ApiManager.ins.requestReport(param: param) { (res) in
                     let isSuccess = res["isSuccess"].stringValue
                     if isSuccess == "01" {
-                        self.showToast("신고가 완료되었습니다.")
+                        self.showToast(NSLocalizedString("activity_txt246", comment: "신고 완료"))
                     }
                     else {
                         self.showErrorToast(res)
@@ -187,7 +195,7 @@ class MyFrendsListViewController: MainActionViewController {
             }
         }
         alert.iconImg = UIImage(named: "warning")
-        alert.addTextView("신고 내용을 입력해주세요.", UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+        alert.addTextView(NSLocalizedString("activity_txt497", comment: "신고내용"), UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
         
         self.present(alert, animated: true, completion: nil)
     }

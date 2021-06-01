@@ -275,7 +275,27 @@ enum TalkMemo: String {
         else if  memo == TalkMemo.talk_memo_14.rawValue { return "talk_memo_14".localized }
         else if  memo == TalkMemo.talk_memo_15.rawValue { return "talk_memo_15".localized }
         else if  memo == TalkMemo.talk_memo_16.rawValue { return "talk_memo_16".localized }
-        else { return "" }
+        else { return memo }
+    }
+    static func severKey(_ memo:String) -> String {
+        if  memo == "talk_memo_0".localized { return  TalkMemo.talk_memo_0.rawValue}
+        else if  memo == "talk_memo_1".localized { return  TalkMemo.talk_memo_1.rawValue }
+        else if  memo == "talk_memo_2".localized { return  TalkMemo.talk_memo_2.rawValue }
+        else if  memo == "talk_memo_3".localized { return  TalkMemo.talk_memo_3.rawValue }
+        else if  memo == "talk_memo_4".localized { return  TalkMemo.talk_memo_4.rawValue }
+        else if  memo == "talk_memo_5".localized { return  TalkMemo.talk_memo_5.rawValue }
+        else if  memo == "talk_memo_6".localized { return  TalkMemo.talk_memo_6.rawValue }
+        else if  memo == "talk_memo_7".localized { return  TalkMemo.talk_memo_7.rawValue }
+        else if  memo == "talk_memo_8".localized { return  TalkMemo.talk_memo_8.rawValue }
+        else if  memo == "talk_memo_9".localized { return  TalkMemo.talk_memo_9.rawValue }
+        else if  memo == "talk_memo_10".localized { return  TalkMemo.talk_memo_10.rawValue }
+        else if  memo == "talk_memo_11".localized { return  TalkMemo.talk_memo_11.rawValue }
+        else if  memo == "talk_memo_12".localized { return  TalkMemo.talk_memo_12.rawValue }
+        else if  memo == "talk_memo_13".localized { return  TalkMemo.talk_memo_13.rawValue }
+        else if  memo == "talk_memo_14".localized { return  TalkMemo.talk_memo_14.rawValue }
+        else if  memo == "talk_memo_15".localized { return  TalkMemo.talk_memo_15.rawValue }
+        else if  memo == "talk_memo_16".localized { return  TalkMemo.talk_memo_16.rawValue }
+        else { return memo }
     }
 }
 
@@ -298,7 +318,7 @@ enum Age:String {
         else if age == Age.age_6.rawValue{ return "age_6".localized }
         else if age == Age.age_7.rawValue{ return "age_7".localized }
         else if age == Age.age_8.rawValue{ return "age_8".localized }
-        else { return ""}
+        else { return age}
     }
     
     static func severKey(_ age:String) -> String {
@@ -310,7 +330,7 @@ enum Age:String {
         else if age == "age_6".localized { return Age.age_6.rawValue }
         else if age == "age_7".localized { return Age.age_7.rawValue }
         else if age == "age_8".localized { return Age.age_8.rawValue }
-        else { return "" }
+        else { return age }
     }
 }
 
@@ -351,7 +371,7 @@ enum Area: String {
         else if area == Area.area_14.rawValue { return "area_14".localized }
         else if area == Area.area_15.rawValue { return "area_15".localized }
         else if area == Area.area_16.rawValue { return "area_16".localized }
-        else { return "" }
+        else { return area }
     }
     
     static func severKey(_ area: String) -> String {
@@ -372,8 +392,153 @@ enum Area: String {
         else if area == "area_14".localized { return  Area.area_14.rawValue }
         else if area == "area_15".localized { return  Area.area_15.rawValue }
         else if area == "area_16".localized { return  Area.area_16.rawValue }
-        else { return "" }
+        else { return area }
     }
+}
+enum ChatMsg: String {
+//    activity_txt102    [CAM_TALK]저와 영상 채팅 해요 ^^    [CAM_TALK]Video Chat with me ^^
+//    activity_txt103    [PHONE_TALK]저와 음성 통화 해요 ^^    [PHONE_TALK]Voice Call with me ^^
+//    activity_txt25    안녕하세요 운영자 입니다    Hello this is the owner
+    case cam_talk = "[CAM_TALK]저와 영상 채팅 해요 ^^"
+    case phone_talk = "[PHONE_TALK]저와 음성 통화 해요 ^^"
+    case owner_talk_hello = "안녕하세요 운영자 입니다"
+    
+    static func localizedString(_ memo:String) -> String {
+        if memo == ChatMsg.cam_talk.rawValue { return "activity_txt102".localized }
+        else if memo == ChatMsg.phone_talk.rawValue { return "activity_txt103".localized }
+        else if memo == ChatMsg.owner_talk_hello.rawValue { return "activity_txt25".localized }
+        else { return memo }
+    }
+    static func severKey(_ memo: String) -> String {
+        if memo == "activity_txt102".localized { return ChatMsg.cam_talk.rawValue}
+        else if memo == "activity_txt103".localized { return  ChatMsg.phone_talk.rawValue }
+        else { return memo }
+    }
+}
+enum Bank: String {
+    case bank_0 = "경남은행[39]"
+    case bank_1 = "국민은행[04]"
+    case bank_2 = "광주은행[34]"
+    case bank_3 = "기업은행[03]"
+    case bank_4 = "농협중앙회[11]"
+    case bank_5 = "단위농협(축협)[12]"
+    case bank_6 = "대구은행[31]"
+    case bank_7 = "대화은행[65]"
+    case bank_8 = "부산은행[32]"
+    case bank_9 = "산업은행[02]"
+    case bank_10 = "상호저축은행[50]"
+    case bank_11 = "새마을금고[45]"
+    case bank_12 = "수출입은행[08]"
+    case bank_13 = "수협[07]"
+    case bank_14 = "통합신한은행[88]"
+    case bank_15 = "신협[48]"
+    case bank_16 = "씨티은행[27]"
+    case bank_17 = "우리은행[20]"
+    case bank_18 = "우체국[71]"
+    case bank_19 = "외환은행[05]"
+    case bank_20 = "전북은행[37]"
+    case bank_21 = "제주은행[35]"
+    case bank_22 = "카카오뱅크[90]"
+    case bank_23 = "케이뱅크[89]"
+    case bank_24 = "한국은행[01]"
+    case bank_25 = "하나은행[81]"
+    case bank_26 = "SC제일은행[23]"
+    case bank_27 = "도이치은행[55]"
+    case bank_28 = "모건스탠리[52]"
+    case bank_29 = "미쓰비시도쿄UFJ은행[59]"
+    case bank_30 = "미즈호은행[58]"
+    case bank_31 = "비엔피파리바은행[61]"
+    case bank_32 = "알비에스피엘씨은행[56]"
+    case bank_33 = "제이피모간체이스은행[57]"
+    case bank_34 = "중국공상은행[62]"
+    case bank_35 = "중국은행[63]"
+    case bank_36 = "BOA은행[60]"
+    case bank_37 = "HSBC은행[54]"
+    
+    static func localizedString(_ bank:String) -> String {
+        if bank == Bank.bank_0.rawValue { return "bank_0".localized }
+        else if bank == Bank.bank_1.rawValue { return "bank_1".localized }
+        else if bank == Bank.bank_2.rawValue { return "bank_2".localized }
+        else if bank == Bank.bank_3.rawValue { return "bank_3".localized }
+        else if bank == Bank.bank_4.rawValue { return "bank_4".localized }
+        else if bank == Bank.bank_5.rawValue { return "bank_5".localized }
+        else if bank == Bank.bank_6.rawValue { return "bank_6".localized }
+        else if bank == Bank.bank_7.rawValue { return "bank_7".localized }
+        else if bank == Bank.bank_8.rawValue { return "bank_8".localized }
+        else if bank == Bank.bank_9.rawValue { return "bank_9".localized }
+        else if bank == Bank.bank_10.rawValue { return "bank_10".localized }
+        else if bank == Bank.bank_11.rawValue { return "bank_11".localized }
+        else if bank == Bank.bank_12.rawValue { return "bank_12".localized }
+        else if bank == Bank.bank_13.rawValue { return "bank_13".localized }
+        else if bank == Bank.bank_14.rawValue { return "bank_14".localized }
+        else if bank == Bank.bank_15.rawValue { return "bank_15".localized }
+        else if bank == Bank.bank_16.rawValue { return "bank_16".localized }
+        else if bank == Bank.bank_17.rawValue { return "bank_17".localized }
+        else if bank == Bank.bank_18.rawValue { return "bank_18".localized }
+        else if bank == Bank.bank_19.rawValue { return "bank_19".localized }
+        else if bank == Bank.bank_20.rawValue { return "bank_20".localized }
+        else if bank == Bank.bank_21.rawValue { return "bank_21".localized }
+        else if bank == Bank.bank_22.rawValue { return "bank_22".localized }
+        else if bank == Bank.bank_23.rawValue { return "bank_23".localized }
+        else if bank == Bank.bank_24.rawValue { return "bank_24".localized }
+        else if bank == Bank.bank_25.rawValue { return "bank_25".localized }
+        else if bank == Bank.bank_26.rawValue { return "bank_26".localized }
+        else if bank == Bank.bank_27.rawValue { return "bank_27".localized }
+        else if bank == Bank.bank_28.rawValue { return "bank_28".localized }
+        else if bank == Bank.bank_29.rawValue { return "bank_29".localized }
+        else if bank == Bank.bank_30.rawValue { return "bank_30".localized }
+        else if bank == Bank.bank_31.rawValue { return "bank_31".localized }
+        else if bank == Bank.bank_32.rawValue { return "bank_32".localized }
+        else if bank == Bank.bank_33.rawValue { return "bank_33".localized }
+        else if bank == Bank.bank_34.rawValue { return "bank_34".localized }
+        else if bank == Bank.bank_35.rawValue { return "bank_35".localized }
+        else if bank == Bank.bank_36.rawValue { return "bank_36".localized }
+        else if bank == Bank.bank_37.rawValue { return "bank_37".localized }
+        else { return bank }
+    }
+    
+    static func severKey(_ bank:String) -> String {
+        if bank == "bank_0".localized { return  Bank.bank_0.rawValue}
+        else if bank == "bank_1".localized { return Bank.bank_1.rawValue }
+        else if bank == "bank_2".localized { return Bank.bank_2.rawValue }
+        else if bank == "bank_3".localized { return Bank.bank_3.rawValue }
+        else if bank == "bank_4".localized { return Bank.bank_4.rawValue }
+        else if bank == "bank_5".localized { return Bank.bank_5.rawValue }
+        else if bank == "bank_6".localized { return Bank.bank_6.rawValue }
+        else if bank == "bank_7".localized { return Bank.bank_7.rawValue }
+        else if bank == "bank_8".localized { return Bank.bank_8.rawValue }
+        else if bank == "bank_9".localized { return Bank.bank_9.rawValue }
+        else if bank == "bank_10".localized { return Bank.bank_10.rawValue }
+        else if bank == "bank_11".localized { return Bank.bank_11.rawValue }
+        else if bank == "bank_12".localized { return Bank.bank_12.rawValue }
+        else if bank == "bank_13".localized { return Bank.bank_13.rawValue }
+        else if bank == "bank_14".localized { return Bank.bank_14.rawValue }
+        else if bank == "bank_15".localized { return Bank.bank_15.rawValue }
+        else if bank == "bank_16".localized { return Bank.bank_16.rawValue }
+        else if bank == "bank_17".localized { return Bank.bank_17.rawValue }
+        else if bank == "bank_18".localized { return Bank.bank_18.rawValue }
+        else if bank == "bank_19".localized { return Bank.bank_19.rawValue }
+        else if bank == "bank_20".localized { return Bank.bank_20.rawValue }
+        else if bank == "bank_21".localized { return Bank.bank_21.rawValue }
+        else if bank == "bank_22".localized { return Bank.bank_22.rawValue }
+        else if bank == "bank_23".localized { return Bank.bank_23.rawValue }
+        else if bank == "bank_24".localized { return Bank.bank_24.rawValue }
+        else if bank == "bank_25".localized { return Bank.bank_25.rawValue }
+        else if bank == "bank_26".localized { return Bank.bank_26.rawValue }
+        else if bank == "bank_27".localized { return Bank.bank_27.rawValue }
+        else if bank == "bank_28".localized { return Bank.bank_28.rawValue }
+        else if bank == "bank_29".localized { return Bank.bank_29.rawValue }
+        else if bank == "bank_30".localized { return Bank.bank_30.rawValue }
+        else if bank == "bank_31".localized { return Bank.bank_31.rawValue }
+        else if bank == "bank_32".localized { return Bank.bank_32.rawValue }
+        else if bank == "bank_33".localized { return Bank.bank_33.rawValue }
+        else if bank == "bank_34".localized { return Bank.bank_34.rawValue }
+        else if bank == "bank_35".localized { return Bank.bank_35.rawValue }
+        else if bank == "bank_36".localized { return Bank.bank_36.rawValue }
+        else if bank == "bank_37".localized { return Bank.bank_37.rawValue }
+        else { return bank }
+    }
+    
 }
 enum ConnectionType {
     case answer

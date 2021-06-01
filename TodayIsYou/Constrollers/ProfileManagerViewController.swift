@@ -31,6 +31,10 @@ class ProfileManagerViewController: BaseViewController {
         CNavigationBar.drawBackButton(self, "프로필 수정", #selector(actionNaviBack))
         tfNickName.inputAccessoryView = accessoryView
         accessoryView.addTarget(self, selctor: #selector(actionKeybardDown))
+        
+        if let ivCircle = btnProfile.viewWithTag(200) as? UIImageView {
+            ivCircle.layer.cornerRadius = ivCircle.bounds.height/2;
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

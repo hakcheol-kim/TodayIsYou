@@ -212,7 +212,7 @@ class CamCallViewController: BaseViewController {
         if ShareData.ins.mySex.rawValue == "남" {
             let sp = "\(baseStartPoint)".addComma()
             let ep = "\(baseLivePoint)".addComma()
-            watingTimerVc.message = "상대가 수락하면 기본 1분 \(sp)포인트 1분 이후 10초에 \(ep)포인트 차감됩니다."
+            watingTimerVc.message = "\(NSLocalizedString("activity_txt223", comment: "상대가 수락하면 기본 1분")) \(sp) \(NSLocalizedString("activity_txt224", comment: " 포인트 1분 이후 10초에")) \(ep)\(NSLocalizedString("activity_txt213", comment: "포인트 차감됩니다."))"
         }
         myAddChildViewController(superView: self.view, childViewController: watingTimerVc)
     }
@@ -449,7 +449,7 @@ class CamCallViewController: BaseViewController {
     
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         if sender == btnBack {
-            CAlertViewController.show(type: .alert, title: nil, message: "영상 통화를 종료합니다.", actions: [.cancel, .ok]) { (vcs, selItem, action) in
+            CAlertViewController.show(type: .alert, title: nil, message: NSLocalizedString("activity_txt188", comment: "영상 통화를 종료합니다."), actions: [.cancel, .ok]) { (vcs, selItem, action) in
                 vcs.dismiss(animated: true, completion: nil)
                 
                 if action == 1 {
@@ -510,7 +510,7 @@ class CamCallViewController: BaseViewController {
                 }
             }
         
-            alert.addTextView("입력해주세요.")
+            alert.addTextView(NSLocalizedString("input_content", comment: "입력해주세요."))
             alert.reloadUI()
             self.present(alert, animated: false) {
                 guard let textView = alert.arrTextView.first else { return }
@@ -521,8 +521,8 @@ class CamCallViewController: BaseViewController {
             print("선물")
             
             let strMyPoint = "\(nowPoint)".addComma()+"P"
-            let tmpStr = "보유 : \(strMyPoint)"
-            let title = "\(toUserName!)님에게 선물하기\n\(tmpStr)"
+            let tmpStr = "\(NSLocalizedString("activity_txt183", comment: "보유 :")) \(strMyPoint)"
+            let title = "\(toUserName!)\(NSLocalizedString("activity_txt180", comment: "님에게 선물하기"))\n\(tmpStr)"
             let paragraphic = NSMutableParagraphStyle.init()
             paragraphic.lineSpacing = 5
             let attr = NSMutableAttributedString.init(string: title)
@@ -530,8 +530,8 @@ class CamCallViewController: BaseViewController {
             attr.addAttribute(.font, value: UIFont.systemFont(ofSize: 17, weight: .medium), range: (title as NSString).range(of: tmpStr))
             attr.addAttribute(.foregroundColor, value: RGB(230, 100, 100), range: (title as NSString).range(of: tmpStr))
             attr.addAttribute(.paragraphStyle, value: paragraphic, range: NSMakeRange(0, title.length))
-            
-            let data:[String] = ["100별(P)", "500별(P)", "1,000별(P)", "3,000별(P)", "5,000별(P)", "10,000별(P)"]
+            let des = (NSLocalizedString("chat_star_point", comment: "별(P)"))
+            let data:[String] = ["100\(des)", "500\(des)", "1,000\(des)", "3,000\(des)", "5,000\(des)", "10,000\(des)"]
             let vc = PopupCollectionListViewController.initWithType(.gift, attr, data, nil) { (vcs, item, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 var giftPoint:Int = 0
@@ -555,21 +555,22 @@ class CamCallViewController: BaseViewController {
                 }
                 
                 if giftPoint > self.nowPoint  || self.nowPoint <= 200 {
-                    self.showToast("최소 200포인트가 있어야 선물 가능합니다")
+                    self.showToast(NSLocalizedString("activity_txt182", comment: "최소 200포인트가 있어야 선물 가능합니다"))
                     return
                 }
                 else {
                     var param:[String:Any] = [:]
+                    let gift_point_str = "\(giftPoint)"
                     param["to_user_id"] =  self.toUserId!
                     param["user_id"] = ShareData.ins.myId
                     param["seq"] = "NO"
-                    param["gift_point_str"] = "\(giftPoint)"
+                    param["gift_point_str"] = gift_point_str
                     param["gift_comment_write_str"] = "\(giftPoint)"
                     
                     ApiManager.ins.requestSendGiftPointCam(param:param) { (res) in
                         let isSuccess = res["isSuccess"].stringValue
                         if isSuccess == "01" {
-                            let msg = "🎁 \(self.toUserName!)님에게 선물"+"\(giftPoint)".addComma()+"를 선물했습니다."
+                            let msg = "🎁 \(self.toUserName!)\(NSLocalizedString("activity_txt194", comment: "님에게 선물")) \(gift_point_str.addComma()) \(NSLocalizedString("activity_txt249", comment: "별(P)를 선물 했습니다."))"
                             self.sendMessage(msg)
                         }
                         else {
@@ -587,7 +588,7 @@ class CamCallViewController: BaseViewController {
             ApiManager.ins.requestSetMyFried(param: param) { res in
                 let isSuccess = res["isSuccess"].stringValue
                 if isSuccess == "01" {
-                    AppDelegate.ins.window?.makeToast("찜 등록 되었습니다.")
+                    AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt243", comment: "찜등록완료!!"))
                 }
                 else {
                     self.showErrorToast(res)
@@ -601,13 +602,13 @@ class CamCallViewController: BaseViewController {
             ApiManager.ins.requesetUpdateGood(param: param) { (res) in
                 let isSuccess = res["isSuccess"].stringValue
                 if isSuccess == "01" {
-                    AppDelegate.ins.window?.makeToast("좋아요.")
+                    AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt429", comment: "좋아요."))
                 }
                 else if isSuccess == "02" {
-                    AppDelegate.ins.window?.makeToast("좋아요는 1회만 가능합니다.")
+                    AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt171", comment: "좋아요는 1회만 가능합니다."))
                 }
                 else {
-                    self.showErrorToast(res)
+                    self.showToast(NSLocalizedString("activity_txt173", comment: "등록 에러!!"))
                 }
             } fail: { (error) in
                 self.showErrorToast(error)
@@ -648,7 +649,7 @@ class CamCallViewController: BaseViewController {
                 }
                 self.navigationController?.popViewController(animated: true)
                 
-                AppDelegate.ins.window?.makeBottomTost("상대가 취소했습니다.")
+                AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt313", comment: "상대가 취소했습니다."))
             }
         }
     }
@@ -672,15 +673,20 @@ extension CamCallViewController: WebRTCClientDelegate {
             switch state {
             case .connected, .completed:
                 textColor = .green
-                AppDelegate.ins.window?.makeToast("수락")
+                AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt315", comment: "수락"))
                 break
             case .disconnected:
                 textColor = .orange
 //                AppDelegate.ins.window?.makeToast("연결 끊김")
+                print("연결 끊김")
+                DispatchQueue.main.async {
+                    self.stopTimer()
+                }
                 break
             case .failed:
                 textColor = .red
 //                AppDelegate.ins.window?.makeToast("실패")
+                print("실패")
                 break
             case .new, .checking, .count:
                 textColor = .purple
@@ -757,21 +763,21 @@ extension CamCallViewController : SignalClientDelegate {
     func signalClientDidRoomOut(_ signalClient: SignalingClient) {
         print("== signal signalClientDidRoomOut")
         self.removeWaitingChildVc()
-        AppDelegate.ins.window?.makeBottomTost("상대의 영상채팅을 종료하였습니다.!!")
+        AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt187", comment: "상대의 영상이 종료 되었습니다!!"))
         self.stopTimer()
     }
     
     func signalClientDidToRoomOut(_ signalClient: SignalingClient) {
         print("== signal signalClientDidToRoomOut")
         self.removeWaitingChildVc()
-        AppDelegate.ins.window?.makeBottomTost("상대의 영상채팅을 종료하였습니다.!!")
+        AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt177", comment: "상대가 영상을 종료 했습니다!!"))
         self.stopTimer()
     }
     
     func signalClientDidCallNo(_ signalClient: SignalingClient) {
         print("== signal signalClientDidCallNo")
         self.removeWaitingChildVc()
-        AppDelegate.ins.window?.makeBottomTost("상대가 영상채팅을 거절했습니다.")
+        AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt191", comment: "상대가 영상채팅을 거절 했습니다!!"))
         self.stopTimer()
     }
     

@@ -78,6 +78,7 @@
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                     <real key="value" value="8"/>
                                                 </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="activity_txt314"/>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="onClickedBtnactions:" destination="iN0-l3-epB" eventType="touchUpInside" id="tgs-h2-Xhx"/>
@@ -99,6 +100,7 @@
                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                     <real key="value" value="8"/>
                                                 </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="activity_txt315"/>
                                             </userDefinedRuntimeAttributes>
                                             <connections>
                                                 <action selector="onClickedBtnactions:" destination="iN0-l3-epB" eventType="touchUpInside" id="y95-a5-Ji9"/>

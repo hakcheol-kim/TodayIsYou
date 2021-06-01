@@ -31,6 +31,7 @@ class CAlertViewController: UIViewController {
     @IBOutlet weak var heightBtn: NSLayoutConstraint!
     @IBOutlet weak var btnFullClose: UIButton!
     
+    var lbMsgTextAligment: NSTextAlignment = .center
     var isBackGroundTouchClose: Bool = true
     var fontMsg: UIFont = UIFont.systemFont(ofSize: 16, weight: .regular)
     var fontTitle: UIFont = UIFont.systemFont(ofSize: 18, weight: .medium)
@@ -179,7 +180,7 @@ class CAlertViewController: UIViewController {
         }
         let lbMsg = UILabel.init()
         lbMsg.tag = 10005
-        lbMsg.textAlignment = .center
+        lbMsg.textAlignment = lbMsgTextAligment
         lbMsg.textColor = UIColor.label
         lbMsg.font = fontMsg
         lbMsg.numberOfLines = 0
@@ -260,18 +261,22 @@ class CAlertViewController: UIViewController {
         }
     }
     
-    func addTextView(_ placeholder: String? = nil, _ edge: UIEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8)) {
-        
+    func addTextView(_ placeholder: String? = nil, _ edge: UIEdgeInsets = UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8), _ height:CGFloat = 120) {
         self.view.layoutIfNeeded()
+        
         var svWrap: UIStackView!
         if let sv = svContent.viewWithTag(12345) as? UIStackView {
             svWrap = sv
         }
         else {
             svWrap = UIStackView()
+            svWrap.axis = .vertical
             svWrap.tag = 12345
+            svWrap.spacing = 8
+            
+            svContent.addArrangedSubview(svWrap)
+            svContent.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         }
-        svContent.addArrangedSubview(svWrap)
         
         let tv = CTextView.init()
         svWrap.addArrangedSubview(tv)
@@ -279,11 +284,14 @@ class CAlertViewController: UIViewController {
         if let placeholder = placeholder {
             tv.placeHolderString = placeholder
         }
-        svContent.layoutMargins = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         
         tv.delegate = self
         tv.translatesAutoresizingMaskIntoConstraints = false
-        tv.heightAnchor.constraint(equalToConstant: 120).isActive = true
+        
+        let h = tv.heightAnchor.constraint(equalToConstant: height)
+        h.priority = UILayoutPriority.init(999)
+        h.isActive = true
+        
         tv.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         tv.layer.borderWidth = 1
         tv.layer.borderColor = RGB(216, 216, 216).cgColor

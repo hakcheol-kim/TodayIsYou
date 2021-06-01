@@ -236,15 +236,16 @@ class CamTalkListViewController: MainActionViewController {
     override func actionBlockAlert() {
         let user_name = self.selUser["user_name"].stringValue
         let user_id = self.selUser["user_id"].stringValue
+      
         var title = ""
         if ShareData.ins.languageCode == "ko" {
-            title = "\(user_name)님 \("layout_txt28".localized)"
+            title = "\(user_name)님 \(NSLocalizedString("activity_txt495", comment: "신고하기"))"
         }
         else {
-            title = "\(user_name) \("layout_txt28".localized)"
+            title = "\(user_name) \(NSLocalizedString("activity_txt495", comment: "신고하기"))"
         }
         
-        let alert = CAlertViewController.init(type: .alert, title:title , message: nil, actions: [.cancel, .ok]) { (vcs, selItem, index) in
+        let alert = CAlertViewController.init(type: .alert, title: title, message: nil, actions: [.cancel, .ok]) { (vcs, selItem, index) in
             
             if (index == 1) {
                 guard let text = vcs.arrTextView.first?.text, text.isEmpty == false else {
@@ -255,7 +256,7 @@ class CamTalkListViewController: MainActionViewController {
                 ApiManager.ins.requestReport(param: param) { (res) in
                     let isSuccess = res["isSuccess"].stringValue
                     if isSuccess == "01" {
-                        self.showToast("activity_txt246".localized)
+                        self.showToast(NSLocalizedString("activity_txt246", comment: "신고 완료"))
                     }
                     else {
                         self.showErrorToast(res)
@@ -269,7 +270,7 @@ class CamTalkListViewController: MainActionViewController {
             }
         }
         alert.iconImg = UIImage(named: "warning")
-        alert.addTextView("activity_txt497".localized, UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+        alert.addTextView(NSLocalizedString("activity_txt497", comment: "신고내용"), UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
         
         self.present(alert, animated: true, completion: nil)
     }

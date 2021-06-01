@@ -15,6 +15,7 @@ class CamTblCell: UITableViewCell {
     @IBOutlet weak var lbSubTitle: UILabel!
     @IBOutlet weak var ivThumb: UIImageViewAligned!
     @IBOutlet weak var btnType: CButton!
+    @IBOutlet weak var lbState: Clabel!
     var data: JSON!
     var didClickedClosure:((_ selData:JSON?, _ actionIndex: Int) -> Void)?
     
@@ -91,6 +92,10 @@ class CamTblCell: UITableViewCell {
         }
         
         lbSubTitle.text = "\(user_name), \(Gender.localizedString(user_sex)) \(Age.localizedString(user_age))"
+        lbState.isHidden = true
+        if status == "Y" {
+            lbState.isHidden = false
+        }
     }
     
     @objc func onTapGesuterHandler(_ gesture: UIGestureRecognizer) {

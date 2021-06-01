@@ -134,7 +134,7 @@ class MainViewController: BaseViewController {
                     let vc = SettingViewController.instantiateFromStoryboard(.main)!
                     self.myAddChildViewController(superView: containerView, childViewController: vc)
                     self.selectedVc = vc
-                    self.changeNaviTitle("activity_txt304".localized)
+                    self.changeNaviTitle("activity_txt306".localized)
                     break
                 default:
                     break

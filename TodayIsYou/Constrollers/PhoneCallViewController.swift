@@ -108,7 +108,7 @@ class PhoneCallViewController: MainActionViewController {
             let user_name = info["user_name"].stringValue
             let user_age = info["user_age"].stringValue
             let user_sex = info["user_sex"].stringValue
-            let good_cnt = info["good_cnt"].stringValue
+            let good_cnt = info["good_cnt"].numberValue
             let talk_user_img = info["talk_user_img"].stringValue
             let to_user_contents = info["to_user_contents"].stringValue
             
@@ -118,13 +118,25 @@ class PhoneCallViewController: MainActionViewController {
                 ivProfile.contentMode = .scaleAspectFill
             }
             
-            lbTakMsg.text = to_user_contents
+            lbTakMsg.text = TalkMemo.localizedString(to_user_contents)
             lbUserName.text = user_name
-            lbGender.text = user_sex
-            lbAge.text = user_age
-            lbGoodCnt.text = good_cnt.addComma()
+            lbGender.text = Gender.localizedString(user_sex)
+            lbAge.text = Age.localizedString(user_age)
+            lbGoodCnt.text = good_cnt.stringValue.addComma()
         }
         
+//        기본 60초 600포인트 소모
+//        이후 10초당 100포인트가 차감됩니다.
+        var phone_out_start_point = "600"
+        if let stPoint = ShareData.ins.dfsGet(DfsKey.phoneOutStartPoint) as? NSNumber {
+            phone_out_start_point = stPoint.stringValue
+        }
+        var phone_out_user_point = "100"
+        if let usePoint = ShareData.ins.dfsGet(DfsKey.phoneOutUserPoint) as? NSNumber {
+            phone_out_user_point = usePoint.stringValue.addComma()
+        }
+        let msg = NSLocalizedString("activity_txt390", comment: "기본 60초") + " \(phone_out_start_point) \(NSLocalizedString("activity_txt391", comment: "포인트 소모\n이후 10초당")) \(phone_out_user_point) \(NSLocalizedString("activity_txt392", comment: "포인트가 차감됩니다."))"
+        lbNotiMsg.text = msg
         self.signalClient.connect()
 //        self.configureVideoRenderer()
         if connectionType == .offer {
@@ -161,7 +173,8 @@ class PhoneCallViewController: MainActionViewController {
         if ShareData.ins.mySex.rawValue == "남" {
             let sp = "\(baseStartPoint)".addComma()
             let ep = "\(baseLivePoint)".addComma()
-            watingTimerVc.message = "상대가 수락하면 기본 1분 \(sp)포인트 1분 이후 10초에 \(ep)포인트 차감됩니다."
+            
+            watingTimerVc.message = "\(NSLocalizedString("activity_txt223", comment: "상대가 수락하면 기본 1분")) \(sp) \(NSLocalizedString("activity_txt224", comment: " 포인트 1분 이후 10초에")) \(ep)\(NSLocalizedString("activity_txt213", comment: "포인트 차감됩니다."))"
         }
         watingTimerVc.type = .phone
         myAddChildViewController(superView: self.view, childViewController: watingTimerVc)
@@ -263,7 +276,7 @@ class PhoneCallViewController: MainActionViewController {
             ApiManager.ins.requestSetMyFried(param: param) { res in
                 let isSuccess = res["isSuccess"].stringValue
                 if isSuccess == "01" {
-                    self.showToast("찜 등록 되었습니다.")
+                    AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt243", comment: "찜등록완료!!"))
                 }
                 else {
                     self.showErrorToast(res)
@@ -277,20 +290,20 @@ class PhoneCallViewController: MainActionViewController {
             ApiManager.ins.requesetUpdateGood(param: param) { (res) in
                 let isSuccess = res["isSuccess"].stringValue
                 if isSuccess == "01" {
-                    self.showToast("좋아요.")
+                    AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt429", comment: "좋아요."))
                 }
                 else if isSuccess == "02" {
-                    self.showToast("좋아요는 1회만 가능합니다.")
+                    AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt171", comment: "좋아요는 1회만 가능합니다."))
                 }
                 else {
-                    self.showErrorToast(res)
+                    self.showToast(NSLocalizedString("activity_txt173", comment: "등록 에러!!"))
                 }
             } fail: { (error) in
                 self.showErrorToast(error)
             }
         }
         else if sender == btnOut {
-            CAlertViewController.show(type: .alert, title: nil, message: "음성 통화를 종료합니다.", actions: [.cancel, .ok]) { (vcs, selItem, action) in
+            CAlertViewController.show(type: .alert, title: nil, message: NSLocalizedString("activity_txt402", comment:"통화를 종료합니다"), actions: [.cancel, .ok]) { (vcs, selItem, action) in
                 vcs.dismiss(animated: true, completion: nil)
                 
                 if action == 1 {
@@ -318,7 +331,7 @@ class PhoneCallViewController: MainActionViewController {
                     self.presentedViewController?.dismiss(animated: false, completion: nil)
                 }
                 self.navigationController?.popViewController(animated: true)
-                AppDelegate.ins.window?.makeBottomTost("상대가 취소했습니다.")
+                AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt313", comment: "상대가 취소했습니다."))
             }
         }
     }
@@ -328,7 +341,6 @@ extension PhoneCallViewController: WebRTCClientDelegate {
     func webRTCClient(_ client: WebRTCClient, didReceiveLocalVideoTrack videoTrack: RTCVideoTrack) {
         
     }
-    
     func webRTCClient(_ client: WebRTCClient, didReceiveData data: Data) {
         print("== webrtc didReceiveData")
         
@@ -373,6 +385,9 @@ extension PhoneCallViewController: WebRTCClientDelegate {
             case .disconnected:
                 textColor = .orange
 //                AppDelegate.ins.window?.makeToast("연결 끊김")
+                DispatchQueue.main.async {
+                    self.stopTimer()
+                }
                 break
             case .failed:
                 textColor = .red
@@ -426,21 +441,21 @@ extension PhoneCallViewController: SignalClientDelegate {
     func signalClientDidRoomOut(_ signalClient: SignalingClient) {
         print("== signal signalClientDidRoomOut")
         self.removeWaitingChildVc()
-        AppDelegate.ins.window?.makeBottomTost("상대가 영상채팅 신청을 취소 했습니다!!")
+        AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt187", comment: "상대의 영상이 종료 되었습니다!!"))
         self.stopTimer()
     }
     
     func signalClientDidToRoomOut(_ signalClient: SignalingClient) {
         print("== signal signalClientDidToRoomOut")
         self.removeWaitingChildVc()
-        AppDelegate.ins.window?.makeBottomTost("상대의 영상이 종료 되었습니다!!")
+        AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt177", comment: "상대가 영상을 종료 했습니다!!"))
         self.stopTimer()
     }
     
     func signalClientDidCallNo(_ signalClient: SignalingClient) {
         print("== signal signalClientDidCallNo")
         self.removeWaitingChildVc()
-        AppDelegate.ins.window?.makeBottomTost("상대가 영상채팅을 거절 했습니다.")
+        AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt191", comment: "상대가 영상채팅을 거절 했습니다!!"))
         self.stopTimer()
     }
     

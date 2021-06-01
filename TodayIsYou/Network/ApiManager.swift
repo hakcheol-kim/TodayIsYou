@@ -689,4 +689,12 @@ class ApiManager: NSObject {
             fail?(error)
         }
     }
+    
+    func requestAppstoreConnect(bundleId:String, success:ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.get, "http://itunes.apple.com/lookup?bundleId=\(bundleId)", nil) { response in
+            success?(response)
+        } failure: { error in
+            fail?(error)
+        }
+    }
 }

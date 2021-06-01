@@ -80,20 +80,25 @@ class ChattingCell: UITableViewCell {
         }
         ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
         
-        memo = memo.replacingOccurrences(of: "[CAM_TALK]", with: "")
-        memo = memo.replacingOccurrences(of: "[PHONE_TALK]", with: "")
-        lbTitle.text = memo
-        let result = "\(user_name), \(user_age), \(user_sex)"
+        var message = ChatMsg.localizedString(memo)
+        message = message.replacingOccurrences(of: "[CAM_TALK]", with: "")
+        message = message.replacingOccurrences(of: "[PHONE_TALK]", with: "")
+        
+        lbTitle.text = message
+        let sex = Gender.localizedString(user_sex)
+        let tmpAttr = NSAttributedString.init(string: " \(sex)", attributes: [.foregroundColor : UIColor.label])
+        
+        let result = "\(user_name), \(Age.localizedString(user_age))"
+        
         let attr = NSMutableAttributedString.init(string: result)
         attr.addAttribute(.foregroundColor, value: RGB(125, 125, 125), range: NSMakeRange(0, result.length))
         attr.addAttribute(.foregroundColor, value: RGB(148, 17, 0), range: NSMakeRange(0, user_name.length))
-        attr.addAttribute(.foregroundColor, value: UIColor.label, range: NSMakeRange(result.length-1, 1))
+        attr.append(tmpAttr)
+        
         lbSubTitle.attributedText = attr
         
         let df = CDateFormatter.init()
-//        "04:09:45.626 PM 03/11/2021"
         df.dateFormat = "hh:mm:ss.SSS a MM/dd/yyyy"
-//        yyyy-MM-dd'T'HH:mm:ss.SSS'Z
         
         lbMsg.text = ""
         ivThumb.isHidden = true
@@ -103,19 +108,19 @@ class ChattingCell: UITableViewCell {
             let comps = curDate - regDate
             
             if let month = comps.month, month > 0 {
-                tStr = "\(month)달전"
+                tStr = "\(month)\(NSLocalizedString("activity_txt29", comment: "달전"))"
             }
             else if let day = comps.day, day > 0 {
-                tStr = String(format: "%ld일전", day)
+                tStr = String(format: "%ld%@", day, NSLocalizedString("activity_txt24", comment: "일전"))
             }
             else if let hour = comps.hour, hour > 0 {
-                tStr = String(format: "%02ld시간 %02ld분전", hour, (comps.minute ?? 0))
+                tStr = String(format: "%02ld%@ %02ld%@", hour,  NSLocalizedString("activity_txt66", comment: "시간"), (comps.minute ?? 0),  NSLocalizedString("activity_txt30", comment: "분전"))
             }
             else if let minute = comps.minute, minute > 0 {
-                tStr = String(format: "%02ld분 %02ld초전", minute, (comps.second ?? 0))
+                tStr = String(format: "%02ld%@ %02ld%@", minute, NSLocalizedString("activity_txt27", comment: "분"), (comps.second ?? 0), NSLocalizedString("activity_txt28", comment: "초전"))
             }
             else if let second = comps.second, second > 0 {
-                tStr = String(format: "%02ld초전", second)
+                tStr = String(format: "%02ld%@", second, NSLocalizedString("activity_txt28", comment: "초전"))
             }
             lbMsg.text = tStr
         }

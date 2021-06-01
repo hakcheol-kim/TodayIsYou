@@ -89,7 +89,7 @@ class RandomCallViewController: BaseViewController {
     }
     
     func showRandonCallAlert() {
-        let vc = CAlertViewController.init(type: .alert, title:"램덤 영상 채팅 신청", message: "재 신청 시 포인트 소모는 없습니다.\n 재 신청하시겠습니까?", actions: [.cancel, .ok]) { vcs, selItem, action in
+        let vc = CAlertViewController.init(type: .alert, title:NSLocalizedString("random_popup_title", comment: "램덤 영상 채팅 신청"), message: NSLocalizedString("random_popup_msg", comment: "재 신청 시 포인트 소모는 없습니다.\n 재 신청하시겠습니까?"), actions: [.cancel, .ok]) { vcs, selItem, action in
             vcs.dismiss(animated: true, completion: nil)
             if action == 1 {
                 self.requestRandomCallSend()

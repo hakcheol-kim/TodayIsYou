@@ -33,6 +33,7 @@ class ExchangeViewController: BaseViewController {
     @IBOutlet weak var btnCheck: UIButton!
     @IBOutlet weak var tfBank: UITextField!
     
+    var selBankName:String!
     
     let toobar = CToolbar.init(barItems: [.up, .down, .keyboardDown])
     var arrTf:[CTextField]!
@@ -57,25 +58,25 @@ class ExchangeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        CNavigationBar.drawBackButton(self, "별 환급 신청", #selector(actionNaviBack))
+        CNavigationBar.drawBackButton(self,  NSLocalizedString("activity_txt358", comment: "별 환급 신청"), #selector(actionNaviBack))
         arrTf = [tfMoney, tfAccountNum, tfHolderName, tfIdentityNum1, tfIdentityNum2, tfAddress]
-        
         
         for tf in arrTf {
             tf.inputAccessoryView = toobar
             tf.delegate = self
         }
-        
+        btnCheck.titleLabel?.numberOfLines = 0
         self.addTapGestureKeyBoardDown()
         toobar.addTarget(self, selctor: #selector(onClickedToolbarActions(_:)))
         requestTerm()
         
         if let rp = ShareData.ins.dfsGet(DfsKey.userR) as? NSNumber {
             rPoint = rp
+            let strPoint = rPoint.stringValue.addComma()
+            lbRPointMsg.text = NSLocalizedString("activity_txt36", comment: "환급 신청금액 : ") + String(format: NSLocalizedString("activity_txt37", comment: ""), strPoint, strPoint)
+            tfMoney.text = rPoint.stringValue.addComma()
         }
-        lbRPointMsg.text = "환급가능 별 : \(rPoint.stringValue.addComma())개(\(rPoint.stringValue.addComma())원)"
-        tfMoney.text = rPoint.stringValue.addComma()
-      
+        
         requestGetRPoint()
     }
     
@@ -148,14 +149,20 @@ class ExchangeViewController: BaseViewController {
     }
    @IBAction func onClickedBtnActions(_ sender: UIButton) {
       if sender == btnBank {
-         guard let banklist = ShareData.ins.getBankList() else {
-            return
-         }
-         let vc = PopupListViewController.initWithType(.normal, "은행을 선택해주세요.", banklist, nil) { vcs, selItem, index in
+//         guard let banklist = ShareData.ins.getBankList() else {
+//            return
+//         }
+        var banks = [String]()
+        for i in 0..<38 {
+            let key = "bank_\(i)"
+            banks.append(NSLocalizedString(key, comment: ""))
+        }
+         let vc = PopupListViewController.initWithType(.normal, NSLocalizedString("bank_select", comment: "은행을 선택해주세요."), banks, nil) { vcs, selItem, index in
             vcs.dismiss(animated: true, completion: nil)
             guard let selItem = selItem as? String else {
                return
             }
+            self.selBankName = Bank.severKey(selItem)
             self.tfBank.text = selItem
          }
          self.presentPanModal(vc)
@@ -165,11 +172,11 @@ class ExchangeViewController: BaseViewController {
          sender.isSelected = !sender.isSelected
       }
       else if sender == btnOk {
-         lbHintMoney.text = "환급가능 별 개수를 입력해주세요."
+         lbHintMoney.text = NSLocalizedString("exchange_star_msg2", comment: "환급가능 별 개수를 입력해주세요.")
          lbHintMoney.isHidden = true
          lbHintBank.isHidden = true
          lbHintAccountNum.isHidden = true
-         lbHintIdentifier.text = "* 주민번호 및 주소는 세금 신고시에만 사용됩니다."
+         lbHintIdentifier.text = NSLocalizedString("exchange_msg", comment: "* 주민번호 및 주소는 세금 신고시에만 사용됩니다.")
          lbHintIdentifier.textColor = RGB(125, 125, 125)
          lbHintHolderName.isHidden = true
          
@@ -211,7 +218,7 @@ class ExchangeViewController: BaseViewController {
             return
          }
          guard btnCheck.isSelected == true else {
-            self.showToast("약관을 확인해주세요.")
+            self.showToast(NSLocalizedString("login_term_msg", comment: "약관을 확인해주세요."))
             return
          }
          

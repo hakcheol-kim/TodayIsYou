@@ -21,11 +21,14 @@
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="rwf-DA-uDL">
                             <rect key="frame" x="62.5" y="34" width="287" height="67.5"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="매너 점수" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="53h-FK-RaK">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="매너 점수" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="53h-FK-RaK" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
                                     <rect key="frame" x="110.5" y="0.0" width="66.5" height="21.5"/>
                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="layout_txt04"/>
+                                    </userDefinedRuntimeAttributes>
                                 </label>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kVJ-gb-LZa" customClass="FloatRatingView" customModule="TodayIsYou" customModuleProvider="target">
                                     <rect key="frame" x="20" y="37.5" width="247" height="30"/>
@@ -52,11 +55,14 @@
                                 <constraint firstItem="kVJ-gb-LZa" firstAttribute="width" secondItem="rwf-DA-uDL" secondAttribute="width" multiplier="0.6" constant="74.800000000000011" id="SuE-y6-ORA"/>
                             </constraints>
                         </stackView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="상대의 매너점수를 선택해주세요." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGH-wE-eSb">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="상대의 매너점수를 선택해주세요." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cGH-wE-eSb" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
                             <rect key="frame" x="109" y="125.5" width="194" height="100.5"/>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="layout_txt05"/>
+                            </userDefinedRuntimeAttributes>
                         </label>
                     </subviews>
                     <edgeInsets key="layoutMargins" top="34" left="16" bottom="24" right="16"/>

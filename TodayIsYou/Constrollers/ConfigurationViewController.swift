@@ -22,8 +22,12 @@ class ConfigurationViewController: BaseViewController {
     var notiYn:String = "A"
     override func viewDidLoad() {
         super.viewDidLoad()
-        CNavigationBar.drawBackButton(self, "설정", #selector(actionNaviBack))
+        CNavigationBar.drawBackButton(self, NSLocalizedString("activity_txt306", comment: "설정"), #selector(actionNaviBack))
         self.reqeustGetUserInfo()
+        btnSound.titleLabel?.numberOfLines = 0
+        btnVibrate.titleLabel?.numberOfLines = 0
+        btnMute.titleLabel?.numberOfLines = 0
+        btnOff.titleLabel?.numberOfLines = 0
     }
     
     func reqeustGetUserInfo() {
@@ -70,7 +74,8 @@ class ConfigurationViewController: BaseViewController {
         }
         
         let version = Bundle.main.appVersion
-        btnUpdate.setTitle("현재 버전(\(version))", for: .normal)
+        let title = String(format: NSLocalizedString("version_cur", comment: "현재버전"), version)
+        btnUpdate.setTitle(title, for: .normal)
     }
     
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
@@ -159,8 +164,8 @@ class ConfigurationViewController: BaseViewController {
             //TODO:: goto appstore url
         }
         else if sender == btnExit {
-            let msg = "15일 후 재가입 가능합니다.\n탈퇴시 별,포인트는 소멸 되며 환불되지 않습니다."
-            CAlertViewController.show(type: .alert, title:"회원 탈퇴", message: msg, actions: [.cancel, .ok]) { (vcs, selItem, index) in
+            let msg = NSLocalizedString("activity_txt281", comment: "15일 후 재가입 가능합니다.\n탈퇴시 별,포인트는 소멸 되며 환불되지 않습니다.")
+            CAlertViewController.show(type: .alert, title:NSLocalizedString("layout_txt40", comment: "회원탈퇴"), message: msg, actions: [.cancel, .ok]) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 if index == 1 {
                     self.resputUserOut()
@@ -198,7 +203,7 @@ class ConfigurationViewController: BaseViewController {
         ApiManager.ins.requestUpdateUserSetting(param: param) { (response) in
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
-                self.showToast("설정 변경 완료되었습니다.")
+                self.showToast(NSLocalizedString("activity_txt308", comment: "설정변경"))
                 ShareData.ins.dfsSet(self.notiYn, DfsKey.notiYn)
                 ShareData.ins.dfsSet(connectPush, DfsKey.connectPush)
             }

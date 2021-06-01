@@ -194,13 +194,13 @@ extension PhotoDetailViewController: UICollectionViewDelegate, UICollectionViewD
                     ApiManager.ins.requestGoodPhotoPlus(param: param) { (res) in
                         let isSuccess = res["isSuccess"].stringValue
                         if isSuccess == "01" {
-                            self.showToast("좋아요!!")
+                            AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt429", comment: "좋아요."))
                         }
                         else if isSuccess == "02" {
-                            self.showToast("좋아요는 1회만 가능합니다!!")
+                            AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt171", comment: "좋아요는 1회만 가능합니다."))
                         }
                         else {
-                            self.showToast("등록 에러!!")
+                            self.showToast(NSLocalizedString("activity_txt173", comment: "등록 에러!!"))
                         }
                     } failure: { (error) in
                         self.showErrorToast(error)

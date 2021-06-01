@@ -84,6 +84,7 @@ class ShareData: NSObject {
     }
     
     func setHomePoint(_ info:JSON) {
+        print("home point: \(info)")
         let phone_out_start_point = info["phone_out_start_point"].numberValue // ": 600,
         let cam_out_user_point = info["cam_out_user_point"].numberValue // ": 200,
         let cam_out_start_point = info["cam_out_start_point"].numberValue // ": 1200,

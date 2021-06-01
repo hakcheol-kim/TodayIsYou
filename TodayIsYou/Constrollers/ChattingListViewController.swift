@@ -105,7 +105,7 @@ class ChattingListViewController: BaseViewController {
             AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnDelAll {
-            CAlertViewController.show(type: .alert, title: "대화삭제", message: "모든 대화가 삭제됩니다.", actions: [.cancel , .ok]) { (vcs, selItem, index) in
+            CAlertViewController.show(type: .alert, title: NSLocalizedString("activity_txt22", comment: "대화삭제"), message: NSLocalizedString("activity_txt142", comment: "모든 대화가 삭제됩니다."), actions: [.cancel , .ok]) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 if index == 1 {
                     ApiManager.ins.requestMssageAllDelete(param: ["user_id":ShareData.ins.myId]) { (res) in
@@ -157,7 +157,9 @@ class ChattingListViewController: BaseViewController {
                 }
                 
                 let user_name = user["user_name"].stringValue
-                self.showToastWindow("\(user_name)님이 대화방을 삭제했습니다.")
+//                self.showToastWindow("\(user_name)님이 대화방을 삭제했습니다.")
+                self.showToastWindow(NSLocalizedString("activity_txt244", comment: "삭제된 대화방 입니다!!"))
+                
                 self.dataRest()
             }
         }

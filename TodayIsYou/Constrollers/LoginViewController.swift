@@ -36,11 +36,12 @@ class LoginViewController: SocialLoginViewController {
         super.viewDidLoad()
         
         if ShareData.ins.languageCode == "ko" {
-            isKr = false
+            isKr = true
         }
-        #if DEBUG
-        isKr = true
-        #endif
+//        #if DEBUG
+//            isKr = true
+//        #endif
+        
         if isKr {
             svPhoneLogin.isHidden = false
             svSocialLogin.isHidden = true
@@ -141,7 +142,8 @@ class LoginViewController: SocialLoginViewController {
             if phoneNum == "01010041004" {  //테스트 폰번호
                 self.authCode = "12345"
             }
-            let param = ["receiver":phoneNum, "service_key":"tiy1031", "contents":"오늘은너야인증번호[\(self.authCode!)]"];
+            let authStr = "오늘은너야 인증번호[\(self.authCode!)]"
+            let param = ["receiver":phoneNum, "service_key":"tiy1031", "contents":authStr];
             ApiManager.ins.requestSmsAuthCode(param: param) { (res) in
                 let code = res["code"].stringValue
                 if code == "000" {
@@ -263,6 +265,7 @@ class LoginViewController: SocialLoginViewController {
                 ShareData.ins.myId = newUserId
                 ShareData.ins.setUserInfo(res)
                 AppDelegate.ins.callMainViewCtrl()
+                AppDelegate.ins.requestUpdateFcmToken()
             }
             else {
                 self.showErrorToast(res)

@@ -53,10 +53,14 @@ class RankTblCell: UITableViewCell {
         let orderby_num = data["orderby_num()"].intValue  //)" : 3,
         let user_status = data["user_status"].stringValue  // "ON"
         
-        let info = "\(good_cnt)점, \(user_name), \(user_age), \(user_sex)"
+        let sex = Gender.localizedString(user_sex)
+        var info = "\(good_cnt)\(NSLocalizedString("activity_txt61", comment: "점"))"
+        info.append(", \(user_name)")
+        info.append(", \(Age.localizedString(user_age))")
+        info.append(", \(sex)")
         
         let attr = NSMutableAttributedString(string: info)
-        attr.addAttribute(.foregroundColor, value: RGB(230, 100, 100), range: (info as NSString).range(of: user_sex))
+        attr.addAttribute(.foregroundColor, value: RGB(230, 100, 100), range: (info as NSString).range(of: sex))
         lbInfo.attributedText = attr
         ratingView.rating = Double(user_score)
         ivThumb.image = Gender.defaultImg(user_sex)

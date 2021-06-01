@@ -68,6 +68,13 @@ class CamTalkColCell: UICollectionViewCell {
         lbAge.text = Age.localizedString(user_age)
         lbName.text = user_name
         btnHartCnt.setTitle("\(good_cnt)", for: .normal)
+        
+        if status == "Y" {
+            btnAvailableVideo.setTitle(NSLocalizedString("activity_txt07", comment: "영상채팅중"), for: .normal)
+        }
+        else {
+            btnAvailableVideo.setTitle(NSLocalizedString("activity_txt06", comment: "영상채팅가능"), for: .normal)
+        }
     }
     
 }

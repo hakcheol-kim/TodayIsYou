@@ -16,7 +16,7 @@ class IntroViewController: UIViewController {
         //1. 앱캐쉬에 저장되있닌지 찾는다.
         //a52fd10c131f149663a64ab074d5b44b
         //c4f3f037ff94f95fe144fc9aed76f0b6
-//        ShareData.ins.dfsSet("a52fd10c131f149663a64ab074d5b44b", DfsKey.userId)
+        ShareData.ins.dfsSet("c4f3f037ff94f95fe144fc9aed76f0b6", DfsKey.userId)
 //            KeychainItem.deleteUserIdentifierFromKeychain()
 //            ShareData.ins.dfsRemove(DfsKey.userId)
         #endif

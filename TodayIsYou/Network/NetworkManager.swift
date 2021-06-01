@@ -48,7 +48,9 @@ class NetworkManager: NSObject {
         if isStartIndicator {
             AppDelegate.ins.startIndicator()
         }
-        let header: HTTPHeaders = [.contentType(ContentType.json.rawValue)]
+        let languageCode = ShareData.ins.languageCode.uppercased()
+        let customLanguageHeader = HTTPHeader(name: "forgn_lang", value: languageCode)
+        let header: HTTPHeaders = [.contentType(ContentType.json.rawValue), customLanguageHeader]
         
         let request = AF.request(encodedUrl, method: method, parameters: param, encoding: encoding, headers: header)
         request.responseJSON { (response:AFDataResponse<Any>) in
@@ -87,7 +89,10 @@ class NetworkManager: NSObject {
         }
         
         AppDelegate.ins.startIndicator()
-        let header: HTTPHeaders = [.contentType(ContentType.formdata.rawValue)]
+        
+        let languageCode = ShareData.ins.languageCode.uppercased()
+        let customLanguageHeader = HTTPHeader(name: "forgn_lang", value: languageCode)
+        let header: HTTPHeaders = [.contentType(ContentType.formdata.rawValue), customLanguageHeader]
         
         AF.upload(multipartFormData: { (multipartFormData) in
             for (key, value) in param {

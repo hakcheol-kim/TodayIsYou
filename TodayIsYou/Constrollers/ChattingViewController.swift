@@ -54,9 +54,9 @@ class ChattingViewController: MainActionViewController {
         self.messageKey = passData["seq"].stringValue
         
         CNavigationBar.drawBackButton(self, toUserName, #selector(actionNaviBack))
-        CNavigationBar.drawRight(self, nil, "차단", 2000, #selector(onClickedBtnActions(_:)))
-        CNavigationBar.drawRight(self, nil, "삭제", 2001, #selector(onClickedBtnActions(_:)))
-        CNavigationBar.drawRight(self, nil, "영상", 2002, #selector(onClickedBtnActions(_:)))
+        CNavigationBar.drawRight(self, nil, NSLocalizedString("layout_txt16", comment: "차단"), 2000, #selector(onClickedBtnActions(_:)))
+        CNavigationBar.drawRight(self, nil, NSLocalizedString("activity_txt55", comment: "삭제"), 2001, #selector(onClickedBtnActions(_:)))
+        CNavigationBar.drawRight(self, nil, NSLocalizedString("activity_txt211", comment: "영상"), 2002, #selector(onClickedBtnActions(_:)))
         
         btnGift.isHidden = true
         if "남" == ShareData.ins.mySex.rawValue  {
@@ -79,17 +79,18 @@ class ChattingViewController: MainActionViewController {
         }
         
         if outChatPoint.intValue > 0 {
-            lbHeader.text = "\(outChatPoint.stringValue.addComma()) 포인트가 소모되는 유료 채팅입니다."
+            lbHeader.text = "\(outChatPoint.stringValue.addComma()) \(NSLocalizedString("activity_txt257", comment: "포인트가 소모되는 유료 채팅입니다."))"
         }
         else {
-            lbHeader.text = "포인트 소모가 없는 무료 채팅 입니다."
+            lbHeader.text = NSLocalizedString("activity_txt256", comment: "포인트 소모가 없는 무료 채팅 입니다.");
         }
         self.tblView.tableHeaderView = lbHeader
         
         self.requestChartMsgList()
         self.getMyBlockList(toUserId: toUserId)
         self.getBlackList(toUserId: toUserId)
-        
+     
+        self.tvChatting.placeHolderString = NSLocalizedString("layout_txt21", comment: "메세지를 입력해주세요.")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -118,12 +119,12 @@ class ChattingViewController: MainActionViewController {
     }
     func relaodUi() {
         if self.isMyBlock {
-            CNavigationBar.drawRight(self, nil, "차단해제", 2000, #selector(self.onClickedBtnActions(_:)))
+            CNavigationBar.drawRight(self, nil, NSLocalizedString("activity_txt250", comment: "차단해제"), 2000, #selector(self.onClickedBtnActions(_:)))
             svEdtingMsg.isHidden = true
             lbBlockStateMsg.isHidden = false
         }
         else {
-            CNavigationBar.drawRight(self, nil, "차단", 2000, #selector(self.onClickedBtnActions(_:)))
+            CNavigationBar.drawRight(self, nil, NSLocalizedString("layout_txt16", comment: "차단"), 2000, #selector(self.onClickedBtnActions(_:)))
             svEdtingMsg.isHidden = false
             lbBlockStateMsg.isHidden = true
         }
@@ -276,7 +277,7 @@ class ChattingViewController: MainActionViewController {
         ApiManager.ins.requestSetMyFried(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
-                self.showToast("찜 등록 완료되었습니다.")
+                self.showToast(NSLocalizedString("activity_txt243", comment: "찜등록완료!!"))
             }
             else {
                 self.showErrorToast(res)
@@ -323,7 +324,7 @@ class ChattingViewController: MainActionViewController {
         else if sender.tag == 2001 {
             print("삭제")
             self.resetKeyboadDown()
-            CAlertViewController.show(type: .alert, title: "대화 삭제", message: "모든 대화가 삭제됩니다.", actions: [.cancel, .ok]) { (vcs, selItem, index) in
+            CAlertViewController.show(type: .alert, title: NSLocalizedString("activity_txt22", comment: "대화삭제"), message: NSLocalizedString("activity_txt23", comment: "선택한 모든 대화가 삭제됩니다."), actions: [.cancel, .ok]) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 if index == 1 {
                     self.requestDeleteChatMsg()
@@ -339,10 +340,10 @@ class ChattingViewController: MainActionViewController {
         else if sender == btnGift {
             self.resetKeyboadDown()
             print("선물")
-            var myPoint = ShareData.ins.myPoint?.intValue ?? 0
+            let myPoint = ShareData.ins.myPoint?.intValue ?? 0
             let strMyPoint = "\(myPoint)".addComma()+"P"
-            let tmpStr = "보유 : \(strMyPoint)"
-            let title = "\(toUserName!)님에게 선물하기\n\(tmpStr)"
+            let tmpStr = "\(NSLocalizedString("activity_txt183", comment: "보유")) \(strMyPoint)"
+            let title = "\(toUserName!)\(NSLocalizedString("activity_txt180", comment: "님에게 선물하기"))\n\(tmpStr)"
             let paragraphic = NSMutableParagraphStyle.init()
             paragraphic.lineSpacing = 5
             let attr = NSMutableAttributedString.init(string: title)
@@ -351,7 +352,14 @@ class ChattingViewController: MainActionViewController {
             attr.addAttribute(.foregroundColor, value: RGB(230, 100, 100), range: (title as NSString).range(of: tmpStr))
             attr.addAttribute(.paragraphStyle, value: paragraphic, range: NSMakeRange(0, title.length))
             
-            let data:[String] = ["100별(P)", "500별(P)", "1,000별(P)", "3,000별(P)", "5,000별(P)", "10,000별(P)"]
+            let pstr = NSLocalizedString("chat_star_point", comment: "별(P)")
+            let data:[String] = ["100\(pstr)",
+                                 "500\(pstr)",
+                                 "1,000\(pstr)",
+                                 "3,000\(pstr)",
+                                 "5,000\(pstr)",
+                                 "10,000\(pstr)"]
+            
             let vc = PopupCollectionListViewController.initWithType(.gift, attr, data, nil) { (vcs, item, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 var giftPoint = 0
@@ -375,7 +383,7 @@ class ChattingViewController: MainActionViewController {
                 }
                 
                 if giftPoint > myPoint {
-                    CAlertViewController.show(type: .alert, title: "포인트 부족", message: "보유한 포인트가 부족합니다. 포인트를 충전하시겠습니까?", actions: [.cancel, .ok]) { (vcs, selItem, index) in
+                    CAlertViewController.show(type: .alert, title: NSLocalizedString("layout_txt26", comment: "포인트 충전"), message: NSLocalizedString("activity_txt181", comment: "보유 포인트가 부족합니다."), actions: [.cancel, .ok]) { (vcs, selItem, index) in
                         vcs.dismiss(animated: true, completion: nil)
                         if index == 1 {
                             let vc = PointPurchaseViewController.instantiateFromStoryboard(.main)!
@@ -395,7 +403,7 @@ class ChattingViewController: MainActionViewController {
                     ApiManager.ins.requestSendGiftPoint(param:param) { (res) in
                         let isSuccess = res["isSuccess"].stringValue
                         if isSuccess == "01" {
-                            let msg = "\(giftPoint)".addComma()+" 별(P)를 선물했습니다."
+                            let msg = "\(giftPoint)".addComma() + NSLocalizedString("activity_txt249", comment: "별(P)를 선물 했습니다.")
                             self.showToast(msg)
                             
                             param["reg_date"] = Date()
@@ -454,7 +462,7 @@ class ChattingViewController: MainActionViewController {
                     param["point_user_id"] = self.passData["point_user_id"].stringValue
                     param["out_chat_point"] = self.passData["out_chat_point"].stringValue
                     param["user_file"] = image
-                    param["memo"] = "FILE 전송"
+                    param["memo"] = "FILE \(NSLocalizedString("layout_txt130", comment: "전송"))"
                     
                     self.requestSendMessage(param)
                 }
@@ -485,7 +493,7 @@ class ChattingViewController: MainActionViewController {
                 param["point_user_id"] = self.passData["point_user_id"].stringValue
                 param["out_chat_point"] = self.passData["out_chat_point"].stringValue
                 param["user_file"] = crop
-                param["memo"] = "FILE 전송"
+                param["memo"] = "FILE \(NSLocalizedString("layout_txt130", comment: "전송"))"
                 
                 self.requestSendMessage(param)
             }
@@ -494,7 +502,7 @@ class ChattingViewController: MainActionViewController {
         }
         else if sender == btnJim {
             if toUserId == ShareData.ins.myId {
-                self.showToast("본인입니다.")
+                self.showToast(NSLocalizedString("activity_txt01", comment: "본인입니다."))
                 return
             }
             self.requestSetMyFriend()
@@ -521,7 +529,7 @@ class ChattingViewController: MainActionViewController {
         }
         else if sender == btnSend {
             guard let text = tvChatting.text, text.isEmpty == false else {
-                self.showToast("메세지를 입력 하세요!!")
+                self.showToast(NSLocalizedString("activity_txt258", comment: "메세지를 입력 하세요!!"))
                 return
             }
             var param:[String:Any] = [:]
@@ -538,7 +546,7 @@ class ChattingViewController: MainActionViewController {
     
     func requestSendMessage(_ param:[String:Any]) {
         if self.isBlocked == true {
-            self.showToast("상대가 차단했습니다!!")
+            self.showToast(NSLocalizedString("activity_txt339", comment: "상대가 차단했습니다!!"))
             return
         }
         
@@ -618,7 +626,7 @@ class ChattingViewController: MainActionViewController {
                 }
             }
             else if type == .msgDel {
-                self.showToastWindow("\(toUserName!)님이 대화방을 나갔습니다.")
+                self.showToastWindow(NSLocalizedString("activity_txt244", comment: "삭제된 대화방 입니다!!"))
                 self.navigationController?.popViewController(animated: true)
             }
         }

@@ -23,13 +23,13 @@ enum PointHistoryType {
     
     func displayName() ->String {
         if self == .point {
-            return "포인트 적립 소모내역"
+            return NSLocalizedString("activity_txt463", comment: "포인트 적립 소모내역")
         }
         else if self == .star {
-            return "별 적립 소모 내역"
+            return NSLocalizedString("activity_txt514", comment: "별 적립 소모 내역")
         }
         else if self == .exchange {
-            return "별 환급 목록"
+            return NSLocalizedString("activity_txt347", comment: "별 환급 목록")
         }
         else {
            return ""
@@ -247,16 +247,16 @@ extension PointHistoryViewController: UITableViewDataSource, UITableViewDelegate
 
             var endTxt = ""
             if stat == "Y" {
-               endTxt = "입금완료"
+               endTxt = NSLocalizedString("activity_txt34", comment: "입금 완료")
             }
             else {
-                endTxt = "입금 대기중"
+                endTxt = NSLocalizedString("activity_txt35", comment: "입금 대기중")
             }
-            
-            let msg = "\(bank) (\(bank_name))\n환급신청 금액: \(out_point.addComma())별 (\(out_point.addComma())원)"
+        
+            let msg = "\(Bank.localizedString(bank)) (\(bank_name))\n\(NSLocalizedString("activity_txt36", comment:"환급신청 금액:"))" + String(format: NSLocalizedString("activity_txt37", comment: ""), out_point.addComma(), out_point.addComma())
             cell.lbTitle.text = msg
             
-            let date = "신청일: \(reg_date), \(endTxt)\n실 입금은 수수료등을 뺀 금액을 입금하여 드립니다. 약관 참조"
+            let date = NSLocalizedString("activity_txt39", comment:"신청일:") + "\(reg_date), \(endTxt)\n" + NSLocalizedString("activity_txt40", comment: "실 입금은 수수료등을 뺀 금액을 입금하여 드립니다. 약관 참조")
             cell.lbSubTitle.text = date
         }
         
