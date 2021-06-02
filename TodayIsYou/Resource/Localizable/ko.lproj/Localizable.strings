@@ -596,4 +596,6 @@
 "exchange_hint4" = "환급 신청이 완료되었습니다." ;
 "random_popup_title" = "램덤 영상 채팅 신청" ;
 "random_popup_msg" = "재 신청 시 포인트 소모는 없습니다.\n 재 신청하시겠습니까?" ;
-
+"update_popup_title" = "업데이트 안내" ;
+"update_popup_msg" = "새로운 버전으로 업데이트 하시겠습니까?" ;
+"update_popup_ok" = "업데이트" ;

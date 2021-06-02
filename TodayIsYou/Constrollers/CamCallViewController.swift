@@ -36,7 +36,26 @@ class CamCallViewController: BaseViewController {
     @IBOutlet weak var btnBack: UIButton!
     @IBOutlet weak var tblView: UITableView!
     
-    var nowPoint:Int = 0
+    var baseStartPoint = 0
+    var baseLivePoint = 0
+    var phoneOutStartPoint = 0 // 최소 포인트
+    
+    var nowPoint:Int = 0 {
+        didSet {
+            if nowPoint < 0 && ShareData.ins.mySex == .mail {
+                self.sendMessage("Room Out")
+                if let timer = self.timer {
+                    timer.invalidate()
+                    timer.fire()
+                    self.timer = nil
+                }
+                self.signalClient.disconnect()
+                self.webRtcClient.close()
+                self.navigationController?.popViewController(animated: false)
+                self.showPointLakePopup()
+            }
+        }
+    }
 
     var listData:[String] = []
     var originListData:[String] = []
@@ -47,9 +66,6 @@ class CamCallViewController: BaseViewController {
     
     private var watingTimerVc:CallWaitingTimerViewController!
     
-    var baseStartPoint = 0
-    var baseLivePoint = 0
-
     private lazy var signalClient: SignalingClient = {
         var client = SignalingClient(connectionType: connectionType, WebSocket(url: Config.default.signalingServerUrl), to: toUserId, toUserName, roomKey: self.roomKey)
         client.delegate = self
@@ -62,7 +78,6 @@ class CamCallViewController: BaseViewController {
         client.delegate = self
         return client
     }()
-    
     
     private var signalingConnected: Bool = false
     private var hasLocalSdp: Bool = false
@@ -93,14 +108,7 @@ class CamCallViewController: BaseViewController {
             min = min % 60
             
             lbTalkTime.text = String(format: "%02ld:%02ld:%02ld", hour, min, sec)
-//            let num = NSNumber.init(integerLiteral: Int(second*15))
-//            let strMoney = num.toString()
-//            if strMoney.isEmpty == false {
-//                lbCost.text = "₩\(num.toString())"
-//            }
-//            else {
-//                lbCost.text = ""
-//            }
+            self.nowPoint = nowPoint - (Int(second)/10)*self.baseLivePoint
         }
     }
     
@@ -121,12 +129,18 @@ class CamCallViewController: BaseViewController {
         
         second = 0.0
         nowPoint = ShareData.ins.myPoint?.intValue ?? 0
+//        #if DEBUG
+//        nowPoint = 100
+//        #endif
         lbCost.text = ""
         if let startPoint = ShareData.ins.dfsGet(DfsKey.camOutStartPoint) as? NSNumber, startPoint.intValue > 0 {
             baseStartPoint = startPoint.intValue
         }
         if let livePoint = ShareData.ins.dfsGet(DfsKey.camOutUserPoint) as? NSNumber, livePoint.intValue > 0 {
             baseLivePoint = livePoint.intValue
+        }
+        if let outStartPoint = ShareData.ins.dfsGet(DfsKey.camOutStartPoint) as? NSNumber, outStartPoint.intValue > 0 {
+            phoneOutStartPoint = outStartPoint.intValue
         }
         
         locaVideo.accessibilityValue = "S"
@@ -165,6 +179,26 @@ class CamCallViewController: BaseViewController {
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    func showPointLakePopup() {
+        let title = NSLocalizedString("activity_txt451", comment: "포인트가 부족 합니다.")
+        var point = nowPoint
+        if (point < 0) {
+            point = 0
+        }
+        let msg = "\(point) \(NSLocalizedString("activity_txt449", comment: "포인트가 남아 있습니다.\n최소")) \(self.phoneOutStartPoint)  \(NSLocalizedString("activity_txt450", comment: "포인트가 필요 합니다."))"
+        
+        let vc = CAlertViewController.init(type: .alert,title: title, message: msg, actions: nil) { vcs, selItem, action in
+            vcs.dismiss(animated: true, completion: nil)
+            
+            if action == 1 {
+                let pointVc = PointPurchaseViewController.instantiateFromStoryboard(.main)!
+                AppDelegate.ins.mainNavigationCtrl.pushViewController(pointVc, animated: true)
+            }
+        }
+        vc.addAction(.cancel, NSLocalizedString("activity_txt479", comment: "취소"))
+        vc.addAction(.ok, NSLocalizedString("activity_txt452", comment: "충전"))
+        AppDelegate.ins.window?.rootViewController?.present(vc, animated: false, completion: nil)
     }
     private func configureVideoRenderer() {
         #if arch(arm64)
@@ -227,6 +261,7 @@ class CamCallViewController: BaseViewController {
         ApiManager.ins.requestCamCallPaymentStartPoint(param: param) { response in
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
+                self.nowPoint -= self.baseStartPoint
                 print("==== 1차 차감완료 \(response)");
             }
             else {
@@ -570,6 +605,7 @@ class CamCallViewController: BaseViewController {
                     ApiManager.ins.requestSendGiftPointCam(param:param) { (res) in
                         let isSuccess = res["isSuccess"].stringValue
                         if isSuccess == "01" {
+                            self.nowPoint -= giftPoint
                             let msg = "🎁 \(self.toUserName!)\(NSLocalizedString("activity_txt194", comment: "님에게 선물")) \(gift_point_str.addComma()) \(NSLocalizedString("activity_txt249", comment: "별(P)를 선물 했습니다."))"
                             self.sendMessage(msg)
                         }

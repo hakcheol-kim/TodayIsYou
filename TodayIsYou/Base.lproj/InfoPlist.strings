@@ -1,0 +1,5 @@
+CFBundleDisplayName = "Today is you" ;
+NSCameraUsageDescription = "You need camera access rights to make video calls, add or change profiles." ;
+NSPhotoLibraryUsageDescription = "Required for image delivery when adding, changing profiles, or chatting." ;
+NSMicrophoneUsageDescription = "You need access to the microphone in order to convey your voice to the other party during video chat." ;
+NSSpeechRecognitionUsageDescription = "You need access to the microphone to convey your voice to the other party during video chat." ;

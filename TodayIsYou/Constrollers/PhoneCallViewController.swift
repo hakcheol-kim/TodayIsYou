@@ -31,8 +31,7 @@ class PhoneCallViewController: MainActionViewController {
     var info: JSON?
     var connectionType: ConnectionType = .answer
     var completion:(() ->Void)?
-    var baseStartPoint = 0
-    var baseLivePoint = 0
+    
     private lazy var signalClient: SignalingClient = {
         var client = SignalingClient(connectionType: connectionType, WebSocket(url: Config.default.signalingServerUrl), to: toUserId, toUserName, roomKey: self.roomKey)
         client.delegate = self
@@ -49,7 +48,26 @@ class PhoneCallViewController: MainActionViewController {
     let colorGreen = RGB(195, 255, 91)
     let colorPurple = RGB(237, 109, 151)
     let colorTint = UIColor.black
-    var nowPoint:Int = 0
+    
+    var baseStartPoint = 0
+    var baseLivePoint = 0
+    var phoneOutStartPoint = 0 // 최소 포인트
+    var nowPoint:Int = 0 {
+        didSet {
+            if nowPoint < 0 && ShareData.ins.mySex == .mail {
+                if let timer = self.timer {
+                    timer.invalidate()
+                    timer.fire()
+                    self.timer = nil
+                }
+                self.signalClient.disconnect()
+                self.webRtcClient.close()
+                self.navigationController?.popViewController(animated: false)
+                self.showPointLakePopup()
+            }
+        }
+    }
+    
     var timer:Timer?
     var second: TimeInterval = 0.0 {
         didSet {
@@ -64,6 +82,7 @@ class PhoneCallViewController: MainActionViewController {
             min = min % 60
             
             lbTakeTime.text = String(format: "%02ld:%02ld:%02ld", hour, min, sec)
+            self.nowPoint = nowPoint - (Int(second)/10)*self.baseLivePoint
         }
     }
     
@@ -73,6 +92,8 @@ class PhoneCallViewController: MainActionViewController {
     private var hasRemoteSdp: Bool = false
     private var remoteCandidateCount: Int = 0
     
+    
+    ///Mark life cycle
     static func initWithType(_ type:ConnectionType, _ roomKey:String, _ toUserId:String, _ toUserName:String?, _ info:JSON? = nil, _ completion:(() ->Void)? = nil) -> PhoneCallViewController {
         let vc = PhoneCallViewController.instantiateFromStoryboard(.call)!
         vc.roomKey = roomKey
@@ -91,7 +112,9 @@ class PhoneCallViewController: MainActionViewController {
         btnOut.imageView?.contentMode = .scaleAspectFit
         
         nowPoint = ShareData.ins.myPoint?.intValue ?? 0
-        
+//        #if DEBUG
+//        nowPoint = 100
+//        #endif
         lbTakMsg.text = ""
         lbUserName.text = ""
         lbGender.text = ShareData.ins.mySex.transGender().rawValue
@@ -103,7 +126,10 @@ class PhoneCallViewController: MainActionViewController {
         if let livePoint = ShareData.ins.dfsGet(DfsKey.phoneOutUserPoint) as? NSNumber, livePoint.intValue > 0 {
             baseLivePoint = livePoint.intValue
         }
-
+        if let outStartPoint = ShareData.ins.dfsGet(DfsKey.phoneOutStartPoint) as? NSNumber, outStartPoint.intValue > 0 {
+            phoneOutStartPoint = outStartPoint.intValue
+        }
+        
         if let info = info {
             let user_name = info["user_name"].stringValue
             let user_age = info["user_age"].stringValue
@@ -158,7 +184,28 @@ class PhoneCallViewController: MainActionViewController {
         self.stopTimer()
         removeWaitingChildVc()
     }
-    
+    func showPointLakePopup() {
+        
+        var point = nowPoint
+        if (point < 0) {
+            point = 0
+        }
+        
+        let title = NSLocalizedString("activity_txt451", comment: "포인트가 부족 합니다.")
+        let msg = "\(point) \(NSLocalizedString("activity_txt449", comment: "포인트가 남아 있습니다.\n최소")) \(self.phoneOutStartPoint)  \(NSLocalizedString("activity_txt450", comment: "포인트가 필요 합니다."))"
+        
+        let vc = CAlertViewController.init(type: .alert,title: title, message: msg, actions: nil) { vcs, selItem, action in
+            vcs.dismiss(animated: true, completion: nil)
+            
+            if action == 1 {
+                let pointVc = PointPurchaseViewController.instantiateFromStoryboard(.main)!
+                AppDelegate.ins.mainNavigationCtrl.pushViewController(pointVc, animated: true)
+            }
+        }
+        vc.addAction(.cancel, NSLocalizedString("activity_txt479", comment: "취소"))
+        vc.addAction(.ok, NSLocalizedString("activity_txt452", comment: "충전"))
+        AppDelegate.ins.window?.rootViewController?.present(vc, animated: false, completion: nil)
+    }
     private func showWatingTimerVc() {
         self.watingTimerVc = CallWaitingTimerViewController.instantiateFromStoryboard {
             self.myRemoveChildViewController(childViewController: self.watingTimerVc)
@@ -191,6 +238,7 @@ class PhoneCallViewController: MainActionViewController {
         ApiManager.ins.requestPhoneCallPaymentStartPoint(param: param) { response in
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
+                self.nowPoint -= self.baseStartPoint
                 print("==== 1차 차감 완료: \(response)");
             }
             else {
@@ -380,7 +428,7 @@ extension PhoneCallViewController: WebRTCClientDelegate {
             switch state {
             case .connected, .completed:
                 textColor = .green
-                AppDelegate.ins.window?.makeToast("수락")
+                AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt315", comment: "수락"))
                 break
             case .disconnected:
                 textColor = .orange

@@ -12,7 +12,7 @@ import CryptoSwift
 import FirebaseMessaging
 import SwiftyJSON
 import AVFoundation
-
+import StoreKit
 
 @main
 
@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var loadingView: UIView?
     var audioPlayer: AVAudioPlayer!
     var downTimer:Timer?
-    
+    var currentLanguage = "en"
     
     static var ins: AppDelegate {
         return UIApplication.shared.delegate as! AppDelegate
@@ -52,12 +52,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
         }
         
-        var languageCode = Locale.current.languageCode.localizedLowercase
-        if languageCode == "en" {
-            languageCode = "us"
+        currentLanguage = Locale.current.languageCode.localizedLowercase
+        var lanCode = currentLanguage
+        if currentLanguage == "en" {
+            lanCode = "us"
         }
-        ShareData.ins.dfsSet(languageCode, DfsKey.languageCode)
-        ShareData.ins.languageCode = languageCode
+        ShareData.ins.dfsSet(lanCode, DfsKey.languageCode)
+        ShareData.ins.languageCode = lanCode
+        Bundle.swizzleLocalization()
         
         callIntroViewCtrl()
 
@@ -265,13 +267,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
-//        let bundleId = Bundle.main.bundleIdentifier
-//        ApiManager.ins.requestAppstoreConnect(bundleId: bundleId) { res in
-//            print("")
-//        } fail: { erro in
-//            
-//        }
+        var lastDate = ""
+        if let date = ShareData.ins.dfsGet(DfsKey.updateCheckDate) as? String {
+            lastDate = date
+        }
+        let today = Utility.getCurrentDate(format: "yyyyMMdd")
+        if lastDate == today {
+            return
+        }
+        ShareData.ins.dfsSet(today, DfsKey.updateCheckDate)
+        
+        let bundleId = Bundle.main.bundleIdentifier
+        ApiManager.ins.requestAppstoreConnect(bundleId: bundleId) { res in
+            let resultCount = res["resultCount"].intValue
+            let result = res["results"].arrayValue
+            let version = result[0]["version"].stringValue
+            if resultCount == 1 && version.isEmpty == false {
+                var curversion = Bundle.main.appVersion
+                curversion = curversion.getNumberString()!
+                let intCurVersion = Int(curversion) ?? 0
+                
+                let newVersion = version.getNumberString()!
+                let intNewVersion = Int(newVersion) ?? 0
+                
+                if intNewVersion > intCurVersion {
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1) {
+                        let alert = CAlertViewController.init(type:.alert, title: NSLocalizedString("update_popup_title", comment: "업데이트 안내"), message: NSLocalizedString("update_popup_msg", comment: "새로운 버전으로 업데이트 하시겠습니까?"), actions:nil) { vcs, _ , action in
+                            vcs.dismiss(animated: true, completion: nil)
+                            if action == 1 {
+                                let storeVc = SKStoreProductViewController.init()
+                                storeVc.delegate = self
+                                //appleId 1564683014
+                                let param = [SKStoreProductParameterITunesItemIdentifier:1564683014]
+                                storeVc.loadProduct(withParameters: param) { success, error in
+                                    if success {
+                                        self.window?.rootViewController?.present(storeVc, animated: true, completion: nil)
+                                    }
+                                }
+                            }
+                        }
+                        alert.addAction(.cancel, NSLocalizedString("activity_txt479", comment: "취소"))
+                        alert.addAction(.ok, NSLocalizedString("update_popup_ok", comment: "업데이트"))
+                        alert.btnFullClose.isUserInteractionEnabled = false
+                        self.window?.rootViewController?.present(alert, animated: false, completion: nil)
+                    }
+                }
+            }
+        } fail: { erro in
+
+        }
     }
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         UIApplication.shared.applicationIconBadgeNumber = 0
     }
@@ -643,4 +689,8 @@ extension AppDelegate: MessagingDelegate {
 //        }
     }
 }
-
+extension AppDelegate : SKStoreProductViewControllerDelegate {
+    func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
+        viewController.dismiss(animated: true, completion: nil)
+    }
+}

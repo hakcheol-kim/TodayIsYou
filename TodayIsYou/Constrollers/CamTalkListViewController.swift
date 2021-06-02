@@ -303,7 +303,7 @@ extension CamTalkListViewController: UITableViewDataSource, UITableViewDelegate 
                         }
                     }
                     else {
-                        self.showToast(NSLocalizedString("activity_txt69", comment: "1회 이상 결제한 유저님만 크게 볼 수 있습니다!!"))
+                        self.showToast(NSLocalizedString("activity_txt08", comment: "1회 이상 결제한 유저님만 크게 볼 수 있습니다!!"))
                     }
                     break
                 case 101:
@@ -315,7 +315,7 @@ extension CamTalkListViewController: UITableViewDataSource, UITableViewDelegate 
                         }
                     }
                     else {
-                        self.showToast(NSLocalizedString("activity_txt69", comment: "1회 이상 결제한 유저님만 크게 볼 수 있습니다!!"))
+                        self.showToast(NSLocalizedString("activity_txt08", comment: "1회 이상 결제한 유저님만 크게 볼 수 있습니다!!"))
                     }
                     break
                 case 102:

@@ -85,6 +85,7 @@ struct DfsKey {
     static let pushData = "pushData"
     static let checkPermission = "checkPermission"
     static let languageCode = "languageCode"
+    static let updateCheckDate = "updateCheckDate"
 }
 
 enum SortedType: String {
