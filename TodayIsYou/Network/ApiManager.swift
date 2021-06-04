@@ -624,6 +624,15 @@ class ApiManager: NSObject {
             fail?(error)
         }
     }
+    ///정기구독 결제
+    func requestPaymentInAppSubScription(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+        let url = "https://api3.todayisyou.co.kr/app/subs/subs_insert.php"
+        NetworkManager.ins.request(.post, url, param) { res in
+            success?(res)
+        } failure: { error in
+            fail?(error)
+        }
+    }
     //영상통화 컨넥션 맺어지면 차감
     func requestCamCallPaymentStartPoint(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
         NetworkManager.ins.request(.post, "/api/talk/insertVcChatLiveStart.do", param, URLEncoding.queryString) { res in

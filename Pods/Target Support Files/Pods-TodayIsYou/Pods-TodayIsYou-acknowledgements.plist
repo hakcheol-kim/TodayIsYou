@@ -14,6 +14,21 @@
 		</dict>
 		<dict>
 			<key>FooterText</key>
+			<string>All text and design is copyright 2020 igaworks, Inc.
+
+All rights reserved.
+
+https://github.com/IGAWorksDev/SDK-IOS-Abx.Remaster-CocoaPod
+</string>
+			<key>License</key>
+			<string>Commercial</string>
+			<key>Title</key>
+			<string>AdBrixRemastered</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
 			<string>Copyright (c) 2014-2021 Alamofire Software Foundation (http://alamofire.org/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

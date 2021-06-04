@@ -183,6 +183,8 @@ class MainViewController: BaseViewController {
         AppDelegate.ins.requestUpdateFcmToken()
         btnRocket.layer.cornerRadius = btnRocket.bounds.height/2
         btnPlus.layer.cornerRadius = btnPlus.bounds.height/2
+        AppDelegate.ins.apptrakingPermissionCheck()
+        AdbrixEvent.addEventLog(.login, ["user_id": ShareData.ins.myId, "user_name":ShareData.ins.myName, "user_sex":ShareData.ins.mySex.rawValue])
         
     }
     override func viewWillAppear(_ animated: Bool) {

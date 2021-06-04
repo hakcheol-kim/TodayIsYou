@@ -411,6 +411,8 @@ class MemberInfoViewController: BaseViewController {
                         else {
                             ShareData.ins.mySex = .femail
                         }
+                        AdbrixEvent.addEventLog(.signup, self.user)
+                        AdbrixEvent.addEventLog(.joinComplete, self.user)
                         AppDelegate.ins.callMainViewCtrl()
                     }
                     self.present(alert, animated: true, completion: nil)

@@ -526,6 +526,9 @@ extension Bundle {
         }
         return bundle.myLocaLizedString(forKey: key, value: value, table: table)
     }
+    static func localizeStirng(_ key: String) -> String {
+        return Bundle.main.localizedString(forKey: key, value: nil, table: "InfoPlist")
+    }
 }
 
 extension Locale {

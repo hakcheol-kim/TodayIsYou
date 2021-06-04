@@ -33,7 +33,7 @@ class NetworkManager: NSObject {
     }
     
     func request(_ method: HTTPMethod, _ url: String, _ param:[String:Any]?, _ encoding:ParameterEncoding = JSONEncoding.default, _ isStartIndicator:Bool = true,  success:ResSuccess?, failure:ResFailure?) {
-        
+        var encoding = encoding
         var fullUrl = ""
         if (url.hasPrefix("http") || url.hasPrefix("https")) {
             fullUrl = url
@@ -50,7 +50,13 @@ class NetworkManager: NSObject {
         }
         let languageCode = ShareData.ins.languageCode.uppercased()
         let customLanguageHeader = HTTPHeader(name: "forgn_lang", value: languageCode)
-        let header: HTTPHeaders = [.contentType(ContentType.json.rawValue), customLanguageHeader]
+        
+        var header:HTTPHeaders = [.contentType(ContentType.json.rawValue), customLanguageHeader]
+        
+        if encodedUrl.hasPrefix("https://api3.todayisyou.co.kr/app/subs/subs_insert.php") {
+            header = [.contentType(ContentType.urlencoded.rawValue), customLanguageHeader]
+            encoding = URLEncoding.default
+        }
         
         let request = AF.request(encodedUrl, method: method, parameters: param, encoding: encoding, headers: header)
         request.responseJSON { (response:AFDataResponse<Any>) in

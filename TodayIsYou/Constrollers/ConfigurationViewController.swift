@@ -168,6 +168,7 @@ class ConfigurationViewController: BaseViewController {
             CAlertViewController.show(type: .alert, title:NSLocalizedString("layout_txt40", comment: "회원탈퇴"), message: msg, actions: [.cancel, .ok]) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 if index == 1 {
+                    AdbrixEvent.addEventLog(.withdrawal, ["user_id": ShareData.ins.myId, "user_name":ShareData.ins.myName, "user_sex":ShareData.ins.mySex.rawValue])
                     self.resputUserOut()
                 }
             }

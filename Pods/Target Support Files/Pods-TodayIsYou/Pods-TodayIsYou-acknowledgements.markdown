@@ -1,6 +1,15 @@
 # Acknowledgements
 This application makes use of the following third party libraries:
 
+## AdBrixRemastered
+
+All text and design is copyright 2020 igaworks, Inc.
+
+All rights reserved.
+
+https://github.com/IGAWorksDev/SDK-IOS-Abx.Remaster-CocoaPod
+
+
 ## Alamofire
 
 Copyright (c) 2014-2021 Alamofire Software Foundation (http://alamofire.org/)

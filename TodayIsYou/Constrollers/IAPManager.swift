@@ -7,6 +7,7 @@
 
 import Foundation
 import StoreKit
+import SwiftyJSON
 
 enum Product: String, CaseIterable {
     case point_000
@@ -15,6 +16,10 @@ enum Product: String, CaseIterable {
     case point_003
     case point_004
     case point_005
+    case subs_0
+    case subs_1
+    case subs_2
+    case subs_3
     
     func severProductId() -> String {
         switch self {
@@ -30,6 +35,31 @@ enum Product: String, CaseIterable {
             return "point_4"
             case .point_005:
             return "point_5"
+            case .subs_0:
+                return "subs_001"
+            case .subs_1:
+                return "subs_002"
+            case .subs_2:
+                return "subs_003"
+            case .subs_3:
+                return "subs_004"
+        }
+    }
+    func subscriptionGroup() -> String {
+        if self == .subs_0 {
+            return "todayis.payload.subscrip0"
+        }
+        else if self == .subs_1 {
+            return "todayis.payload.subscrip1"
+        }
+        else if self == .subs_2 {
+            return "todayis.payload.subscrip2"
+        }
+        else if self == .subs_3 {
+            return "todayis.payload.subscrip3"
+        }
+        else {
+            return ""
         }
     }
 }
@@ -51,7 +81,7 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
     private var products = [SKProduct]()
     private var productBeingPurchased:SKProduct?
     private var completion: ((_ pram:[String:Any]) -> Void)?
-    
+    private var product: Product = .point_000
     //앱스토어 상품정보를 불러온다.
     public func fetchProductus() {
         let set = Set(Product.allCases.compactMap({ $0.rawValue}))
@@ -65,14 +95,89 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
         guard SKPaymentQueue.canMakePayments() else {
             return
         }
+        
+        self.product = product
+        self.completion = completion
+        if product == .subs_0 || product == .subs_1 || product == .subs_2 || product == .subs_3 {
+            self.checkPendingSubscriptionProductId(product)
+        }
+        else {
+            self.requestPayment()
+        }
+    }
+    func requestPayment() {
         guard let storeKitProduct = products.first(where: {$0.productIdentifier == product.rawValue}) else {
             return
         }
         AppDelegate.ins.startIndicator()
-        self.completion = completion
         let paymentRequset = SKPayment(product: storeKitProduct)
         SKPaymentQueue.default().add(paymentRequset)
         SKPaymentQueue.default().add(self)
+    }
+    //정기결제이면 이미 구독중인 상품인지 체크한다.
+    private func checkPendingSubscriptionProductId(_ product: Product) {
+        if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
+           FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
+            do {
+                let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
+                let receiptString = receiptData.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+                var param = [String:Any]()
+                param["receipt-data"] = receiptString
+                param["password"] = "fd3920cace1942e187254a235ac658dc"
+                
+                ApiManager.ins.requestAppleValidateRecipient(param: param) {[weak self] res in
+                    print(res)
+                    let status = res["status"].intValue
+                    if status == 0 {  //정상적인 거래 애플계정 거래
+                        self?.checkVerifyReceipt(product, res)
+                    }
+                    else if status == 21007 {
+                        //샌드박스 계정인지 한번더 체크한다.
+                        ApiManager.ins.requestAppleValidateRecipientSandBox(param: param) { res in
+                            let status = res["status"].intValue
+                            if status == 0 {
+                                self?.checkVerifyReceipt(product, res)
+                            }
+                            else {
+                                AppDelegate.ins.window?.makeToast("Sandbox 결제 실패")
+                            }
+                        } fail: { error in
+                            AppDelegate.ins.window?.makeToast("Sandbox 결제 실패")
+                        }
+                    }
+                    else {
+                        AppDelegate.ins.window?.makeToast("결제 실패")
+                    }
+                } fail: { error in
+                    AppDelegate.ins.window?.makeToast("결제 실패")
+                }
+            }
+            catch { print("Couldn't read receipt data with error: " + error.localizedDescription) }
+        }
+    }
+    private func checkVerifyReceipt(_ product:Product, _ res:JSON) {
+        let pending_renewal_info = res["pending_renewal_info"].arrayValue
+        
+        var isPending = false
+        for item in pending_renewal_info {
+//            "auto_renew_status" : "1", 자동갱신, "0" 자동갱신해지
+//             "auto_renew_product_id" : "subs_0",
+//             "product_id" : "subs_0",
+//             "original_transaction_id" : "1000000820157263"
+            let auto_renew_product_id = item["auto_renew_product_id"].stringValue
+            let auto_renew_status = item["auto_renew_status"].stringValue
+ 
+            if auto_renew_status == "1" && auto_renew_product_id == product.rawValue {
+                isPending = true
+            }
+        }
+        
+        if isPending == true {
+            AppDelegate.ins.window?.makeToast(NSLocalizedString("pending_renewal", comment: "이미 구독중인 상품입니다."))
+        }
+        else {
+            self.requestPayment()
+        }
     }
     private func validationCheckTransaction(transaction:SKPaymentTransaction) {
         if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
@@ -94,7 +199,7 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
                 
                 #if DEBUG
 //                let url: String = "https://sandbox.itunes.apple.com/verifyReceipt"
-                print("=== receipt: \(receiptString)")
+//                print("=== receipt: \(receiptString)")
                 #else
 //                let url: String = "https://buy.itunes.apple.com/verifyReceipt"
                 #endif
@@ -130,7 +235,6 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
                 } fail: { error in
                     AppDelegate.ins.window?.makeToast("결제 실패")
                 }
-
             }
             catch { print("Couldn't read receipt data with error: " + error.localizedDescription) }
         }

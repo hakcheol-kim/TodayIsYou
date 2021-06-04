@@ -24,6 +24,7 @@
 		E94AF90E2638F6B600DF1A56 /* SessionDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94AF90B2638F6B600DF1A56 /* SessionDescription.swift */; };
 		E94AF90F2638F6B600DF1A56 /* IceCandidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94AF90C2638F6B600DF1A56 /* IceCandidate.swift */; };
 		E94AF9142638F88900DF1A56 /* CallWaitingTimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94AF9132638F88900DF1A56 /* CallWaitingTimerViewController.swift */; };
+		E94D5AF4266791620025AE63 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E94D5AF3266791620025AE63 /* iAd.framework */; };
 		E9522B8626058EBB002DD056 /* CamTalkAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9522B8526058EBB002DD056 /* CamTalkAlertView.swift */; };
 		E9522B8A26058EC1002DD056 /* CamTalkAlertView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9522B8926058EC1002DD056 /* CamTalkAlertView.xib */; };
 		E954D9AF2609A743005E14BC /* TermsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E954D9AE2609A743005E14BC /* TermsViewController.xib */; };
@@ -124,6 +125,7 @@
 		E9B12DDE25FA02EF00FF7B11 /* RankTopColCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B12DDC25FA02EF00FF7B11 /* RankTopColCell.swift */; };
 		E9B12DE325FA03CB00FF7B11 /* RankTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B12DE125FA03CB00FF7B11 /* RankTblCell.swift */; };
 		E9B12DE425FA03CB00FF7B11 /* RankTblCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B12DE225FA03CB00FF7B11 /* RankTblCell.xib */; };
+		E9B27617266862EF000F2784 /* AdbrixEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B27616266862EF000F2784 /* AdbrixEvent.swift */; };
 		E9B97C292600FA0200F8D805 /* ContactusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B97C272600FA0200F8D805 /* ContactusCell.swift */; };
 		E9B97C2A2600FA0200F8D805 /* ContactusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B97C282600FA0200F8D805 /* ContactusCell.xib */; };
 		E9BF08992645B2620000F3A5 /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = E9BF08982645B2620000F3A5 /* Configuration.storekit */; };
@@ -207,6 +209,7 @@
 		E94AF90B2638F6B600DF1A56 /* SessionDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionDescription.swift; sourceTree = "<group>"; };
 		E94AF90C2638F6B600DF1A56 /* IceCandidate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IceCandidate.swift; sourceTree = "<group>"; };
 		E94AF9132638F88900DF1A56 /* CallWaitingTimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallWaitingTimerViewController.swift; sourceTree = "<group>"; };
+		E94D5AF3266791620025AE63 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		E9522B8526058EBB002DD056 /* CamTalkAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CamTalkAlertView.swift; sourceTree = "<group>"; };
 		E9522B8926058EC1002DD056 /* CamTalkAlertView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CamTalkAlertView.xib; sourceTree = "<group>"; };
 		E954D9AE2609A743005E14BC /* TermsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TermsViewController.xib; sourceTree = "<group>"; };
@@ -319,6 +322,7 @@
 		E9B12DDC25FA02EF00FF7B11 /* RankTopColCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankTopColCell.swift; sourceTree = "<group>"; };
 		E9B12DE125FA03CB00FF7B11 /* RankTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankTblCell.swift; sourceTree = "<group>"; };
 		E9B12DE225FA03CB00FF7B11 /* RankTblCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RankTblCell.xib; sourceTree = "<group>"; };
+		E9B27616266862EF000F2784 /* AdbrixEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdbrixEvent.swift; sourceTree = "<group>"; };
 		E9B544CB260A137C00EF6C2D /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/iOSSupport/System/Library/Frameworks/AuthenticationServices.framework; sourceTree = DEVELOPER_DIR; };
 		E9B97C272600FA0200F8D805 /* ContactusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactusCell.swift; sourceTree = "<group>"; };
 		E9B97C282600FA0200F8D805 /* ContactusCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactusCell.xib; sourceTree = "<group>"; };
@@ -385,6 +389,7 @@
 				E96FD37E26073FCB00B466D0 /* Contacts.framework in Frameworks */,
 				E9836FCA25FF2FE50072F22F /* PhotosUI.framework in Frameworks */,
 				410FE2703639684E36203CCD /* Pods_TodayIsYou.framework in Frameworks */,
+				E94D5AF4266791620025AE63 /* iAd.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -403,6 +408,7 @@
 		E8058E01557F46CA2468173B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E94D5AF3266791620025AE63 /* iAd.framework */,
 				E988DB9D2644C4FD00877508 /* StoreKit.framework */,
 				E98F9A752621D29300BC75ED /* CoreData.framework */,
 				E9B544CB260A137C00EF6C2D /* AuthenticationServices.framework */,
@@ -728,6 +734,7 @@
 				E9DF8F6C262B390A008CC6C9 /* ContactsManager.swift */,
 				E9112DF3263557A9008984A2 /* PulseButton.swift */,
 				E902F5F7263BFF2F00DBE7E6 /* LocalNotificationManager.swift */,
+				E9B27616266862EF000F2784 /* AdbrixEvent.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -975,6 +982,7 @@
 				E98B3837261DD6E0001AEA52 /* ChattingViewController.swift in Sources */,
 				E9C2CED025F22ECC002A1F95 /* CButton.swift in Sources */,
 				E9C2CF1625F28C7A002A1F95 /* CamTblCell.swift in Sources */,
+				E9B27617266862EF000F2784 /* AdbrixEvent.swift in Sources */,
 				E99C4CC725F8B07F00B8DFB8 /* CFlowLayout.swift in Sources */,
 				E99199FE25FE1D6C00D6128A /* PointPurchaseViewController.swift in Sources */,
 				E9C2CE9B25F21FF6002A1F95 /* BaseNavigationController.swift in Sources */,
@@ -1261,7 +1269,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.1.3;
+				CURRENT_PROJECT_VERSION = 1.0.1.6;
 				DEVELOPMENT_TEAM = KCYR65B299;
 				ENABLE_BITCODE = NO;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = NO;
@@ -1345,7 +1353,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.1.3;
+				CURRENT_PROJECT_VERSION = 1.0.1.6;
 				DEVELOPMENT_TEAM = KCYR65B299;
 				ENABLE_BITCODE = NO;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = NO;

@@ -1498,50 +1498,55 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jxj-D5-KU8">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="x4S-tv-oLK">
+                                <rect key="frame" x="0.0" y="44" width="414" height="237"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1E7-ZW-TKI">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="818"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="yWj-hp-kt1">
+                                        <rect key="frame" x="24" y="24" width="366" height="37.5"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="yWj-hp-kt1">
-                                                <rect key="frame" x="24" y="16" width="366" height="37.5"/>
-                                                <subviews>
-                                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="나의 포인트" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RwI-bR-0kq" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="366" height="0.0"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="point_activity03"/>
-                                                        </userDefinedRuntimeAttributes>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Point" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kJZ-pA-PhZ">
-                                                        <rect key="frame" x="0.0" y="8" width="366" height="21.5"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <edgeInsets key="layoutMargins" top="8" left="0.0" bottom="8" right="0.0"/>
-                                            </stackView>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="255" verticalHuggingPriority="900" verticalCompressionResistancePriority="751" image="banner_info_subscription.png" translatesAutoresizingMaskIntoConstraints="NO" id="E91-27-3U8">
-                                                <rect key="frame" x="24" y="61.5" width="366" height="120"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="120" id="GSi-8n-5vZ"/>
-                                                </constraints>
-                                            </imageView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* 월 정기 결제는 이벤트 상품으로 취소하셔도 해당월은 취소가 인되며 다음달 부터 결제가 되지 않습니다." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ur-RZ-LVL" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
-                                                <rect key="frame" x="24" y="189.5" width="366" height="31.5"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <nil key="textColor"/>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="900" text="나의 포인트" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RwI-bR-0kq" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="366" height="0.0"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                                 <nil key="highlightedColor"/>
                                                 <userDefinedRuntimeAttributes>
-                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="point_activity04"/>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="point_activity03"/>
                                                 </userDefinedRuntimeAttributes>
                                             </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Point" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kJZ-pA-PhZ">
+                                                <rect key="frame" x="0.0" y="8" width="366" height="21.5"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <edgeInsets key="layoutMargins" top="8" left="0.0" bottom="8" right="0.0"/>
+                                    </stackView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="255" verticalHuggingPriority="900" verticalCompressionResistancePriority="751" image="banner_info_subscription.png" translatesAutoresizingMaskIntoConstraints="NO" id="E91-27-3U8">
+                                        <rect key="frame" x="24" y="69.5" width="366" height="120"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" priority="999" constant="120" id="GSi-8n-5vZ"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="* 월 정기 결제는 이벤트 상품으로 취소하셔도 해당월은 취소가 인되며 다음달 부터 결제가 되지 않습니다." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Ur-RZ-LVL" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                        <rect key="frame" x="24" y="197.5" width="366" height="31.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="point_activity04"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </label>
+                                </subviews>
+                                <edgeInsets key="layoutMargins" top="24" left="24" bottom="8" right="24"/>
+                            </stackView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jxj-D5-KU8">
+                                <rect key="frame" x="0.0" y="299" width="414" height="563"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1E7-ZW-TKI">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="804"/>
+                                        <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Nh3-v5-Yxk">
-                                                <rect key="frame" x="24" y="229" width="366" height="394"/>
+                                                <rect key="frame" x="24" y="16" width="366" height="394"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="일반 결제" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Znk-Tq-jkc" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="16" width="366" height="18"/>
@@ -1851,20 +1856,20 @@
                                                 </constraints>
                                                 <edgeInsets key="layoutMargins" top="16" left="0.0" bottom="0.0" right="0.0"/>
                                             </stackView>
-                                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="y5T-Qj-jcC">
-                                                <rect key="frame" x="24" y="627" width="366" height="256"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="y5T-Qj-jcC">
+                                                <rect key="frame" x="24" y="418" width="366" height="274"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="정기결재" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ria-c7-HOW" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="16" width="366" height="0.0"/>
+                                                        <rect key="frame" x="0.0" y="16" width="366" height="18"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                         <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="layout_txt117"/>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="layout_txt121"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eza-XB-4rh" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="24" width="366" height="52"/>
+                                                        <rect key="frame" x="0.0" y="42" width="366" height="52"/>
                                                         <subviews>
                                                             <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gn0-eq-VxZ">
                                                                 <rect key="frame" x="0.0" y="0.0" width="366" height="52"/>
@@ -1878,11 +1883,14 @@
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3,300원" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="poA-nS-HQl">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3,300원" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="poA-nS-HQl" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
                                                                         <rect key="frame" x="132" y="17" width="218" height="18"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="layout_txt117"/>
+                                                                        </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                 </subviews>
                                                                 <edgeInsets key="layoutMargins" top="8" left="16" bottom="8" right="16"/>
@@ -1910,7 +1918,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sXF-10-4Ze" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="84" width="366" height="52"/>
+                                                        <rect key="frame" x="0.0" y="102" width="366" height="52"/>
                                                         <subviews>
                                                             <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="u52-id-0Ue">
                                                                 <rect key="frame" x="0.0" y="0.0" width="366" height="52"/>
@@ -1924,11 +1932,14 @@
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="55,00원" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZMM-OF-a5J">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="55,00원" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZMM-OF-a5J" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
                                                                         <rect key="frame" x="134.5" y="17" width="215.5" height="18"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="layout_txt118"/>
+                                                                        </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                 </subviews>
                                                                 <edgeInsets key="layoutMargins" top="8" left="16" bottom="8" right="16"/>
@@ -1955,7 +1966,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pOH-8d-PDJ" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="144" width="366" height="52"/>
+                                                        <rect key="frame" x="0.0" y="162" width="366" height="52"/>
                                                         <subviews>
                                                             <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Wgj-xO-oNJ">
                                                                 <rect key="frame" x="0.0" y="0.0" width="366" height="52"/>
@@ -1969,11 +1980,14 @@
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11,000원" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BLx-VB-VsF">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11,000원" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BLx-VB-VsF" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
                                                                         <rect key="frame" x="141.5" y="17" width="208.5" height="18"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="layout_txt119"/>
+                                                                        </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                 </subviews>
                                                                 <edgeInsets key="layoutMargins" top="8" left="16" bottom="8" right="16"/>
@@ -2000,7 +2014,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GbF-kQ-xMZ" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="204" width="366" height="52"/>
+                                                        <rect key="frame" x="0.0" y="222" width="366" height="52"/>
                                                         <subviews>
                                                             <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="glY-fA-QYA">
                                                                 <rect key="frame" x="0.0" y="0.0" width="366" height="52"/>
@@ -2014,11 +2028,14 @@
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="33,000원" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Uf-Yz-Lpe">
+                                                                    <label opaque="NO" userInteractionEnabled="NO" tag="101" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="33,000원" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Uf-Yz-Lpe" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
                                                                         <rect key="frame" x="149" y="17" width="201" height="18"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <userDefinedRuntimeAttributes>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="layout_txt120"/>
+                                                                        </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                 </subviews>
                                                                 <edgeInsets key="layoutMargins" top="8" left="16" bottom="8" right="16"/>
@@ -2053,7 +2070,7 @@
                                                 <edgeInsets key="layoutMargins" top="16" left="0.0" bottom="0.0" right="0.0"/>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N4M-g1-xo4" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
-                                                <rect key="frame" x="24" y="631" width="366" height="43"/>
+                                                <rect key="frame" x="24" y="700" width="366" height="43"/>
                                                 <string key="text">* 부가세(10%)포함 가격입니다.
 * 결제시 포인트 적립에 문제가 있다면 GPA로 시작되는 영수증 코드를 고객센터로 보내주세요.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -2064,7 +2081,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sk9-xn-Fyf" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
-                                                <rect key="frame" x="24" y="682" width="366" height="45"/>
+                                                <rect key="frame" x="24" y="751" width="366" height="45"/>
                                                 <color key="backgroundColor" red="0.90196078430000004" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="HAx-5p-ADi"/>
@@ -2084,7 +2101,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="59Q-0p-18W">
-                                                <rect key="frame" x="24" y="735" width="366" height="83"/>
+                                                <rect key="frame" x="24" y="804" width="366" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -2107,8 +2124,11 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="Jxj-D5-KU8" secondAttribute="trailing" id="7if-ZK-W2k"/>
-                            <constraint firstItem="Jxj-D5-KU8" firstAttribute="top" secondItem="RMq-85-EUC" secondAttribute="top" id="e3r-1d-Sau"/>
+                            <constraint firstItem="x4S-tv-oLK" firstAttribute="leading" secondItem="RMq-85-EUC" secondAttribute="leading" id="8Zf-wK-TAv"/>
+                            <constraint firstItem="Jxj-D5-KU8" firstAttribute="top" secondItem="x4S-tv-oLK" secondAttribute="bottom" id="OK4-kc-4Le"/>
+                            <constraint firstAttribute="trailing" secondItem="x4S-tv-oLK" secondAttribute="trailing" id="P48-OS-KJj"/>
                             <constraint firstItem="RMq-85-EUC" firstAttribute="bottom" secondItem="Jxj-D5-KU8" secondAttribute="bottom" id="ok5-56-pEr"/>
+                            <constraint firstItem="x4S-tv-oLK" firstAttribute="top" secondItem="RMq-85-EUC" secondAttribute="top" id="p5s-bf-kIn"/>
                             <constraint firstItem="Jxj-D5-KU8" firstAttribute="leading" secondItem="Q1J-3C-JMg" secondAttribute="leading" id="uAB-ic-vcl"/>
                         </constraints>
                     </view>
@@ -2123,11 +2143,15 @@
                         <outletCollection property="arrBtnPoint" destination="PEw-DA-a2M" collectionClass="NSMutableArray" id="VC3-H8-uni"/>
                         <outletCollection property="arrBtnPoint" destination="8Bn-oq-Lql" collectionClass="NSMutableArray" id="Vf0-7L-FBa"/>
                         <outletCollection property="arrBtnPoint" destination="v50-ki-Vqh" collectionClass="NSMutableArray" id="2P3-cp-nhA"/>
+                        <outletCollection property="arrBtnSubscript" destination="eza-XB-4rh" collectionClass="NSMutableArray" id="K6A-lk-sq2"/>
+                        <outletCollection property="arrBtnSubscript" destination="sXF-10-4Ze" collectionClass="NSMutableArray" id="EAP-jR-aSU"/>
+                        <outletCollection property="arrBtnSubscript" destination="pOH-8d-PDJ" collectionClass="NSMutableArray" id="v65-ih-5hW"/>
+                        <outletCollection property="arrBtnSubscript" destination="GbF-kQ-xMZ" collectionClass="NSMutableArray" id="PSe-au-hkx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dGs-zT-kd5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6225" y="-982"/>
+            <point key="canvasLocation" x="6224.6376811594209" y="-982.36607142857133"/>
         </scene>
         <!--Point Gate View Controller-->
         <scene sceneID="W1D-yr-aDi">
@@ -5991,6 +6015,9 @@
         <designable name="11O-NT-kcK">
             <size key="intrinsicContentSize" width="129" height="18.5"/>
         </designable>
+        <designable name="1Uf-Yz-Lpe">
+            <size key="intrinsicContentSize" width="62.5" height="18"/>
+        </designable>
         <designable name="1Ur-RZ-LVL">
             <size key="intrinsicContentSize" width="532.5" height="16"/>
         </designable>
@@ -5999,6 +6026,9 @@
         </designable>
         <designable name="4jm-aG-sev">
             <size key="intrinsicContentSize" width="48.5" height="17"/>
+        </designable>
+        <designable name="54F-TK-Gjm">
+            <size key="intrinsicContentSize" width="53" height="18"/>
         </designable>
         <designable name="5rv-wC-09L">
             <size key="intrinsicContentSize" width="39" height="19.5"/>
@@ -6021,11 +6051,17 @@
         <designable name="9yu-Gm-Fbb">
             <size key="intrinsicContentSize" width="131.5" height="16"/>
         </designable>
+        <designable name="BLx-VB-VsF">
+            <size key="intrinsicContentSize" width="57.5" height="18"/>
+        </designable>
         <designable name="CKh-ot-uc1">
             <size key="intrinsicContentSize" width="22.5" height="16"/>
         </designable>
         <designable name="Dku-Tw-MxE">
             <size key="intrinsicContentSize" width="48.5" height="17"/>
+        </designable>
+        <designable name="DwF-z6-g0e">
+            <size key="intrinsicContentSize" width="62" height="18"/>
         </designable>
         <designable name="EgN-Cj-3S6">
             <size key="intrinsicContentSize" width="181" height="18"/>
@@ -6048,6 +6084,9 @@
         <designable name="Kxj-nH-e6i">
             <size key="intrinsicContentSize" width="121" height="19.5"/>
         </designable>
+        <designable name="MAP-J9-VWV">
+            <size key="intrinsicContentSize" width="69" height="18"/>
+        </designable>
         <designable name="Mic-7G-TOX">
             <size key="intrinsicContentSize" width="24.5" height="18.5"/>
         </designable>
@@ -6065,6 +6104,9 @@
         </designable>
         <designable name="QL4-hG-s9N">
             <size key="intrinsicContentSize" width="21" height="14.5"/>
+        </designable>
+        <designable name="Ra6-z0-pLi">
+            <size key="intrinsicContentSize" width="57.5" height="18"/>
         </designable>
         <designable name="Ria-c7-HOW">
             <size key="intrinsicContentSize" width="52" height="18"/>
@@ -6098,6 +6140,9 @@
         </designable>
         <designable name="ZIg-9l-fEW">
             <size key="intrinsicContentSize" width="18" height="20"/>
+        </designable>
+        <designable name="ZMM-OF-a5J">
+            <size key="intrinsicContentSize" width="53" height="18"/>
         </designable>
         <designable name="Znk-Tq-jkc">
             <size key="intrinsicContentSize" width="56" height="18"/>
@@ -6153,6 +6198,9 @@
         <designable name="lF8-91-x3p">
             <size key="intrinsicContentSize" width="21" height="14.5"/>
         </designable>
+        <designable name="lSW-KC-BpJ">
+            <size key="intrinsicContentSize" width="62.5" height="18"/>
+        </designable>
         <designable name="lmv-o2-anD">
             <size key="intrinsicContentSize" width="82.5" height="19.5"/>
         </designable>
@@ -6177,6 +6225,9 @@
         <designable name="pM7-Fn-SSQ">
             <size key="intrinsicContentSize" width="112.5" height="18"/>
         </designable>
+        <designable name="poA-nS-HQl">
+            <size key="intrinsicContentSize" width="53.5" height="18"/>
+        </designable>
         <designable name="rLu-3k-vbh">
             <size key="intrinsicContentSize" width="11.5" height="16"/>
         </designable>
@@ -6194,6 +6245,9 @@
         </designable>
         <designable name="vds-bo-PCv">
             <size key="intrinsicContentSize" width="112.5" height="18"/>
+        </designable>
+        <designable name="vyd-Kq-CmN">
+            <size key="intrinsicContentSize" width="69" height="18"/>
         </designable>
         <designable name="w50-0H-QuZ">
             <size key="intrinsicContentSize" width="109" height="16"/>

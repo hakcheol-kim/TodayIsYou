@@ -170,6 +170,7 @@ extension LeftSideMenuViewController: UITableViewDelegate, UITableViewDataSource
                     vcs.dismiss(animated: true, completion: nil)
                     
                     if action == 1 {
+                        AdbrixEvent.addEventLog(.logout, ["user_id": ShareData.ins.myId, "user_name":ShareData.ins.myName, "user_sex":ShareData.ins.mySex.rawValue])
                         ShareData.ins.dfsRemove(DfsKey.userId)
 //                        KeychainItem.deleteUserIdentifierFromKeychain()
                         AppDelegate.ins.callLoginVC()

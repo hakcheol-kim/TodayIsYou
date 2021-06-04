@@ -13,6 +13,9 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let screen = NSStringFromClass(self.classForCoder).components(separatedBy: ".").last {
+            AdbrixEvent.addEventLog(.screenName, ["screenName": screen])
+        }
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default

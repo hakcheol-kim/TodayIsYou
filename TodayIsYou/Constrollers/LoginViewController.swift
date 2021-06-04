@@ -266,6 +266,8 @@ class LoginViewController: SocialLoginViewController {
                 ShareData.ins.setUserInfo(res)
                 AppDelegate.ins.callMainViewCtrl()
                 AppDelegate.ins.requestUpdateFcmToken()
+                
+                AdbrixEvent.addEventLog(.login, user)
             }
             else {
                 self.showErrorToast(res)

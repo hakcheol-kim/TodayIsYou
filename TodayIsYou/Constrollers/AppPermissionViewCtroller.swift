@@ -23,7 +23,7 @@ class AppPermissionViewCtroller: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        AppDelegate.ins.apptrakingPermissionCheck()
         if let lbSubDes = btnCamera.viewWithTag(102) as? UILabel {
             let des = Bundle.main.localizedString(forKey: "NSCameraUsageDescription", value: nil, table: "InfoPlist")
             lbSubDes.text = des
@@ -51,7 +51,7 @@ class AppPermissionViewCtroller: UIViewController {
             }, failureBlock: {
                 print("error: permission")
             }, deniedBlock: {
-                self.showSystemSettingAlert(title: "카메라 액세스 할 수 없습니다.", message: "액세스를 사용하려면 설정> 개인 정보 보호> 카메라를 허용해주세요.")
+                self.showSystemSettingAlert(title: NSLocalizedString("permission_camera", comment: "카메라 액세스 할 수 없습니다."), message: NSLocalizedString("permission_camera_setting", comment: "액세스를 사용하려면 설정> 개인 정보 보호> 카메라를 허용해주세요."))
             })
             
         }
@@ -63,7 +63,7 @@ class AppPermissionViewCtroller: UIViewController {
             } failureBlock: {
                 print("fail")
             } deniedBlock: {
-                self.showSystemSettingAlert(title: "마이크를 액세스 할 수 없습니다.", message: "액세스를 사용하려면 설정> 개인 정보 보호> 마이크를 허용해주세요.")
+                self.showSystemSettingAlert(title: NSLocalizedString("permission_microphone", comment: "마이크를 액세스 할 수 없습니다."), message: NSLocalizedString("permission_microphone_setting", comment: "액세스를 사용하려면 설정> 개인 정보 보호> 마이크를 허용해주세요."))
             }
         }
         else if sender == btnPhoto {
@@ -74,12 +74,12 @@ class AppPermissionViewCtroller: UIViewController {
             } failureBlock: {
                 print("fail")
             } deniedBlock: {
-                self.showSystemSettingAlert(title: "캘러리를 액세스 할 수 없습니다.", message: "액세스를 사용하려면 설정> 개인 정보 보호> 사진 접근 권한을 허용해주세요.")
+                self.showSystemSettingAlert(title: NSLocalizedString("permission_gallery", comment: "캘러리를 액세스 할 수 없습니다."), message:NSLocalizedString("permission_gallery_stting", comment: "액세스를 사용하려면 설정> 개인 정보 보호> 사진 접근 권한을 허용해주세요."))
             }
         }
         else if sender == btnOk {
             if btnCamera.isSelected == false || btnMicroPhone.isSelected == false {
-                self.view.makeToast("권한을 확인해주세요.")
+                self.view.makeToast(NSLocalizedString("permission_check", comment: "권한을 확인해주세요."))
                 return
             }
             ShareData.ins.dfsSet(true, DfsKey.checkPermission)
@@ -90,10 +90,10 @@ class AppPermissionViewCtroller: UIViewController {
     func showSystemSettingAlert(title:String?, message:String?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: { action in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("activity_txt479", comment: "취소"), style: .cancel, handler: { action in
             alert.dismiss(animated: true, completion: nil)
         }))
-        alert.addAction(UIAlertAction(title: "설정", style: .default, handler: { action in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("activity_txt306", comment: "설정"), style: .default, handler: { action in
             let urlSetting = NSURL.init(string: UIApplication.openSettingsURLString)! as URL
             if UIApplication.shared.canOpenURL(urlSetting) {
                 UIApplication.shared.open(urlSetting, options: [:], completionHandler: nil)

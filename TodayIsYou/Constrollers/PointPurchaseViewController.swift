@@ -7,11 +7,16 @@
 
 import UIKit
 import StoreKit
+import SwiftyJSON
+
 class PointPurchaseViewController: BaseViewController {
     @IBOutlet weak var lbPointTitle: Clabel!
     @IBOutlet var arrBtnPoint: [CButton]!
     @IBOutlet weak var btnContactus: CButton!
     @IBOutlet weak var lbCurPoint: UILabel!
+    @IBOutlet var arrBtnSubscript: [CButton]!
+    
+    
     var points = [PointModel]()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,10 +26,16 @@ class PointPurchaseViewController: BaseViewController {
         arrBtnPoint = arrBtnPoint.sorted(by: { (btn1, btn2) -> Bool in
             return btn1.tag < btn2.tag
         })
-        
-        for btn in arrBtnPoint {
+        arrBtnSubscript = arrBtnSubscript.sorted(by: { btn1, btn2 in
+            return btn1.tag < btn2.tag
+        })
+        arrBtnSubscript.forEach { btn in
             btn.addTarget(self, action: #selector(onClickedBtnActions(_:)), for: .touchUpInside)
         }
+        arrBtnPoint.forEach { btn in
+            btn.addTarget(self, action: #selector(onClickedBtnActions(_:)), for: .touchUpInside)
+        }
+        
         refreshUi()
         CNavigationBar.drawBackButton(self, "point_activity01".localized, #selector(actionNaviBack))
         lbPointTitle.isHidden = false
@@ -69,16 +80,34 @@ class PointPurchaseViewController: BaseViewController {
             }
             
             let productId = product.severProductId()
-            var param = [String:Any]()
-            param["user_id"] = ShareData.ins.myId
-            param["productId"] = productId  //삼품코드
-            param["app_type"] = appType //어플종류
-            param["point_key"] = "GPA.\(transactionId)" //주문번호 아이폰은 GPA. 붙인다 서버 구분하기 위해
-            param["developerPayload"] = payload //서버에서 생성한 payload sequence
-            param["purchaseToken"] = receipt
-            param["packageName"] = Bundle.main.bundleIdentifier
-            
-            self?.requestSaveInAppPoint(param)
+            if product == .subs_0 || product == .subs_1 || product == .subs_2 || product == .subs_3 {
+                //정기 결제이면
+                
+                var param = [String:Any]()
+                param["user_id"] = ShareData.ins.myId
+                param["productId"] = product.severProductId()  //상품코드
+                param["point_key"] = "GPA.\(transactionId)" //주문번호 아이폰은 GPA. 붙인다 서버 구분하기 위해
+                param["app_type"] = appType //어플종류
+                param["purchaseToken"] = receipt
+                param["packageName"] = Bundle.main.bundleIdentifier
+                param["item_package"] = product.subscriptionGroup()
+                param["ref"] = ""
+                
+//                param["developerPayload"] = payload //서버에서 생성한 payload sequence
+                self?.requestPaymentInAppSubScription(param)
+                print("==================\n\n=========== \(JSON(param).stringValue)")
+            }
+            else {
+                var param = [String:Any]()
+                param["user_id"] = ShareData.ins.myId
+                param["productId"] = productId  //삼품코드
+                param["app_type"] = appType //어플종류
+                param["point_key"] = "GPA.\(transactionId)" //주문번호 아이폰은 GPA. 붙인다 서버 구분하기 위해
+                param["developerPayload"] = payload //서버에서 생성한 payload sequence
+                param["purchaseToken"] = receipt
+                param["packageName"] = Bundle.main.bundleIdentifier
+                self?.requestSaveInAppPoint(param)
+            }
         }
     }
     
@@ -91,10 +120,34 @@ class PointPurchaseViewController: BaseViewController {
             }
             else {
                 print("결제오류!!")
-                self.showErrorToast(res)
+//                self.showErrorToast(res)
+                let msg = "\(res)"
+                AppDelegate.ins.window?.makeToast(msg)
             }
         } fail: { error in
-            self.showErrorToast(error)
+//            self.showErrorToast(error)
+            AppDelegate.ins.window?.makeToast(NSLocalizedString("point_activity05", comment: "결제오류!!"))
+        }
+    }
+    
+    func requestPaymentInAppSubScription(_ param:[String:Any]) {
+        ApiManager.ins.requestPaymentInAppSubScription(param: param) { res in
+            let code = res["code"].stringValue
+            let msg = res["msg"].stringValue
+            if code == "000" {
+                self.getUserInfo()
+                print("결제 성공!!")
+                AppDelegate.ins.window?.makeToast("\(msg)")
+            }
+            else {
+                AppDelegate.ins.window?.makeToast("error: \(msg)\ncode:\(code)")
+            }
+        } fail: { error in
+            if let res = JSON(error) as? JSON {
+                let code = res["code"].stringValue
+                let msg = res["msg"].stringValue
+                AppDelegate.ins.window?.makeToast("error: \(msg)\ncode:\(code)")
+            }
         }
     }
     func getUserInfo() {
@@ -104,8 +157,10 @@ class PointPurchaseViewController: BaseViewController {
                 ShareData.ins.setUserInfo(res)
                 self.refreshUi()
             }
+            
         } failure: { error in
             self.showErrorToast(error)
+            
         }
     }
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
@@ -137,5 +192,28 @@ class PointPurchaseViewController: BaseViewController {
                 break
             }
         }
+        else if arrBtnSubscript.contains(sender as! CButton) {
+            switch sender.tag {
+                case 0:
+                    print("구독 1")
+                    self.requestPayloadId(.subs_0)
+                    break
+                case 1:
+                    print("구독 2")
+                    self.requestPayloadId(.subs_1)
+                    break
+                case 2:
+                    print("구독 3")
+                    self.requestPayloadId(.subs_2)
+                    break
+                case 3:
+                    print("구독 4")
+                    self.requestPayloadId(.subs_3)
+                    break
+                default:
+                    break
+            }
+        }
     }
 }
+

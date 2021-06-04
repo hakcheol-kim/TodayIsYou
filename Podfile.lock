@@ -1,4 +1,5 @@
 PODS:
+  - AdBrixRemastered (1.6.5407)
   - Alamofire (5.4.3)
   - AlamofireImage (4.2.0):
     - Alamofire (~> 5.4)
@@ -99,6 +100,7 @@ PODS:
   - UIImageViewAlignedSwift (0.8.1)
 
 DEPENDENCIES:
+  - AdBrixRemastered
   - Alamofire (~> 5.2)
   - AlamofireImage (~> 4.1)
   - BSImagePicker (~> 3.1)
@@ -119,6 +121,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AdBrixRemastered
     - Alamofire
     - AlamofireImage
     - BSImagePicker
@@ -151,6 +154,7 @@ SPEC REPOS:
     - UIImageViewAlignedSwift
 
 SPEC CHECKSUMS:
+  AdBrixRemastered: cbb9d2e1ce1a922c9565d68fb2afe0bc94d9577b
   Alamofire: e447a2774a40c996748296fa2c55112fdbbc42f9
   AlamofireImage: 34a2d90b0e5fe6a5605f85ae4b7b01e784c60192
   BSImagePicker: 0fe04b574d4d6b81093785d2af6c26227efc8428
@@ -182,6 +186,6 @@ SPEC CHECKSUMS:
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
   UIImageViewAlignedSwift: e4f83530f90860aa31b6840bf570034a681bd2c4
 
-PODFILE CHECKSUM: 8010dc6d9e16bed332c1a25d2548ac23ffeee5e7
+PODFILE CHECKSUM: 6effd3c5d8be0e03a92d94aec3e8cb4f6042eb31
 
 COCOAPODS: 1.10.1

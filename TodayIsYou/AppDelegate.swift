@@ -13,6 +13,8 @@ import FirebaseMessaging
 import SwiftyJSON
 import AVFoundation
 import StoreKit
+import AdBrixRM
+import AdSupport
 
 @main
 
@@ -38,6 +40,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
         self.registApnsPushKey()
         
+        self.apptrakingPermissionCheck()
+        
         window = UIWindow(frame: UIScreen.main.bounds)
         window!.overrideUserInterfaceStyle = .light
         
@@ -62,10 +66,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Bundle.swizzleLocalization()
         
         callIntroViewCtrl()
-
+        
         return true
     }
- 
+    
     func callTempView() {
         let vc = MemberInfoViewController.instantiateFromStoryboard(.login)!
         window?.rootViewController = BaseNavigationController.init(rootViewController: vc)
@@ -104,6 +108,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         UIApplication.shared.open(requestUrl, options: [:]) { (success) in
             completion?(success)
+        }
+    }
+    func apptrakingPermissionCheck() {
+        
+        let adBrix = AdBrixRM.getInstance
+        PermissionsController.gloableInstance.checkPermissionAppTracking {
+            adBrix.initAdBrix(appKey: "OSxxd1KKyUi6q0BNrFTVog", secretKey: "2h7fSMEmRkyZXvfRLj8NXg")
+            adBrix.setLogLevel(.TRACE)
+            adBrix.setEventUploadTimeInterval(.MIN)
+            adBrix.delegateDeeplink = self
+//            if ASIdentifierManager.shared().isAdvertisingTrackingEnabled {
+//                let ifa: UUID = ASIdentifierManager.shared().advertisingIdentifier
+//                adBrix.setAppleAdvertisingIdentifier(ifa.uuidString)
+//            }
+            adBrix.startGettingIDFA()
+        } failureBlock: {
+            adBrix.stopGettingIDFA()
+        } deniedBlock: {
+            adBrix.stopGettingIDFA()
         }
     }
     func removeApnsPushKey() {
@@ -158,7 +181,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         })
     }
-    
     func stopIndicator() {
         DispatchQueue.main.async(execute: {
             if self.loadingView != nil {
@@ -169,9 +191,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-        return true
+        let adBrix = AdBrixRM.getInstance
+        adBrix.deepLinkOpen(url: url)
+        return false
     }
-    
+    //deepling open
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+            guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+                let incomingURL = userActivity.webpageURL
+                else {
+                    return false
+            }
+            
+            print("DEEPLINK :: UniversialLink was clicked !! incomingURL - \(incomingURL)")
+            NSLog("UNIVERSAL LINK OPEN!!!!!!!!!!!!!!!!!")
+            let adBrix = AdBrixRM.getInstance
+            adBrix.deepLinkOpen(url: incomingURL)
+            return true
+    }
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         
         if deviceToken.count == 0 {
@@ -692,5 +729,11 @@ extension AppDelegate: MessagingDelegate {
 extension AppDelegate : SKStoreProductViewControllerDelegate {
     func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
         viewController.dismiss(animated: true, completion: nil)
+    }
+}
+extension AppDelegate : AdBrixRMDeeplinkDelegate {
+    func didReceiveDeeplink(deeplink: String) {
+        //deeplink parssing
+        print("adbrix deeplink: \(deeplink)")
     }
 }

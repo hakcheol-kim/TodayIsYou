@@ -153,6 +153,10 @@
 "layout_txt114" = "55,000원" ;
 "layout_txt115" = "109,000원" ;
 "layout_txt116" = "219,000원" ;
+"layout_txt117" = "3,500원" ;
+"layout_txt118" = "5,500원" ;
+"layout_txt119" = "11,000원" ;
+"layout_txt120" = "33,000원" ;
 "layout_txt121" = "정기결제" ;
 "layout_txt122" = "*부가세(10%)포함 가격 입니다.\n*결제시 포인트 적립에 문제가 있다면 GPA로 시작되는 영수증 코드를 고객센터로 보내주세요." ;
 "layout_txt123" = "고객센터" ;
@@ -599,3 +603,12 @@
 "update_popup_title" = "업데이트 안내" ;
 "update_popup_msg" = "새로운 버전으로 업데이트 하시겠습니까?" ;
 "update_popup_ok" = "업데이트" ;
+"permission_title" = "권한 설정 안내" ;
+"permission_camera" = "카메라 액세스 할 수 없습니다." ;
+"permission_camera_setting" = "액세스를 사용하려면 설정> 개인 정보 보호> 카메라를 허용해주세요." ;
+"permission_microphone" = "마이크를 액세스 할 수 없습니다." ;
+"permission_microphone_setting" = "액세스를 사용하려면 설정> 개인 정보 보호> 마이크를 허용해주세요." ;
+"permission_check" = "권한을 확인해주세요." ;
+"permission_gallery" = "캘러리를 액세스 할 수 없습니다." ;
+"permission_gallery_stting" = "액세스를 사용하려면 설정> 개인 정보 보호> 사진 접근 권한을 허용해주세요." ;
+"pending_renewal" = "이미 구독중인 상품입니다." ;

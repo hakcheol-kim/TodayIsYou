@@ -14,6 +14,7 @@ import AssetsLibrary
 import CoreBluetooth
 import CoreNFC
 import PhotosUI
+import AppTrackingTransparency
 
 typealias PermissionVoidBlock = () -> Void
 class PermissionsController: NSObject {
@@ -188,6 +189,30 @@ class PermissionsController: NSObject {
         }
         else {
             failureBlock()
+        }
+    }
+    
+    func checkPermissionAppTracking(successBlock: @escaping PermissionVoidBlock, failureBlock: @escaping PermissionVoidBlock, deniedBlock: @escaping PermissionVoidBlock) {
+        
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization { status in
+                switch status {
+                    case .authorized:
+                        successBlock()
+                        break
+                    case .denied:
+                        deniedBlock()
+                        break
+                    case .notDetermined, .restricted:
+                        failureBlock()
+                        break
+                    default:
+                        failureBlock()
+                        break
+                }
+            }
+        } else {
+            successBlock()
         }
     }
    
