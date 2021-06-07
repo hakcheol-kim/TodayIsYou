@@ -10,7 +10,7 @@ import UIKit
 class PointGateViewController: BaseViewController {
     @IBOutlet weak var tblView: UITableView!
     
-    let listData:[[String]] = [[NSLocalizedString("layout_txt132", comment: "포인트 내역"),
+    let listData:[[String]] = [[NSLocalizedString("layout_txt133", comment: "포인트 내역"),
                                 NSLocalizedString("layout_txt134", comment: "별 내역"),
                                 NSLocalizedString("layout_txt135", comment: "환급 목록")],
                             [NSLocalizedString("layout_txt136", comment:"환급 신청")]]

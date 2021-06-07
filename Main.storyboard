@@ -2548,10 +2548,13 @@
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="hkK-5u-AE1">
                                                         <rect key="frame" x="0.0" y="311.5" width="382" height="79.5"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="예금주" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Lr-VB-MAa">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="예금주" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Lr-VB-MAa" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="0.0" width="382" height="14.5"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                 <nil key="highlightedColor"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="account_holder_name"/>
+                                                                </userDefinedRuntimeAttributes>
                                                             </label>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="예금주입력해주세요." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Kxj-nH-e6i" customClass="CTextField" customModule="TodayIsYou" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="14.5" width="382" height="45"/>
@@ -6020,6 +6023,9 @@
         </designable>
         <designable name="1Ur-RZ-LVL">
             <size key="intrinsicContentSize" width="532.5" height="16"/>
+        </designable>
+        <designable name="2Lr-VB-MAa">
+            <size key="intrinsicContentSize" width="31.5" height="14.5"/>
         </designable>
         <designable name="4Zm-UZ-Bl2">
             <size key="intrinsicContentSize" width="19" height="20"/>

@@ -108,7 +108,13 @@ class CamCallViewController: BaseViewController {
             min = min % 60
             
             lbTalkTime.text = String(format: "%02ld:%02ld:%02ld", hour, min, sec)
-            self.nowPoint = nowPoint - (Int(second)/10)*self.baseLivePoint
+            
+            var checkPoint:Int = Int(second - 60) //처음 1분은 빼고 계산
+            if checkPoint < 0 {
+                checkPoint = 0
+            }
+            checkPoint = Int(checkPoint/10)
+            self.nowPoint = nowPoint - checkPoint*self.baseLivePoint
         }
     }
     
@@ -274,11 +280,22 @@ class CamCallViewController: BaseViewController {
     }
     func requestPaymentEndPoint() {
         var param = [String:Any]()
-        
+//        영상채팅 최초 연결 시
+//        1분간 1200포인트 차감
+//        이후 10초당 200포인트 차감
+//
+//        음성채팅 최초 연결 시
+//        1분간 600포인트 차감
+//        10초당 100포인트 차감
         param["from_user_id"] = ShareData.ins.myId
         param["from_user_sex"] = ShareData.ins.mySex.rawValue
         param["to_user_id"] = toUserId!
-        param["out_point_time"] = (Int(second)/10)*baseLivePoint
+        var checkPoint:Int = Int(second - 60) //처음 1분은 빼고 계산
+        if checkPoint < 0 {
+            checkPoint = 0
+        }
+        checkPoint = Int(checkPoint/10)
+        param["out_point_time"] = checkPoint*baseLivePoint
         param["room_key"] = roomKey!
         ApiManager.ins.requestCamCallPaymentEndPoint(param: param) { response in
             let isSuccess = response["isSuccess"].stringValue

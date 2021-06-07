@@ -1,0 +1,915 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)
+// swift-module-flags: -target i386-apple-ios9.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name AdBrixRM
+@_exported import AdBrixRM
+import AdServices
+import AdSupport
+import CommonCrypto
+import CoreData
+import CoreLocation
+import CoreTelephony
+import Foundation
+import Swift
+import SystemConfiguration
+import UIKit
+import UserNotifications
+import WebKit
+import iAd
+import os.log
+import os
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class AdBrixCommon : ObjectiveC.NSObject {
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forUndefinedKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forKeyPath keyPath: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValuesForKeys(_ keyedValues: [Swift.String : Any])
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setNilValueForKey(_ key: Swift.String)
+  @objc deinit
+}
+extension URL {
+  public var queryParameters: [Swift.String : Swift.String]? {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @objc public class AdBrixRmAttrModel : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc public func getAttrData() -> Swift.Dictionary<Swift.String, Any>
+  @objc public func setAttrDataDouble(_ key: Swift.String, _ value: Swift.Double)
+  @objc public func setAttrDataInt(_ key: Swift.String, _ value: Swift.Int)
+  @objc public func setAttrDataUInt64(_ key: Swift.String, _ value: Swift.UInt64)
+  @objc public func setAttrDataInt64(_ key: Swift.String, _ value: Swift.Int64)
+  @objc public func setAttrDataString(_ key: Swift.String, _ value: Swift.String)
+  @objc public func setAttrDataBool(_ key: Swift.String, _ value: Swift.Bool)
+  @available(*, deprecated, message: "Don't use this override function. Use setAttrData~ instead of this")
+  @objc override dynamic public func setValue(_ value: Any?, forKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function. Use setAttrData~ instead of this")
+  @objc override dynamic public func setValue(_ value: Any?, forUndefinedKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function. Use setAttrData~ instead of this")
+  @objc override dynamic public func setValue(_ value: Any?, forKeyPath keyPath: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function. Use setAttrData~ instead of this")
+  @objc override dynamic public func setValuesForKeys(_ keyedValues: [Swift.String : Any])
+  @available(*, deprecated, message: "Don't use this override function. Use setAttrData~ instead of this")
+  @objc override dynamic public func setNilValueForKey(_ key: Swift.String)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class AdBrixPurchase : ObjectiveC.NSObject {
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forUndefinedKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forKeyPath keyPath: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValuesForKeys(_ keyedValues: [Swift.String : Any])
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setNilValueForKey(_ key: Swift.String)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @available(iOS 10.0, *)
+open class AdBrixMultiPushProviderController : ObjectiveC.NSObject {
+  @objc public func abxPushServiceExtensionTimeWillExpire()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class AdBrixBase64Key : ObjectiveC.NSObject {
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forUndefinedKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forKeyPath keyPath: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValuesForKeys(_ keyedValues: [Swift.String : Any])
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setNilValueForKey(_ key: Swift.String)
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class AdBrixRmCommerceProductCategoryModel : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc public func setModel(categoryArr: Swift.Array<Swift.String>) -> AdBrixRM.AdBrixRmCommerceProductCategoryModel
+  @available(*, deprecated, message: "Don't use this override function. User setModel func")
+  @objc override dynamic public func setValue(_ value: Any?, forKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function. User setModel func")
+  @objc override dynamic public func setValue(_ value: Any?, forUndefinedKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function. User setModel func")
+  @objc override dynamic public func setValue(_ value: Any?, forKeyPath keyPath: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function. User setModel func")
+  @objc override dynamic public func setValuesForKeys(_ keyedValues: [Swift.String : Any])
+  @available(*, deprecated, message: "Don't use this override function. User setModel func")
+  @objc override dynamic public func setNilValueForKey(_ key: Swift.String)
+  @objc deinit
+}
+@objc public protocol AdBrixRMDeeplinkDelegate {
+  @objc func didReceiveDeeplink(deeplink: Swift.String)
+}
+@objc public protocol AdBrixRMDeferredDeeplinkDelegate {
+  @objc func didReceiveDeferredDeeplink(deeplink: Swift.String)
+}
+@objc public protocol AdBrixRmPushLocalDelegate {
+  @objc func pushLocalCallback(data: Swift.Dictionary<Swift.String, Any>?, state: UIKit.UIApplication.State)
+}
+@objc public protocol AdBrixRmPushRemoteDelegate {
+  @objc func pushRemoteCallback(data: Swift.Dictionary<Swift.String, Any>?, state: UIKit.UIApplication.State)
+}
+@objc public protocol AdBrixRmPushNoticePopupLinkClickDelegate {
+  @objc func noticePopupLinkClickCallback(popupSpaceKey: Swift.String, data: Swift.Dictionary<Swift.String, Any>?)
+}
+@objc public protocol AdBrixRmPushNoticePopupCloseDelegate {
+  @objc func noticePopupCloseCallback(popupSpaceKey: Swift.String, data: Swift.Dictionary<Swift.String, Any>?)
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class AdBrixRM : ObjectiveC.NSObject {
+  public static let getInstance: AdBrixRM.AdBrixRM
+  public static let Log: AdBrixRM.Logger
+  public var delegateDeeplink: AdBrixRM.AdBrixRMDeeplinkDelegate?
+  public var delegateDeferredDeeplink: AdBrixRM.AdBrixRMDeferredDeeplinkDelegate?
+  public var delegateLocalPush: AdBrixRM.AdBrixRmPushLocalDelegate?
+  public var delegateRemotePush: AdBrixRM.AdBrixRmPushRemoteDelegate?
+  public var delegateNoticePopupLinkClick: AdBrixRM.AdBrixRmPushNoticePopupLinkClickDelegate?
+  public var delegateNoticePopupClose: AdBrixRM.AdBrixRmPushNoticePopupCloseDelegate?
+  @objc final public let AdBrixDateFormat: Swift.String
+  final public let AdBrixConstantsAGE: Swift.String
+  final public let AdBrixConstantsGENDER: Swift.String
+  @objc public enum AdBrixLogLevel : Swift.Int {
+    case NONE = 0, TRACE = 1, DEBUG = 2, INFO = 3, WARNING = 4, ERROR = 5
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public enum AdBrixEventUploadCountInterval : Swift.Int {
+    case MIN = 10, NORMAL = 30, MAX = 1000
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public enum AdBrixEventUploadTimeInterval : Swift.Int {
+    case MIN = 30, NORMAL = 60, MAX = 120
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public enum AdBrixUserPropKey : Swift.Int {
+    case AGE, GENDER
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public enum AdBrixRmSharingChannel : Swift.Int {
+    case AdBrixRmSharingFacebook = 1, AdBrixRmSharingKakaoTalk = 2, AdBrixRmSharingKakaoStory = 3, AdBrixRmSharingLine = 4, AdBrixRmSharingWhatsApp = 5, AdBrixRmSharingQQ = 6, AdBrixRmSharingWeChat = 7, AdBrixRmSharingSMS = 8, AdBrixRmSharingEmail = 9, AdBrixRmSharingCopyUrl = 10, AdBrixRmSharingETC = 11
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public enum AdBrixRmSignUpChannel : Swift.Int {
+    case AdBrixRmSignUpKakaoChannel = 1, AdBrixRmSignUpNaverChannel = 2, AdBrixRmSignUpLineChannel = 3, AdBrixRmSignUpGoogleChannel = 4, AdBrixRmSignUpFacebookChannel = 5, AdBrixRmSignUpTwitterChannel = 6, AdBrixRmSignUpWhatsAppChannel = 7, AdBrixRmSignUpQQChannel = 8, AdBrixRmSignUpWeChatChannel = 9, AdBrixRmSignUpUserIdChannel = 10, AdBrixRmSignUpETCChannel = 11, AdBrixRmSignUpSkTidChannel = 12, AdBrixRmSignUpAppleIdChannel = 13
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public enum AdBrixRmInviteChannel : Swift.Int {
+    case AdBrixRmInviteKakaoChannel = 1, AdBrixRmInviteNaverChannel = 2, AdBrixRmInviteLineChannel = 3, AdBrixRmInviteGoogleChannel = 4, AdBrixRmInviteFacebookChannel = 5, AdBrixRmInviteTwitterChannel = 6, AdBrixRmInviteWhatsAppChannel = 7, AdBrixRmInviteQQChannel = 8, AdBrixRmInviteWeChatChannel = 9, AdBrixRmInviteETCChannel = 10
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public enum AdBrixGenderType : Swift.Int {
+    case Male = 2, Female = 1, Unknown = 0
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public enum AdBrixRmCurrencyType : Swift.Int {
+    case KRW = 1, USD = 2, JPY = 3, EUR = 4, GBP = 5, CNY = 6, TWD = 7, HKD = 8, IDR = 9, INR = 10, RUB = 11, THB = 12, VND = 13, MYR = 14
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public enum AdbrixRmPaymentMethod : Swift.Int {
+    case CreditCard = 1, BankTransfer = 2, MobilePayment = 3, ETC = 4
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+  @objc public class func sharedInstance() -> AdBrixRM.AdBrixRM
+  @objc public func stopGettingIDFA()
+  @objc public func startGettingIDFA()
+  @objc public func gdprForgetMe()
+  @objc public func isGdprForgetMe() -> Swift.Bool
+  @objc public func setDeeplinkDelegate(delegate: AdBrixRM.AdBrixRMDeeplinkDelegate)
+  @objc public func setDeferredDeeplinkDelegate(delegate: AdBrixRM.AdBrixRMDeferredDeeplinkDelegate)
+  @available(iOS 10.0, *)
+  @objc public func setAdBrixRmPushLocalDelegate(delegate: AdBrixRM.AdBrixRmPushLocalDelegate)
+  @available(iOS 10.0, *)
+  @objc public func setAdBrixRmPushRemoteDelegate(delegate: AdBrixRM.AdBrixRmPushRemoteDelegate)
+  @available(iOS 10.0, *)
+  @objc public func setAdBrixRmPushNoticePopupLinkClickDelegate(delegate: AdBrixRM.AdBrixRmPushNoticePopupLinkClickDelegate)
+  @available(iOS 10.0, *)
+  @objc public func setAdBrixRmPushNoticePopupCloseDelegate(delegate: AdBrixRM.AdBrixRmPushNoticePopupCloseDelegate)
+  @available(iOS 10.0, *)
+  @objc public func registerLocalPushNotification(date: Foundation.Date, title: Swift.String, subtitle: Swift.String?, body: Swift.String, sound: UserNotifications.UNNotificationSound?, categoryId: Swift.String?, threadId: Swift.String?, badgeNumber: Foundation.NSNumber?, image: Foundation.URL?, attrDic: Swift.Dictionary<Swift.String, Any>?, completionHandler: @escaping (Swift.Bool, Swift.Error?, Swift.String) -> Swift.Void)
+  @available(iOS 10.0, *)
+  @objc public func registerLocalPushNotification(id: Swift.String, date: Foundation.Date, title: Swift.String, subtitle: Swift.String?, body: Swift.String, sound: UserNotifications.UNNotificationSound?, categoryId: Swift.String?, threadId: Swift.String?, badgeNumber: Foundation.NSNumber?, image: Foundation.URL?, attrDic: Swift.Dictionary<Swift.String, Any>?, completionHandler: @escaping (Swift.Bool, Swift.Error?, Swift.String) -> Swift.Void)
+  @available(iOS 10.0, *)
+  @objc public func registerLocalPushNotification(id: Swift.String, dateComponents: Foundation.DateComponents, title: Swift.String, subtitle: Swift.String?, body: Swift.String, sound: UserNotifications.UNNotificationSound?, categoryId: Swift.String?, threadId: Swift.String?, badgeNumber: Foundation.NSNumber?, image: Foundation.URL?, attrDic: Swift.Dictionary<Swift.String, Any>?, completionHandler: @escaping (Swift.Bool, Swift.Error?, Swift.String) -> Swift.Void)
+  @available(iOS 10.0, *)
+  @objc public func getRegisteredLocalPushNotification(completeHandler: @escaping (Swift.Array<Swift.String>?) -> ())
+  @available(iOS 10.0, *)
+  @objc public func cancelLocalPushNotification(ids: Swift.Array<Swift.String>)
+  @available(iOS 10.0, *)
+  @objc public func cancelLocalPushNotificationAll()
+  @available(iOS 10.0, *)
+  @objc public func handleUserNotificationCenter(_ userInfo: [Swift.AnyHashable : Any], _ fetchCompletionHandler: @escaping (UIKit.UIBackgroundFetchResult) -> Swift.Void)
+  @available(iOS 10.0, *)
+  @objc public func userNotificationCenter(center: UserNotifications.UNUserNotificationCenter, notification: UserNotifications.UNNotification)
+  @available(iOS 10.0, *)
+  @objc public func userNotificationCenter(center: UserNotifications.UNUserNotificationCenter, response: UserNotifications.UNNotificationResponse)
+  @available(iOS 10.0, *)
+  @objc public func getNoticePopup(completionHandler: @escaping (Swift.Dictionary<Swift.String, Any>) -> Swift.Void)
+  @available(iOS 10.0, *)
+  @objc public func presentNoticePopup(popupSpaceKey: Swift.String, _ type: AdBrixRM.AbxIAMNoticeType)
+  @available(iOS 10.0, *)
+  @objc public func presentNoticePopup(popupSpaceKey: Swift.String, viewController: UIKit.UIViewController)
+  @objc public func initAdBrix(appKey: Swift.String, secretKey: Swift.String)
+  @objc public func initAdBrixWithDelayTime(appKey: Swift.String, secretKey: Swift.String, delaySecondTime: Swift.Int)
+  @available(iOS 10.0, *)
+  @objc public func initAdBrixPush()
+  @objc public func setLogLevel(_ logLevel: AdBrixRM.AdBrixRM.AdBrixLogLevel)
+  @objc public func setDeviceId(_ device_id: Swift.String)
+  @objc public func setEventUploadTimeInterval(_ intervalTime: AdBrixRM.AdBrixRM.AdBrixEventUploadTimeInterval)
+  @objc public func setEventUploadCountInterval(_ cnt: AdBrixRM.AdBrixRM.AdBrixEventUploadCountInterval)
+  @available(*, deprecated, message: "AdBrixRm sdk can get IDFA/IDFV without this api, please don't use this.")
+  @objc public func setAppleAdvertisingIdentifier(_ appleAdvertisingIdentifier: Swift.String)
+  @objc public func login(userId: Swift.String)
+  @objc public func login(userId: Swift.String, eventDateStr: Swift.String)
+  @objc public func logout()
+  @objc public func event(eventName: Swift.String)
+  @objc public func event(eventName: Swift.String, eventDate: Foundation.Date)
+  @objc public func event(eventName: Swift.String, eventDateMs: Swift.Double)
+  @objc public func event(eventName: Swift.String, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'eventWithAttr' functions instead of this")
+  @objc public func event(eventName: Swift.String, value: Swift.Dictionary<Swift.String, Any>)
+  @objc public func eventWithAttr(eventName: Swift.String, value: AdBrixRM.AdBrixRmAttrModel)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'eventWithAttr' functions instead of this")
+  @objc public func eventForUnity(eventName: Swift.String, value: Swift.Dictionary<Swift.String, Swift.String>)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'eventWithAttr' functions instead of this")
+  @objc public func event(eventName: Swift.String, value: Swift.Dictionary<Swift.String, Any>, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'eventWithAttr' functions instead of this")
+  @objc public func event(eventName: Swift.String, value: Swift.Dictionary<Swift.String, Any>, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'eventWithAttr' functions instead of this")
+  @objc public func eventForUnity(eventName: Swift.String, value: Swift.Dictionary<Swift.String, Swift.String>, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'eventWithAttr' functions instead of this")
+  @objc public func event(eventName: Swift.String, value: Swift.Dictionary<Swift.String, Any>, eventDateStr: Swift.String)
+  @objc public func eventWithAttr(eventName: Swift.String, value: AdBrixRM.AdBrixRmAttrModel, eventDate: Foundation.Date)
+  @objc public func eventWithAttr(eventName: Swift.String, value: AdBrixRM.AdBrixRmAttrModel, eventDateMs: Swift.Double)
+  @objc public func eventForUnityWithAttr(eventName: Swift.String, value: AdBrixRM.AdBrixRmAttrModel)
+  @objc public func eventForUnityWithAttr(eventName: Swift.String, value: AdBrixRM.AdBrixRmAttrModel, eventDateStr: Swift.String)
+  @objc public func eventWithAttr(eventName: Swift.String, value: AdBrixRM.AdBrixRmAttrModel, eventDateStr: Swift.String)
+  @objc public func commerceViewHome()
+  @objc public func commerceViewHome(eventDate: Foundation.Date)
+  @objc public func commerceViewHome(eventDateMs: Swift.Double)
+  @objc public func commerceViewHome(eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceViewHomeWithAttr' functions instead of this")
+  @objc public func commerceViewHome(orderAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commerceViewHomeWithAttr(orderAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceViewHomeWithAttr' functions instead of this")
+  @objc public func commerceViewHome(orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commerceViewHomeWithAttr(orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceViewHomeWithAttr' functions instead of this")
+  @objc public func commerceViewHome(orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commerceViewHomeWithAttr(orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceViewHomeWithAttr' functions instead of this")
+  @objc public func commerceViewHome(orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commerceViewHomeWithAttr(orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commerceCategoryView(category: AdBrixRM.AdBrixRmCommerceProductCategoryModel, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>)
+  @objc public func commerceCategoryView(category: AdBrixRM.AdBrixRmCommerceProductCategoryModel, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, eventDate: Foundation.Date)
+  @objc public func commerceCategoryView(category: AdBrixRM.AdBrixRmCommerceProductCategoryModel, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, eventDateMs: Swift.Double)
+  @objc public func commerceCategoryView(category: AdBrixRM.AdBrixRmCommerceProductCategoryModel, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceCategoryViewWithAttr' functions instead of this")
+  @objc public func commerceCategoryView(category: AdBrixRM.AdBrixRmCommerceProductCategoryModel, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commerceCategoryViewWithAttr(category: AdBrixRM.AdBrixRmCommerceProductCategoryModel, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceCategoryViewWithAttr' functions instead of this")
+  @objc public func commerceCategoryView(category: AdBrixRM.AdBrixRmCommerceProductCategoryModel, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commerceCategoryViewWithAttr(category: AdBrixRM.AdBrixRmCommerceProductCategoryModel, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceCategoryViewWithAttr' functions instead of this")
+  @objc public func commerceCategoryView(category: AdBrixRM.AdBrixRmCommerceProductCategoryModel, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commerceCategoryViewWithAttr(category: AdBrixRM.AdBrixRmCommerceProductCategoryModel, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceCategoryViewWithAttr' functions instead of this")
+  @objc public func commerceCategoryView(category: AdBrixRM.AdBrixRmCommerceProductCategoryModel, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commerceCategoryViewWithAttr(category: AdBrixRM.AdBrixRmCommerceProductCategoryModel, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commerceProductView(productInfo: AdBrixRM.AdBrixRmCommerceProductModel)
+  @objc public func commerceProductView(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, eventDate: Foundation.Date)
+  @objc public func commerceProductView(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, eventDateMs: Swift.Double)
+  @objc public func commerceProductView(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceProductViewWithAttr' functions instead of this")
+  @objc public func commerceProductView(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commerceProductViewWithAttr(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceProductViewWithAttr' functions instead of this")
+  @objc public func commerceProductView(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commerceProductViewWithAttr(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceProductViewWithAttr' functions instead of this")
+  @objc public func commerceProductView(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commerceProductViewWithAttr(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceProductViewWithAttr' functions instead of this")
+  @objc public func commerceProductView(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commerceProductViewWithAttr(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commerceAddToCart(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>)
+  @objc public func commerceAddToCart(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, eventDate: Foundation.Date)
+  @objc public func commerceAddToCart(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, eventDateMs: Swift.Double)
+  @objc public func commerceAddToCart(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceAddToCartWithAttr' functions instead of this")
+  @objc public func commerceAddToCart(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commerceAddToCartWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceAddToCartWithAttr' functions instead of this")
+  @objc public func commerceAddToCart(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commerceAddToCartWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceAddToCartWithAttr' functions instead of this")
+  @objc public func commerceAddToCart(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commerceAddToCartWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceAddToCartWithAttr' functions instead of this")
+  @objc public func commerceAddToCart(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commerceAddToCartWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commerceAddToWishList(productInfo: AdBrixRM.AdBrixRmCommerceProductModel)
+  @objc public func commerceAddToWishList(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, eventDateMs: Swift.Double)
+  @objc public func commerceAddToWishList(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceAddToWishListWithAttr' functions instead of this")
+  @objc public func commerceAddToWishList(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commerceAddToWishListWithAttr(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceAddToWishListWithAttr' functions instead of this")
+  @objc public func commerceAddToWishList(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commerceAddToWishListWithAttr(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceAddToWishListWithAttr' functions instead of this")
+  @objc public func commerceAddToWishList(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commerceAddToWishListWithAttr(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceAddToWishListWithAttr' functions instead of this")
+  @objc public func commerceAddToWishList(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commerceAddToWishListWithAttr(productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commerceReviewOrder(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceReviewOrderWithAttr' functions instead of this")
+  @objc public func commerceReviewOrder(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, orderAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commerceReviewOrderWithAttr(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, orderAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @objc public func commerceReviewOrder(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, eventDate: Foundation.Date)
+  @objc public func commerceReviewOrder(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, eventDateMs: Swift.Double)
+  @objc public func commerceReviewOrder(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceReviewOrderWithAttr' functions instead of this")
+  @objc public func commerceReviewOrder(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commerceReviewOrderWithAttr(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceReviewOrderWithAttr' functions instead of this")
+  @objc public func commerceReviewOrder(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commerceReviewOrderWithAttr(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceReviewOrderWithAttr' functions instead of this")
+  @objc public func commerceReviewOrder(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commerceReviewOrderWithAttr(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commerceRefund(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, penaltyCharge: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceRefundWithAttr' functions instead of this")
+  @objc public func commerceRefund(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, penaltyCharge: Swift.Double, orderAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commerceRefundWithAttr(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, penaltyCharge: Swift.Double, orderAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @objc public func commerceRefund(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, penaltyCharge: Swift.Double, eventDate: Foundation.Date)
+  @objc public func commerceRefund(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, penaltyCharge: Swift.Double, eventDateMs: Swift.Double)
+  @objc public func commerceRefund(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, penaltyCharge: Swift.Double, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceRefundWithAttr' functions instead of this")
+  @objc public func commerceRefund(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, penaltyCharge: Swift.Double, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commerceRefundWithAttr(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, penaltyCharge: Swift.Double, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceRefundWithAttr' functions instead of this")
+  @objc public func commerceRefund(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, penaltyCharge: Swift.Double, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commerceRefundWithAttr(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, penaltyCharge: Swift.Double, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @objc public func commerceRefund(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, penaltyCharge: Swift.Double, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commerceRefundWithAttr(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, penaltyCharge: Swift.Double, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commerceSearch(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, keyword: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceSearchWithAttr' functions instead of this")
+  @objc public func commerceSearch(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, keyword: Swift.String, orderAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commerceSearchWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, keyword: Swift.String, orderAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @objc public func commerceSearch(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, keyword: Swift.String, eventDate: Foundation.Date)
+  @objc public func commerceSearch(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, keyword: Swift.String, eventDateMs: Swift.Double)
+  @objc public func commerceSearch(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, keyword: Swift.String, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceSearchWithAttr' functions instead of this")
+  @objc public func commerceSearch(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, keyword: Swift.String, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commerceSearchWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, keyword: Swift.String, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceSearchWithAttr' functions instead of this")
+  @objc public func commerceSearch(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, keyword: Swift.String, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commerceSearchWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, keyword: Swift.String, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceSearchWithAttr' functions instead of this")
+  @objc public func commerceSearch(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, keyword: Swift.String, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commerceSearchWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, keyword: Swift.String, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commerceShare(channel: AdBrixRM.AdBrixRM.AdBrixRmSharingChannel, productInfo: AdBrixRM.AdBrixRmCommerceProductModel)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceShareWithAttr' functions instead of this")
+  @objc public func commerceShare(channel: AdBrixRM.AdBrixRM.AdBrixRmSharingChannel, productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commerceShareWithAttr(channel: AdBrixRM.AdBrixRM.AdBrixRmSharingChannel, productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @objc public func commerceShare(channel: AdBrixRM.AdBrixRM.AdBrixRmSharingChannel, productInfo: AdBrixRM.AdBrixRmCommerceProductModel, eventDate: Foundation.Date)
+  @objc public func commerceShare(channel: AdBrixRM.AdBrixRM.AdBrixRmSharingChannel, productInfo: AdBrixRM.AdBrixRmCommerceProductModel, eventDateMs: Swift.Double)
+  @objc public func commerceShare(channel: AdBrixRM.AdBrixRM.AdBrixRmSharingChannel, productInfo: AdBrixRM.AdBrixRmCommerceProductModel, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceShareWithAttr' functions instead of this")
+  @objc public func commerceShare(channel: AdBrixRM.AdBrixRM.AdBrixRmSharingChannel, productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commerceShareWithAttr(channel: AdBrixRM.AdBrixRM.AdBrixRmSharingChannel, productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @objc public func commerceShare(channel: AdBrixRM.AdBrixRM.AdBrixRmSharingChannel, productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commerceShareWithAttr(channel: AdBrixRM.AdBrixRM.AdBrixRmSharingChannel, productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceShareWithAttr' functions instead of this")
+  @objc public func commerceShare(channel: AdBrixRM.AdBrixRM.AdBrixRmSharingChannel, productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commerceShareWithAttr(channel: AdBrixRM.AdBrixRM.AdBrixRmSharingChannel, productInfo: AdBrixRM.AdBrixRmCommerceProductModel, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commerceListView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>)
+  @objc public func commerceListView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, eventDate: Foundation.Date)
+  @objc public func commerceListView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, eventDateMs: Swift.Double)
+  @objc public func commerceListView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceListViewWithAttr' functions instead of this")
+  @objc public func commerceListView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commerceListViewWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceListViewWithAttr' functions instead of this")
+  @objc public func commerceListView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commerceListViewWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceListViewWithAttr' functions instead of this")
+  @objc public func commerceListView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commerceListViewWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceListViewWithAttr' functions instead of this")
+  @objc public func commerceListView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commerceListViewWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commerceCartView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>)
+  @objc public func commerceCartView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, eventDate: Foundation.Date)
+  @objc public func commerceCartView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, eventDateMs: Swift.Double)
+  @objc public func commerceCartView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceCartViewWithAttr' functions instead of this")
+  @objc public func commerceCartView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commerceCartViewWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceCartViewWithAttr' functions instead of this")
+  @objc public func commerceCartView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commerceCartViewWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceCartViewWithAttr' functions instead of this")
+  @objc public func commerceCartView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commerceCartViewWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commerceCartViewWithAttr' functions instead of this")
+  @objc public func commerceCartView(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commerceCartViewWithAttr(productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commercePaymentInfoAdded()
+  @objc public func commercePayment(eventDate: Foundation.Date)
+  @objc public func commercePaymentInfoAdded(eventDateMs: Swift.Double)
+  @objc public func commercePaymentInfoAdded(eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commercePaymentInfoAddedWithAttr' functions instead of this")
+  @objc public func commercePaymentInfoAdded(paymentInfoAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commercePaymentInfoAddedWithAttr(paymentInfoAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commercePaymentInfoAddedWithAttr' functions instead of this")
+  @objc public func commercePaymentInfoAdded(paymentInfoAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commercePaymentInfoAddedWithAttr(paymentInfoAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commercePaymentInfoAddedWithAttr' functions instead of this")
+  @objc public func commercePaymentInfoAdded(paymentInfoAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commercePaymentInfoAddedWithAttr(paymentInfoAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commercePaymentInfoAddedWithAttr' functions instead of this")
+  @objc public func commercePaymentInfoAdded(paymentInfoAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commercePaymentInfoAddedWithAttr(paymentInfoAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func gameLevelAchieved(level: Swift.Int)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameLevelAchievedWithAttr' functions instead of this")
+  @objc public func gameLevelAchieved(level: Swift.Int, gameInfoAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func gameLevelAchievedWithAttr(level: Swift.Int, gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @objc public func gameLevelAchieved(level: Swift.Int, eventDate: Foundation.Date)
+  @objc public func gameLevelAchieved(level: Swift.Int, eventDateMs: Swift.Double)
+  @objc public func gameLevelAchedved(level: Swift.Int, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameLevelAchievedWithAttr' functions instead of this")
+  @objc public func gameLevelAchedved(level: Swift.Int, gameInfoAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func gameLevelAchedvedWithAttr(level: Swift.Int, gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameLevelAchievedWithAttr' functions instead of this")
+  @objc public func gameLevelAchieved(level: Swift.Int, gameInfoAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func gameLevelAchievedWithAttr(level: Swift.Int, gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameLevelAchievedWithAttr' functions instead of this")
+  @objc public func gameLevelAchieved(level: Swift.Int, gameInfoAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func gameLevelAchievedWithAttr(level: Swift.Int, gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func gameTutorialCompleted(isSkip: Swift.Bool)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameTutorialCompletedWithAttr' functions instead of this")
+  @objc public func gameTutorialCompleted(isSkip: Swift.Bool, gameInfoAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func gameTutorialCompletedWithAttr(isSkip: Swift.Bool, gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @objc public func gameTutorialCompleted(isSkip: Swift.Bool, eventDate: Foundation.Date)
+  @objc public func gameTutorialCompleted(isSkip: Swift.Bool, eventDateMs: Swift.Double)
+  @objc public func gameTutorialCompleted(isSkip: Swift.Bool, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameTutorialCompletedWithAttr' functions instead of this")
+  @objc public func gameTutorialCompleted(isSkip: Swift.Bool, gameInfoAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func gameTutorialCompletedWithAttr(isSkip: Swift.Bool, gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameTutorialCompletedWithAttr' functions instead of this")
+  @objc public func gameTutorialCompleted(isSkip: Swift.Bool, gameInfoAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func gameTutorialCompletedWithAttr(isSkip: Swift.Bool, gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameTutorialCompletedWithAttr' functions instead of this")
+  @objc public func gameTutorialCompleted(isSkip: Swift.Bool, gameInfoAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func gameTutorialCompletedWithAttr(isSkip: Swift.Bool, gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func gameCharacterCreated()
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameCharacterCreatedWithAttr' functions instead of this")
+  @objc public func gameCharacterCreated(gameInfoAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func gameCharacterCreatedWithAttr(gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @objc public func gameCharacterCreated(eventDate: Foundation.Date)
+  @objc public func gameCharacterCreated(eventDateMs: Swift.Double)
+  @objc public func gameCharacterCreated(eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameCharacterCreatedWithAttr' functions instead of this")
+  @objc public func gameCharacterCreated(gameInfoAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func gameCharacterCreatedWithAttr(gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameCharacterCreatedWithAttr' functions instead of this")
+  @objc public func gameCharacterCreated(gameInfoAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func gameCharacterCreatedWithAttr(gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameCharacterCreatedWithAttr' functions instead of this")
+  @objc public func gameCharacterCreated(gameInfoAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func gameCharacterCreatedWithAttr(gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func gameStageCleared(stageName: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameStageClearedWithAttr' functions instead of this")
+  @objc public func gameStageCleared(stageName: Swift.String, gameInfoAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func gameStageClearedWithAttr(stageName: Swift.String, gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @objc public func gameStageCleared(stageName: Swift.String, eventDate: Foundation.Date)
+  @objc public func gameStageCleared(stageName: Swift.String, eventDateMs: Swift.Double)
+  @objc public func gameStageCleared(stageName: Swift.String, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameStageClearedWithAttr' functions instead of this")
+  @objc public func gameStageCleared(stageName: Swift.String, gameInfoAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func gameStageClearedWithAttr(stageName: Swift.String, gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameStageClearedWithAttr' functions instead of this")
+  @objc public func gameStageCleared(stageName: Swift.String, gameInfoAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func gameStageClearedWithAttr(stageName: Swift.String, gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'gameStageClearedWithAttr' functions instead of this")
+  @objc public func gameStageCleared(stageName: Swift.String, gameInfoAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func gameStageClearedWithAttr(stageName: Swift.String, gameInfoAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commonPurchase(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod)
+  @objc public func commonPurchase(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, orderAttr: Swift.Dictionary<Swift.String, Swift.String>?)
+  @objc public func commonPurchase(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, extraAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commonPurchase(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderSales: Swift.Double, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod)
+  @objc public func commonPurchase(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderSales: Swift.Double, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, orderAttr: Swift.Dictionary<Swift.String, Swift.String>?)
+  @objc public func commonPurchase(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderSales: Swift.Double, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, extraAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commonPurchaseWithAttr(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, orderAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @objc public func commonPurchaseWithAttr(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderSales: Swift.Double, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, orderAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @objc public func commonPurchase(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, eventDate: Foundation.Date)
+  @objc public func commonPurchase(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, eventDateMs: Swift.Double)
+  @objc public func commonPurchase(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, eventDateStr: Swift.String)
+  @objc public func commonPurchase(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderSales: Swift.Double, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, eventDate: Foundation.Date)
+  @objc public func commonPurchase(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderSales: Swift.Double, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, eventDateMs: Swift.Double)
+  @objc public func commonPurchase(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderSales: Swift.Double, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonPurchaseWithAttr' functions instead of this")
+  @objc public func commonPurchase(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commonPurchaseWithAttr(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonPurchaseWithAttr' functions instead of this")
+  @objc public func commonPurchase(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commonPurchaseWithAttr(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonPurchaseWithAttr' functions instead of this")
+  @objc public func commonPurchase(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, orderAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commonPurchaseWithAttr(orderId: Swift.String, productInfo: Swift.Array<AdBrixRM.AdBrixRmCommerceProductModel>, orderSales: Swift.Double, discount: Swift.Double, deliveryCharge: Swift.Double, paymentMethod: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod, orderAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commonSignUp(channel: AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonSignUpWithAttr' functions instead of this")
+  @objc public func commonSignUp(channel: AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel, commonAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commonSignUpWithAttr(channel: AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel, commonAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @objc public func commonSignUp(channel: AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel, eventDate: Foundation.Date)
+  @objc public func commonSignUp(channel: AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel, eventDateMs: Swift.Double)
+  @objc public func commonSignUp(channel: AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonSignUpWithAttr' functions instead of this")
+  @objc public func commonSignUp(channel: AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel, commonAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commonSignUpWithAttr(channel: AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel, commonAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonSignUpWithAttr' functions instead of this")
+  @objc public func commonSignUp(channel: AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel, commonAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commonSignUpWithAttr(channel: AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel, commonAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonSignUpWithAttr' functions instead of this")
+  @objc public func commonSignUp(channel: AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel, commonAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commonSignUpWithAttr(channel: AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel, commonAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commonUseCredit()
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonUseCreditWithAttr' functions instead of this")
+  @objc public func commonUseCredit(commonAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commonUseCreditWithAttr(commonAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @objc public func commonUseCredit(eventDate: Foundation.Date)
+  @objc public func commonUseCredit(eventDateMs: Swift.Double)
+  @objc public func commonUseCredit(eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonUseCreditWithAttr' functions instead of this")
+  @objc public func commonUseCredit(commonAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commonUseCreditWithAttr(commonAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonUseCreditWithAttr' functions instead of this")
+  @objc public func commonUseCredit(commonAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commonUseCreditWithAttr(commonAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonUseCreditWithAttr' functions instead of this")
+  @objc public func commonUseCredit(commonAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commonUseCreditWithAttr(commonAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commonAppUpdate(prev_ver: Swift.String, curr_ver: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonAppUpdateWithAttr' functions instead of this")
+  @objc public func commonAppUpdate(prev_ver: Swift.String, curr_ver: Swift.String, commonAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commonAppUpdateWithAttr(prev_ver: Swift.String, curr_ver: Swift.String, commonAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @objc public func commonAppUpdate(prev_ver: Swift.String, curr_ver: Swift.String, eventDate: Foundation.Date)
+  @objc public func commonAppUpdate(prev_ver: Swift.String, curr_ver: Swift.String, eventDateMs: Swift.Double)
+  @objc public func commonAppUpdate(prev_ver: Swift.String, curr_ver: Swift.String, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonAppUpdateWithAttr' functions instead of this")
+  @objc public func commonAppUpdate(prev_ver: Swift.String, curr_ver: Swift.String, commonAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commonAppUpdateWithAttr(prev_ver: Swift.String, curr_ver: Swift.String, commonAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonAppUpdateWithAttr' functions instead of this")
+  @objc public func commonAppUpdate(prev_ver: Swift.String, curr_ver: Swift.String, commonAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commonAppUpdateWithAttr(prev_ver: Swift.String, curr_ver: Swift.String, commonAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonAppUpdateWithAttr' functions instead of this")
+  @objc public func commonAppUpdate(prev_ver: Swift.String, curr_ver: Swift.String, commonAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commonAppUpdateWithAttr(prev_ver: Swift.String, curr_ver: Swift.String, commonAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func commonInvite(channel: AdBrixRM.AdBrixRM.AdBrixRmInviteChannel)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonInviteWithAttr' functions instead of this")
+  @objc public func commonInvite(channel: AdBrixRM.AdBrixRM.AdBrixRmInviteChannel, commonAttr: Swift.Dictionary<Swift.String, Any>?)
+  @objc public func commonInviteWithAttr(channel: AdBrixRM.AdBrixRM.AdBrixRmInviteChannel, commonAttr: AdBrixRM.AdBrixRmAttrModel?)
+  @objc public func commonInvite(channel: AdBrixRM.AdBrixRM.AdBrixRmInviteChannel, eventDate: Foundation.Date)
+  @objc public func commonInvite(channel: AdBrixRM.AdBrixRM.AdBrixRmInviteChannel, eventDateMs: Swift.Double)
+  @objc public func commonInvite(channel: AdBrixRM.AdBrixRM.AdBrixRmInviteChannel, eventDateStr: Swift.String)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonInviteWithAttr' functions instead of this")
+  @objc public func commonInvite(channel: AdBrixRM.AdBrixRM.AdBrixRmInviteChannel, commonAttr: Swift.Dictionary<Swift.String, Any>?, eventDate: Foundation.Date)
+  @objc public func commonInviteWithAttr(channel: AdBrixRM.AdBrixRM.AdBrixRmInviteChannel, commonAttr: AdBrixRM.AdBrixRmAttrModel?, eventDate: Foundation.Date)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonInviteWithAttr' functions instead of this")
+  @objc public func commonInvite(channel: AdBrixRM.AdBrixRM.AdBrixRmInviteChannel, commonAttr: Swift.Dictionary<Swift.String, Any>?, eventDateMs: Swift.Double)
+  @objc public func commonInviteWithAttr(channel: AdBrixRM.AdBrixRM.AdBrixRmInviteChannel, commonAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateMs: Swift.Double)
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use 'commonInviteWithAttr' functions instead of this")
+  @objc public func commonInvite(channel: AdBrixRM.AdBrixRM.AdBrixRmInviteChannel, commonAttr: Swift.Dictionary<Swift.String, Any>?, eventDateStr: Swift.String)
+  @objc public func commonInviteWithAttr(channel: AdBrixRM.AdBrixRM.AdBrixRmInviteChannel, commonAttr: AdBrixRM.AdBrixRmAttrModel?, eventDateStr: Swift.String)
+  @objc public func getCurrencyStringByAdBrixCurrencyType(_ currency: AdBrixRM.AdBrixRM.AdBrixRmCurrencyType) -> Swift.String
+  @objc public func getCurrencyString(_ currency: Swift.Int) -> Swift.String
+  @objc public func getSharingChannelByAdBrixRmSharingChannel(_ channel: AdBrixRM.AdBrixRM.AdBrixRmSharingChannel) -> Swift.String
+  @objc public func getSharingChannel(_ channel: Swift.Int) -> Swift.String
+  @objc public func getPaymentMethodByAdbrixRmPaymentMethod(_ method: AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod) -> Swift.String
+  @objc public func getPaymentMethod(_ method: Swift.Int) -> Swift.String
+  @objc public func getSignUpChannelByAdBrixRmSignUpChannel(_ channel: AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel) -> Swift.String
+  @objc public func getSignUpChannel(_ channel: Swift.Int) -> Swift.String
+  @objc public func getInviteChannelByAdBrixRmSignUpChannel(_ channel: AdBrixRM.AdBrixRM.AdBrixRmInviteChannel) -> Swift.String
+  @objc public func getInviteChannel(_ channel: Swift.Int) -> Swift.String
+  @objc public func createCommerceProductCategoryDataByStrings(categoryArray: [Swift.String]) -> AdBrixRM.AdBrixRmCommerceProductCategoryModel
+  @objc public func createCommerceProductCategoryDataByArray(categoryArray: Swift.Array<Swift.String>) -> AdBrixRM.AdBrixRmCommerceProductCategoryModel
+  @objc public func createCommerceProductCategoryData(category: Swift.String) -> AdBrixRM.AdBrixRmCommerceProductCategoryModel
+  @objc public func createCommerceProductCategoryData(category: Swift.String, category2: Swift.String) -> AdBrixRM.AdBrixRmCommerceProductCategoryModel
+  @objc public func createCommerceProductCategoryData(category: Swift.String, category2: Swift.String, category3: Swift.String) -> AdBrixRM.AdBrixRmCommerceProductCategoryModel
+  @objc public func createCommerceProductCategoryData(category: Swift.String, category2: Swift.String, category3: Swift.String, category4: Swift.String) -> AdBrixRM.AdBrixRmCommerceProductCategoryModel
+  @objc public func createCommerceProductCategoryData(category: Swift.String, category2: Swift.String, category3: Swift.String, category4: Swift.String, category5: Swift.String) -> AdBrixRM.AdBrixRmCommerceProductCategoryModel
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use createCommerceProductDataWithAttr instead of this")
+  @objc public func createCommerceProductData(productId: Swift.String, productName: Swift.String, price: Swift.Double, quantity: Swift.Int, discount: Swift.Double, currencyString: Swift.String?, category: AdBrixRM.AdBrixRmCommerceProductCategoryModel?, productAttrsMap: AdBrixRM.AdBrixRmCommerceProductAttrModel?) -> AdBrixRM.AdBrixRmCommerceProductModel
+  @objc public func createCommerceProductDataWithAttr(productId: Swift.String, productName: Swift.String, price: Swift.Double, quantity: Swift.Int, discount: Swift.Double, currencyString: Swift.String?, category: AdBrixRM.AdBrixRmCommerceProductCategoryModel?, productAttrsMap: AdBrixRM.AdBrixRmAttrModel?) -> AdBrixRM.AdBrixRmCommerceProductModel
+  @objc public func createCommerceProductAttrData(dictionary: Swift.Dictionary<Swift.String, Swift.String>?) -> AdBrixRM.AdBrixRmCommerceProductAttrModel
+  @objc public func deepLinkOpen(urlStr: Swift.String)
+  @objc public func deepLinkOpen(urlStr: Swift.String, eventDateStr: Swift.String)
+  @objc public func deepLinkOpen(url: Foundation.URL)
+  @objc public func deepLinkOpen(url: Foundation.URL, eventDateStr: Swift.String)
+  @objc public func setLocation(latitude: Swift.Double, longitude: Swift.Double)
+  @objc public func setAge(int: Swift.Int)
+  @objc public func setGender(adBrixGenderType: AdBrixRM.AdBrixRM.AdBrixGenderType)
+  @objc public func clearUserProperties()
+  @available(*, deprecated, message: "No more support direct Dictionary data type in parameter. Use ~WithAttr functions instead of this")
+  @objc public func setUserProperties(dictionary: Swift.Dictionary<Swift.String, Any>)
+  @objc public func setUserPropertiesWithAttr(attrModel: AdBrixRM.AdBrixRmAttrModel)
+  @objc public func setKakaoId(kakaoId: Swift.String)
+  @objc public func setUserCiWithAttr(attrModel: AdBrixRM.AdBrixRmAttrModel)
+  @objc public func setUserPropertiesForUnity(dictionary: Swift.Dictionary<Swift.String, Swift.String>)
+  @objc public func getUserProperties() -> Swift.Dictionary<Swift.String, Any>?
+  @available(iOS 10.0, *)
+  @objc public func setPushEnable(toPushEnable: Swift.Bool)
+  @available(iOS 10.0, *)
+  @objc public func setRegistrationId(deviceToken: Foundation.Data)
+  @available(iOS 10.0, *)
+  @objc public func setRegistrationIdForUnity(deviceToken: Swift.String)
+  @objc public func convertChannel(_ code: Swift.Int) -> AdBrixRM.AdBrixRM.AdBrixRmSharingChannel
+  @objc public func convertSignUpChannel(_ code: Swift.Int) -> AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel
+  @objc public func convertInviteChannel(_ code: Swift.Int) -> AdBrixRM.AdBrixRM.AdBrixRmInviteChannel
+  @objc public func convertPayment(_ code: Swift.Int) -> AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod
+  @objc public func convertGender(_ code: Swift.Int) -> AdBrixRM.AdBrixRM.AdBrixGenderType
+  @objc public func convertLogLevel(_ code: Swift.Int) -> AdBrixRM.AdBrixRM.AdBrixLogLevel
+  @objc public func convertTimeInterval(_ code: Swift.Int) -> AdBrixRM.AdBrixRM.AdBrixEventUploadTimeInterval
+  @objc public func convertCountInterval(_ code: Swift.Int) -> AdBrixRM.AdBrixRM.AdBrixEventUploadCountInterval
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forUndefinedKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forKeyPath keyPath: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValuesForKeys(_ keyedValues: [Swift.String : Any])
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setNilValueForKey(_ key: Swift.String)
+  @available(iOS 10.0, *)
+  @objc public func didReceiveAbxPush(_ request: UserNotifications.UNNotificationRequest, withContentHandler contentHandler: @escaping (UserNotifications.UNNotificationContent) -> Swift.Void)
+  @available(iOS 10.0, *)
+  @objc public func abxPushServiceExtensionTimeWillExpire()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class AbxSkbroadbandController : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class Util_device : ObjectiveC.NSObject {
+  @objc public class func sharedInstance() -> AdBrixRM.Util_device
+  @objc public static func getLanguage() -> Swift.String
+  @objc public static func getBatteryLevel() -> Swift.Int
+  @objc public static func getBatteryState() -> Swift.Bool
+  @objc public static func getTimeZoneOffset() -> Swift.Int
+  @objc deinit
+}
+public enum Component {
+  case date(Swift.String)
+  case message
+  case level
+  case file(fullPath: Swift.Bool, fileExtension: Swift.Bool)
+  case line
+  case column
+  case function
+  case location
+  case block(() -> Any?)
+}
+@_hasMissingDesignatedInitializers public class Formatters {
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class Formatter : AdBrixRM.Formatters {
+  convenience public init(_ format: Swift.String, _ components: AdBrixRM.Component...)
+  public init(_ format: Swift.String, _ components: [AdBrixRM.Component])
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class AdBrixConfig : ObjectiveC.NSObject {
+  public static let STR_ASIdentifierManager: Swift.String
+  public static let AdBrixDateFormatSimple: Swift.String
+  @objc public class func sharedInstance() -> AdBrixRM.AdBrixConfig
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forUndefinedKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forKeyPath keyPath: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValuesForKeys(_ keyedValues: [Swift.String : Any])
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setNilValueForKey(_ key: Swift.String)
+  @objc deinit
+}
+extension Themes {
+  public static let `default`: AdBrixRM.Theme
+  public static let dusk: AdBrixRM.Theme
+  public static let midnight: AdBrixRM.Theme
+  public static let tomorrow: AdBrixRM.Theme
+  public static let tomorrowNight: AdBrixRM.Theme
+  public static let tomorrowNightEighties: AdBrixRM.Theme
+  public static let tomorrowNightBright: AdBrixRM.Theme
+}
+@_inheritsConvenienceInitializers @objc public class AdBrixRmCommerceProductAttrModel : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc public func setModel(dictionary: Swift.Dictionary<Swift.String, Swift.String>) -> AdBrixRM.AdBrixRmCommerceProductAttrModel
+  @available(*, deprecated, message: "Don't use this override function. User setModel func")
+  @objc override dynamic public func setValue(_ value: Any?, forKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function. User setModel func")
+  @objc override dynamic public func setValue(_ value: Any?, forUndefinedKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function. User setModel func")
+  @objc override dynamic public func setValue(_ value: Any?, forKeyPath keyPath: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function. User setModel func")
+  @objc override dynamic public func setValuesForKeys(_ keyedValues: [Swift.String : Any])
+  @available(*, deprecated, message: "Don't use this override function. User setModel func")
+  @objc override dynamic public func setNilValueForKey(_ key: Swift.String)
+  @objc deinit
+}
+extension Formatters {
+  public static let `default`: AdBrixRM.Formatter
+  public static let minimal: AdBrixRM.Formatter
+  public static let detailed: AdBrixRM.Formatter
+  public static let detailedNonDate: AdBrixRM.Formatter
+}
+public enum Level : Swift.Int {
+  case none, trace, debug, info, warning, error
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+extension Level : Swift.Comparable {
+}
+public func == (x: AdBrixRM.Level, y: AdBrixRM.Level) -> Swift.Bool
+public func < (x: AdBrixRM.Level, y: AdBrixRM.Level) -> Swift.Bool
+open class Logger {
+  public var enabled: Swift.Bool
+  public var formatter: AdBrixRM.Formatter {
+    get
+    set
+  }
+  public var theme: AdBrixRM.Theme?
+  public var minLevel: AdBrixRM.Level
+  public var format: Swift.String {
+    get
+  }
+  public var colors: Swift.String {
+    get
+  }
+  public init(formatter: AdBrixRM.Formatter = .detailedNonDate, theme: AdBrixRM.Theme? = nil, minLevel: AdBrixRM.Level = .trace)
+  open func trace(_ items: Any..., separator: Swift.String = " ", terminator: Swift.String = "\n", file: Swift.String = #file, line: Swift.Int = #line, column: Swift.Int = #column, function: Swift.String = #function)
+  open func debug(_ items: Any..., separator: Swift.String = " ", terminator: Swift.String = "\n", file: Swift.String = #file, line: Swift.Int = #line, column: Swift.Int = #column, function: Swift.String = #function)
+  open func info(_ items: Any..., separator: Swift.String = " ", terminator: Swift.String = "\n", file: Swift.String = #file, line: Swift.Int = #line, column: Swift.Int = #column, function: Swift.String = #function)
+  open func warning(_ items: Any..., separator: Swift.String = " ", terminator: Swift.String = "\n", file: Swift.String = #file, line: Swift.Int = #line, column: Swift.Int = #column, function: Swift.String = #function)
+  open func error(_ items: Any..., separator: Swift.String = " ", terminator: Swift.String = "\n", file: Swift.String = #file, line: Swift.Int = #line, column: Swift.Int = #column, function: Swift.String = #function)
+  public func measure(_ description: Swift.String? = nil, iterations n: Swift.Int = 10, file: Swift.String = #file, line: Swift.Int = #line, column: Swift.Int = #column, function: Swift.String = #function, block: () -> Swift.Void)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objc public class AdBrixController : ObjectiveC.NSObject {
+  public var appleAdvertisingIdentifier: Swift.String
+  public var isAppleAdvertisingTrackingEnabled: Swift.Bool
+  @objc public class func sharedInstance() -> AdBrixRM.AdBrixController
+  @objc public func getAppleAdvertisingIdentifierStr() -> Swift.String
+  @objc public func getAppleAdvertisingTrackingEnable() -> Swift.Bool
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forUndefinedKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forKeyPath keyPath: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValuesForKeys(_ keyedValues: [Swift.String : Any])
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setNilValueForKey(_ key: Swift.String)
+  @objc deinit
+}
+@objc public enum AbxIAMNoticeType : Swift.Int {
+  case FullImage = 0, FullWebView = 1, Modal = 2, Bar = 3, Carousel = 4, Modal2 = 5
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@_inheritsConvenienceInitializers @objc public class AdBrixConstant : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class Themes {
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class Theme : AdBrixRM.Themes {
+  public init(trace: Swift.String, debug: Swift.String, info: Swift.String, warning: Swift.String, error: Swift.String)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @available(iOS 10.0, *)
+@objc open class AdBrixPushService : UserNotifications.UNNotificationServiceExtension {
+  @objc override dynamic public init()
+  @objc override dynamic open func didReceive(_ request: UserNotifications.UNNotificationRequest, withContentHandler contentHandler: @escaping (UserNotifications.UNNotificationContent) -> Swift.Void)
+  @objc override dynamic open func serviceExtensionTimeWillExpire()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class AdBrixUserConfig : ObjectiveC.NSObject {
+  @objc public class func sharedInstance() -> AdBrixRM.AdBrixUserConfig
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forUndefinedKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValue(_ value: Any?, forKeyPath keyPath: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setValuesForKeys(_ keyedValues: [Swift.String : Any])
+  @available(*, deprecated, message: "Don't use this override function.")
+  @objc override dynamic public func setNilValueForKey(_ key: Swift.String)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objc public class AdBrixRmCommerceProductModel : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc public func setModel(productId: Swift.String, productName: Swift.String, price: Swift.Double, quantity: Swift.Int, discount: Swift.Double, currencyString: Swift.String?, categories: AdBrixRM.AdBrixRmCommerceProductCategoryModel?, productAttrsMap: AdBrixRM.AdBrixRmAttrModel?) -> AdBrixRM.AdBrixRmCommerceProductModel
+  @available(*, deprecated, message: "Don't use this override function. User setModel func")
+  @objc override dynamic public func setValue(_ value: Any?, forKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function. User setModel func")
+  @objc override dynamic public func setValue(_ value: Any?, forUndefinedKey key: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function. User setModel func")
+  @objc override dynamic public func setValue(_ value: Any?, forKeyPath keyPath: Swift.String)
+  @available(*, deprecated, message: "Don't use this override function. User setModel func")
+  @objc override dynamic public func setValuesForKeys(_ keyedValues: [Swift.String : Any])
+  @available(*, deprecated, message: "Don't use this override function. User setModel func")
+  @objc override dynamic public func setNilValueForKey(_ key: Swift.String)
+  @objc deinit
+}
+extension AdBrixRM.AdBrixRM.AdBrixLogLevel : Swift.Equatable {}
+extension AdBrixRM.AdBrixRM.AdBrixLogLevel : Swift.Hashable {}
+extension AdBrixRM.AdBrixRM.AdBrixLogLevel : Swift.RawRepresentable {}
+extension AdBrixRM.AdBrixRM.AdBrixEventUploadCountInterval : Swift.Equatable {}
+extension AdBrixRM.AdBrixRM.AdBrixEventUploadCountInterval : Swift.Hashable {}
+extension AdBrixRM.AdBrixRM.AdBrixEventUploadCountInterval : Swift.RawRepresentable {}
+extension AdBrixRM.AdBrixRM.AdBrixEventUploadTimeInterval : Swift.Equatable {}
+extension AdBrixRM.AdBrixRM.AdBrixEventUploadTimeInterval : Swift.Hashable {}
+extension AdBrixRM.AdBrixRM.AdBrixEventUploadTimeInterval : Swift.RawRepresentable {}
+extension AdBrixRM.AdBrixRM.AdBrixUserPropKey : Swift.Equatable {}
+extension AdBrixRM.AdBrixRM.AdBrixUserPropKey : Swift.Hashable {}
+extension AdBrixRM.AdBrixRM.AdBrixUserPropKey : Swift.RawRepresentable {}
+extension AdBrixRM.AdBrixRM.AdBrixRmSharingChannel : Swift.Equatable {}
+extension AdBrixRM.AdBrixRM.AdBrixRmSharingChannel : Swift.Hashable {}
+extension AdBrixRM.AdBrixRM.AdBrixRmSharingChannel : Swift.RawRepresentable {}
+extension AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel : Swift.Equatable {}
+extension AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel : Swift.Hashable {}
+extension AdBrixRM.AdBrixRM.AdBrixRmSignUpChannel : Swift.RawRepresentable {}
+extension AdBrixRM.AdBrixRM.AdBrixRmInviteChannel : Swift.Equatable {}
+extension AdBrixRM.AdBrixRM.AdBrixRmInviteChannel : Swift.Hashable {}
+extension AdBrixRM.AdBrixRM.AdBrixRmInviteChannel : Swift.RawRepresentable {}
+extension AdBrixRM.AdBrixRM.AdBrixGenderType : Swift.Equatable {}
+extension AdBrixRM.AdBrixRM.AdBrixGenderType : Swift.Hashable {}
+extension AdBrixRM.AdBrixRM.AdBrixGenderType : Swift.RawRepresentable {}
+extension AdBrixRM.AdBrixRM.AdBrixRmCurrencyType : Swift.Equatable {}
+extension AdBrixRM.AdBrixRM.AdBrixRmCurrencyType : Swift.Hashable {}
+extension AdBrixRM.AdBrixRM.AdBrixRmCurrencyType : Swift.RawRepresentable {}
+extension AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod : Swift.Equatable {}
+extension AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod : Swift.Hashable {}
+extension AdBrixRM.AdBrixRM.AdbrixRmPaymentMethod : Swift.RawRepresentable {}
+extension AdBrixRM.Level : Swift.Hashable {}
+extension AdBrixRM.Level : Swift.RawRepresentable {}
+extension AdBrixRM.AbxIAMNoticeType : Swift.Equatable {}
+extension AdBrixRM.AbxIAMNoticeType : Swift.Hashable {}
+extension AdBrixRM.AbxIAMNoticeType : Swift.RawRepresentable {}

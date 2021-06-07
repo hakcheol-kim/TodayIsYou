@@ -34,6 +34,7 @@ class BaseViewController: UIViewController {
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
                 ShareData.ins.setUserInfo(response)
+                AppDelegate.ins.mainViewCtrl.updateNaviPoint()
             }
         } failure: { (error) in
             self.showErrorToast(error)

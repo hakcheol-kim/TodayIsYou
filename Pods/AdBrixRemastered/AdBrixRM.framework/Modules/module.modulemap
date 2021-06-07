@@ -1,0 +1,11 @@
+framework module AdBrixRM {
+  umbrella header "AdBrixRM.h"
+
+  export *
+  module * { export * }
+}
+
+module AdBrixRM.Swift {
+    header "AdBrixRM-Swift.h"
+    requires objc
+}

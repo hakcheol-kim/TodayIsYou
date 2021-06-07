@@ -82,7 +82,13 @@ class PhoneCallViewController: MainActionViewController {
             min = min % 60
             
             lbTakeTime.text = String(format: "%02ld:%02ld:%02ld", hour, min, sec)
-            self.nowPoint = nowPoint - (Int(second)/10)*self.baseLivePoint
+          
+            var checkPoint:Int = Int(second - 60) //처음 1분은 빼고 계산
+            if checkPoint < 0 {
+                checkPoint = 0
+            }
+            checkPoint = Int(checkPoint/10)
+            self.nowPoint = nowPoint - checkPoint*self.baseLivePoint
         }
     }
     
@@ -255,7 +261,13 @@ class PhoneCallViewController: MainActionViewController {
         param["from_user_id"] = ShareData.ins.myId
         param["from_user_sex"] = ShareData.ins.mySex.rawValue
         param["to_user_id"] = toUserId!
-        param["out_point_time"] = (Int(second)/10)*baseLivePoint
+        
+        var checkPoint:Int = Int(second - 60) //처음 1분은 빼고 계산
+        if checkPoint < 0 {
+            checkPoint = 0
+        }
+        checkPoint = Int(checkPoint/10)
+        param["out_point_time"] = checkPoint*baseLivePoint
         param["room_key"] = roomKey!
         ApiManager.ins.requestPhoneCallPaymentEndPoint(param: param) { response in
             let isSuccess = response["isSuccess"].stringValue

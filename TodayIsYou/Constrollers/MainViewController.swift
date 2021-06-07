@@ -191,7 +191,8 @@ class MainViewController: BaseViewController {
         super.viewWillAppear(animated)
         self.updateUnReadMessageCount()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.updateNaviPoint()
+//        self.updateNaviPoint()
+        self.requestMyInfo()
     }
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

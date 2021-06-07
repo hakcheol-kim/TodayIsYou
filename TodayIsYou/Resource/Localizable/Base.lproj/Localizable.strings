@@ -1,3 +1,6 @@
+"CRRefreshHeaderIdleText" = "Pull down to refresh";
+"CRRefreshHeaderPullingText" = "Release to refresh";
+"CRRefreshHeaderRefreshingText" = "Loading...";
 "app_name" = "Todayis" ;
 "navigation_drawer_open" = "Open" ;
 "navigation_drawer_close" = "Close" ;
@@ -612,3 +615,4 @@
 "permission_gallery" = "Can't access the gallery." ;
 "permission_gallery_stting" = "To enable access, please go to Settings > Privacy > Allow photo access." ;
 "pending_renewal" = "This product is already subscribed to." ;
+"account_holder_name" = "depositor of bank" ;

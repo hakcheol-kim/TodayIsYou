@@ -1,3 +1,6 @@
+"CRRefreshHeaderIdleText" = "아래로 당겨 새로 고침";
+"CRRefreshHeaderPullingText" = "새로 고침하려면 놓으세요.";
+"CRRefreshHeaderRefreshingText" = "로딩 중...";
 "app_name" = "오늘은너야" ;
 "navigation_drawer_open" = "Open navigation drawer" ;
 "navigation_drawer_close" = "Close navigation drawer" ;
@@ -612,3 +615,4 @@
 "permission_gallery" = "캘러리를 액세스 할 수 없습니다." ;
 "permission_gallery_stting" = "액세스를 사용하려면 설정> 개인 정보 보호> 사진 접근 권한을 허용해주세요." ;
 "pending_renewal" = "이미 구독중인 상품입니다." ;
+"account_holder_name" = "예금주" ;
