@@ -80,22 +80,23 @@ class PointPurchaseViewController: BaseViewController {
             }
             
             let productId = product.severProductId()
-            if product == .subs_0 || product == .subs_1 || product == .subs_2 || product == .subs_3 {
+            if product == .subscribe_001 || product == .subscribe_002 || product == .subscribe_003 || product == .subscribe_004 {
                 //정기 결제이면
                 
                 var param = [String:Any]()
                 param["user_id"] = ShareData.ins.myId
-                param["productId"] = product.severProductId()  //상품코드
+                param["productId"] = buy_key  //상품코드
                 param["point_key"] = "GPA.\(transactionId)" //주문번호 아이폰은 GPA. 붙인다 서버 구분하기 위해
                 param["app_type"] = appType //어플종류
                 param["purchaseToken"] = receipt
                 param["packageName"] = Bundle.main.bundleIdentifier
-                param["item_package"] = product.subscriptionGroup()
+                param["item_package"] = product.serverItemPackageKey()
                 param["ref"] = ""
                 
 //                param["developerPayload"] = payload //서버에서 생성한 payload sequence
                 self?.requestPaymentInAppSubScription(param)
                 print("==================\n\n=========== \(JSON(param).stringValue)")
+                print("==================\n\n=========== point_key\(transactionId)")
             }
             else {
                 var param = [String:Any]()
@@ -196,19 +197,19 @@ class PointPurchaseViewController: BaseViewController {
             switch sender.tag {
                 case 0:
                     print("구독 1")
-                    self.requestPayloadId(.subs_0)
+                    self.requestPayloadId(.subscribe_001)
                     break
                 case 1:
                     print("구독 2")
-                    self.requestPayloadId(.subs_1)
+                    self.requestPayloadId(.subscribe_002)
                     break
                 case 2:
                     print("구독 3")
-                    self.requestPayloadId(.subs_2)
+                    self.requestPayloadId(.subscribe_003)
                     break
                 case 3:
                     print("구독 4")
-                    self.requestPayloadId(.subs_3)
+                    self.requestPayloadId(.subscribe_004)
                     break
                 default:
                     break

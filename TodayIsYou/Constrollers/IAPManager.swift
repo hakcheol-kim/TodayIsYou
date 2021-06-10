@@ -16,10 +16,10 @@ enum Product: String, CaseIterable {
     case point_003
     case point_004
     case point_005
-    case subs_0
-    case subs_1
-    case subs_2
-    case subs_3
+    case subscribe_001
+    case subscribe_002
+    case subscribe_003
+    case subscribe_004
     
     func severProductId() -> String {
         switch self {
@@ -35,31 +35,29 @@ enum Product: String, CaseIterable {
             return "point_4"
             case .point_005:
             return "point_5"
-            case .subs_0:
+            case .subscribe_001:
                 return "subs_001"
-            case .subs_1:
+            case .subscribe_002:
                 return "subs_002"
-            case .subs_2:
+            case .subscribe_003:
                 return "subs_003"
-            case .subs_3:
+            case .subscribe_004:
                 return "subs_004"
         }
     }
-    func subscriptionGroup() -> String {
-        if self == .subs_0 {
-            return "todayis.payload.subscrip0"
-        }
-        else if self == .subs_1 {
-            return "todayis.payload.subscrip1"
-        }
-        else if self == .subs_2 {
-            return "todayis.payload.subscrip2"
-        }
-        else if self == .subs_3 {
-            return "todayis.payload.subscrip3"
-        }
-        else {
-            return ""
+    
+    func serverItemPackageKey() ->String {
+        switch self {
+            case .subscribe_001:
+                return "todayis.payload.subscrip"
+            case .subscribe_002:
+                return "todayis.payload.subscrip"
+            case .subscribe_003:
+                return "todayis.payload.subscrip"
+            case .subscribe_004:
+                return "todayis.payload.subscrip"
+            case .point_000, .point_001, .point_002, .point_003, .point_004, .point_005:
+                return ""
         }
     }
 }
@@ -98,7 +96,7 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
         
         self.product = product
         self.completion = completion
-        if product == .subs_0 || product == .subs_1 || product == .subs_2 || product == .subs_3 {
+        if product == .subscribe_001 || product == .subscribe_002 || product == .subscribe_003 || product == .subscribe_004 {
             self.checkPendingSubscriptionProductId(product)
         }
         else {
@@ -154,10 +152,14 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
             }
             catch { print("Couldn't read receipt data with error: " + error.localizedDescription) }
         }
+        else {
+            print("error: aaa")
+            self.requestPayment()
+        }
     }
     private func checkVerifyReceipt(_ product:Product, _ res:JSON) {
         let pending_renewal_info = res["pending_renewal_info"].arrayValue
-        
+        print("subscribe proguct list: \(pending_renewal_info)")
         var isPending = false
         for item in pending_renewal_info {
 //            "auto_renew_status" : "1", 자동갱신, "0" 자동갱신해지
@@ -166,8 +168,8 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
 //             "original_transaction_id" : "1000000820157263"
             let auto_renew_product_id = item["auto_renew_product_id"].stringValue
             let auto_renew_status = item["auto_renew_status"].stringValue
- 
-            if auto_renew_status == "1" && auto_renew_product_id == product.rawValue {
+            
+            if auto_renew_product_id == product.rawValue {
                 isPending = true
             }
         }
