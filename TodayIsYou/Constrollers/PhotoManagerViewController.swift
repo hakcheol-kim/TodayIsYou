@@ -123,18 +123,7 @@ class PhotoManagerViewController: BaseViewController {
     }
     
     func showCameraPicker(_ sourceType: UIImagePickerController.SourceType) {
-        if sourceType == .camera {
-            guard UIImagePickerController.isSourceTypeAvailable(sourceType) == true else {
-                let alertController = UIAlertController(title: nil, message: "Device has no camera.", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Alright", style: .default, handler: { (alert: UIAlertAction!) in
-                })
-                alertController.addAction(okAction)
-                self.present(alertController, animated: true, completion: nil)
-                return
-            }
-        }
-        
-        let picker = CImagePickerController.init() { (orig, crop) in
+         let picker = CImagePickerController.init() { (orig, crop) in
             guard let orig = orig, let crop = crop else {
                 return
             }

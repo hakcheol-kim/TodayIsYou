@@ -15,12 +15,13 @@ import AVFoundation
 import StoreKit
 import AdBrixRM
 import AdSupport
-
+import Photos
 @main
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
+    private var warningWindow: UIWindow?
     var loadingView: UIView?
     var audioPlayer: AVAudioPlayer!
     var downTimer:Timer?
@@ -44,6 +45,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window!.overrideUserInterfaceStyle = .light
+//        self.startPreventingRecording()
+//        self.startPreventingScreenshot()
         
         do {
             let path = Bundle.main.path(forResource: "bell_30", ofType: ".mp3")
@@ -63,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         ShareData.ins.dfsSet(lanCode, DfsKey.languageCode)
         ShareData.ins.languageCode = lanCode
-        Bundle.swizzleLocalization()
+        //        Bundle.swizzleLocalization()
         
         callIntroViewCtrl()
         
@@ -118,10 +121,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             adBrix.setLogLevel(.TRACE)
             adBrix.setEventUploadTimeInterval(.MIN)
             adBrix.delegateDeeplink = self
-//            if ASIdentifierManager.shared().isAdvertisingTrackingEnabled {
-//                let ifa: UUID = ASIdentifierManager.shared().advertisingIdentifier
-//                adBrix.setAppleAdvertisingIdentifier(ifa.uuidString)
-//            }
+            //            if ASIdentifierManager.shared().isAdvertisingTrackingEnabled {
+            //                let ifa: UUID = ASIdentifierManager.shared().advertisingIdentifier
+            //                adBrix.setAppleAdvertisingIdentifier(ifa.uuidString)
+            //            }
             adBrix.startGettingIDFA()
         } failureBlock: {
             adBrix.stopGettingIDFA()
@@ -184,7 +187,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func stopIndicator() {
         DispatchQueue.main.async(execute: {
             if self.loadingView != nil {
-//                self.loadingView!.stopAnimation()
+                //                self.loadingView!.stopAnimation()
                 self.loadingView?.removeFromSuperview()
             }
         })
@@ -197,17 +200,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     //deepling open
     func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-            guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
-                let incomingURL = userActivity.webpageURL
-                else {
-                    return false
-            }
-            
-            print("DEEPLINK :: UniversialLink was clicked !! incomingURL - \(incomingURL)")
-            NSLog("UNIVERSAL LINK OPEN!!!!!!!!!!!!!!!!!")
-            let adBrix = AdBrixRM.getInstance
-            adBrix.deepLinkOpen(url: incomingURL)
-            return true
+        guard userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+              let incomingURL = userActivity.webpageURL
+        else {
+            return false
+        }
+        
+        print("DEEPLINK :: UniversialLink was clicked !! incomingURL - \(incomingURL)")
+        NSLog("UNIVERSAL LINK OPEN!!!!!!!!!!!!!!!!!")
+        let adBrix = AdBrixRM.getInstance
+        adBrix.deepLinkOpen(url: incomingURL)
+        return true
     }
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         
@@ -239,7 +242,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let container = NSPersistentContainer(name: "TodayIsYou")
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-           
+                
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
         })
@@ -252,7 +255,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             do {
                 try context.save()
             } catch {
-               let nserror = error as NSError
+                let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
@@ -284,14 +287,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             let from_user_id = data["from_user_id"].stringValue
                             let user_name = data["user_name"].stringValue
                             
-                            if type == .cam {
-//                                ["message_key": 8813, "room_key": CAM_20210601132028_21, "from_user_id": a52fd10c131f149663a64ab074d5b44b, "msg_cmd": CAM, "user_id": c4f3f037ff94f95fe144fc9aed76f0b6]
-                                let vc = CamCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
-                                self.mainNavigationCtrl.pushViewController(vc, animated: true)
+                            let canCall = self.checkPoint(callType: type, connectedType: .answer)
+                            if canCall == true {
+                                if type == .cam {
+                                    //                                ["message_key": 8813, "room_key": CAM_20210601132028_21, "from_user_id": a52fd10c131f149663a64ab074d5b44b, "msg_cmd": CAM, "user_id": c4f3f037ff94f95fe144fc9aed76f0b6]
+                                    let vc = CamCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
+                                    self.mainNavigationCtrl.pushViewController(vc, animated: true)
+                                }
+                                else  {
+                                    let vc = PhoneCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
+                                    self.mainNavigationCtrl.pushViewController(vc, animated: true)
+                                }
                             }
-                            else  {
-                                let vc = PhoneCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
-                                self.mainNavigationCtrl.pushViewController(vc, animated: true)
+                            else {
+                                self.showPointLackPopup(callType: type)
                             }
                         }
                         ShareData.ins.dfsRemove(DfsKey.pushData)
@@ -300,7 +309,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         
                     }
                 }
-//                NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: pushData)
+                //                NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: pushData)
             }
         }
         
@@ -351,7 +360,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         } fail: { erro in
-
+            
         }
     }
     
@@ -378,17 +387,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             else if action == 101 { //수락
                 self.removeCallingView()
-                let user_name = data["user_name"].stringValue
-                let room_key = data["room_key"].stringValue
-                let from_user_id = data["from_user_id"].stringValue
                 
-                if type == .cam {
-                    let vc = CamCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
-                    self.mainNavigationCtrl.pushViewController(vc, animated: true)
+                let canCall = self.checkPoint(callType: type, connectedType: .answer)
+                
+                if canCall == true {
+                    let user_name = data["user_name"].stringValue
+                    let room_key = data["room_key"].stringValue
+                    let from_user_id = data["from_user_id"].stringValue
+                    if type == .cam {
+                        let vc = CamCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
+                        self.mainNavigationCtrl.pushViewController(vc, animated: true)
+                    }
+                    else  {
+                        let vc = PhoneCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
+                        self.mainNavigationCtrl.pushViewController(vc, animated: true)
+                    }
                 }
-                else  {
-                    let vc = PhoneCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
-                    self.mainNavigationCtrl.pushViewController(vc, animated: true)
+                else {
+                    self.showPointLackPopup(callType: type)
                 }
             }
             else if action == 200 { //터치시 확장
@@ -647,6 +663,182 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func checkPoint(callType:PushType, connectedType:ConnectionType) -> Bool {
+        //        #if DEBUG
+        //        ShareData.ins.myPoint = NSNumber(integerLiteral: 100)
+        //        #endif
+        
+        //여성은 무료, 남성만 포인트 체크한다.
+        if ShareData.ins.mySex == .femail  {
+            return true
+        }
+        
+        guard let curPoint = ShareData.ins.myPoint, curPoint.intValue > 0 else {
+            return false
+        }
+        
+        var basePoint = 0
+        if (callType == .cam) {
+            basePoint = 1200
+            if let bPoint = ShareData.ins.dfsGet(DfsKey.camOutStartPoint) as? NSNumber, bPoint.intValue > 0 {
+                basePoint = bPoint.intValue
+            }
+        }
+        else if callType == .phone {
+            basePoint = 600
+            if let bPoint = ShareData.ins.dfsGet(DfsKey.phoneOutStartPoint) as? NSNumber, bPoint.intValue > 0 {
+                basePoint = bPoint.intValue
+            }
+        }
+        //        if connectedType == .answer { //수신 내가 받는것
+        //
+        //        }
+        //        else { //발신 내가 콜 거는것
+        //
+        //        }
+        
+        guard curPoint.intValue > basePoint else {
+            return false
+        }
+        
+        return true
+    }
+    
+    //포인트 부족 팝업
+    func showPointLackPopup(callType:PushType) {
+        var nowPoint = 0
+        if let point = ShareData.ins.myPoint, point.intValue > 0 {
+            nowPoint = point.intValue
+        }
+        
+        var basePoint = 0
+        if (callType == .cam) {
+            basePoint = 1200
+            if let bPoint = ShareData.ins.dfsGet(DfsKey.camOutStartPoint) as? NSNumber, bPoint.intValue > 0 {
+                basePoint = bPoint.intValue
+            }
+        }
+        else if callType == .phone {
+            basePoint = 600
+            if let bPoint = ShareData.ins.dfsGet(DfsKey.phoneOutStartPoint) as? NSNumber, bPoint.intValue > 0 {
+                basePoint = bPoint.intValue
+            }
+        }
+        
+        let title = NSLocalizedString("activity_txt451", comment: "포인트가 부족 합니다.")
+        
+        if (nowPoint < 0) {
+            nowPoint = 0
+        }
+        let msg = "\(nowPoint) \(NSLocalizedString("activity_txt449", comment: "포인트가 남아 있습니다.\n최소")) \(basePoint)  \(NSLocalizedString("activity_txt450", comment: "포인트가 필요 합니다."))"
+        
+        let vc = CAlertViewController.init(type: .alert,title: title, message: msg, actions: nil) { vcs, selItem, action in
+            vcs.dismiss(animated: true, completion: nil)
+            
+            if action == 1 {
+                let pointVc = PointPurchaseViewController.instantiateFromStoryboard(.main)!
+                AppDelegate.ins.mainNavigationCtrl.pushViewController(pointVc, animated: true)
+            }
+        }
+        vc.addAction(.cancel, NSLocalizedString("activity_txt479", comment: "취소"))
+        vc.addAction(.ok, NSLocalizedString("activity_txt452", comment: "충전"))
+        AppDelegate.ins.window?.rootViewController?.present(vc, animated: false, completion: nil)
+    }
+    
+    
+    func startPreventingRecording() {
+        NotificationCenter.default.addObserver(self, selector: #selector(didDetectRecording), name: UIScreen.capturedDidChangeNotification, object: nil)
+        
+    }
+    
+    @objc private func didDetectRecording() {
+//        DispatchQueue.main.async {
+//            self.hideScreen()
+            self.presentwarningWindow()
+//        }
+    }
+    func startPreventingScreenshot() {
+//        NotificationCenter.default.addObserver(self, selector: #selector(didDetectScreenshot), name: UIApplication.userDidTakeScreenshotNotification, object: nil)
+        NotificationCenter.default.addObserver(forName: UIApplication.userDidTakeScreenshotNotification, object: nil, queue: .main) { notification in
+            let fetchOptions = PHFetchOptions()
+            // 생성 날짜 순으로 정렬
+            fetchOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
+            
+            // 지정한 옵션으로 정렬된 모든 이미지를 가져옴
+            let fetchResult = PHAsset.fetchAssets(with: .image, options: fetchOptions)
+            
+            // 정렬된 이미지 중 가장 최근 이미지를 가져옴
+            guard let capturedImage = fetchResult.firstObject else { return }
+            
+            // 삭제 동작 수행
+            PHAssetChangeRequest.deleteAssets([capturedImage] as NSFastEnumeration)
+            
+//            PHPhotoLibrary.shared().performChanges({
+//
+//                print("여기 도착 1")
+//            }) { isSuccess, error in
+//                // 성공, 실패 후 동작 처리
+//                (isSuccess) ? print("여기 도착 1") : print("여기 도착 2")
+//            }
+        }
+    }
+    
+    @objc private func didDetectScreenshot() {
+//        DispatchQueue.main.async {
+//            self.hideScreen()
+            self.presentwarningWindow()
+//        }
+    }
+    private func hideScreen() {
+//        if UIScreen.main.isCaptured {
+//            window?.isHidden = true
+//        } else {
+//            window?.isHidden = false
+//        }
+//        print("isCapture : \(UIScreen.main.isCaptured)")
+    }
+    private func presentwarningWindow() {
+        // Remove exsiting
+        warningWindow?.removeFromSuperview()
+        warningWindow = nil
+
+        guard let frame = window?.bounds else { return }
+
+        // Warning label
+        let label = UILabel(frame: frame)
+        label.numberOfLines = 0
+        label.font = UIFont.boldSystemFont(ofSize: 40)
+        label.textColor = .white
+        label.textAlignment = .center
+        label.text = "Screen recording is not allowed at our app!"
+
+        // warning window
+        var warningWindow = UIWindow(frame: frame)
+
+        let windowScene = UIApplication.shared
+            .connectedScenes
+            .first {
+                $0.activationState == .foregroundActive
+            }
+        if let windowScene = windowScene as? UIWindowScene {
+            warningWindow = UIWindow(windowScene: windowScene)
+        }
+
+        warningWindow.frame = frame
+        warningWindow.backgroundColor = .black
+        warningWindow.windowLevel = UIWindow.Level.statusBar + 1
+        warningWindow.clipsToBounds = true
+        warningWindow.isHidden = false
+        warningWindow.addSubview(label)
+
+        self.warningWindow = warningWindow
+
+        UIView.animate(withDuration: 0.15) {
+            label.alpha = 1.0
+            label.transform = .identity
+        }
+        warningWindow.makeKeyAndVisible()
+    }
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {

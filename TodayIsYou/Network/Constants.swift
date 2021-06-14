@@ -12,7 +12,8 @@ let baseUrl = "http://211.233.15.31:8080"
 let soketUrl = "http://211.233.15.31:8081"
 let rootPath = "api"
 let cyberUrl = "https://www.cyber1388.kr:447"
-
+let baseUrl2 = "https://api3.todayisyou.co.kr"
+    
 let appType: String = "I1"
 let KakaoNativeAppKey = "4ed15923e57b40951d49163ec6250484"
 
@@ -92,7 +93,7 @@ enum SortedType: String {
     case total = "total"
     case femail = "femail"
     case mail = "mail"
-
+    
     func displayName() -> String {
         if self == .mail {
             return "layout_txt08".localized
@@ -113,6 +114,17 @@ enum SortedType: String {
         }
         else {
             return ""
+        }
+    }
+    static func getSortType(_ gender: Gender) -> SortedType {
+        if gender == .femail {
+            return .femail
+        }
+        else if gender == .mail {
+            return .mail
+        }
+        else {
+            return .total
         }
     }
 }

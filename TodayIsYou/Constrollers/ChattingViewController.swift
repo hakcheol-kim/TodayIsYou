@@ -471,16 +471,6 @@ class ChattingViewController: MainActionViewController {
             }
         }
         else if sender == btnCamera {
-            //시뮬레이터일때 죽는것 방지
-            guard UIImagePickerController.isSourceTypeAvailable(.camera) == true else {
-                let alertController = UIAlertController(title: nil, message: "Device has no camera.", preferredStyle: .alert)
-                let okAction = UIAlertAction(title: "Alright", style: .default, handler: { (alert: UIAlertAction!) in
-                })
-                alertController.addAction(okAction)
-                self.present(alertController, animated: true, completion: nil)
-                return
-            }
-            
             let picker = CImagePickerController.init() { (origin, crop) in
                 guard let crop = crop else {
                     return

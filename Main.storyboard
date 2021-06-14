@@ -1071,6 +1071,7 @@
                                                             <userDefinedRuntimeAttribute type="number" keyPath="insetR">
                                                                 <real key="value" value="0.0"/>
                                                             </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedPlaceHolder" value="join_activity06"/>
                                                         </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <outlet property="delegate" destination="PMN-Vs-CTI" id="wFv-FU-Fmc"/>
@@ -1168,11 +1169,12 @@
                                                     <constraint firstAttribute="height" constant="45" id="Ypb-p3-U2R"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
-                                                <state key="normal" title="프로파일 저장"/>
+                                                <state key="normal" title="프로필 저장"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                         <real key="value" value="4"/>
                                                     </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="layout_txt127"/>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="onClickedBtnActions:" destination="PMN-Vs-CTI" eventType="touchUpInside" id="4xC-Dy-qr8"/>
@@ -5418,6 +5420,7 @@
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                         <real key="value" value="4"/>
                                                     </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="layout_txt107"/>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="onClickedBtnActions:" destination="A1L-mK-G0J" eventType="touchUpInside" id="7ql-Em-RLN"/>

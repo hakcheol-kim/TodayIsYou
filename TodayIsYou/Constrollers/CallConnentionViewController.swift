@@ -76,16 +76,28 @@ class CallConnentionViewController: BaseViewController {
             let room_key = data["room_key"].stringValue
             let from_user_id = data["from_user_id"].stringValue
             
-            let vc = CamCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
-            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+            let canCall = AppDelegate.ins.checkPoint(callType: .cam, connectedType: .answer)
+          
+            if canCall {
+                let vc = CamCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
+                AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+            }
+            else {
+                AppDelegate.ins.showPointLackPopup(callType: .cam)
+            }
         }
         else if sender == btnPhoneCall {
-            let user_name = data["user_name"].stringValue
-            let room_key = data["room_key"].stringValue
-            let from_user_id = data["from_user_id"].stringValue
-            
-            let vc = PhoneCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
-            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+            let canCall = AppDelegate.ins.checkPoint(callType: .phone, connectedType: .answer)
+            if canCall {
+                let user_name = data["user_name"].stringValue
+                let room_key = data["room_key"].stringValue
+                let from_user_id = data["from_user_id"].stringValue
+                let vc = PhoneCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
+                AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+            }
+            else {
+                AppDelegate.ins.showPointLackPopup(callType: .phone)
+            }
         }
     }
     ///MARK::push handler

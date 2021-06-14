@@ -40,8 +40,8 @@ class LeftSideMenuViewController: UIViewController {
                                       ["title": NSLocalizedString("layout_txt23", comment: "공지사항"), "imgName": "bell"],
                                       ["title": NSLocalizedString("activity_txt291", comment: "찜 목록"), "imgName": "hand.tap"],
                                       ["title": NSLocalizedString("activity_txt165", comment: "차단목록"), "imgName": "xmark.circle"],
-                                      ["title": NSLocalizedString("activity_txt284", comment: "사용자 접속목록"), "imgName": "person"],
-                                      ["title": NSLocalizedString("log_out", comment: "로그아웃"), "imgName": "arrow.backward.square"]]
+                                      ["title": NSLocalizedString("activity_txt284", comment: "사용자 접속목록"), "imgName": "person"]]
+//                                      ["title": NSLocalizedString("log_out", comment: "로그아웃"), "imgName": "arrow.backward.square"]]
     
     override func viewDidLoad() {
         super.viewDidLoad()

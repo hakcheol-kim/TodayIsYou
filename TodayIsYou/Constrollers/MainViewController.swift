@@ -21,8 +21,9 @@ class MainViewController: BaseViewController {
     
     var oldSelIndex: Int = -1
     var selectedVc: UIViewController?
-    var videoSortType: SortedType = .total
-    var videoListType: ListType = .table
+    
+    var videoSortType: SortedType = SortedType.getSortType(ShareData.ins.mySex.transGender())
+    var videoListType: ListType = .collection
     
     var selIndex:Int = 0 {
         didSet {

@@ -175,13 +175,19 @@ class MainActionViewController: BaseViewController {
         
         ApiManager.ins.requestPhoneCallInsertMsg(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
+            
             if isSuccess == "01" {
-                let to_user_name = res["to_user_name"].stringValue
-                let to_user_id = res["to_user_id"].stringValue
-                let room_key = res["room_key"].stringValue
-                let vc = PhoneCallViewController.initWithType(.offer, room_key, to_user_id, to_user_name, self.selUser)
-                
-                self.navigationController?.pushViewController(vc, animated: true)
+                let canCall = AppDelegate.ins.checkPoint(callType: .phone, connectedType: .offer)
+                if canCall {
+                    let to_user_name = res["to_user_name"].stringValue
+                    let to_user_id = res["to_user_id"].stringValue
+                    let room_key = res["room_key"].stringValue
+                    let vc = PhoneCallViewController.initWithType(.offer, room_key, to_user_id, to_user_name, self.selUser)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                else {
+                    AppDelegate.ins.showPointLackPopup(callType: .phone)
+                }
             }
             else {
                 self.showErrorToast(res)
@@ -206,11 +212,18 @@ class MainActionViewController: BaseViewController {
         ApiManager.ins.requestCamCallInsertMsg(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
-                let to_user_name = res["to_user_name"].stringValue
-                let to_user_id = res["to_user_id"].stringValue
-                let room_key = res["room_key"].stringValue
-                let vc = CamCallViewController.initWithType(.offer, room_key, to_user_id, to_user_name, self.selUser)
-                self.navigationController?.pushViewController(vc, animated: true)
+                
+                let canCall = AppDelegate.ins.checkPoint(callType: .cam, connectedType: .offer)
+                if canCall {
+                    let to_user_name = res["to_user_name"].stringValue
+                    let to_user_id = res["to_user_id"].stringValue
+                    let room_key = res["room_key"].stringValue
+                    let vc = CamCallViewController.initWithType(.offer, room_key, to_user_id, to_user_name, self.selUser)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                else {
+                    AppDelegate.ins.showPointLackPopup(callType: .cam)
+                }
             }
             else {
                 self.showErrorToast(res)

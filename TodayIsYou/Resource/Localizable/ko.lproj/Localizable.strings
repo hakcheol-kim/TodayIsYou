@@ -1,7 +1,7 @@
-"CRRefreshHeaderIdleText" = "아래로 당겨 새로 고침";
-"CRRefreshHeaderPullingText" = "새로 고침하려면 놓으세요.";
-"CRRefreshHeaderRefreshingText" = "로딩 중...";
 "app_name" = "오늘은너야" ;
+"CRRefreshHeaderIdleText" = "아래로 당겨 새로 고침" ;
+"CRRefreshHeaderPullingText" = "새로 고침하려면 놓으세요." ;
+"CRRefreshHeaderRefreshingText" = "로딩 중..." ;
 "navigation_drawer_open" = "Open navigation drawer" ;
 "navigation_drawer_close" = "Close navigation drawer" ;
 "yk1" = "가입약관" ;
@@ -616,3 +616,14 @@
 "permission_gallery_stting" = "액세스를 사용하려면 설정> 개인 정보 보호> 사진 접근 권한을 허용해주세요." ;
 "pending_renewal" = "이미 구독중인 상품입니다." ;
 "account_holder_name" = "예금주" ;
+"PHOTO" = "사진" ;
+"AEAF_LOCK_TEXT" = "AE / AF 잠금" ;
+"API_CANCEL_TITLE" = "취소" ;
+"HDR_AUTO" = "자동" ;
+"HDR_ON" = "On" ;
+"HDR_OFF" = "Off" ;
+"TIMER_OFF_TEXT" = "Off" ;
+"USE_PHOTO" = "사진 사용" ;
+"PHOTOS" = "사진" ;
+"CAMERA_ROLL" = "카메라 롤" ;
+"ALL_SCREENSHOTS" = "스크린 샷" ;

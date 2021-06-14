@@ -16,7 +16,7 @@ class TermsViewController: BaseViewController {
     @IBOutlet weak var tvContent: CTextView!
     
     var fontContent = UIFont.systemFont(ofSize: 14, weight: .regular)
-    var vcTitle: String = "약관"
+    var vcTitle: String = NSLocalizedString("login_term", comment: "약관")
     var content: String = ""
     var type: TermsType = .nomarl
     

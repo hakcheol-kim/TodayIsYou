@@ -99,7 +99,7 @@ class TalkWriteViewController: BaseViewController {
         lbMsg.text = NSLocalizedString("activity_txt520", comment: "사진은 검증된 이미지만 등록 됩니다.")
         if type == .cam {
             if let camDayPoint = ShareData.ins.dfsGet(DfsKey.camDayPoint) as? NSNumber, camDayPoint.intValue > 0, "남" == ShareData.ins.mySex.rawValue {
-                lbMsg.text = NSLocalizedString("activity_txt522", comment: "사진은 검증된 이미지만 등록 됩니다.\n1일 1회 토크 등록시 ") + camDayPoint.stringValue + NSLocalizedString("activity_txt446", comment: "P를 적립해 드립니다")
+                lbMsg.text = NSLocalizedString("activity_txt522", comment: "사진은 검증된 이미지만 등록 됩니다.\n1일 1회 토크 등록시 ") + " \(camDayPoint.stringValue)" + NSLocalizedString("activity_txt446", comment: "P를 적립해 드립니다")
             }
         }
         else if type == .cam {
@@ -108,7 +108,7 @@ class TalkWriteViewController: BaseViewController {
             }
         }
         btnLink.isHidden = true
-        if type == .cam {
+        if type == .cam && ShareData.ins.mySex == .femail {
             btnLink.isHidden = false
             let msg = NSLocalizedString("layout_txt14", comment:"영상 채팅으로 적립 받고 환급받는 방법을 알아보기")
             let attr = NSAttributedString.init(string: msg, attributes: [NSAttributedString.Key.underlineStyle : NSUnderlineStyle.single.rawValue])

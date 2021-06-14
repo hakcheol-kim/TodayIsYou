@@ -174,5 +174,5 @@ class BaseViewController: UIViewController {
         let controller = LightboxController(images: images, startIndex: 0)
         controller.dynamicBackground = true
         present(controller, animated: true, completion: nil)
-    }
+    }    
 }

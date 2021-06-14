@@ -19,16 +19,10 @@ class ProfileManagerViewController: BaseViewController {
     
     var userInfo:JSON!
     
-    var selAge: String = "" {
-        didSet {
-            if let lbAge = btnAge.viewWithTag(100) as? UILabel {
-                lbAge.text = selAge
-            }
-        }
-    }
+    var selAge: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
-        CNavigationBar.drawBackButton(self, "프로필 수정", #selector(actionNaviBack))
+        CNavigationBar.drawBackButton(self, NSLocalizedString("activity_txt467", comment: "프로필 수정"), #selector(actionNaviBack))
         tfNickName.inputAccessoryView = accessoryView
         accessoryView.addTarget(self, selctor: #selector(actionKeybardDown))
         
@@ -63,10 +57,15 @@ class ProfileManagerViewController: BaseViewController {
         
         tfNickName.text = user_name
         let lbGender = btnGender.viewWithTag(100) as! UILabel
-        lbGender.text = user_sex
+        lbGender.text = Gender.localizedString(user_sex)
         lbGender.textColor = RGB(125, 125, 125)
         
-        self.selAge = user_age
+        if selAge.isEmpty == true {
+            selAge = user_age
+        }
+        if let lbAge = btnAge.viewWithTag(100) as? UILabel {
+            lbAge.text = Age.localizedString(selAge)
+        }
         
         let ivProfile = btnProfile.viewWithTag(100) as! UIImageViewAligned
         if let url = Utility.thumbnailUrl(user_id, user_img) {
@@ -81,34 +80,40 @@ class ProfileManagerViewController: BaseViewController {
         }
         
     }
+    
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         if sender == btnGender {
-            self.showToast("성별은 변경이 불가합니다.")
+            self.showToast(NSLocalizedString("not_changed_gender", comment: "성별은 변경이 불가합니다."))
         }
         else if sender == btnProfile {
             let vc = PhotoManagerViewController.instantiate(with: .profile)
             self.navigationController?.pushViewController(vc, animated: true)
         }
         else if sender == btnAge {
-            guard let ageRange = ShareData.ins.getAge() else {
-                return
+            var ageRange = [String]()
+            for i in 2..<9 {
+                ageRange.append(NSLocalizedString("age_\(i)", comment: ""))
             }
-            let vc = PopupListViewController.initWithType(.normal, "선택해주세요.", ageRange, nil) { (vcs, selItem, index) in 
+            
+            let vc = PopupListViewController.initWithType(.normal, NSLocalizedString("popup_tilte_select", comment: "선택해주세요."), ageRange, nil) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 guard let selItem = selItem as? String else {
                     return
                 }
-                self.selAge = selItem
+                self.selAge = Age.severKey(selItem)
+                if let lbAge = self.btnAge.viewWithTag(100) as? UILabel {
+                    lbAge.text = Age.localizedString(self.selAge)
+                }
             }
             self.presentPanModal(vc)
         }
         else if sender == btnOk {
             guard let text = tfNickName.text, text.isEmpty == false else {
-                self.showToast("닉네임을 입력해주세요.")
+                self.showToast(NSLocalizedString("join_activity06", comment: "닉네임을 입력해주세요."))
                 return
             }
             guard text.length > 2 else {
-                self.showToast("닉네은 3자 이상입니다.")
+                self.showToast(NSLocalizedString("join_nickname_check", comment: "3글자 이상 닉넴임을 입력해주세요."))
                 return
             }
             
@@ -129,9 +134,27 @@ class ProfileManagerViewController: BaseViewController {
             }
         }
     }
-    
+    @objc func checkNicknameProfanity() {
+        guard let text = tfNickName.text, text.isEmpty == false else {
+            return
+        }
+        let profanNickname = ProfanityFilter.ins.cleanUp(text)
+        tfNickName.text = profanNickname
+    }
 }
+
 extension ProfileManagerViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        ProfileManagerViewController.cancelPreviousPerformRequests(withTarget: self, selector: #selector(checkNicknameProfanity), object: nil)
+        
+        guard let text = textField.text as NSString? else {
+            return false
+        }
+        let newString = text.replacingCharacters(in: range, with: string)
+        perform(#selector(checkNicknameProfanity), with: nil, afterDelay: 0.3)
+        return true
+    }
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if let textField = textField as? CTextField {
             textField.borderColor = RGB(230, 100, 100)
@@ -141,5 +164,12 @@ extension ProfileManagerViewController: UITextFieldDelegate {
         if let textField = textField as? CTextField {
             textField.borderColor = RGB(216, 216, 216)
         }
+        if textField == tfNickName {
+            self.checkNicknameProfanity()
+        }
+    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return true
     }
 }

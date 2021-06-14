@@ -1,7 +1,7 @@
-"CRRefreshHeaderIdleText" = "Pull down to refresh";
-"CRRefreshHeaderPullingText" = "Release to refresh";
-"CRRefreshHeaderRefreshingText" = "Loading...";
 "app_name" = "Todayis" ;
+"CRRefreshHeaderIdleText" = "Pull down to refresh" ;
+"CRRefreshHeaderPullingText" = "Release to refresh" ;
+"CRRefreshHeaderRefreshingText" = "Loading..." ;
 "navigation_drawer_open" = "Open" ;
 "navigation_drawer_close" = "Close" ;
 "yk1" = "Terms and Conditions" ;
@@ -82,7 +82,7 @@
 "layout_txt08" = "Male" ;
 "layout_txt09" = "Chat available" ;
 "layout_txt14" = "Learn how to earn points and receive reimbursement through video chat" ;
-"layout_txt15" = "Start video chat" ;
+"layout_txt15" = "Video Talk Registration" ;
 "layout_txt16" = "Block" ;
 "layout_txt19" = "Gift" ;
 "layout_txt20" = "Cash transactions during video chat are illegal.\nWe are not responsible for any losses." ;
@@ -176,7 +176,7 @@
 "layout_txt140" = "Send SMS" ;
 "layout_txt141" = "Time left : sec" ;
 "layout_txt142" = "Verify" ;
-"layout_txt145" = "register" ;
+"layout_txt145" = "Talk Registeration" ;
 "layout_txt146" = "Turn off" ;
 "activity_txt01" = "This is your account" ;
 "activity_txt03" = "Video chat is unavailable for the same gender!!" ;
@@ -616,3 +616,14 @@
 "permission_gallery_stting" = "To enable access, please go to Settings > Privacy > Allow photo access." ;
 "pending_renewal" = "This product is already subscribed to." ;
 "account_holder_name" = "depositor of bank" ;
+"PHOTO" = "PHOTO" ;
+"AEAF_LOCK_TEXT" = "AE/AF LOCK" ;
+"API_CANCEL_TITLE" = "Cancel" ;
+"HDR_AUTO" = "Auto" ;
+"HDR_ON" = "On" ;
+"HDR_OFF" = "Off" ;
+"TIMER_OFF_TEXT" = "Off" ;
+"USE_PHOTO" = "Use Photo" ;
+"PHOTOS" = "Photos" ;
+"CAMERA_ROLL" = "Camera roll" ;
+"ALL_SCREENSHOTS" = "Screenshots" ;

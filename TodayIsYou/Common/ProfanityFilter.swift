@@ -12,7 +12,7 @@ class ProfanityFilter: NSObject {
     static let ins = ProfanityFilter()
     private override init() {}
 
-    private let dirtyWords = "바보|멍청이|카톡|카똑|라인|까톡|까똑|카토|ㅋㅌ|catok|ㅋㅏ|ㅋ ㅏ|카뚝|캬뚝|섹스|쎅스|sex"
+    private let dirtyWords = "바보|멍청이|카톡|카똑|라인|까톡|까똑|카토|ㅋㅌ|catok|ㅋㅏ|ㅋ ㅏ|카뚝|캬뚝|바부|까또옥|인스타"
 
     private func matches(for regex: String, in text: String) -> [String] {
 

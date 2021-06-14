@@ -12,16 +12,15 @@ class PhotoTalkWriteViewController: BaseViewController {
     @IBOutlet weak var lbMsg: UILabel!
     @IBOutlet weak var btnAddPhoto: CButton!
     @IBOutlet weak var collectionView: UICollectionView!
-    
     @IBOutlet weak var btnLink: UIButton!
     
     var listData:[JSON] = []
     override func viewDidLoad() {
         super.viewDidLoad()
-        CNavigationBar.drawBackButton(self, "포토 토크 등록", #selector(actionNaviBack))
+        CNavigationBar.drawBackButton(self, NSLocalizedString("layout_txt107", comment: "포토 토크 등록"), #selector(actionNaviBack))
         collectionView.register(UINib(nibName: "PhotoCell", bundle: nil), forCellWithReuseIdentifier: "PhotoCell")
         
-        let attr = NSAttributedString.init(string: "사진 등록하고 적립, 환급받는 방법 알아보기", attributes: [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue])
+        let attr = NSAttributedString.init(string: NSLocalizedString("layout_txt108", comment: "사진 등록하고 적립, 환급받는 방법 알아보기"), attributes: [NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue])
         btnLink.setAttributedTitle(attr, for: .normal)
         
         let layout = UICollectionViewFlowLayout.init()
@@ -30,9 +29,14 @@ class PhotoTalkWriteViewController: BaseViewController {
         layout.minimumInteritemSpacing = 0
         collectionView.collectionViewLayout = layout
         
-        lbMsg.text = "사진은 검증된 사진만 등록합니다."
+        lbMsg.text = NSLocalizedString("activity_txt444", comment: "사진은 검증된 사진만 등록합니다.")
         if "남" == ShareData.ins.mySex.rawValue, let point = ShareData.ins.dfsGet(DfsKey.photoDayPoint) as? NSNumber, point.intValue > 0 {
-            lbMsg.text = "사진은 검증된 사진만 등록 됩니다.\n사진 등록시 1일 1회 \(point.stringValue.addComma())P를 적립해 드립니다"
+            lbMsg.text = NSLocalizedString("activity_txt445", comment: "사진은 검증된 사진만 등록 됩니다.\n사진 등록시 1일 1회") + "  \(point.stringValue.addComma())" + NSLocalizedString("activity_txt446", comment: "P를 적립해 드립니다")
+        }
+        
+        btnLink.isHidden = true
+        if ShareData.ins.mySex == .femail {
+            btnLink.isHidden = false
         }
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -121,7 +125,7 @@ extension PhotoTalkWriteViewController: UICollectionViewDataSource, UICollection
         collectionView.deselectItem(at: indexPath, animated: true)
         let item = listData[indexPath.row]
         
-        let vc = CAlertViewController.init(type: .alert, title: "삭제/보기", message: "이미지를 삭제 혹은 보기 가능합니다.", actions: nil) { (vcs, selIem, index) in
+        let vc = CAlertViewController.init(type: .alert, title: NSLocalizedString("activity_txt52", comment: "삭제/보기"), message:NSLocalizedString("activity_txt53", comment: "이미지를 삭제 혹은 보기 가능합니다."), actions: nil) { (vcs, selIem, index) in
             vcs.dismiss(animated: true, completion: nil)
             if index == 0  {
                 let seq = item["seq"].stringValue
@@ -149,8 +153,8 @@ extension PhotoTalkWriteViewController: UICollectionViewDataSource, UICollection
                 self.showPhoto(imgUrls: [url])
             }
         }
-        vc.addAction(.ok, "삭제")
-        vc.addAction(.normal, "보기")
+        vc.addAction(.ok, NSLocalizedString("activity_txt55", comment: "삭제"))
+        vc.addAction(.normal, NSLocalizedString("activity_txt424", comment: "보기"))
         present(vc, animated: true, completion: nil)
     }
     
