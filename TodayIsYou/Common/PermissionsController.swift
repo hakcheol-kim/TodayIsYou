@@ -196,19 +196,21 @@ class PermissionsController: NSObject {
         
         if #available(iOS 14, *) {
             ATTrackingManager.requestTrackingAuthorization { status in
-                switch status {
-                    case .authorized:
-                        successBlock()
-                        break
-                    case .denied:
-                        deniedBlock()
-                        break
-                    case .notDetermined, .restricted:
-                        failureBlock()
-                        break
-                    default:
-                        failureBlock()
-                        break
+                DispatchQueue.main.async {
+                    switch status {
+                        case .authorized:
+                            successBlock()
+                            break
+                        case .denied:
+                            deniedBlock()
+                            break
+                        case .notDetermined, .restricted:
+                            failureBlock()
+                            break
+                        default:
+                            failureBlock()
+                            break
+                    }
                 }
             }
         } else {

@@ -176,7 +176,7 @@
 "layout_txt140" = "Send SMS" ;
 "layout_txt141" = "Time left : sec" ;
 "layout_txt142" = "Verify" ;
-"layout_txt145" = "Talk Registeration" ;
+"layout_txt145" = "register" ;
 "layout_txt146" = "Turn off" ;
 "activity_txt01" = "This is your account" ;
 "activity_txt03" = "Video chat is unavailable for the same gender!!" ;
@@ -627,3 +627,12 @@
 "PHOTOS" = "Photos" ;
 "CAMERA_ROLL" = "Camera roll" ;
 "ALL_SCREENSHOTS" = "Screenshots" ;
+"not_changed_gender" = "Gender cannot be changed." ;
+"do_not_see_today" = "do not see today" ;
+"subscription_noti_msg" = "This purchased on a monthly.\nYou will be charged regularly every month from the date of payment." ;
+"subscribe_001" = "$2.99 / Month" ;
+"subscribe_002" = "$4.99 / Month" ;
+"subscribe_003" = "$9.99 / Month" ;
+"subscribe_004" = "$29.49 / Month" ;
+"launch_msg_1" = "WHO CAN I ENJOY\nMEETING TODAY?";
+"launch_msg_2" = "TODAY IS YOU";

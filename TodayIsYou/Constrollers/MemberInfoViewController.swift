@@ -398,6 +398,23 @@ class MemberInfoViewController: BaseViewController {
             user["forgn_lang"] = ShareData.ins.languageCode.uppercased()
             let userId = user["user_id"] as! String
             
+            if let referalParam = ShareData.ins.dfsGet(DfsKey.referalParam) as? [String:Any], referalParam.isEmpty == false {
+//                http://dbdbdeep.com/site19/gate/today/join_result.php?dbdbdeep_userid=&dbdbdeep_tel=01031244920&referrer=TEST_S00259878ZC05487261&mb=Y
+                var param = [String:Any]()
+                param = referalParam
+                param["dbdbdeep_userid"] = userId
+                param["dbdbdeep_tel"] = ""
+                param["mb"] = "Y"
+                
+                ApiManager.ins.requestReferal(param: param) { res in
+                    print("refreal request success")
+                    
+                } fail: { error in
+                    print("refreal request error")
+                }
+                
+                ShareData.ins.dfsRemove(DfsKey.referalParam)
+            }
             ApiManager.ins.requestMemberRegist(param: user) { (response) in
                 let isSuccess = response["isSuccess"].stringValue
                 if isSuccess == "01" {

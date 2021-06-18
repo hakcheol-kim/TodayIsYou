@@ -706,4 +706,26 @@ class ApiManager: NSObject {
             fail?(error)
         }
     }
+    
+    func requestEventList(success: ResSuccess?, fail:ResFailure?) {
+        NetworkManager.ins.request(.get, "http://todayisyou.co.kr/app/banner/main_banner.php", nil) { res in
+            success?(res)
+        } failure: { error in
+            fail?(error)
+        }
+    }
+    func requestReferal(param:[String:Any], success:ResSuccess?, fail:ResFailure?) {
+//        http://dbdbdeep.com/site19/gate/today/join_result.php?dbdbdeep_userid=&dbdbdeep_tel=01031244920&referrer=TEST_S00259878ZC05487261&mb=Y
+        var url: String = "http://dbdbdeep.com/site19/gate/today/join_result.php?"
+        for (key, value) in param {
+            url.append("\(key)=\(value)&")
+        }
+        url.removeLast()
+        
+        NetworkManager.ins.request(.get, url, nil) { res in
+            success?(res)
+        } failure: { error in
+            fail?(error)
+        }
+    }
 }

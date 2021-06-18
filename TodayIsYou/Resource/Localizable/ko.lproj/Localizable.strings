@@ -627,3 +627,12 @@
 "PHOTOS" = "사진" ;
 "CAMERA_ROLL" = "카메라 롤" ;
 "ALL_SCREENSHOTS" = "스크린 샷" ;
+"not_changed_gender" = "성별은 변경이 불가합니다." ;
+"do_not_see_today" = "오늘하루 보지않기" ;
+"subscription_noti_msg" = "본 상품은 월 정기결재 상품입니다.\n결재하신 날로 부터 한달 마다 정기적으로 금액이 청구 됩니다" ;
+"subscribe_001" = "3,500원 / 월" ;
+"subscribe_002" = "5,500원 / 월" ;
+"subscribe_003" = "11,000원 / 월" ;
+"subscribe_004" = "33,000원 / 월" ;
+"launch_msg_1" = "오늘은\n누구랑 셀레는 만남?!" ;
+"launch_msg_2" = "오늘은 너야!" ;

@@ -10,7 +10,8 @@
 	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks : OSxxd1KKyUi6q0BNrFTVog.adtouch.adbrix.io</string>
+		<string>applinks:osxxd1kkyui6q0bnrftvog.adtouch.adbrix.io</string>
+		<string>kr.app.todayis.you</string>
 	</array>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>

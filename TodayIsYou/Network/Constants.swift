@@ -87,6 +87,9 @@ struct DfsKey {
     static let checkPermission = "checkPermission"
     static let languageCode = "languageCode"
     static let updateCheckDate = "updateCheckDate"
+    static let eventBanerSeeDate = "eventBanerSeeDate"
+    static let referalParam = "referalParam"
+    
 }
 
 enum SortedType: String {
@@ -184,6 +187,7 @@ enum Storyboard: String {
     case main = "Main"
     case login = "Login"
     case call = "Call"
+    case other = "Other"
 }
 
 enum PushType: String {

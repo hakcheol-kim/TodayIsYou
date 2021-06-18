@@ -7,7 +7,7 @@
 
 import UIKit
 import SideMenu
-
+import SwiftyJSON
 class MainViewController: BaseViewController {
     
     @IBOutlet weak var tabView: UIView!
@@ -24,7 +24,7 @@ class MainViewController: BaseViewController {
     
     var videoSortType: SortedType = SortedType.getSortType(ShareData.ins.mySex.transGender())
     var videoListType: ListType = .collection
-    
+    var bannerList = [JSON]()
     var selIndex:Int = 0 {
         didSet {
             for btn in btnTabs {
@@ -187,6 +187,7 @@ class MainViewController: BaseViewController {
         AppDelegate.ins.apptrakingPermissionCheck()
         AdbrixEvent.addEventLog(.login, ["user_id": ShareData.ins.myId, "user_name":ShareData.ins.myName, "user_sex":ShareData.ins.mySex.rawValue])
         
+//        self.requestEventList()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -205,6 +206,30 @@ class MainViewController: BaseViewController {
         SideMenuManager.default.leftMenuNavigationController = storyboard?.instantiateViewController(withIdentifier: "LeftMenuNavigationController") as? SideMenuNavigationController
 //        SideMenuManager.default.addPanGestureToPresent(toView: navigationController!.navigationBar)
         SideMenuManager.default.addScreenEdgePanGesturesToPresent(toView: (AppDelegate.ins.window?.rootViewController?.view)!)
+    }
+    func requestEventList() {
+        let dateStr = Date().stringDateWithFormat("yyyyMMdd")
+        let saveDate = ShareData.ins.dfsGet(DfsKey.eventBanerSeeDate) as? String ?? ""
+        if dateStr == saveDate {
+            return
+        }
+        
+        ApiManager.ins.requestEventList { res in
+            let code = res["code"].stringValue
+            let banner_list = res["banner_list"].arrayValue
+            if code == "000", banner_list.count > 0 {
+                self.bannerList = banner_list
+                self.showEventBannerListView()
+            }
+        } fail: { error in
+            self.showErrorToast(error)
+        }
+    }
+    func showEventBannerListView() {
+        let vc = BannerListViewController.instantiateFromStoryboard(.other)!
+        vc.data = bannerList
+        vc.modalPresentationStyle = .overFullScreen
+        self.present(vc, animated: false, completion: nil)
     }
     @IBAction func onclickedBtnActions(_ sender:UIButton) {
         if sender.tag == TAG_NAVI_TITLE {

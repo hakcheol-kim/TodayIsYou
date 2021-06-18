@@ -196,6 +196,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         let adBrix = AdBrixRM.getInstance
         adBrix.deepLinkOpen(url: url)
+        
+        if let param = self.parsingDeepLinkUrl(url.absoluteString), param.isEmpty == false {
+            ShareData.ins.dfsSet(param, DfsKey.referalParam)
+            print("adbrix referal param: \(param)")
+            
+        }
         return false
     }
     //deepling open
@@ -210,6 +216,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NSLog("UNIVERSAL LINK OPEN!!!!!!!!!!!!!!!!!")
         let adBrix = AdBrixRM.getInstance
         adBrix.deepLinkOpen(url: incomingURL)
+        
+        if let param = self.parsingDeepLinkUrl(incomingURL.absoluteString), param.isEmpty == false {
+            ShareData.ins.dfsSet(param, DfsKey.referalParam)
+            print("adbrix referal param: \(param)")
+        }
         return true
     }
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
@@ -839,6 +850,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         warningWindow.makeKeyAndVisible()
     }
+    
+    func parsingDeepLinkUrl(_ url: String) -> [String:Any]? {
+        var referalParam: [String:Any]? = nil
+        do {
+            let arr = url.components(separatedBy: "?")
+            if let quryparam = arr.last {
+                let parameters = quryparam.components(separatedBy: CharacterSet(charactersIn: "=&"))
+                var i = 0
+                referalParam = [String:Any]()
+                while i < parameters.count {
+                    let key: String = parameters[i]
+                    let value: String = parameters[i+1]
+                    referalParam?[key] = value
+                    i = i+2
+                }
+                
+                return referalParam
+            }
+            return referalParam
+        }
+        catch {
+            return referalParam
+        }
+    }
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
@@ -883,6 +918,7 @@ extension AppDelegate: MessagingDelegate {
         let param = ["fcm_token":fcmToken, "user_id": userId]
         ApiManager.ins.requestUpdateFcmToken(param: param) { (res) in
             if res["isSuccess"].stringValue == "01"{
+                print("fcm upload success")
             }
             else {
                 self.window?.makeToast("fcm token update error")
@@ -898,24 +934,25 @@ extension AppDelegate: MessagingDelegate {
             return
         }
         
-        guard let _ = ShareData.ins.dfsGet(DfsKey.userId) else {
-            return
+        if let _ = ShareData.ins.dfsGet(DfsKey.userId) {
+            self.requestUpdateFcmToken()
         }
-        self.requestUpdateFcmToken()
-        
-//        print("==== fcm token: \(fcmToken)")
-//        ApiManager.ins.requestReigstPushToken(param: ["fcm_token":fcmToken]) { (res) in
-//            if res["isSuccess"].stringValue == "01" {
-//                let fcm_cnt = res["fcm_cnt"].intValue
-//                if fcm_cnt > 1 {
-//                }
-//            }
-//            else {
-//                self.window?.makeToast("fcm token update error")
-//            }
-//        } failure: { (error) in
-//            self.window?.makeToast("fcm token update error")
-//        }
+        else {
+            print("==== fcm token: \(fcmToken)")
+            ApiManager.ins.requestReigstPushToken(param: ["fcm_token":fcmToken]) { (res) in
+                if res["isSuccess"].stringValue == "01" {
+                    let fcm_cnt = res["fcm_cnt"].intValue
+                    print("fcm regist success")
+                    if fcm_cnt > 1 {
+                    }
+                }
+                else {
+                    self.window?.makeToast("fcm token update error")
+                }
+            } failure: { (error) in
+                self.window?.makeToast("fcm token update error")
+            }
+        }
     }
 }
 extension AppDelegate : SKStoreProductViewControllerDelegate {
@@ -923,9 +960,17 @@ extension AppDelegate : SKStoreProductViewControllerDelegate {
         viewController.dismiss(animated: true, completion: nil)
     }
 }
+
 extension AppDelegate : AdBrixRMDeeplinkDelegate {
     func didReceiveDeeplink(deeplink: String) {
         //deeplink parssing
         print("adbrix deeplink: \(deeplink)")
+        if deeplink.isEmpty == true {
+            return
+        }
+        if let param = self.parsingDeepLinkUrl(deeplink), param.isEmpty == false {
+            ShareData.ins.dfsSet(param, DfsKey.referalParam)
+            print("adbrix referal param: \(param)")
+        }
     }
 }

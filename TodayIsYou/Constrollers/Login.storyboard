@@ -386,30 +386,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="fJr-Cr-NBc">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="logo_img" translatesAutoresizingMaskIntoConstraints="NO" id="fJr-Cr-NBc">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                             </imageView>
-                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="JjN-AJ-35I">
-                                <rect key="frame" x="32.333333333333343" y="334.66666666666669" width="310.33333333333326" height="153"/>
+                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="tkt-kF-NDC">
+                                <rect key="frame" x="28.666666666666657" y="329.66666666666669" width="318" height="153"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="zhS-uA-x7P" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="310.33333333333331" height="91.333333333333329"/>
-                                        <string key="text">오늘은
-누구랑 셀레는 만남?!</string>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="nrE-RN-t8s" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="318" height="91.333333333333329"/>
+                                        <string key="text">WHO CAN I ENJOY
+MEETING TODAY?</string>
                                         <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="38"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="logo_title1"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="launch_msg_1"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="오늘은 너야!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="zCE-iB-l6e" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="107.33333333333333" width="310.33333333333331" height="45.666666666666671"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TODAY IS YOU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Fkt-hq-gre" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="107.33333333333333" width="318" height="45.666666666666671"/>
                                         <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="38"/>
                                         <color key="textColor" systemColor="systemPinkColor"/>
                                         <nil key="highlightedColor"/>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="logo_title2"/>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="launch_msg_2"/>
                                         </userDefinedRuntimeAttributes>
                                     </label>
                                 </subviews>
@@ -418,17 +418,16 @@
                         <viewLayoutGuide key="safeArea" id="0Ql-Qy-PyI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="tkt-kF-NDC" firstAttribute="centerY" secondItem="TCD-tL-7vm" secondAttribute="centerY" id="2Dw-ZD-Ya7"/>
                             <constraint firstItem="fJr-Cr-NBc" firstAttribute="leading" secondItem="TCD-tL-7vm" secondAttribute="leading" id="LJJ-HI-I0V"/>
-                            <constraint firstItem="JjN-AJ-35I" firstAttribute="width" relation="lessThanOrEqual" secondItem="TCD-tL-7vm" secondAttribute="width" multiplier="0.85" id="OzJ-6P-7ej"/>
-                            <constraint firstItem="JjN-AJ-35I" firstAttribute="centerX" secondItem="0Ql-Qy-PyI" secondAttribute="centerX" id="Rlv-nF-Y6l"/>
                             <constraint firstItem="fJr-Cr-NBc" firstAttribute="top" secondItem="TCD-tL-7vm" secondAttribute="top" id="dGl-3r-UZz"/>
+                            <constraint firstItem="tkt-kF-NDC" firstAttribute="centerX" secondItem="TCD-tL-7vm" secondAttribute="centerX" id="sCd-5L-2C8"/>
                             <constraint firstAttribute="trailing" secondItem="fJr-Cr-NBc" secondAttribute="trailing" id="suf-IW-iCE"/>
-                            <constraint firstItem="JjN-AJ-35I" firstAttribute="centerY" secondItem="0Ql-Qy-PyI" secondAttribute="centerY" id="uJ8-zq-Rdr"/>
                             <constraint firstAttribute="bottom" secondItem="fJr-Cr-NBc" secondAttribute="bottom" id="yki-m8-HSm"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="ivBg" destination="fJr-Cr-NBc" id="rjj-76-GIs"/>
+                        <outlet property="ivBg" destination="fJr-Cr-NBc" id="Hhi-Fj-d79"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="llH-Zi-Sg1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1501,13 +1500,105 @@
             <point key="canvasLocation" x="924" y="136"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="145-F6-6UZ">
+            <size key="intrinsicContentSize" width="26" height="19.666666666666668"/>
+        </designable>
+        <designable name="54d-Su-4hH">
+            <size key="intrinsicContentSize" width="123" height="19.666666666666668"/>
+        </designable>
+        <designable name="8oo-zk-0pK">
+            <size key="intrinsicContentSize" width="100.66666666666667" height="14.333333333333334"/>
+        </designable>
+        <designable name="EIb-L8-jck">
+            <size key="intrinsicContentSize" width="34" height="15.666666666666666"/>
+        </designable>
+        <designable name="G81-M6-ew5">
+            <size key="intrinsicContentSize" width="121.33333333333333" height="14.333333333333334"/>
+        </designable>
+        <designable name="Hn2-8y-SbC">
+            <size key="intrinsicContentSize" width="126.33333333333333" height="15.666666666666666"/>
+        </designable>
+        <designable name="IwP-6m-9ae">
+            <size key="intrinsicContentSize" width="217.33333333333334" height="15.666666666666666"/>
+        </designable>
+        <designable name="KCH-4T-j65">
+            <size key="intrinsicContentSize" width="62.333333333333336" height="28.666666666666668"/>
+        </designable>
+        <designable name="LbA-7O-Jqv">
+            <size key="intrinsicContentSize" width="151" height="19.666666666666668"/>
+        </designable>
+        <designable name="MWC-kX-Kp7">
+            <size key="intrinsicContentSize" width="111" height="14.333333333333334"/>
+        </designable>
+        <designable name="NdG-ST-x64">
+            <size key="intrinsicContentSize" width="78.333333333333329" height="24"/>
+        </designable>
+        <designable name="OOE-f1-HYT">
+            <size key="intrinsicContentSize" width="26" height="19.666666666666668"/>
+        </designable>
+        <designable name="QJN-Ja-7OI">
+            <size key="intrinsicContentSize" width="82.333333333333329" height="19.666666666666668"/>
+        </designable>
+        <designable name="Uoc-A6-JMr">
+            <size key="intrinsicContentSize" width="26" height="19.666666666666668"/>
+        </designable>
+        <designable name="V9b-ft-mqC">
+            <size key="intrinsicContentSize" width="145.33333333333334" height="14.333333333333334"/>
+        </designable>
+        <designable name="VKa-n0-iPx">
+            <size key="intrinsicContentSize" width="56.333333333333336" height="15.666666666666666"/>
+        </designable>
+        <designable name="VUF-4X-o9X">
+            <size key="intrinsicContentSize" width="208.66666666666666" height="15.666666666666666"/>
+        </designable>
+        <designable name="c9t-WA-N02">
+            <size key="intrinsicContentSize" width="232" height="15.666666666666666"/>
+        </designable>
+        <designable name="dUU-2I-Bpv">
+            <size key="intrinsicContentSize" width="123" height="19.666666666666668"/>
+        </designable>
+        <designable name="gP6-uv-REj">
+            <size key="intrinsicContentSize" width="45" height="15.666666666666666"/>
+        </designable>
+        <designable name="luC-Fu-ojz">
+            <size key="intrinsicContentSize" width="45" height="15.666666666666666"/>
+        </designable>
+        <designable name="o1R-A8-91d">
+            <size key="intrinsicContentSize" width="82.333333333333329" height="19.666666666666668"/>
+        </designable>
+        <designable name="oto-YP-hA6">
+            <size key="intrinsicContentSize" width="108.66666666666667" height="15.666666666666666"/>
+        </designable>
+        <designable name="rT7-Q9-dey">
+            <size key="intrinsicContentSize" width="48.666666666666664" height="15.666666666666666"/>
+        </designable>
+        <designable name="riN-Mt-mC6">
+            <size key="intrinsicContentSize" width="45" height="15.666666666666666"/>
+        </designable>
+        <designable name="s5f-8B-Sto">
+            <size key="intrinsicContentSize" width="121.33333333333333" height="14.333333333333334"/>
+        </designable>
+        <designable name="sk1-wo-gPQ">
+            <size key="intrinsicContentSize" width="121.33333333333333" height="14.333333333333334"/>
+        </designable>
+        <designable name="tTF-ec-CxE">
+            <size key="intrinsicContentSize" width="48.666666666666664" height="15.666666666666666"/>
+        </designable>
+        <designable name="vij-TX-CLC">
+            <size key="intrinsicContentSize" width="45" height="15.666666666666666"/>
+        </designable>
+        <designable name="zXp-ND-NGz">
+            <size key="intrinsicContentSize" width="138.33333333333334" height="19.666666666666668"/>
+        </designable>
+    </designables>
     <resources>
         <image name="arrow.clockwise" catalog="system" width="115" height="128"/>
         <image name="camera" catalog="system" width="128" height="94"/>
         <image name="checkmark.square" catalog="system" width="128" height="114"/>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
         <image name="ico_apple" width="14" height="18"/>
-        <image name="logo.png" width="720" height="1280"/>
+        <image name="logo_img" width="240" height="426.66665649414062"/>
         <image name="mic" catalog="system" width="108" height="128"/>
         <image name="photo" catalog="system" width="128" height="93"/>
         <image name="squareshape" catalog="system" width="128" height="114"/>

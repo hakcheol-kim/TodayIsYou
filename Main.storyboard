@@ -1545,7 +1545,7 @@
                                 <rect key="frame" x="0.0" y="299" width="414" height="563"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="1E7-ZW-TKI">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="804"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="841"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Nh3-v5-Yxk">
                                                 <rect key="frame" x="24" y="16" width="366" height="394"/>
@@ -1859,7 +1859,7 @@
                                                 <edgeInsets key="layoutMargins" top="16" left="0.0" bottom="0.0" right="0.0"/>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="y5T-Qj-jcC">
-                                                <rect key="frame" x="24" y="418" width="366" height="274"/>
+                                                <rect key="frame" x="24" y="418" width="366" height="311"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="정기결재" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ria-c7-HOW" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="16" width="366" height="18"/>
@@ -1870,8 +1870,19 @@
                                                             <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="layout_txt121"/>
                                                         </userDefinedRuntimeAttributes>
                                                     </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YtL-0X-vqn" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="42" width="366" height="29"/>
+                                                        <string key="text">본 상품은 월 정기결재 상품입니다.
+결재하신 날로 부터 한달 마다 정기적으로 금액이 청구 됩니다</string>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="subscription_noti_msg"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </label>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eza-XB-4rh" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="42" width="366" height="52"/>
+                                                        <rect key="frame" x="0.0" y="79" width="366" height="52"/>
                                                         <subviews>
                                                             <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="gn0-eq-VxZ">
                                                                 <rect key="frame" x="0.0" y="0.0" width="366" height="52"/>
@@ -1891,7 +1902,7 @@
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="layout_txt117"/>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="subscribe_001"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                 </subviews>
@@ -1920,7 +1931,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view tag="1" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sXF-10-4Ze" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="102" width="366" height="52"/>
+                                                        <rect key="frame" x="0.0" y="139" width="366" height="52"/>
                                                         <subviews>
                                                             <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="u52-id-0Ue">
                                                                 <rect key="frame" x="0.0" y="0.0" width="366" height="52"/>
@@ -1940,7 +1951,7 @@
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="layout_txt118"/>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="subscribe_002"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                 </subviews>
@@ -1968,7 +1979,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view tag="2" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pOH-8d-PDJ" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="162" width="366" height="52"/>
+                                                        <rect key="frame" x="0.0" y="199" width="366" height="52"/>
                                                         <subviews>
                                                             <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Wgj-xO-oNJ">
                                                                 <rect key="frame" x="0.0" y="0.0" width="366" height="52"/>
@@ -1988,7 +1999,7 @@
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="layout_txt119"/>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="subscribe_003"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                 </subviews>
@@ -2016,7 +2027,7 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view tag="3" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GbF-kQ-xMZ" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="222" width="366" height="52"/>
+                                                        <rect key="frame" x="0.0" y="259" width="366" height="52"/>
                                                         <subviews>
                                                             <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="glY-fA-QYA">
                                                                 <rect key="frame" x="0.0" y="0.0" width="366" height="52"/>
@@ -2036,7 +2047,7 @@
                                                                         <color key="textColor" red="0.49019607840000001" green="0.49019607840000001" blue="0.49019607840000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="layout_txt120"/>
+                                                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="subscribe_004"/>
                                                                         </userDefinedRuntimeAttributes>
                                                                     </label>
                                                                 </subviews>
@@ -2072,7 +2083,7 @@
                                                 <edgeInsets key="layoutMargins" top="16" left="0.0" bottom="0.0" right="0.0"/>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N4M-g1-xo4" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
-                                                <rect key="frame" x="24" y="700" width="366" height="43"/>
+                                                <rect key="frame" x="24" y="737" width="366" height="43"/>
                                                 <string key="text">* 부가세(10%)포함 가격입니다.
 * 결제시 포인트 적립에 문제가 있다면 GPA로 시작되는 영수증 코드를 고객센터로 보내주세요.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -2083,7 +2094,7 @@
                                                 </userDefinedRuntimeAttributes>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sk9-xn-Fyf" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
-                                                <rect key="frame" x="24" y="751" width="366" height="45"/>
+                                                <rect key="frame" x="24" y="788" width="366" height="45"/>
                                                 <color key="backgroundColor" red="0.90196078430000004" green="0.3921568627" blue="0.3921568627" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="HAx-5p-ADi"/>
@@ -2103,7 +2114,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1" verticalHuggingPriority="1" horizontalCompressionResistancePriority="1" verticalCompressionResistancePriority="1" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="59Q-0p-18W">
-                                                <rect key="frame" x="24" y="804" width="366" height="0.0"/>
+                                                <rect key="frame" x="24" y="841" width="366" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -6143,6 +6154,9 @@
         </designable>
         <designable name="Wpv-5e-Vf4">
             <size key="intrinsicContentSize" width="109" height="16"/>
+        </designable>
+        <designable name="YtL-0X-vqn">
+            <size key="intrinsicContentSize" width="286.5" height="29"/>
         </designable>
         <designable name="ZE9-Ab-Gkx">
             <size key="intrinsicContentSize" width="112.5" height="18"/>
