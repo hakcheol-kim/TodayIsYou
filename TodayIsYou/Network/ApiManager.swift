@@ -99,9 +99,10 @@ class ApiManager: NSObject {
     }
     ///푸쉬키 및 유저 정보 업데이트
     /// - fcm_token: , user_id
-    func requestUpdatePushTokenAndUserId(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {
-        NetworkManager.ins.request(.post, "/api/talk/updateToken.do", clientPara(param)) { (response) in
-            success?(response)
+    //fcm key update
+    func requestUpdateFcmToken(param:[String:Any],  success:ResSuccess?, failure:ResFailure?) {
+        NetworkManager.ins.request(.post, "/api/talk/updateToken.do", param, URLEncoding.queryString) { (res) in
+            success?(res)
         } failure: { (error) in
             failure?(error)
         }
@@ -366,14 +367,7 @@ class ApiManager: NSObject {
         }
     }
     
-    //fcm key update
-    func requestUpdateFcmToken(param:[String:Any],  success:ResSuccess?, failure:ResFailure?) {
-        NetworkManager.ins.request(.post, "/api/talk/updateToken.do", param, URLEncoding.queryString) { (res) in
-            success?(res)
-        } failure: { (error) in
-            failure?(error)
-        }
-    }
+   
     ///나의 영상토크 정보가져오기
     func requestMyImgTalk(param:[String:Any],  success:ResSuccess?, failure:ResFailure?) {
         NetworkManager.ins.request(.post, "/api/talk/getMyImgTalk.json", clientPara(param)) { (res) in
@@ -722,6 +716,15 @@ class ApiManager: NSObject {
         }
         url.removeLast()
         
+        NetworkManager.ins.request(.get, url, nil) { res in
+            success?(res)
+        } failure: { error in
+            fail?(error)
+        }
+    }
+    //MARK: 앱타입 변경
+    func requestChangeAppType(type: String, userId:String, success:ResSuccess?, fail:ResFailure?) {
+        let url = "https://api3.todayisyou.co.kr/app/check/app_type_check.php?app_type=\(type)&user_id=\(userId)"
         NetworkManager.ins.request(.get, url, nil) { res in
             success?(res)
         } failure: { error in

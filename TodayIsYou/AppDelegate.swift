@@ -16,8 +16,11 @@ import StoreKit
 import AdBrixRM
 import AdSupport
 import Photos
-@main
 
+
+let appDelegate = UIApplication.shared.delegate as! AppDelegate
+
+@main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
@@ -27,20 +30,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var downTimer:Timer?
     var currentLanguage = "en"
     
-    static var ins: AppDelegate {
-        return UIApplication.shared.delegate as! AppDelegate
-    }
     var mainNavigationCtrl: BaseNavigationController {
-        return AppDelegate.ins.window?.rootViewController as! BaseNavigationController
+        return appDelegate.window?.rootViewController as! BaseNavigationController
     }
     var mainViewCtrl: MainViewController {
-        return AppDelegate.ins.mainNavigationCtrl.viewControllers.first as! MainViewController
+        return appDelegate.mainNavigationCtrl.viewControllers.first as! MainViewController
     }
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        currentLanguage = Locale.current.languageCode.localizedLowercase
+        var lanCode = currentLanguage
+        if currentLanguage == "en" {
+            lanCode = "us"
+        }
+        Bundle.swizzleLocalization()
+        
         FirebaseApp.configure()
         self.registApnsPushKey()
-        
         self.apptrakingPermissionCheck()
         
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -59,14 +65,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
         }
         
-        currentLanguage = Locale.current.languageCode.localizedLowercase
-        var lanCode = currentLanguage
-        if currentLanguage == "en" {
-            lanCode = "us"
-        }
         ShareData.ins.dfsSet(lanCode, DfsKey.languageCode)
         ShareData.ins.languageCode = lanCode
-        //        Bundle.swizzleLocalization()
+        
         
         callIntroViewCtrl()
         
@@ -113,8 +114,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             completion?(success)
         }
     }
+    
     func apptrakingPermissionCheck() {
-        
         let adBrix = AdBrixRM.getInstance
         PermissionsController.gloableInstance.checkPermissionAppTracking {
             adBrix.initAdBrix(appKey: "OSxxd1KKyUi6q0BNrFTVog", secretKey: "2h7fSMEmRkyZXvfRLj8NXg")
@@ -133,9 +134,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     func removeApnsPushKey() {
+        UNUserNotificationCenter.current().removeAllDeliveredNotifications()
         Messaging.messaging().delegate = nil
     }
     func registApnsPushKey() {
+        self.removeApnsPushKey()
         Messaging.messaging().delegate = self
         self.registerForRemoteNoti()
     }
@@ -153,7 +156,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func startIndicator() {
         DispatchQueue.main.async(execute: {
-            if let loadingView = AppDelegate.ins.window!.viewWithTag(215000) {
+            if let loadingView = appDelegate.window!.viewWithTag(215000) {
                 loadingView.removeFromSuperview()
             }
             
@@ -178,7 +181,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             //혹시라라도 indicator 계속 돌고 있으면 강제로 제거 해준다. 10초후에
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+60) {
-                if let loadingView = AppDelegate.ins.window!.viewWithTag(215000) {
+                if let loadingView = appDelegate.window!.viewWithTag(215000) {
                     loadingView.removeFromSuperview()
                 }
             }
@@ -230,7 +233,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         print("==== apns token:\(deviceToken.hexString)")
         //파이어베이스에 푸쉬토큰 등록
-        Messaging.messaging().setAPNSToken(deviceToken, type: .prod)
+//        Messaging.messaging().setAPNSToken(deviceToken, type: .prod)
+        Messaging.messaging().apnsToken = deviceToken
     }
     
     // 앱이 백그라운드에있는 동안 알림 메시지를 받으면
@@ -445,7 +449,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setPushData(_ userInfo:[String:Any], _ isBackgroundMode:Bool = false) {
         let userInfo = JSON(userInfo)
         let message = userInfo["message"].stringValue
-        
+        print("push data: \(userInfo)")
         let info = JSON(parseJSON: message)
         let msg_cmd = info["msg_cmd"].stringValue
         guard msg_cmd.length > 0  else {
@@ -490,7 +494,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         else if type  == .msgDel {
             let seq = info["seq"].stringValue
             DBManager.ins.deleteChatMessage(messageKey: seq, nil)
-            AppDelegate.ins.mainViewCtrl.updateUnReadMessageCount()
+            appDelegate.mainViewCtrl.updateUnReadMessageCount()
             NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: info.dictionaryObject)
         }
         else if type == .cam {
@@ -515,22 +519,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.mainViewCtrl.updateUnReadMessageCount()
             }
             
-            if notiYn != "N" {
-                let req = ["user_id":from_user_id]
-                ApiManager.ins.requestGetUserImgTalk(param: req) { (res) in
-                    let isSuccess = res["isSuccess"].stringValue
-                    if isSuccess == "01" {
-                        var data = res
-                        data["message_key"] = info["message_key"]
-                        data["room_key"] = info["room_key"]
-                        data["from_user_id"] = info["from_user_id"]
-                        data["msg_cmd"] = "CAM"
-                        
-                        self.showCallingView(type, data)
-                    }
-                } fail: { (error) in
+            if notiYn == "N" {
+                return
+            }
+            
+            let req = ["user_id":from_user_id]
+            ApiManager.ins.requestGetUserImgTalk(param: req) { (res) in
+                let isSuccess = res["isSuccess"].stringValue
+                if isSuccess == "01" {
+                    var data = res
+                    data["message_key"] = info["message_key"]
+                    data["room_key"] = info["room_key"]
+                    data["from_user_id"] = info["from_user_id"]
+                    data["msg_cmd"] = "CAM"
                     
+                    self.showCallingView(type, data)
                 }
+            } fail: { (error) in
+                
             }
         }
         else if type == .phone {
@@ -664,7 +670,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ApiManager.ins.requestGiveScore(param: param) { res in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
-                AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt356", comment: "등록완료!!"))
+                appDelegate.window?.makeToast(NSLocalizedString("activity_txt356", comment: "등록완료!!"))
             }
             else {
                 print("give score error")
@@ -748,12 +754,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             if action == 1 {
                 let pointVc = PointPurchaseViewController.instantiateFromStoryboard(.main)!
-                AppDelegate.ins.mainNavigationCtrl.pushViewController(pointVc, animated: true)
+                appDelegate.mainNavigationCtrl.pushViewController(pointVc, animated: true)
             }
         }
         vc.addAction(.cancel, NSLocalizedString("activity_txt479", comment: "취소"))
         vc.addAction(.ok, NSLocalizedString("activity_txt452", comment: "충전"))
-        AppDelegate.ins.window?.rootViewController?.present(vc, animated: false, completion: nil)
+        appDelegate.window?.rootViewController?.present(vc, animated: false, completion: nil)
     }
     
     
@@ -929,29 +935,21 @@ extension AppDelegate: MessagingDelegate {
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        guard let _ = fcmToken else {
-            print("===== error: fcm token key not receive")
+        guard let token = fcmToken else {
+            print("==== fcm token key not receive")
             return
         }
         
-        if let _ = ShareData.ins.dfsGet(DfsKey.userId) {
-            self.requestUpdateFcmToken()
-        }
-        else {
-            print("==== fcm token: \(fcmToken)")
-            ApiManager.ins.requestReigstPushToken(param: ["fcm_token":fcmToken]) { (res) in
-                if res["isSuccess"].stringValue == "01" {
-                    let fcm_cnt = res["fcm_cnt"].intValue
-                    print("fcm regist success")
-                    if fcm_cnt > 1 {
-                    }
-                }
-                else {
-                    self.window?.makeToast("fcm token update error")
-                }
-            } failure: { (error) in
-                self.window?.makeToast("fcm token update error")
+        print("==== fcm token: \(token)")
+        ApiManager.ins.requestReigstPushToken(param: ["fcm_token":token]) { (res) in
+            let fcm_cnt = res["fcm_cnt"].intValue
+            print("fcm regist success")
+            if fcm_cnt > 1 {
+                print("handler fcmkey")
             }
+            self.requestUpdateFcmToken()
+        } failure: { (error) in
+            self.window?.makeToast("fcm token update error")
         }
     }
 }

@@ -76,27 +76,27 @@ class CallConnentionViewController: BaseViewController {
             let room_key = data["room_key"].stringValue
             let from_user_id = data["from_user_id"].stringValue
             
-            let canCall = AppDelegate.ins.checkPoint(callType: .cam, connectedType: .answer)
+            let canCall = appDelegate.checkPoint(callType: .cam, connectedType: .answer)
           
             if canCall {
                 let vc = CamCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
-                AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+                appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
             }
             else {
-                AppDelegate.ins.showPointLackPopup(callType: .cam)
+                appDelegate.showPointLackPopup(callType: .cam)
             }
         }
         else if sender == btnPhoneCall {
-            let canCall = AppDelegate.ins.checkPoint(callType: .phone, connectedType: .answer)
+            let canCall = appDelegate.checkPoint(callType: .phone, connectedType: .answer)
             if canCall {
                 let user_name = data["user_name"].stringValue
                 let room_key = data["room_key"].stringValue
                 let from_user_id = data["from_user_id"].stringValue
                 let vc = PhoneCallViewController.initWithType(.answer, room_key, from_user_id , user_name, data)
-                AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+                appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
             }
             else {
-                AppDelegate.ins.showPointLackPopup(callType: .phone)
+                appDelegate.showPointLackPopup(callType: .phone)
             }
         }
     }
@@ -110,7 +110,7 @@ class CallConnentionViewController: BaseViewController {
             if type == .camNo || type == .camCancel {
                 self.dismiss(animated: true, completion: nil)
             }
-            AppDelegate.ins.window?.makeBottomTost("상대가 취소했습니다.")
+            appDelegate.window?.makeBottomTost("상대가 취소했습니다.")
         }
     }
 }

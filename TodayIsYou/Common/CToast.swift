@@ -21,7 +21,7 @@ public extension UIView {
         if let btnToast = self.viewWithTag(tagTostView) as? UIButton {
             btnToast.removeFromSuperview()
         }
-        if let btnToast = AppDelegate.ins.window?.viewWithTag(tagTostView) as? UIButton {
+        if let btnToast = appDelegate.window?.viewWithTag(tagTostView) as? UIButton {
             btnToast.removeFromSuperview()
         }
         
@@ -113,7 +113,7 @@ public extension UIView {
                 toast.removeFromSuperview()
             }
         }
-        AppDelegate.ins.window?.bringSubviewToFront(toast)
+        appDelegate.window?.bringSubviewToFront(toast)
     }
     
 }

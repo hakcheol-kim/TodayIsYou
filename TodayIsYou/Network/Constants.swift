@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 let baseUrlNew = "http://todayisyou.co.kr"
 let baseUrl = "http://211.233.15.31:8080"
+//let baseUrl = "https://api.todayisyou.co.kr"
 let soketUrl = "http://211.233.15.31:8081"
 let rootPath = "api"
 let cyberUrl = "https://www.cyber1388.kr:447"

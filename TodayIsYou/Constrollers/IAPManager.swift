@@ -107,7 +107,7 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
         guard let storeKitProduct = products.first(where: {$0.productIdentifier == product.rawValue}) else {
             return
         }
-        AppDelegate.ins.startIndicator()
+        appDelegate.startIndicator()
         let paymentRequset = SKPayment(product: storeKitProduct)
         SKPaymentQueue.default().add(paymentRequset)
         SKPaymentQueue.default().add(self)
@@ -137,17 +137,17 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
                                 self?.checkVerifyReceipt(product, res)
                             }
                             else {
-                                AppDelegate.ins.window?.makeToast("Sandbox 결제 실패")
+                                appDelegate.window?.makeToast("Sandbox 결제 실패")
                             }
                         } fail: { error in
-                            AppDelegate.ins.window?.makeToast("Sandbox 결제 실패")
+                            appDelegate.window?.makeToast("Sandbox 결제 실패")
                         }
                     }
                     else {
-                        AppDelegate.ins.window?.makeToast("결제 실패")
+                        appDelegate.window?.makeToast("결제 실패")
                     }
                 } fail: { error in
-                    AppDelegate.ins.window?.makeToast("결제 실패")
+                    appDelegate.window?.makeToast("결제 실패")
                 }
             }
             catch { print("Couldn't read receipt data with error: " + error.localizedDescription) }
@@ -175,7 +175,7 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
         }
         
         if isPending == true {
-            AppDelegate.ins.window?.makeToast(NSLocalizedString("pending_renewal", comment: "이미 구독중인 상품입니다."))
+            appDelegate.window?.makeToast(NSLocalizedString("pending_renewal", comment: "이미 구독중인 상품입니다."))
         }
         else {
             self.requestPayment()
@@ -225,17 +225,17 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
                                 self?.completion?(data)
                             }
                             else {
-                                AppDelegate.ins.window?.makeToast("Sandbox 결제 실패")
+                                appDelegate.window?.makeToast("Sandbox 결제 실패")
                             }
                         } fail: { error in
-                            AppDelegate.ins.window?.makeToast("Sandbox 결제 실패")
+                            appDelegate.window?.makeToast("Sandbox 결제 실패")
                         }
                     }
                     else {
-                        AppDelegate.ins.window?.makeToast("결제 실패")
+                        appDelegate.window?.makeToast("결제 실패")
                     }
                 } fail: { error in
-                    AppDelegate.ins.window?.makeToast("결제 실패")
+                    appDelegate.window?.makeToast("결제 실패")
                 }
             }
             catch { print("Couldn't read receipt data with error: " + error.localizedDescription) }
@@ -255,7 +255,7 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
     // Observe the transaction state
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         transactions.forEach { transaction in
-            AppDelegate.ins.stopIndicator()
+            appDelegate.stopIndicator()
             switch transaction.transactionState {
             case .purchasing:
                 break
@@ -276,7 +276,7 @@ final class IAPManager: NSObject, SKProductsRequestDelegate, SKPaymentTransactio
         }
     }
     func request(_ request: SKRequest, didFailWithError error: Error) {
-        AppDelegate.ins.stopIndicator()
+        appDelegate.stopIndicator()
         guard request is SKProductsRequest else {
             return
         }

@@ -209,13 +209,13 @@ class MemberInfoViewController: BaseViewController {
                 return
             }
             
-            AppDelegate.ins.startIndicator()
+            appDelegate.startIndicator()
             self.stopTimer()
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.2) {
                 self.isCheckedAuth = true
                 self.tfAuthCode.isUserInteractionEnabled = false
                 self.btnAuthComfirm.isEnabled = false
-                AppDelegate.ins.stopIndicator()
+                appDelegate.stopIndicator()
             }
         }
         else if sender == btnSound {
@@ -430,7 +430,8 @@ class MemberInfoViewController: BaseViewController {
                         }
                         AdbrixEvent.addEventLog(.signup, self.user)
                         AdbrixEvent.addEventLog(.joinComplete, self.user)
-                        AppDelegate.ins.callMainViewCtrl()
+                        appDelegate.callMainViewCtrl()
+                        self.requestNotiYnSetting()
                     }
                     self.present(alert, animated: true, completion: nil)
                     
@@ -464,7 +465,29 @@ class MemberInfoViewController: BaseViewController {
             }
         }
     }
-    
+    func requestNotiYnSetting() {
+        
+        
+        var param:[String:Any] = [:]
+        param["user_id"] = ShareData.ins.myId
+        param["recommend"] = "Y"
+        param["noti_yn"] = "A"
+        param["connect_push"] = "Y"
+        print("param: \(param)")
+        ApiManager.ins.requestUpdateUserSetting(param: param) { (response) in
+            let isSuccess = response["isSuccess"].stringValue
+            if isSuccess == "01" {
+                self.showToast(NSLocalizedString("activity_txt308", comment: "설정변경"))
+                ShareData.ins.dfsSet("A", DfsKey.notiYn)
+                ShareData.ins.dfsSet("Y", DfsKey.connectPush)
+            }
+            else {
+                self.showErrorToast(response)
+            }
+        } failure: { (error) in
+            self.showErrorToast(error)
+        }
+    }
     func setDownTimer() {
         let endTimer = Date.timeIntervalSinceReferenceDate+(AUTH_TIMEOUT_MIN * 60)
         let diff:Int = Int(endTimer - Date.timeIntervalSinceReferenceDate)

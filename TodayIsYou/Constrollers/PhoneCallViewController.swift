@@ -205,12 +205,12 @@ class PhoneCallViewController: MainActionViewController {
             
             if action == 1 {
                 let pointVc = PointPurchaseViewController.instantiateFromStoryboard(.main)!
-                AppDelegate.ins.mainNavigationCtrl.pushViewController(pointVc, animated: true)
+                appDelegate.mainNavigationCtrl.pushViewController(pointVc, animated: true)
             }
         }
         vc.addAction(.cancel, NSLocalizedString("activity_txt479", comment: "취소"))
         vc.addAction(.ok, NSLocalizedString("activity_txt452", comment: "충전"))
-        AppDelegate.ins.window?.rootViewController?.present(vc, animated: false, completion: nil)
+        appDelegate.window?.rootViewController?.present(vc, animated: false, completion: nil)
     }
     private func showWatingTimerVc() {
         self.watingTimerVc = CallWaitingTimerViewController.instantiateFromStoryboard {
@@ -305,7 +305,7 @@ class PhoneCallViewController: MainActionViewController {
         self.signalClient.disconnect()
         self.webRtcClient.close()
         self.requestPaymentEndPoint()
-        AppDelegate.ins.showScoreAlert(toUserId: self.toUserId!, toUserName: self.toUserName)
+        appDelegate.showScoreAlert(toUserId: self.toUserId!, toUserName: self.toUserName)
         
         self.completion?()
         self.navigationController?.popViewController(animated: false)
@@ -336,7 +336,7 @@ class PhoneCallViewController: MainActionViewController {
             ApiManager.ins.requestSetMyFried(param: param) { res in
                 let isSuccess = res["isSuccess"].stringValue
                 if isSuccess == "01" {
-                    AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt243", comment: "찜등록완료!!"))
+                    appDelegate.window?.makeToast(NSLocalizedString("activity_txt243", comment: "찜등록완료!!"))
                 }
                 else {
                     self.showErrorToast(res)
@@ -350,10 +350,10 @@ class PhoneCallViewController: MainActionViewController {
             ApiManager.ins.requesetUpdateGood(param: param) { (res) in
                 let isSuccess = res["isSuccess"].stringValue
                 if isSuccess == "01" {
-                    AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt429", comment: "좋아요."))
+                    appDelegate.window?.makeToast(NSLocalizedString("activity_txt429", comment: "좋아요."))
                 }
                 else if isSuccess == "02" {
-                    AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt171", comment: "좋아요는 1회만 가능합니다."))
+                    appDelegate.window?.makeToast(NSLocalizedString("activity_txt171", comment: "좋아요는 1회만 가능합니다."))
                 }
                 else {
                     self.showToast(NSLocalizedString("activity_txt173", comment: "등록 에러!!"))
@@ -391,7 +391,7 @@ class PhoneCallViewController: MainActionViewController {
                     self.presentedViewController?.dismiss(animated: false, completion: nil)
                 }
                 self.navigationController?.popViewController(animated: true)
-                AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt313", comment: "상대가 취소했습니다."))
+                appDelegate.window?.makeBottomTost(NSLocalizedString("activity_txt313", comment: "상대가 취소했습니다."))
             }
         }
     }
@@ -440,18 +440,18 @@ extension PhoneCallViewController: WebRTCClientDelegate {
             switch state {
             case .connected, .completed:
                 textColor = .green
-                AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt315", comment: "수락"))
+                appDelegate.window?.makeToast(NSLocalizedString("activity_txt315", comment: "수락"))
                 break
             case .disconnected:
                 textColor = .orange
-//                AppDelegate.ins.window?.makeToast("연결 끊김")
+//                appDelegate.window?.makeToast("연결 끊김")
                 DispatchQueue.main.async {
                     self.stopTimer()
                 }
                 break
             case .failed:
                 textColor = .red
-//                AppDelegate.ins.window?.makeToast("실패")
+//                appDelegate.window?.makeToast("실패")
                 break
             case .new, .checking, .count:
                 textColor = .purple
@@ -501,21 +501,21 @@ extension PhoneCallViewController: SignalClientDelegate {
     func signalClientDidRoomOut(_ signalClient: SignalingClient) {
         print("== signal signalClientDidRoomOut")
         self.removeWaitingChildVc()
-        AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt187", comment: "상대의 영상이 종료 되었습니다!!"))
+        appDelegate.window?.makeBottomTost(NSLocalizedString("activity_txt187", comment: "상대의 영상이 종료 되었습니다!!"))
         self.stopTimer()
     }
     
     func signalClientDidToRoomOut(_ signalClient: SignalingClient) {
         print("== signal signalClientDidToRoomOut")
         self.removeWaitingChildVc()
-        AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt177", comment: "상대가 영상을 종료 했습니다!!"))
+        appDelegate.window?.makeBottomTost(NSLocalizedString("activity_txt177", comment: "상대가 영상을 종료 했습니다!!"))
         self.stopTimer()
     }
     
     func signalClientDidCallNo(_ signalClient: SignalingClient) {
         print("== signal signalClientDidCallNo")
         self.removeWaitingChildVc()
-        AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt191", comment: "상대가 영상채팅을 거절 했습니다!!"))
+        appDelegate.window?.makeBottomTost(NSLocalizedString("activity_txt191", comment: "상대가 영상채팅을 거절 했습니다!!"))
         self.stopTimer()
     }
     

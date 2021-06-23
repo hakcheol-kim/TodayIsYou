@@ -199,12 +199,12 @@ class CamCallViewController: BaseViewController {
             
             if action == 1 {
                 let pointVc = PointPurchaseViewController.instantiateFromStoryboard(.main)!
-                AppDelegate.ins.mainNavigationCtrl.pushViewController(pointVc, animated: true)
+                appDelegate.mainNavigationCtrl.pushViewController(pointVc, animated: true)
             }
         }
         vc.addAction(.cancel, NSLocalizedString("activity_txt479", comment: "취소"))
         vc.addAction(.ok, NSLocalizedString("activity_txt452", comment: "충전"))
-        AppDelegate.ins.window?.rootViewController?.present(vc, animated: false, completion: nil)
+        appDelegate.window?.rootViewController?.present(vc, animated: false, completion: nil)
     }
     private func configureVideoRenderer() {
         #if arch(arm64)
@@ -322,6 +322,8 @@ class CamCallViewController: BaseViewController {
     }
     func stopTimer() {
         guard let timer = self.timer else {
+            self.completion?()
+            self.navigationController?.popViewController(animated: false)
             return
         }
         
@@ -331,7 +333,7 @@ class CamCallViewController: BaseViewController {
         self.signalClient.disconnect()
         self.webRtcClient.close()
         self.requestPaymentEndPoint()
-        AppDelegate.ins.showScoreAlert(toUserId: self.toUserId!, toUserName: self.toUserName)
+        appDelegate.showScoreAlert(toUserId: self.toUserId!, toUserName: self.toUserName)
         
         self.completion?()
         self.navigationController?.popViewController(animated: false)
@@ -530,7 +532,7 @@ class CamCallViewController: BaseViewController {
             //카메라
             sender.isSelected = !sender.isSelected
             if sender.isSelected {
-                if let localRender = locaVideo.subviews.first as? RTCEAGLVideoView {
+                if let localRender = locaVideo.subviews.first as? RTCMTLVideoView {
                     webRtcClient.swapCameraToBack(localRender)
                 }
                 else if let localRender = locaVideo.subviews.first as? RTCEAGLVideoView{
@@ -541,7 +543,7 @@ class CamCallViewController: BaseViewController {
                 btnCamera.backgroundColor = UIColor.white
             }
             else {
-                if let localRender = locaVideo.subviews.first as? RTCEAGLVideoView {
+                if let localRender = locaVideo.subviews.first as? RTCMTLVideoView {
                     webRtcClient.swapCameraToFront(localRender)
                 }
                 else if let localRender = locaVideo.subviews.first as? RTCEAGLVideoView{
@@ -641,7 +643,7 @@ class CamCallViewController: BaseViewController {
             ApiManager.ins.requestSetMyFried(param: param) { res in
                 let isSuccess = res["isSuccess"].stringValue
                 if isSuccess == "01" {
-                    AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt243", comment: "찜등록완료!!"))
+                    appDelegate.window?.makeToast(NSLocalizedString("activity_txt243", comment: "찜등록완료!!"))
                 }
                 else {
                     self.showErrorToast(res)
@@ -655,10 +657,10 @@ class CamCallViewController: BaseViewController {
             ApiManager.ins.requesetUpdateGood(param: param) { (res) in
                 let isSuccess = res["isSuccess"].stringValue
                 if isSuccess == "01" {
-                    AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt429", comment: "좋아요."))
+                    appDelegate.window?.makeToast(NSLocalizedString("activity_txt429", comment: "좋아요."))
                 }
                 else if isSuccess == "02" {
-                    AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt171", comment: "좋아요는 1회만 가능합니다."))
+                    appDelegate.window?.makeToast(NSLocalizedString("activity_txt171", comment: "좋아요는 1회만 가능합니다."))
                 }
                 else {
                     self.showToast(NSLocalizedString("activity_txt173", comment: "등록 에러!!"))
@@ -675,7 +677,6 @@ class CamCallViewController: BaseViewController {
                 self.webRtcClient.muteAudio()
             }
         }
-        
     }
     func sendMessage(_ msg:String) {
         print("\(msg)")
@@ -702,7 +703,7 @@ class CamCallViewController: BaseViewController {
                 }
                 self.navigationController?.popViewController(animated: true)
                 
-                AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt313", comment: "상대가 취소했습니다."))
+                appDelegate.window?.makeBottomTost(NSLocalizedString("activity_txt313", comment: "상대가 취소했습니다."))
             }
         }
     }
@@ -726,11 +727,11 @@ extension CamCallViewController: WebRTCClientDelegate {
             switch state {
             case .connected, .completed:
                 textColor = .green
-                AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt315", comment: "수락"))
+                appDelegate.window?.makeToast(NSLocalizedString("activity_txt315", comment: "수락"))
                 break
             case .disconnected:
                 textColor = .orange
-//                AppDelegate.ins.window?.makeToast("연결 끊김")
+//                appDelegate.window?.makeToast("연결 끊김")
                 print("연결 끊김")
                 DispatchQueue.main.async {
                     self.stopTimer()
@@ -738,7 +739,7 @@ extension CamCallViewController: WebRTCClientDelegate {
                 break
             case .failed:
                 textColor = .red
-//                AppDelegate.ins.window?.makeToast("실패")
+//                appDelegate.window?.makeToast("실패")
                 print("실패")
                 break
             case .new, .checking, .count:
@@ -816,21 +817,21 @@ extension CamCallViewController : SignalClientDelegate {
     func signalClientDidRoomOut(_ signalClient: SignalingClient) {
         print("== signal signalClientDidRoomOut")
         self.removeWaitingChildVc()
-        AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt187", comment: "상대의 영상이 종료 되었습니다!!"))
+        appDelegate.window?.makeBottomTost(NSLocalizedString("activity_txt187", comment: "상대의 영상이 종료 되었습니다!!"))
         self.stopTimer()
     }
     
     func signalClientDidToRoomOut(_ signalClient: SignalingClient) {
         print("== signal signalClientDidToRoomOut")
         self.removeWaitingChildVc()
-        AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt177", comment: "상대가 영상을 종료 했습니다!!"))
+        appDelegate.window?.makeBottomTost(NSLocalizedString("activity_txt177", comment: "상대가 영상을 종료 했습니다!!"))
         self.stopTimer()
     }
     
     func signalClientDidCallNo(_ signalClient: SignalingClient) {
         print("== signal signalClientDidCallNo")
         self.removeWaitingChildVc()
-        AppDelegate.ins.window?.makeBottomTost(NSLocalizedString("activity_txt191", comment: "상대가 영상채팅을 거절 했습니다!!"))
+        appDelegate.window?.makeBottomTost(NSLocalizedString("activity_txt191", comment: "상대가 영상채팅을 거절 했습니다!!"))
         self.stopTimer()
     }
     

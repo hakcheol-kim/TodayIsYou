@@ -147,23 +147,23 @@ extension LeftSideMenuViewController: UITableViewDelegate, UITableViewDataSource
             switch indexPath.row {
             case 0:
                 let vc = PointPurchaseViewController.instantiateFromStoryboard(.main)!
-                AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+                appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
                 break
             case 1:
                 let vc = NoticeListViewController.instantiateFromStoryboard(.main)!
-                AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+                appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
                 break
             case 2:
                 let vc = MyFrendsListViewController .instantiateFromStoryboard(.main)!
-                AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+                appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
                 break
             case 3:
                 let vc = MyBlockListViewController.instantiateFromStoryboard(.main)!
-                AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+                appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
                 break
             case 4:
                 let vc = ConnectUserListViewController.instantiateFromStoryboard(.main)!
-                AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+                appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
                 break
             case 5:
                 CAlertViewController.show(type: .alert, title: "log_out".localized, message: "log_out_msg".localized, actions: [.cancel, .ok]) { (vcs, selItem, action) in
@@ -173,7 +173,7 @@ extension LeftSideMenuViewController: UITableViewDelegate, UITableViewDataSource
                         AdbrixEvent.addEventLog(.logout, ["user_id": ShareData.ins.myId, "user_name":ShareData.ins.myName, "user_sex":ShareData.ins.mySex.rawValue])
                         ShareData.ins.dfsRemove(DfsKey.userId)
 //                        KeychainItem.deleteUserIdentifierFromKeychain()
-                        AppDelegate.ins.callLoginVC()
+                        appDelegate.callLoginVC()
                     }
                 }
                 break

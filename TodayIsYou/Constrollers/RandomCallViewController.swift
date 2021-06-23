@@ -156,14 +156,14 @@ class RandomCallViewController: BaseViewController {
                         data["msg_cmd"] = "CAM"
                         let toUserName = data["user_name"].stringValue
 
-                        let canCall = AppDelegate.ins.checkPoint(callType: .cam, connectedType: .answer)
+                        let canCall = appDelegate.checkPoint(callType: .cam, connectedType: .answer)
                       
                         if canCall {
                             let vc = CamCallViewController.initWithType(.answer, roomKey, toUserId, toUserName, data)
-                            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: false)
+                            appDelegate.mainNavigationCtrl.pushViewController(vc, animated: false)
                         }
                         else {
-                            AppDelegate.ins.showPointLackPopup(callType: .cam)
+                            appDelegate.showPointLackPopup(callType: .cam)
                         }
     //                    if var obj = data.dictionaryObject {
     //                        obj["read_yn"] = true

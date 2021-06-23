@@ -36,8 +36,8 @@ class ChattingListViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.dataRest()
-        AppDelegate.ins.mainViewCtrl.updateUnReadMessageCount()
-        AppDelegate.ins.mainViewCtrl.updateNaviPoint()
+        appDelegate.mainViewCtrl.updateUnReadMessageCount()
+        appDelegate.mainViewCtrl.updateNaviPoint()
         NotificationCenter.default.addObserver(self, selector: #selector(notificationHandler(_:)), name: Notification.Name(PUSH_DATA), object: nil)
     }
     
@@ -102,7 +102,7 @@ class ChattingListViewController: BaseViewController {
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         if sender == btnJim {
             let vc = MyFrendsListViewController.instantiateFromStoryboard(.main)!
-            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+            appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnDelAll {
             CAlertViewController.show(type: .alert, title: NSLocalizedString("activity_txt22", comment: "대화삭제"), message: NSLocalizedString("activity_txt142", comment: "모든 대화가 삭제됩니다."), actions: [.cancel , .ok]) { (vcs, selItem, index) in
@@ -125,7 +125,7 @@ class ChattingListViewController: BaseViewController {
         }
         else if sender == btnBlock {
             let vc = MyBlockListViewController.instantiateFromStoryboard(.main)!
-            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+            appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
     }
     
@@ -200,7 +200,7 @@ extension ChattingListViewController: UITableViewDelegate, UITableViewDataSource
         let item = listData[indexPath.row]
         let vc = ChattingViewController.instantiateFromStoryboard(.main)!
         vc.passData = item
-        AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+        appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
     }
 }
 

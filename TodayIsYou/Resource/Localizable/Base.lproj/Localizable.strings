@@ -634,5 +634,8 @@
 "subscribe_002" = "$4.99 / Month" ;
 "subscribe_003" = "$9.99 / Month" ;
 "subscribe_004" = "$29.49 / Month" ;
-"launch_msg_1" = "WHO CAN I ENJOY\nMEETING TODAY?";
-"launch_msg_2" = "TODAY IS YOU";
+"launch_msg_1" = "WHO CAN I ENJOY\nMEETING TODAY?" ;
+"launch_msg_2" = "TODAY IS YOU" ;
+"member_rejoin" = "Re-registration is possible after %@ days." ;
+"info" = "Guidance" ;
+"block_end_date" = "Block end date is %@." ;

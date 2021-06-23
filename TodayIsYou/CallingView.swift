@@ -46,7 +46,7 @@ class CallingView: UIView {
         
         if let notiYn = ShareData.ins.dfsGet(DfsKey.notiYn) as? String {
             if notiYn == "A" || notiYn == "S" {
-                AppDelegate.ins.audioPlayer.play()
+                appDelegate.audioPlayer.play()
             }
         }
         
@@ -99,7 +99,7 @@ class CallingView: UIView {
         }
     }
     class func show(_ type:PushType, _ data: JSON, _ completion:((_ data: JSON, _ actionIndex:Int)->Void)?) {
-        let window = AppDelegate.ins.window
+        let window = appDelegate.window
         if let view = window?.viewWithTag(TagCallingView) {
             view.removeFromSuperview()
         }

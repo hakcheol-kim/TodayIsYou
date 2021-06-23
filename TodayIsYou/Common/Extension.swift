@@ -67,7 +67,7 @@ extension UIViewController {
 //                    break
 //                }
 //            }
-            AppDelegate.ins.window?.makeToast(msg)
+            appDelegate.window?.makeToast(msg)
         }
         else if let error = data as? Error, let msg = error.localizedDescription as String? {
             var findView:UIView = self.view
@@ -506,7 +506,7 @@ extension Bundle {
     }
     
     @objc private func myLocaLizedString(forKey key: String,value: String?, table: String?) -> String {
-        let curLanCode = AppDelegate.ins.currentLanguage
+        let curLanCode = appDelegate.currentLanguage
         var tblCode = curLanCode
         switch curLanCode {
             case "ko":

@@ -181,10 +181,9 @@ class MainViewController: BaseViewController {
         setupSideMenu()
         updateMenus()
         self.requestMyHomePoint()
-        AppDelegate.ins.requestUpdateFcmToken()
         btnRocket.layer.cornerRadius = btnRocket.bounds.height/2
         btnPlus.layer.cornerRadius = btnPlus.bounds.height/2
-        AppDelegate.ins.apptrakingPermissionCheck()
+        appDelegate.apptrakingPermissionCheck()
         AdbrixEvent.addEventLog(.login, ["user_id": ShareData.ins.myId, "user_name":ShareData.ins.myName, "user_sex":ShareData.ins.mySex.rawValue])
         
 //        self.requestEventList()
@@ -205,7 +204,7 @@ class MainViewController: BaseViewController {
     private func setupSideMenu() {
         SideMenuManager.default.leftMenuNavigationController = storyboard?.instantiateViewController(withIdentifier: "LeftMenuNavigationController") as? SideMenuNavigationController
 //        SideMenuManager.default.addPanGestureToPresent(toView: navigationController!.navigationBar)
-        SideMenuManager.default.addScreenEdgePanGesturesToPresent(toView: (AppDelegate.ins.window?.rootViewController?.view)!)
+        SideMenuManager.default.addScreenEdgePanGesturesToPresent(toView: (appDelegate.window?.rootViewController?.view)!)
     }
     func requestEventList() {
         let dateStr = Date().stringDateWithFormat("yyyyMMdd")
@@ -239,7 +238,7 @@ class MainViewController: BaseViewController {
         }
         else if sender.tag == TAG_NAVI_POINT {
             let vc = PointPurchaseViewController.instantiateFromStoryboard(.main)!
-            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+            appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if btnTabs.contains(sender) == true {
             self.selIndex = sender.tag
@@ -247,15 +246,15 @@ class MainViewController: BaseViewController {
         else if sender == btnPlus {
             if selIndex == 0 {
                 let vc = TalkWriteViewController.instant(withType: .cam)
-                AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+                appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
             }
             else if selIndex == 1 {
                 let vc = TalkWriteViewController.instant(withType: .talk)
-                AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+                appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
             }
             else {
                 let vc = PhotoTalkWriteViewController.instantiateFromStoryboard(.main)!
-                AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+                appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
             }
         }
         else if sender == btnRocket {

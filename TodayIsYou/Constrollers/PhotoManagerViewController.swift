@@ -205,7 +205,7 @@ class PhotoManagerViewController: BaseViewController {
         ApiManager.ins.requestChangePhotoTalk(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
-                AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt356", comment: "등록완료!!"))
+                appDelegate.window?.makeToast(NSLocalizedString("activity_txt356", comment: "등록완료!!"))
                 self.navigationController?.popViewController(animated: true)
             }
             else {
@@ -219,7 +219,7 @@ class PhotoManagerViewController: BaseViewController {
         ApiManager.ins.requestModifyMyPhoto(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
-                AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt356", comment: "등록완료!!"))
+                appDelegate.window?.makeToast(NSLocalizedString("activity_txt356", comment: "등록완료!!"))
                 self.navigationController?.popViewController(animated: true)
             }
             else {

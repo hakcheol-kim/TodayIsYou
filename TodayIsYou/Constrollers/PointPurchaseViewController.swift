@@ -123,11 +123,11 @@ class PointPurchaseViewController: BaseViewController {
                 print("결제오류!!")
 //                self.showErrorToast(res)
                 let msg = "\(res)"
-                AppDelegate.ins.window?.makeToast(msg)
+                appDelegate.window?.makeToast(msg)
             }
         } fail: { error in
 //            self.showErrorToast(error)
-            AppDelegate.ins.window?.makeToast(NSLocalizedString("point_activity05", comment: "결제오류!!"))
+            appDelegate.window?.makeToast(NSLocalizedString("point_activity05", comment: "결제오류!!"))
         }
     }
     
@@ -138,21 +138,22 @@ class PointPurchaseViewController: BaseViewController {
             if code == "000" {
                 self.getUserInfo()
                 print("결제 성공!!")
-                AppDelegate.ins.window?.makeToast("\(msg)")
+                appDelegate.window?.makeToast("\(msg)")
             }
             else {
-                AppDelegate.ins.window?.makeToast("error: \(msg)\ncode:\(code)")
+                appDelegate.window?.makeToast("error: \(msg)\ncode:\(code)")
             }
         } fail: { error in
             if let res = JSON(error) as? JSON {
                 let code = res["code"].stringValue
                 let msg = res["msg"].stringValue
-                AppDelegate.ins.window?.makeToast("error: \(msg)\ncode:\(code)")
+                appDelegate.window?.makeToast("error: \(msg)\ncode:\(code)")
             }
         }
     }
     func getUserInfo() {
-        ApiManager.ins.requestUerInfo(param: ["user_id":ShareData.ins.myId]) { res in
+        
+        ApiManager.ins.requestUerInfo(param: ["app_type": appType, "user_id": ShareData.ins.myId]) { res in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
                 ShareData.ins.setUserInfo(res)

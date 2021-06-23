@@ -13,7 +13,7 @@ enum DBName: String {
 
 class DBManager: NSObject {
     static let ins = DBManager()
-    private let viewcontext = AppDelegate.ins.persistentContainer.viewContext
+    private let viewcontext = appDelegate.persistentContainer.viewContext
     
     func getAllChatMessage(_ completion:((_ messages:[ChatMessage]?, _ error:Error?) -> Void)?) {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: DBName.chatmessage.rawValue)

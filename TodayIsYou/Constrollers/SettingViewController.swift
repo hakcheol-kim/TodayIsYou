@@ -37,11 +37,11 @@ class SettingViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         requestMyInfo()
-        AppDelegate.ins.mainViewCtrl.updateNaviPoint()
+        appDelegate.mainViewCtrl.updateNaviPoint()
     }
     
     override func requestMyInfo() {
-        ApiManager.ins.requestUerInfo(param: ["user_id":ShareData.ins.myId]) { (response) in
+        ApiManager.ins.requestUerInfo(param: ["app_type": appType, "user_id": ShareData.ins.myId]) { (response) in
             self.userInfo = response
             self.decorationUi()
             ShareData.ins.setUserInfo(response)
@@ -74,11 +74,11 @@ class SettingViewController: BaseViewController {
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         if sender == btnProfile {
             let vc = ProfileManagerViewController.instantiateFromStoryboard(.main)!
-            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+            appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnNotice {
             let vc = NoticeListViewController.instantiateFromStoryboard(.main)!
-            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+            appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnAbsent {
             let user_sex = userInfo["user_sex"].stringValue
@@ -125,19 +125,19 @@ class SettingViewController: BaseViewController {
         }
         else if sender == btnPhoto {
             let vc = PhotoManagerViewController.instantiateFromStoryboard(.main)!
-            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+            appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnPoint {
             let vc = PointPurchaseViewController.instantiateFromStoryboard(.main)!
-            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+            appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnExchange {
             let vc = PointGateViewController.instantiateFromStoryboard(.main)!
-            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+            appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnContactUs {
             let vc = ContactusViewController.instantiateFromStoryboard(.main)!
-            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+            appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnReport {
              
@@ -183,7 +183,7 @@ class SettingViewController: BaseViewController {
         }
         else if sender == btnSetting {
             let vc = ConfigurationViewController.instantiateFromStoryboard(.main)!
-            AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+            appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
         else if sender == btnJoinTerm {
             ApiManager.ins.requestServiceTerms(mode: "yk1") { (response) in
@@ -192,7 +192,7 @@ class SettingViewController: BaseViewController {
                     let vc = TermsViewController.init()
                     vc.vcTitle = NSLocalizedString("yk1", comment: "가입 약관")
                     vc.content = yk
-                    AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+                    appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
                 }
             } failure: { (error) in
                 self.showErrorToast(error)
@@ -205,14 +205,14 @@ class SettingViewController: BaseViewController {
                     let vc = TermsViewController.init()
                     vc.vcTitle = NSLocalizedString("yk2", comment: "개인정보 취급방침");
                     vc.content = yk;
-                    AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+                    appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
                 }
             } failure: { (error) in
                 self.showErrorToast(error)
             }
         }
         else if sender == btnCyber {
-            AppDelegate.ins.openUrl(cyberUrl, completion: nil)
+            appDelegate.openUrl(cyberUrl, completion: nil)
         }
     }
     

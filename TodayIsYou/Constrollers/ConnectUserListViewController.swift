@@ -295,7 +295,7 @@ extension ConnectUserListViewController: UITableViewDelegate, UITableViewDataSou
         let item = listData[indexPath.row]
         let vc = RankDetailViewController.instantiateFromStoryboard(.main)!
         vc.passData = item
-        AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+        appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
     }
 }
 

@@ -31,7 +31,7 @@ class BannerListViewController: BaseViewController {
                 let banner_intent = item["banner_intent"].stringValue
                 let banner_type = item["banner_type"].stringValue
                 if banner_type == "web" {
-                    AppDelegate.ins.openUrl(banner_intent, completion: nil)
+                    appDelegate.openUrl(banner_intent, completion: nil)
                 }
             }
         }

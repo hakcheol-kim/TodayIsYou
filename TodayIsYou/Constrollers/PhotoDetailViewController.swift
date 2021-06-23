@@ -95,14 +95,14 @@ class PhotoDetailViewController: MainActionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         if listData.count > 0 {
             collectionView.reloadData()
         }
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     func checkPhotoDetail() {
         let seq = passData["seq"].stringValue
@@ -194,10 +194,10 @@ extension PhotoDetailViewController: UICollectionViewDelegate, UICollectionViewD
                     ApiManager.ins.requestGoodPhotoPlus(param: param) { (res) in
                         let isSuccess = res["isSuccess"].stringValue
                         if isSuccess == "01" {
-                            AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt429", comment: "좋아요."))
+                            appDelegate.window?.makeToast(NSLocalizedString("activity_txt429", comment: "좋아요."))
                         }
                         else if isSuccess == "02" {
-                            AppDelegate.ins.window?.makeToast(NSLocalizedString("activity_txt171", comment: "좋아요는 1회만 가능합니다."))
+                            appDelegate.window?.makeToast(NSLocalizedString("activity_txt171", comment: "좋아요는 1회만 가능합니다."))
                         }
                         else {
                             self.showToast(NSLocalizedString("activity_txt173", comment: "등록 에러!!"))

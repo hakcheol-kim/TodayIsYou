@@ -31,7 +31,7 @@ class ConfigurationViewController: BaseViewController {
     }
     
     func reqeustGetUserInfo() {
-        let param = ["user_id": ShareData.ins.myId]
+        let param = ["app_type": appType, "user_id": ShareData.ins.myId]
         ApiManager.ins.requestUerInfo(param: param) { (response) in
             let isSuccess = response["isSuccess"]
             if isSuccess == "01" {

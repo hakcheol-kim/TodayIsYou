@@ -11,7 +11,7 @@ import Photos
 
 class Utility: NSObject {
     class func isEdgePhone() -> Bool {
-        return ((AppDelegate.ins.window?.safeAreaInsets.bottom)! > 0.0)
+        return ((appDelegate.window?.safeAreaInsets.bottom)! > 0.0)
     }
     class func thumbnailUrl(_ userId: String?, _ fileName: String?) ->String? {
         guard let userId = userId, let fileName = fileName, userId.isEmpty == false, fileName.isEmpty == false  else {

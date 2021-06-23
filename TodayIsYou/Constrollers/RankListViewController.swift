@@ -41,7 +41,7 @@ class RankListViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        AppDelegate.ins.mainViewCtrl.updateNaviPoint()
+        appDelegate.mainViewCtrl.updateNaviPoint()
     }
     func commitPagerView() {
         
@@ -147,7 +147,7 @@ extension RankListViewController: FSPagerViewDelegate, FSPagerViewDataSource {
         let item = listData[index]
         let vc = RankDetailViewController.instantiateFromStoryboard(.main)!
         vc.passData = item
-        AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+        appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
     }
 }
 
@@ -169,7 +169,7 @@ extension RankListViewController: UITableViewDelegate, UITableViewDataSource {
         let item = listData[indexPath.row]
         let vc = RankDetailViewController.instantiateFromStoryboard(.main)!
         vc.passData = item
-        AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+        appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
     }
 }
 

@@ -46,7 +46,7 @@ class NetworkManager: NSObject {
             return
         }
         if isStartIndicator {
-            AppDelegate.ins.startIndicator()
+            appDelegate.startIndicator()
         }
         let languageCode = ShareData.ins.languageCode.uppercased()
         let customLanguageHeader = HTTPHeader(name: "forgn_lang", value: languageCode)
@@ -66,9 +66,9 @@ class NetworkManager: NSObject {
                     print(String(describing: param))
                 }
             }
-//            print("\n======= response ======= \n\(response)")
+            print("\n======= response ======= \n\(response)")
             if isStartIndicator {
-                AppDelegate.ins.stopIndicator()
+                appDelegate.stopIndicator()
             }
             switch response.result {
             case .success(let value):
@@ -94,7 +94,7 @@ class NetworkManager: NSObject {
             return
         }
         
-        AppDelegate.ins.startIndicator()
+        appDelegate.startIndicator()
         
         let languageCode = ShareData.ins.languageCode.uppercased()
         let customLanguageHeader = HTTPHeader(name: "forgn_lang", value: languageCode)
@@ -133,7 +133,7 @@ class NetworkManager: NSObject {
                 print(String(describing: param))
             }
 //            print("\n======= response ======= \n\(response)")
-            AppDelegate.ins.stopIndicator()
+            appDelegate.stopIndicator()
             
             switch response.result {
             case .success(let value):

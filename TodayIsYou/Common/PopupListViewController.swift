@@ -210,7 +210,7 @@ extension PopupListViewController: PanModalPresentable {
         return self.tblView
     }
 //    var topOffset: CGFloat {
-//        guard let window = AppDelegate.ins.window else {
+//        guard let window = appDelegate.window else {
 //            return 100
 //        }
 //        return window.safeAreaInsets.top + 50

@@ -317,8 +317,9 @@ extension WebRTCClient {
         audioTracks.forEach { $0.isEnabled = isMuted }
     }
     
-    func swapCameraToFront(_ render:Any) {
+    func swapCameraToFront(_ render:RTCVideoRenderer) {
         self.cameraPosition = .front
+        self.startCaptureLocalVideo(renderer: render)
     }
 
     func swapCameraToBack(_ render:RTCVideoRenderer) {

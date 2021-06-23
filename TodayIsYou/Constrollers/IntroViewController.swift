@@ -13,11 +13,10 @@ class IntroViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         #if DEBUG
         //1. 앱캐쉬에 저장되있닌지 찾는다.
         //a52fd10c131f149663a64ab074d5b44b
-        //c4f3f037ff94f95fe144fc9aed76f0b6
+//        c4f3f037ff94f95fe144fc9aed76f0b6
 //        ShareData.ins.dfsSet("c4f3f037ff94f95fe144fc9aed76f0b6", DfsKey.userId)
 //            KeychainItem.deleteUserIdentifierFromKeychain()
 //            ShareData.ins.dfsRemove(DfsKey.userId)
@@ -39,18 +38,28 @@ class IntroViewController: UIViewController {
 //            }
 //            else {
                 if let checkPermission = ShareData.ins.dfsGet(DfsKey.checkPermission) as? Bool, checkPermission == true {
-                    AppDelegate.ins.callLoginVC()
+                    appDelegate.callLoginVC()
                 }
                 else {
-                    AppDelegate.ins.callPermissioVc()
+                    appDelegate.callPermissioVc()
                 }
 //            }
-            
-            
         }
         
     }
     
+    //앱타입 변경
+    func requestChageAppType() {
+        ApiManager.ins.requestChangeAppType(type: appType, userId: ShareData.ins.myId) { res in
+            let isSuccess = res["isSuccess"].stringValue
+            let Message = res["Message"].stringValue
+            if isSuccess == "01" {
+                appDelegate.window?.makeToast(Message)
+            }
+        } fail: { err in
+            self.showErrorToast(err)
+        }
+    }
     //탈퇴회원인지 체크
     func requestUserInfo() {
         if ShareData.ins.myId.isEmpty == true {
@@ -59,10 +68,10 @@ class IntroViewController: UIViewController {
         let param = ["app_type": appType, "user_id": ShareData.ins.myId]
         
         ApiManager.ins.requestUerInfo(param: param) { (response) in
-            
+            self.requestChageAppType()
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "00" {
-                AppDelegate.ins.callJoinTermVc()
+                appDelegate.callJoinTermVc()
             }
             else if isSuccess == "01" {
                 let use_yn = response["use_yn"].stringValue
@@ -70,18 +79,18 @@ class IntroViewController: UIViewController {
                     let out_diff = response["out_diff"].intValue
                     var msg = ""
                     if out_diff < 15 {
-                        msg = "재가입 신청은 \(15-out_diff)일 후에 재가입 가능합니다."
-                        CAlertViewController.show(type: .alert,title: "안 내", message: msg, actions: [.ok]) { (vcs, item, index) in
+                        msg = String(format: NSLocalizedString("member_rejoin", comment: "재가입 신청은 15일 후에 재가입 가능합니다."), 15-out_diff)
+                        CAlertViewController.show(type: .alert,title: NSLocalizedString("info", comment: "안내"), message: msg, actions: [.ok]) { (vcs, item, index) in
                             vcs.dismiss(animated: true, completion: nil)
                             exit(0) //강제 종료
                         }
                     }
                     else {
-                        msg = "탈퇴 회원입니다.\n재 가입을 하시겠습니까?"
-                        CAlertViewController.show(type: .alert,title: "안 내", message: msg, actions: [.cancel, .ok]) { (vcs, item, index) in
+                        msg = NSLocalizedString("activity_txt538", comment: "탈퇴 회원입니다.\n재 가입을 하시겠습니까?")
+                        CAlertViewController.show(type: .alert,title: NSLocalizedString("info", comment: "안내"), message: msg, actions: [.cancel, .ok]) { (vcs, item, index) in
                             vcs.dismiss(animated: true, completion: nil)
                             if index == 1 {
-                                AppDelegate.ins.callJoinTermVc()
+                                appDelegate.callJoinTermVc()
                             }
                         }
                     }
@@ -90,7 +99,7 @@ class IntroViewController: UIViewController {
                     self.requestCheckUserBlock()
                 }
                 else if use_yn == "A" {
-                    CAlertViewController.show(type: .alert, message: "관리자에 의해 차단되었습니다", actions: [.ok]) { (vcs, selItem, index) in
+                    CAlertViewController.show(type: .alert, message: NSLocalizedString("activity_txt539", comment: "관리자에 의해 차단되었습니다"), actions: [.ok]) { (vcs, selItem, index) in
                         vcs.dismiss(animated: true, completion: nil)
                         exit(0)
                     }
@@ -98,7 +107,7 @@ class IntroViewController: UIViewController {
                 else {
                     ShareData.ins.setUserInfo(response)
 //                    self.requestPushMessage()
-                    AppDelegate.ins.callMainViewCtrl()
+                    appDelegate.callMainViewCtrl()
                     
                 }
             }
@@ -127,13 +136,14 @@ class IntroViewController: UIViewController {
             if isSuccess == "01" {
                 let block_memo = res["block_memo"].stringValue
                 let end_date = res["end_date"].stringValue
-                let msg = "차단이 끝나는 날자는 \(end_date) 입니다.\n\n\(block_memo)"
-                CAlertViewController.show(type: .alert, title: "안 내", message: msg, actions:[.ok]) { (vcs, selItem, index) in
+                let blackDay = String(format: NSLocalizedString("block_end_date", comment: "차단이 끝나는 날자는 입니다."), end_date)
+                let msg = "\(blackDay)\n\n\(block_memo)"
+                CAlertViewController.show(type: .alert, title: NSLocalizedString("info", comment: "안내"), message: msg, actions:[.ok]) { (vcs, selItem, index) in
                     exit(0)
                 }
             }
             else {
-                AppDelegate.ins.callJoinTermVc()
+                appDelegate.callJoinTermVc()
             }
         } failure: { (error) in
             self.showErrorToast(error)

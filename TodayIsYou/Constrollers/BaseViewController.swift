@@ -34,7 +34,7 @@ class BaseViewController: UIViewController {
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
                 ShareData.ins.setUserInfo(response)
-                AppDelegate.ins.mainViewCtrl.updateNaviPoint()
+                appDelegate.mainViewCtrl.updateNaviPoint()
             }
         } failure: { (error) in
             self.showErrorToast(error)
@@ -47,7 +47,7 @@ class BaseViewController: UIViewController {
             let isSuccess = respone["isSuccess"].stringValue
             if isSuccess == "01" {
                 ShareData.ins.setHomePoint(respone)
-                AppDelegate.ins.mainViewCtrl.updateNaviPoint()
+                appDelegate.mainViewCtrl.updateNaviPoint()
             }
         } failure: { (error) in
             self.showErrorToast(error)
@@ -82,7 +82,7 @@ class BaseViewController: UIViewController {
         guard let msg = msg else {
             return
         }
-        AppDelegate.ins.window?.makeToast(msg)
+        appDelegate.window?.makeToast(msg)
     }
     @objc public func actionNaviBack() {
         self.navigationController?.popViewController(animated: true)
@@ -144,7 +144,7 @@ class BaseViewController: UIViewController {
                     tabBarHeight = self.navigationController?.toolbar.bounds.height ?? 0.0
                 }
                 
-                let safeBottom:CGFloat = AppDelegate.ins.window?.safeAreaInsets.bottom ?? 0
+                let safeBottom:CGFloat = appDelegate.window?.safeAreaInsets.bottom ?? 0
                 bottomCon.constant = heightKeyboard - safeBottom - tabBarHeight - CGFloat(heightBtn)
                 UIView.animate(withDuration: TimeInterval(duration), animations: { [self] in
                     self.view.layoutIfNeeded()

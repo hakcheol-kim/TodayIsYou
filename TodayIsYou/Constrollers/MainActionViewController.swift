@@ -149,7 +149,7 @@ class MainActionViewController: BaseViewController {
 //        self.showPhoto(imgUrls: [imgUrl])
         let vc = RankDetailViewController.instantiateFromStoryboard(.main)!
         vc.passData = self.selUser
-        AppDelegate.ins.mainNavigationCtrl.pushViewController(vc, animated: true)
+        appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
     }
     @objc private func actionAlertReport(_ sender: UIButton) {
         if let presentedVc = presentedViewController {
@@ -177,7 +177,7 @@ class MainActionViewController: BaseViewController {
             let isSuccess = res["isSuccess"].stringValue
             
             if isSuccess == "01" {
-                let canCall = AppDelegate.ins.checkPoint(callType: .phone, connectedType: .offer)
+                let canCall = appDelegate.checkPoint(callType: .phone, connectedType: .offer)
                 if canCall {
                     let to_user_name = res["to_user_name"].stringValue
                     let to_user_id = res["to_user_id"].stringValue
@@ -186,7 +186,7 @@ class MainActionViewController: BaseViewController {
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
                 else {
-                    AppDelegate.ins.showPointLackPopup(callType: .phone)
+                    appDelegate.showPointLackPopup(callType: .phone)
                 }
             }
             else {
@@ -213,7 +213,7 @@ class MainActionViewController: BaseViewController {
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
                 
-                let canCall = AppDelegate.ins.checkPoint(callType: .cam, connectedType: .offer)
+                let canCall = appDelegate.checkPoint(callType: .cam, connectedType: .offer)
                 if canCall {
                     let to_user_name = res["to_user_name"].stringValue
                     let to_user_id = res["to_user_id"].stringValue
@@ -222,7 +222,7 @@ class MainActionViewController: BaseViewController {
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
                 else {
-                    AppDelegate.ins.showPointLackPopup(callType: .cam)
+                    appDelegate.showPointLackPopup(callType: .cam)
                 }
             }
             else {

@@ -23,7 +23,8 @@ class AppPermissionViewCtroller: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        AppDelegate.ins.apptrakingPermissionCheck()
+        
+        appDelegate.apptrakingPermissionCheck()
         if let lbSubDes = btnCamera.viewWithTag(102) as? UILabel {
             let des = Bundle.main.localizedString(forKey: "NSCameraUsageDescription", value: nil, table: "InfoPlist")
             lbSubDes.text = des
@@ -83,7 +84,7 @@ class AppPermissionViewCtroller: UIViewController {
                 return
             }
             ShareData.ins.dfsSet(true, DfsKey.checkPermission)
-            AppDelegate.ins.callLoginVC()
+            appDelegate.callLoginVC()
         }
     }
     

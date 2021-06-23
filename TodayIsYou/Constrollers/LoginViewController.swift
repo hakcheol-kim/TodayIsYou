@@ -187,7 +187,7 @@ class LoginViewController: SocialLoginViewController {
                 return
             }
             
-            AppDelegate.ins.startIndicator()
+            appDelegate.startIndicator()
             self.stopTimer()
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.2) {
                 self.isCheckedAuth = true
@@ -198,7 +198,7 @@ class LoginViewController: SocialLoginViewController {
                 self.btnAuth.setTitleColor(RGB(230, 100, 100), for: .normal)
                 self.btnAuth.backgroundColor = RGB(230, 230, 230)
                 
-                AppDelegate.ins.stopIndicator()
+                appDelegate.stopIndicator()
 //                self.btnSignin.sendActions(for: .touchUpInside)
             }
         }
@@ -246,7 +246,7 @@ class LoginViewController: SocialLoginViewController {
             newUserId = Utility.createUserId(id)
         }
         
-        ApiManager.ins.requestUerInfo(param: ["user_id": newUserId]) { (res) in
+        ApiManager.ins.requestUerInfo(param: ["user_id": newUserId, "app_type": appType]) { (res) in
             let isSuccess = res["isSuccess"]
             if isSuccess == "00" { //신규
                 if joinType == "phone" {
@@ -264,16 +264,30 @@ class LoginViewController: SocialLoginViewController {
                 ShareData.ins.dfsSet(newUserId, DfsKey.userId)
                 ShareData.ins.myId = newUserId
                 ShareData.ins.setUserInfo(res)
-                AppDelegate.ins.callMainViewCtrl()
-                AppDelegate.ins.requestUpdateFcmToken()
+                appDelegate.callMainViewCtrl()
                 
+                appDelegate.requestUpdateFcmToken()
                 AdbrixEvent.addEventLog(.login, user)
+                
+                self.requestChageAppType()
             }
             else {
                 self.showErrorToast(res)
             }
         } failure: { (error) in
             self.showErrorToast(error)
+        }
+    }
+    //앱타입 변경
+    func requestChageAppType() {
+        ApiManager.ins.requestChangeAppType(type: appType, userId: ShareData.ins.myId) { res in
+            let isSuccess = res["isSuccess"].stringValue
+            let Message = res["Message"].stringValue
+            if isSuccess == "01" {
+                appDelegate.window?.makeToast(Message)
+            }
+        } fail: { err in
+            self.showErrorToast(err)
         }
     }
 }

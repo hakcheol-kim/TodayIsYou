@@ -36,7 +36,7 @@ class CamTalkListViewController: MainActionViewController {
         self.view.layoutIfNeeded()
         
         
-        self.listType = AppDelegate.ins.mainViewCtrl.videoListType
+        self.listType = appDelegate.mainViewCtrl.videoListType
         if self.listType == .collection {
             btnListType.isSelected = true
         }
@@ -58,7 +58,7 @@ class CamTalkListViewController: MainActionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        AppDelegate.ins.mainViewCtrl.updateNaviPoint()
+        appDelegate.mainViewCtrl.updateNaviPoint()
     }
     func decorationUI() {
         let imgNor = UIImage.color(from: RGB(120, 120, 130))
@@ -132,7 +132,7 @@ class CamTalkListViewController: MainActionViewController {
             else {
                 self.listType = .table
             }
-            AppDelegate.ins.mainViewCtrl.videoListType = self.listType
+            appDelegate.mainViewCtrl.videoListType = self.listType
             self.toggleListType()
             self.dataRest()
         }

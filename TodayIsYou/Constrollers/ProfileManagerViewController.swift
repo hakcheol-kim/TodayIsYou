@@ -40,7 +40,7 @@ class ProfileManagerViewController: BaseViewController {
     }
     
     override func requestMyInfo() {
-        ApiManager.ins.requestUerInfo(param: ["user_id":ShareData.ins.myId]) { (response) in
+        ApiManager.ins.requestUerInfo(param: ["app_type": appType, "user_id": ShareData.ins.myId]) { (response) in
             self.userInfo = response
             self.decorationUi()
         } failure: { (error) in

@@ -386,42 +386,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="logo_img" translatesAutoresizingMaskIntoConstraints="NO" id="fJr-Cr-NBc">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="launch.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="fJr-Cr-NBc">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                             </imageView>
-                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="tkt-kF-NDC">
-                                <rect key="frame" x="28.666666666666657" y="329.66666666666669" width="318" height="153"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="nrE-RN-t8s" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="318" height="91.333333333333329"/>
-                                        <string key="text">WHO CAN I ENJOY
-MEETING TODAY?</string>
-                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="38"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="launch_msg_1"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TODAY IS YOU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Fkt-hq-gre" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="107.33333333333333" width="318" height="45.666666666666671"/>
-                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="38"/>
-                                        <color key="textColor" systemColor="systemPinkColor"/>
-                                        <nil key="highlightedColor"/>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="launch_msg_2"/>
-                                        </userDefinedRuntimeAttributes>
-                                    </label>
-                                </subviews>
-                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="0Ql-Qy-PyI"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="tkt-kF-NDC" firstAttribute="centerY" secondItem="TCD-tL-7vm" secondAttribute="centerY" id="2Dw-ZD-Ya7"/>
                             <constraint firstItem="fJr-Cr-NBc" firstAttribute="leading" secondItem="TCD-tL-7vm" secondAttribute="leading" id="LJJ-HI-I0V"/>
                             <constraint firstItem="fJr-Cr-NBc" firstAttribute="top" secondItem="TCD-tL-7vm" secondAttribute="top" id="dGl-3r-UZz"/>
-                            <constraint firstItem="tkt-kF-NDC" firstAttribute="centerX" secondItem="TCD-tL-7vm" secondAttribute="centerX" id="sCd-5L-2C8"/>
                             <constraint firstAttribute="trailing" secondItem="fJr-Cr-NBc" secondAttribute="trailing" id="suf-IW-iCE"/>
                             <constraint firstAttribute="bottom" secondItem="fJr-Cr-NBc" secondAttribute="bottom" id="yki-m8-HSm"/>
                         </constraints>
@@ -1598,7 +1571,7 @@ MEETING TODAY?</string>
         <image name="checkmark.square" catalog="system" width="128" height="114"/>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
         <image name="ico_apple" width="14" height="18"/>
-        <image name="logo_img" width="240" height="426.66665649414062"/>
+        <image name="launch.jpeg" width="720" height="1280"/>
         <image name="mic" catalog="system" width="108" height="128"/>
         <image name="photo" catalog="system" width="128" height="93"/>
         <image name="squareshape" catalog="system" width="128" height="114"/>
@@ -1613,9 +1586,6 @@ MEETING TODAY?</string>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
