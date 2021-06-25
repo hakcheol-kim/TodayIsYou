@@ -183,7 +183,7 @@ class MainViewController: BaseViewController {
         self.requestMyHomePoint()
         btnRocket.layer.cornerRadius = btnRocket.bounds.height/2
         btnPlus.layer.cornerRadius = btnPlus.bounds.height/2
-        appDelegate.apptrakingPermissionCheck()
+//        appDelegate.apptrakingPermissionCheck()
         AdbrixEvent.addEventLog(.login, ["user_id": ShareData.ins.myId, "user_name":ShareData.ins.myName, "user_sex":ShareData.ins.mySex.rawValue])
         
 //        self.requestEventList()

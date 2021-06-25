@@ -44,6 +44,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             lanCode = "us"
         }
         Bundle.swizzleLocalization()
+        ShareData.ins.dfsSet(lanCode, DfsKey.languageCode)
+        ShareData.ins.languageCode = lanCode
+        
         
         FirebaseApp.configure()
         self.registApnsPushKey()
@@ -65,11 +68,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
         }
         
-        ShareData.ins.dfsSet(lanCode, DfsKey.languageCode)
-        ShareData.ins.languageCode = lanCode
         
-        
-        callIntroViewCtrl()
+        if let checkPermission = ShareData.ins.dfsGet(DfsKey.checkPermission) as? Bool, checkPermission == true {
+            callIntroViewCtrl()
+        }
+        else {
+            callPermissioVc()
+        }
         
         return true
     }
@@ -278,7 +283,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(_ application: UIApplication) {
         if let pushData = ShareData.ins.dfsGet(DfsKey.pushData) as? [String:Any] {
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+0.5) {
+            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+1.0) {
                 
                 self.mainNavigationCtrl.popViewController(animated: false)
                 let data = JSON(pushData)
@@ -288,7 +293,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if type == .cam || type == .phone {
                     let room_key = data["room_key"].stringValue
                     do {
-                        let arrTmp = room_key.components(separatedBy: "_") as! [String]
+                        let arrTmp = room_key.components(separatedBy: "_") 
                         let callingateStr = arrTmp[1]
                         let df = CDateFormatter.init()
                         df.dateFormat = "yyyyMMddHHmmss"
@@ -321,10 +326,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         ShareData.ins.dfsRemove(DfsKey.pushData)
                     }
                     catch {
-                        
+                        ShareData.ins.dfsRemove(DfsKey.pushData)
                     }
                 }
-                //                NotificationCenter.default.post(name: Notification.Name(PUSH_DATA), object: type, userInfo: pushData)
+                else {
+                    ShareData.ins.dfsRemove(DfsKey.pushData)
+                }
             }
         }
         
@@ -689,6 +696,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if ShareData.ins.mySex == .femail  {
             return true
         }
+
+//        #if DEBUG
+//        ShareData.ins.myPoint = NSNumber(integerLiteral: 750)
+//        ShareData.ins.dfsSet(ShareData.ins.myPoint, DfsKey.userPoint)
+//        #endif
         
         guard let curPoint = ShareData.ins.myPoint, curPoint.intValue > 0 else {
             return false
@@ -707,17 +719,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 basePoint = bPoint.intValue
             }
         }
-        //        if connectedType == .answer { //수신 내가 받는것
-        //
-        //        }
-        //        else { //발신 내가 콜 거는것
-        //
-        //        }
-        
-        guard curPoint.intValue > basePoint else {
+ 
+        if curPoint.intValue < basePoint  {
             return false
         }
-        
         return true
     }
     

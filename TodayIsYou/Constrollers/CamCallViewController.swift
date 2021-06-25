@@ -40,23 +40,6 @@ class CamCallViewController: BaseViewController {
     var baseLivePoint = 0
     var phoneOutStartPoint = 0 // 최소 포인트
     
-    var nowPoint:Int = 0 {
-        didSet {
-            if nowPoint < 0 && ShareData.ins.mySex == .mail {
-                self.sendMessage("Room Out")
-                if let timer = self.timer {
-                    timer.invalidate()
-                    timer.fire()
-                    self.timer = nil
-                }
-                self.signalClient.disconnect()
-                self.webRtcClient.close()
-                self.navigationController?.popViewController(animated: false)
-                self.showPointLakePopup()
-            }
-        }
-    }
-
     var listData:[String] = []
     var originListData:[String] = []
     var speakerOn:Bool = true
@@ -95,6 +78,8 @@ class CamCallViewController: BaseViewController {
     var completion:(() ->Void)?
     var sPoint = CGPoint.zero
     
+    var billPoint = 0 //2차 차감 포인트
+    
     var second: TimeInterval = 0.0 {
         didSet {
             if second == 0.0 {
@@ -109,15 +94,48 @@ class CamCallViewController: BaseViewController {
             
             lbTalkTime.text = String(format: "%02ld:%02ld:%02ld", hour, min, sec)
             
-            var checkPoint:Int = Int(second - 60) //처음 1분은 빼고 계산
-            if checkPoint < 0 {
-                checkPoint = 0
+            let oldBillPoint = billPoint
+            
+            var checkSec = Int(second - 60) //처음 1분은 빼고 계산
+            if checkSec < 0 {
+                checkSec = 0
             }
-            checkPoint = Int(checkPoint/10)
-            self.nowPoint = nowPoint - checkPoint*self.baseLivePoint
+            
+            if checkSec > exitTime {
+                self.forceExit()
+            }
+            else {
+                billPoint = Int(checkSec/10)*self.baseLivePoint
+                if oldBillPoint != billPoint {
+                    self.nowPoint = ShareData.ins.myPoint!.intValue - billPoint
+                }
+            }
+            print("== sec: \(second), now point => \(nowPoint), bill point => \(billPoint)")
         }
     }
     
+    var nowPoint:Int = 0 {
+        didSet {
+            if nowPoint < 0 {
+                self.forceExit()
+            }
+        }
+    }
+    
+    func forceExit() {
+        self.sendMessage("Room Out")
+        if let timer = self.timer {
+            timer.invalidate()
+            timer.fire()
+            self.timer = nil
+        }
+        
+        self.signalClient.disconnect()
+        self.webRtcClient.close()
+        self.requestPaymentEndPoint()
+        self.navigationController?.popViewController(animated: false)
+        self.showPointLakePopup()
+    }
     static func initWithType(_ type:ConnectionType, _ roomKey:String, _ toUserId:String, _ toUserName:String?, _ info:JSON? = nil, _ completion:(() ->Void)? = nil) -> CamCallViewController {
         let vc = CamCallViewController.instantiateFromStoryboard(.call)!
         vc.roomKey = roomKey
@@ -128,27 +146,30 @@ class CamCallViewController: BaseViewController {
         vc.completion = completion
         return vc
     }
+    var exitTime = Int.max
     
     //MARK:: life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         second = 0.0
+
         nowPoint = ShareData.ins.myPoint?.intValue ?? 0
-//        #if DEBUG
-//        nowPoint = 100
-//        #endif
+        
         lbCost.text = ""
+        //시작시 포인트 1200
         if let startPoint = ShareData.ins.dfsGet(DfsKey.camOutStartPoint) as? NSNumber, startPoint.intValue > 0 {
             baseStartPoint = startPoint.intValue
         }
+        //1분후 10초당 200 point 차감
         if let livePoint = ShareData.ins.dfsGet(DfsKey.camOutUserPoint) as? NSNumber, livePoint.intValue > 0 {
             baseLivePoint = livePoint.intValue
         }
+        //시작시 포인트 1200
         if let outStartPoint = ShareData.ins.dfsGet(DfsKey.camOutStartPoint) as? NSNumber, outStartPoint.intValue > 0 {
             phoneOutStartPoint = outStartPoint.intValue
         }
-        
+    
         locaVideo.accessibilityValue = "S"
         mainVideo.accessibilityValue = "L"
         
@@ -186,6 +207,8 @@ class CamCallViewController: BaseViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
+    
+    
     func showPointLakePopup() {
         let title = NSLocalizedString("activity_txt451", comment: "포인트가 부족 합니다.")
         var point = nowPoint
@@ -256,18 +279,25 @@ class CamCallViewController: BaseViewController {
         }
         myAddChildViewController(superView: self.view, childViewController: watingTimerVc)
     }
+    //1차
     func requestPaymentStartPoint() {
+        
+        //포인트 차감 정책:
+        //1200 포이트 보다 크면 : 1분 1200 차감, 이후 10초당 200 포인트 차감
+        
         var param = [String:Any]()
         param["from_user_id"] = ShareData.ins.myId
         param["from_user_sex"] = ShareData.ins.mySex.rawValue
         param["to_user_id"] = toUserId!
-        param["out_point"] = baseStartPoint
+        param["out_point"] = "\(baseStartPoint)"
         param["room_key"] = roomKey!
         
         ApiManager.ins.requestCamCallPaymentStartPoint(param: param) { response in
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
                 self.nowPoint -= self.baseStartPoint
+                ShareData.ins.myPoint = NSNumber(integerLiteral: self.nowPoint)
+                self.exitTime = Int(self.nowPoint/self.baseLivePoint)*10
                 print("==== 1차 차감완료 \(response)");
             }
             else {
@@ -278,25 +308,20 @@ class CamCallViewController: BaseViewController {
             print("==== 오류: 1차 차감: \(error)");
         }
     }
+    //2차
     func requestPaymentEndPoint() {
+        
         var param = [String:Any]()
 //        영상채팅 최초 연결 시
 //        1분간 1200포인트 차감
 //        이후 10초당 200포인트 차감
-//
-//        음성채팅 최초 연결 시
-//        1분간 600포인트 차감
-//        10초당 100포인트 차감
+
         param["from_user_id"] = ShareData.ins.myId
         param["from_user_sex"] = ShareData.ins.mySex.rawValue
         param["to_user_id"] = toUserId!
-        var checkPoint:Int = Int(second - 60) //처음 1분은 빼고 계산
-        if checkPoint < 0 {
-            checkPoint = 0
-        }
-        checkPoint = Int(checkPoint/10)
-        param["out_point_time"] = checkPoint*baseLivePoint
+        param["out_point_time"] = "\(billPoint*1000)"
         param["room_key"] = roomKey!
+        
         ApiManager.ins.requestCamCallPaymentEndPoint(param: param) { response in
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
@@ -307,7 +332,6 @@ class CamCallViewController: BaseViewController {
             }
         } fail: { error in
             print("==== 오류: 2차차감 오류 \(error)");
-//            self.showErrorToast(error)
         }
     }
     func startTimer() {
@@ -625,6 +649,8 @@ class CamCallViewController: BaseViewController {
                         let isSuccess = res["isSuccess"].stringValue
                         if isSuccess == "01" {
                             self.nowPoint -= giftPoint
+                            ShareData.ins.myPoint = NSNumber(integerLiteral: self.nowPoint)
+                            self.exitTime = Int(self.nowPoint/self.baseLivePoint)*10
                             let msg = "🎁 \(self.toUserName!)\(NSLocalizedString("activity_txt194", comment: "님에게 선물")) \(gift_point_str.addComma()) \(NSLocalizedString("activity_txt249", comment: "별(P)를 선물 했습니다."))"
                             self.sendMessage(msg)
                         }

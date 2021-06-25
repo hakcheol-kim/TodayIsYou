@@ -20,6 +20,7 @@ class TalkWriteViewController: BaseViewController {
     var type: PhotoManageType = .cam
     var data:JSON!
     var selMemo: String = ""
+    var talkList = [String]()
     
     internal static func instant(withType type:PhotoManageType) ->TalkWriteViewController {
         let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "TalkWriteViewController") as! TalkWriteViewController
@@ -37,10 +38,44 @@ class TalkWriteViewController: BaseViewController {
             CNavigationBar.drawBackButton(self, NSLocalizedString("layout_txt145", comment: "토크 등록"), #selector(actionNaviBack))
             btnRegiTalk.setTitle(NSLocalizedString("layout_txt145", comment: "토크 등록"), for: .normal)
         }
+        
         btnLink.titleLabel?.numberOfLines = 0
+        
+        if type == .cam {
+            talkList.append(NSLocalizedString("talk_memo_3", comment: "친구가 필요해요"))
+            talkList.append(NSLocalizedString("talk_memo_0", comment: "가입인사드립니다"))
+            talkList.append(NSLocalizedString("talk_memo_2", comment: "먼저 영상 신청해 주세요"))
+            talkList.append(NSLocalizedString("talk_memo_6", comment: "연상이 좋아요"))
+            talkList.append(NSLocalizedString("talk_memo_7", comment: "개인기 봐주세요"))
+            talkList.append(NSLocalizedString("talk_memo_8", comment: "심심해요"))
+            talkList.append(NSLocalizedString("talk_memo_9", comment: "재미있게 채팅 해요"))
+            talkList.append(NSLocalizedString("talk_memo_4", comment: "동갑 친구가 좋아요"))
+            talkList.append(NSLocalizedString("talk_memo_5", comment: "연하가 좋아요"))
+        }
+        else if type == .talk {
+            talkList.append(NSLocalizedString("talk_memo_8", comment: "심심해요"))
+            talkList.append(NSLocalizedString("talk_memo_12", comment: "영화 볼까요?"))
+            talkList.append(NSLocalizedString("talk_memo_14", comment: "고민 들어 주세요"))
+            talkList.append(NSLocalizedString("talk_memo_11", comment: "차 한잔 할까요"))
+            talkList.append(NSLocalizedString("talk_memo_10", comment: "먼저 메세지 주세요"))
+            talkList.append(NSLocalizedString("talk_memo_13", comment: "대화하다 친해지면 만나요"))
+            talkList.append(NSLocalizedString("talk_memo_5", comment: "연하가 좋아요"))
+            talkList.append(NSLocalizedString("talk_memo_3", comment: "친구가 필요해요"))
+            talkList.append(NSLocalizedString("talk_memo_15", comment: "포토톡 해요"))
+            talkList.append(NSLocalizedString("talk_memo_4", comment: "동갑 친구가 좋아요"))
+            talkList.append(NSLocalizedString("talk_memo_6", comment: "연상이 좋아요"))
+            talkList.append(NSLocalizedString("talk_memo_16", comment: "애인이 필요해요"))
+            talkList.append(NSLocalizedString("talk_memo_0", comment: "가입인사드립니다"))
+        }
+        
+        self.reloadData()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    func reloadData() {
         if type == .cam {
             requestMyImgTalk()
         }
@@ -48,7 +83,6 @@ class TalkWriteViewController: BaseViewController {
             requestMyTalk()
         }
     }
-    
     //영상토크
     func requestMyImgTalk() {
         ApiManager.ins.requestMyImgTalk(param: ["user_id":ShareData.ins.myId]) { (res) in
@@ -84,9 +118,13 @@ class TalkWriteViewController: BaseViewController {
         let contents = data["contents"].stringValue
         let user_img = data["user_img"].stringValue
         
-        self.selMemo = contents
+        if selMemo.isEmpty == true {
+            self.selMemo = contents
+        }
+        tfMemo.text = selMemo
+        
         let ivProfile = btnProfile.viewWithTag(100) as! UIImageView
-
+        
         if let url = Utility.thumbnailUrl(ShareData.ins.myId, user_img) {
             ivProfile.setImageCache(url)
             ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
@@ -118,37 +156,7 @@ class TalkWriteViewController: BaseViewController {
     
     @IBAction func onClickedBtnActions(_ sender: UIButton) {
         if sender == btnTalk {
-            
-            var list = [String]()
-            if type == .cam {
-                list.append(NSLocalizedString("talk_memo_3", comment: "친구가 필요해요"))
-                list.append(NSLocalizedString("talk_memo_0", comment: "가입인사드립니다"))
-                list.append(NSLocalizedString("talk_memo_2", comment: "먼저 영상 신청해 주세요"))
-                list.append(NSLocalizedString("talk_memo_6", comment: "연상이 좋아요"))
-                list.append(NSLocalizedString("talk_memo_7", comment: "개인기 봐주세요"))
-                list.append(NSLocalizedString("talk_memo_8", comment: "심심해요"))
-                list.append(NSLocalizedString("talk_memo_9", comment: "재미있게 채팅 해요"))
-                list.append(NSLocalizedString("talk_memo_4", comment: "동갑 친구가 좋아요"))
-                list.append(NSLocalizedString("talk_memo_5", comment: "연하가 좋아요"))
-            }
-            else if type == .talk {
-                list.append(NSLocalizedString("talk_memo_8", comment: "심심해요"))
-                list.append(NSLocalizedString("talk_memo_12", comment: "영화 볼까요?"))
-                list.append(NSLocalizedString("talk_memo_14", comment: "고민 들어 주세요"))
-                list.append(NSLocalizedString("talk_memo_11", comment: "차 한잔 할까요"))
-                list.append(NSLocalizedString("talk_memo_10", comment: "먼저 메세지 주세요"))
-                list.append(NSLocalizedString("talk_memo_13", comment: "대화하다 친해지면 만나요"))
-                list.append(NSLocalizedString("talk_memo_5", comment: "연하가 좋아요"))
-                list.append(NSLocalizedString("talk_memo_3", comment: "친구가 필요해요"))
-                list.append(NSLocalizedString("talk_memo_15", comment: "포토톡 해요"))
-                list.append(NSLocalizedString("talk_memo_4", comment: "동갑 친구가 좋아요"))
-                list.append(NSLocalizedString("talk_memo_6", comment: "연상이 좋아요"))
-                list.append(NSLocalizedString("talk_memo_16", comment: "애인이 필요해요"))
-                list.append(NSLocalizedString("talk_memo_0", comment: "가입인사드립니다"))
-            }
-            
-            if list.isEmpty == true { return }
-            let vc = PopupListViewController.initWithType(.normal, NSLocalizedString("popup_tilte_select", comment: "선택해주세요."), list, nil) { (vcs, selItem, index) in
+            let vc = PopupListViewController.initWithType(.normal, NSLocalizedString("popup_tilte_select", comment: "선택해주세요."), talkList, nil) { (vcs, selItem, index) in
                 vcs.dismiss(animated: true, completion: nil)
                 guard let selItem = selItem as? String else {
                     return
@@ -161,6 +169,7 @@ class TalkWriteViewController: BaseViewController {
         }
         else if sender == btnProfile {
             let vc = PhotoManagerViewController.instantiate(with: type)
+            vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: true)
         }
         else if sender == btnLink {
@@ -246,5 +255,11 @@ class TalkWriteViewController: BaseViewController {
                 }
             }
         }
+    }
+}
+
+extension TalkWriteViewController: PhotoManagerViewControllerDelegate {
+    func didFinishChangePhotoSetting() {
+        self.reloadData()
     }
 }

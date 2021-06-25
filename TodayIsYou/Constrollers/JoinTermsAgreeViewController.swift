@@ -49,7 +49,7 @@ class JoinTermsAgreeViewController: BaseViewController {
         }
         else if sender == btnOk {
             if btnSeviceCheck.isSelected == false || btnPrivacyCheck.isSelected == false {
-                self.view.makeToast(NSLocalizedString("join_activity47", comment: "서비스ㅂ 이용약관에 동의하셔야 회원가입이 가능합니다."))
+                self.view.makeToast(NSLocalizedString("join_activity47", comment: "서비스 이용약관에 동의하셔야 회원가입이 가능합니다."))
                 return
             }
             

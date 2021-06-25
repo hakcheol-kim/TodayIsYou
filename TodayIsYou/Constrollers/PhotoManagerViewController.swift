@@ -10,13 +10,16 @@ import SwiftyJSON
 import Photos
 import BSImagePicker
 import UIImageViewAlignedSwift
-
+protocol PhotoManagerViewControllerDelegate {
+    func didFinishChangePhotoSetting()
+}
 class PhotoManagerViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var btnAddPhoto: CButton!
     @IBOutlet weak var btnCheckTerm: UIButton!
     @IBOutlet weak var btnShowTerm: UIButton!
     var type:PhotoManageType = .normal
+    var delegate: PhotoManagerViewControllerDelegate?
     
     var listData:[JSON] = []
     static func instantiate(with type:PhotoManageType) -> PhotoManagerViewController {
@@ -205,6 +208,9 @@ class PhotoManagerViewController: BaseViewController {
         ApiManager.ins.requestChangePhotoTalk(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
+                if let delegate = self.delegate {
+                    delegate.didFinishChangePhotoSetting()
+                }
                 appDelegate.window?.makeToast(NSLocalizedString("activity_txt356", comment: "등록완료!!"))
                 self.navigationController?.popViewController(animated: true)
             }
@@ -219,6 +225,9 @@ class PhotoManagerViewController: BaseViewController {
         ApiManager.ins.requestModifyMyPhoto(param: param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
+                if let delegate = self.delegate {
+                    delegate.didFinishChangePhotoSetting()
+                }
                 appDelegate.window?.makeToast(NSLocalizedString("activity_txt356", comment: "등록완료!!"))
                 self.navigationController?.popViewController(animated: true)
             }

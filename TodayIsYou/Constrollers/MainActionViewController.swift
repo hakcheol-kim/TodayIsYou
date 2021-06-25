@@ -160,25 +160,26 @@ class MainActionViewController: BaseViewController {
     
     //overide method
     func actionAlertPhoneCall() {
-        var param:[String:Any] = [:]
-        param["room_key"] = Utility.roomKeyPhone()
         
-        param["from_user_id"] = ShareData.ins.myId
-        param["from_user_sex"] = ShareData.ins.mySex.rawValue
-        param["to_user_id"] = self.selUser["user_id"].stringValue
-        param["to_user_name"] = self.selUser["user_name"].stringValue
-        param["friend_mode"] = "N"
-        
-        if isMyFriend {
-            param["friend_mode"] = "Y"
-        }
-        
-        ApiManager.ins.requestPhoneCallInsertMsg(param: param) { (res) in
-            let isSuccess = res["isSuccess"].stringValue
+        let canCall = appDelegate.checkPoint(callType: .phone, connectedType: .offer)
+        if canCall {
+            var param:[String:Any] = [:]
+            param["room_key"] = Utility.roomKeyPhone()
             
-            if isSuccess == "01" {
-                let canCall = appDelegate.checkPoint(callType: .phone, connectedType: .offer)
-                if canCall {
+            param["from_user_id"] = ShareData.ins.myId
+            param["from_user_sex"] = ShareData.ins.mySex.rawValue
+            param["to_user_id"] = self.selUser["user_id"].stringValue
+            param["to_user_name"] = self.selUser["user_name"].stringValue
+            param["friend_mode"] = "N"
+            
+            if isMyFriend {
+                param["friend_mode"] = "Y"
+            }
+
+            ApiManager.ins.requestPhoneCallInsertMsg(param: param) { (res) in
+                let isSuccess = res["isSuccess"].stringValue
+                
+                if isSuccess == "01" {
                     let to_user_name = res["to_user_name"].stringValue
                     let to_user_id = res["to_user_id"].stringValue
                     let room_key = res["room_key"].stringValue
@@ -186,35 +187,34 @@ class MainActionViewController: BaseViewController {
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
                 else {
-                    appDelegate.showPointLackPopup(callType: .phone)
+                    self.showErrorToast(res)
                 }
+            } fail: { (error) in
+                self.showErrorToast(error)
             }
-            else {
-                self.showErrorToast(res)
-            }
-        } fail: { (error) in
-            self.showErrorToast(error)
+        }
+        else {
+            appDelegate.showPointLackPopup(callType: .phone)
         }
     }
     func actionAlertCamTalkCall() {
-        var param:[String:Any] = [:]
-        param["room_key"] = Utility.roomKeyCam()
-        param["from_user_id"] = ShareData.ins.myId
-        param["from_user_sex"] = ShareData.ins.mySex.rawValue
-        param["to_user_id"] = self.selUser["user_id"].stringValue
-        param["to_user_name"] = self.selUser["user_name"].stringValue
-        param["friend_mode"] = "N"
-        
-        if isMyFriend {
-            param["friend_mode"] = "Y"
-        }
-        
-        ApiManager.ins.requestCamCallInsertMsg(param: param) { (res) in
-            let isSuccess = res["isSuccess"].stringValue
-            if isSuccess == "01" {
-                
-                let canCall = appDelegate.checkPoint(callType: .cam, connectedType: .offer)
-                if canCall {
+        let canCall = appDelegate.checkPoint(callType: .cam, connectedType: .offer)
+        if canCall {
+            var param:[String:Any] = [:]
+            param["room_key"] = Utility.roomKeyCam()
+            param["from_user_id"] = ShareData.ins.myId
+            param["from_user_sex"] = ShareData.ins.mySex.rawValue
+            param["to_user_id"] = self.selUser["user_id"].stringValue
+            param["to_user_name"] = self.selUser["user_name"].stringValue
+            param["friend_mode"] = "N"
+            
+            if isMyFriend {
+                param["friend_mode"] = "Y"
+            }
+            
+            ApiManager.ins.requestCamCallInsertMsg(param: param) { (res) in
+                let isSuccess = res["isSuccess"].stringValue
+                if isSuccess == "01" {
                     let to_user_name = res["to_user_name"].stringValue
                     let to_user_id = res["to_user_id"].stringValue
                     let room_key = res["room_key"].stringValue
@@ -222,14 +222,14 @@ class MainActionViewController: BaseViewController {
                     self.navigationController?.pushViewController(vc, animated: true)
                 }
                 else {
-                    appDelegate.showPointLackPopup(callType: .cam)
+                    self.showErrorToast(res)
                 }
+            } fail: { (error) in
+                self.showErrorToast(error)
             }
-            else {
-                self.showErrorToast(res)
-            }
-        } fail: { (error) in
-            self.showErrorToast(error)
+        }
+        else {
+            appDelegate.showPointLackPopup(callType: .cam)
         }
     }
     func actionBlockAlert() {

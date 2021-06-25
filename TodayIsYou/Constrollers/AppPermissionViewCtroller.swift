@@ -12,7 +12,6 @@ class AppPermissionViewCtroller: UIViewController {
     @IBOutlet weak var btnCamera: UIButton!
     @IBOutlet weak var btnMicroPhone: UIButton!
     @IBOutlet weak var btnPhoto: UIButton!
-    
     @IBOutlet weak var ivCamera: UIImageView!
     @IBOutlet weak var ivMicroPhone: UIImageView!
     @IBOutlet weak var ivPhoto: UIImageView!
@@ -20,11 +19,12 @@ class AppPermissionViewCtroller: UIViewController {
     @IBOutlet weak var btnOk: UIButton!
     @IBOutlet weak var safetyView: UIView!
     
+    var completion:((_ success:Bool) ->Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        appDelegate.apptrakingPermissionCheck()
+//        appDelegate.apptrakingPermissionCheck()
         if let lbSubDes = btnCamera.viewWithTag(102) as? UILabel {
             let des = Bundle.main.localizedString(forKey: "NSCameraUsageDescription", value: nil, table: "InfoPlist")
             lbSubDes.text = des
@@ -84,7 +84,7 @@ class AppPermissionViewCtroller: UIViewController {
                 return
             }
             ShareData.ins.dfsSet(true, DfsKey.checkPermission)
-            appDelegate.callLoginVC()
+            appDelegate.callIntroViewCtrl()
         }
     }
     

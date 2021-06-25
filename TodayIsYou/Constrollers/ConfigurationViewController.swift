@@ -179,7 +179,7 @@ class ConfigurationViewController: BaseViewController {
         ApiManager.ins.requestUserOut(param:param) { (res) in
             let isSuccess = res["isSuccess"].stringValue
             if isSuccess == "01" {
-                
+                appDelegate.callIntroViewCtrl()
             }
             else {
                 self.showErrorToast(res)

@@ -42,7 +42,7 @@ class TalkListViewController: MainActionViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.requestMyHomePoint()
+        self.requestGetPoint()
     }
     func dataRest() {
         pageNum = 1

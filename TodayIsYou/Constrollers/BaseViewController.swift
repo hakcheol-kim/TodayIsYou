@@ -28,6 +28,19 @@ class BaseViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
+    func requestGetPoint() {
+        ApiManager.ins.requestGetPoint(param: ["user_id" : ShareData.ins.myId]) { res in
+            let isSuccess = res["isSuccess"].stringValue
+            if isSuccess == "01" {
+                let point = res["point"].numberValue
+                ShareData.ins.myPoint = point
+                ShareData.ins.dfsSet(point, DfsKey.userPoint)
+                appDelegate.mainViewCtrl.updateNaviPoint()
+            }
+        } failure: { error in
+            self.showErrorToast(error)
+        }
+    }
     func requestMyInfo() {
         let param = ["app_type": appType, "user_id":ShareData.ins.myId]
         ApiManager.ins.requestUerInfo(param: param) { (response) in

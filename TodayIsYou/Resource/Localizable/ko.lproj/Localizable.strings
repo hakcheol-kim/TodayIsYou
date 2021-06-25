@@ -358,7 +358,7 @@
 "activity_txt345" = "환급 신청이 없습니다." ;
 "activity_txt347" = "별 환급 목록" ;
 "activity_txt348" = "환급가능 별 : %@개(%@원)" ;
-"activity_txt351" = "별은 10,000개(10,000원) 부터 환급 가능합니다" ;
+"activity_txt351" = "별은 20,000개(20,000원) 부터 환급 가능합니다" ;
 "activity_txt352" = "환급신청완료!!" ;
 "activity_txt353" = "별이 부족 합니다." ;
 "activity_txt356" = "등록완료!!" ;
@@ -636,6 +636,6 @@
 "subscribe_004" = "33,000원 / 월" ;
 "launch_msg_1" = "오늘은\n누구랑 셀레는 만남?!" ;
 "launch_msg_2" = "오늘은 너야!" ;
-"member_rejoin" = "재가입 신청은 %@일 후에 재가입 가능합니다." ;
+"member_rejoin" = "재가입 신청은 %d일 후에 재가입 가능합니다." ;
 "info" = "안내" ;
 "block_end_date" = "차단이 끝나는 날짜는 %@입니다." ;

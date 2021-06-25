@@ -236,17 +236,10 @@ class LoginViewController: SocialLoginViewController {
         
         let joinType = user["joinType"] as! String
         let userId = user["userId"] as! String
-        
-        var newUserId = ""
-        if joinType == "phone" {
-            newUserId = Utility.createUserId(userId)
-        }
-        else {
-            let id = "\(joinType)|\(userId)"
-            newUserId = Utility.createUserId(id)
-        }
-        
-        ApiManager.ins.requestUerInfo(param: ["user_id": newUserId, "app_type": appType]) { (res) in
+
+        let md5UserId = Utility.createUserId(userId)
+        let param = ["user_id": md5UserId, "app_type": appType]
+        ApiManager.ins.requestUerInfo(param: param) { (res) in
             let isSuccess = res["isSuccess"]
             if isSuccess == "00" { //신규
                 if joinType == "phone" {
@@ -259,16 +252,16 @@ class LoginViewController: SocialLoginViewController {
                 }
             }
             else if isSuccess == "01" {
-//                let userIdentifier = CipherManager.aes128EncrpytToHex(phoneNumber)
-//                KeychainItem.saveUserInKeychain(userIdentifier)
-                ShareData.ins.dfsSet(newUserId, DfsKey.userId)
-                ShareData.ins.myId = newUserId
+                let saveKeychainPlanTxt = "\(joinType)|\(userId)"
+//                let userIdentifier = CipherManager.aes128EncrpytToHex(saveKeychainPlanTxt)
+                KeychainItem.saveUserInKeychain(saveKeychainPlanTxt)
+                
+                ShareData.ins.dfsSet(md5UserId, DfsKey.userId)
+                ShareData.ins.myId = md5UserId
                 ShareData.ins.setUserInfo(res)
                 appDelegate.callMainViewCtrl()
-                
                 appDelegate.requestUpdateFcmToken()
                 AdbrixEvent.addEventLog(.login, user)
-                
                 self.requestChageAppType()
             }
             else {

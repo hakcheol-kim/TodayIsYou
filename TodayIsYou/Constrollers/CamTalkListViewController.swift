@@ -58,7 +58,7 @@ class CamTalkListViewController: MainActionViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        appDelegate.mainViewCtrl.updateNaviPoint()
+        self.requestGetPoint()
     }
     func decorationUI() {
         let imgNor = UIImage.color(from: RGB(120, 120, 130))

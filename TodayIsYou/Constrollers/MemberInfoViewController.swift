@@ -39,7 +39,7 @@ class MemberInfoViewController: BaseViewController {
     var user:[String:Any] = [:]
     let toolbar = CToolbar.init(barItems: [.keyboardDown])
     var authCode:String = ""
-    var notiYn = "N"
+    var notiYn = "A"
     var timer:Timer?
     var selGender: String = ""
     var selAge: String = ""
@@ -307,7 +307,7 @@ class MemberInfoViewController: BaseViewController {
             }
         }
         else if sender == btnOk {
-            
+            var planTextUserId = ""
             if joinType == "phone" {
                 lbHintPhone.text = ""
                 lbHintAuthCode.text = ""
@@ -325,15 +325,13 @@ class MemberInfoViewController: BaseViewController {
                     lbHintAuthCode.text = NSLocalizedString("join_auth_code_comfirm", comment: "전화번호 인증번호 확인을 해주세요.")
                     return
                 }
-                
-                let userId = phone.md5()
-                user["user_id"] = userId
+                planTextUserId = phone
+                user["user_id"] = Utility.createUserId(planTextUserId)
                 user["user_phone"] = tfPhoneNumber.text!
             }
             else {
-                let userId = user["userId"] as! String
-                let newUserId = "\(self.joinType)|\(userId)"
-                user["user_id"] = Utility.createUserId(newUserId)
+                planTextUserId = user["userId"] as! String
+                user["user_id"] = Utility.createUserId(planTextUserId)
             }
             
             lbHintNickname.text = ""
@@ -365,27 +363,7 @@ class MemberInfoViewController: BaseViewController {
                 lbHintInfo.text = NSLocalizedString("join_activity09", comment: "지역 선택해주세요.")
                 return
             }
-           
-//            {
-//                instantExperienceLaunched=,
-//                app_type=A1,
-//                forgn_lang=US,
-//                save_type=G,
-//                referrerClickTime=,
-//                user_name=미라클여,
-//                appInstallTime=,
-//                version_code=10,
-//                user_age=10대,
-//                locale=en,
-//                referrerUrl=,
-//                user_sex=여,
-//                user_mail=miraclebible7342@gmail.com,
-//                user_id=87374bf0400f17bc2000b773f63b11ce,
-//                user_area=해외, noti_yn=A,
-//                user_phone=01073424920
-//            }
-            
-            
+  
             user["app_type"] = appType
             user["save_type"] = "G"
             user["version_code"] = Bundle.main.appVersion
@@ -396,6 +374,7 @@ class MemberInfoViewController: BaseViewController {
             user["user_area"] = selArea
             user["noti_yn"] = notiYn
             user["forgn_lang"] = ShareData.ins.languageCode.uppercased()
+            
             let userId = user["user_id"] as! String
             
             if let referalParam = ShareData.ins.dfsGet(DfsKey.referalParam) as? [String:Any], referalParam.isEmpty == false {
@@ -415,11 +394,17 @@ class MemberInfoViewController: BaseViewController {
                 
                 ShareData.ins.dfsRemove(DfsKey.referalParam)
             }
+            
             ApiManager.ins.requestMemberRegist(param: user) { (response) in
                 let isSuccess = response["isSuccess"].stringValue
                 if isSuccess == "01" {
                     let alert = CAlertViewController.init(type: .alert, title: nil, message: NSLocalizedString("join_completed", comment: "회원가입이 완료되었습니다."), actions: [.ok]) { (vcs, selitem, index) in
                         vcs.dismiss(animated: true, completion: nil)
+                        
+                        let saveKeychainPlanTxt = "\(self.joinType)|\(planTextUserId)"
+//                        let userIdentifier = CipherManager.aes128EncrpytToHex(saveKeychainPlanTxt)
+                        KeychainItem.saveUserInKeychain(saveKeychainPlanTxt)
+                     
                         ShareData.ins.dfsSet(userId, DfsKey.userId)
                         ShareData.ins.myId = userId
                         if gender == "남" {

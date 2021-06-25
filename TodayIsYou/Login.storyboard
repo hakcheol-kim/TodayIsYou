@@ -386,7 +386,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="launch.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="fJr-Cr-NBc">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="launcher.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="fJr-Cr-NBc">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                             </imageView>
                         </subviews>
@@ -1571,7 +1571,7 @@
         <image name="checkmark.square" catalog="system" width="128" height="114"/>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
         <image name="ico_apple" width="14" height="18"/>
-        <image name="launch.jpeg" width="720" height="1280"/>
+        <image name="launcher.jpeg" width="720" height="1280"/>
         <image name="mic" catalog="system" width="108" height="128"/>
         <image name="photo" catalog="system" width="128" height="93"/>
         <image name="squareshape" catalog="system" width="128" height="114"/>

@@ -37,7 +37,7 @@ class SettingViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         requestMyInfo()
-        appDelegate.mainViewCtrl.updateNaviPoint()
+        self.requestGetPoint()
     }
     
     override func requestMyInfo() {

@@ -358,7 +358,7 @@
 "activity_txt345" = "No reimbursement request." ;
 "activity_txt347" = "Star reimbursement list" ;
 "activity_txt348" = "Stars eligible for reimbursement : %@ Stars ($%@)" ;
-"activity_txt351" = "You may receive reimbursements starting from 10,000 stars (100$)" ;
+"activity_txt351" = "You may receive reimbursements starting from 20,000 stars (200$)" ;
 "activity_txt352" = "Reimbursement request complete!!" ;
 "activity_txt353" = "You do not have enough stars." ;
 "activity_txt356" = "Registration Success" ;
@@ -636,6 +636,6 @@
 "subscribe_004" = "$29.49 / Month" ;
 "launch_msg_1" = "WHO CAN I ENJOY\nMEETING TODAY?" ;
 "launch_msg_2" = "TODAY IS YOU" ;
-"member_rejoin" = "Re-registration is possible after %@ days." ;
-"info" = "Guidance" ;
+"member_rejoin" = "Re-registration is possible after %d days." ;
+"info" = "Information" ;
 "block_end_date" = "Block end date is %@." ;

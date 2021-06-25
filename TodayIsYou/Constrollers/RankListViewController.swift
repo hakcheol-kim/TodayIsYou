@@ -41,7 +41,7 @@ class RankListViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        appDelegate.mainViewCtrl.updateNaviPoint()
+        self.requestGetPoint()
     }
     func commitPagerView() {
         

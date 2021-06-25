@@ -84,6 +84,7 @@
 		E9919A0425FE1D8600D6128A /* ContactusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9919A0325FE1D8600D6128A /* ContactusViewController.swift */; };
 		E9919A0725FE1DFB00D6128A /* ConfigurationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9919A0625FE1DFB00D6128A /* ConfigurationViewController.swift */; };
 		E9919A0A25FE1ECF00D6128A /* ProfileManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9919A0925FE1ECF00D6128A /* ProfileManagerViewController.swift */; };
+		E998C9F42684250900EB1F02 /* launcher.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = E998C9F32684250900EB1F02 /* launcher.jpeg */; };
 		E99BA9CB264A482A00E3A66A /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = E99BA9CA264A482A00E3A66A /* loading.gif */; };
 		E99BD64225FB621900B000FE /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = E99BD63625FB621900B000FE /* LICENSE */; };
 		E99BD64325FB621900B000FE /* README-OBJECTIVE-C.md in Resources */ = {isa = PBXBuildFile; fileRef = E99BD63725FB621900B000FE /* README-OBJECTIVE-C.md */; };
@@ -114,7 +115,6 @@
 		E99CFF45260B8888009985F8 /* JoinTermsAgreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99CFF44260B8888009985F8 /* JoinTermsAgreeViewController.swift */; };
 		E99E51B4260AC0D400A5F5AE /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99E51B3260AC0D400A5F5AE /* KeychainItem.swift */; };
 		E9A033D62681DEAA007CAEAE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9A033D52681DEAA007CAEAE /* LaunchScreen.storyboard */; };
-		E9A033D82681DFB8007CAEAE /* launch.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = E9A033D72681DFB8007CAEAE /* launch.jpeg */; };
 		E9A07DAC2677169F00096202 /* ScreenCaptureDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A07DAB2677169F00096202 /* ScreenCaptureDetector.swift */; };
 		E9A07DAE26774AF900096202 /* Other.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9A07DAD26774AF900096202 /* Other.storyboard */; };
 		E9A07DB026774B2C00096202 /* BannerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A07DAF26774B2C00096202 /* BannerListViewController.swift */; };
@@ -278,6 +278,7 @@
 		E9919A0325FE1D8600D6128A /* ContactusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactusViewController.swift; sourceTree = "<group>"; };
 		E9919A0625FE1DFB00D6128A /* ConfigurationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurationViewController.swift; sourceTree = "<group>"; };
 		E9919A0925FE1ECF00D6128A /* ProfileManagerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileManagerViewController.swift; sourceTree = "<group>"; };
+		E998C9F32684250900EB1F02 /* launcher.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = launcher.jpeg; sourceTree = "<group>"; };
 		E99BA9CA264A482A00E3A66A /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		E99BD52525FB490800B000FE /* TodayIsYou.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TodayIsYou.entitlements; sourceTree = "<group>"; };
 		E99BD63625FB621900B000FE /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -311,7 +312,6 @@
 		E99E51B3260AC0D400A5F5AE /* KeychainItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItem.swift; sourceTree = "<group>"; };
 		E9A0338B2681C28E007CAEAE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9A033D52681DEAA007CAEAE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
-		E9A033D72681DFB8007CAEAE /* launch.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = launch.jpeg; sourceTree = "<group>"; };
 		E9A07DAB2677169F00096202 /* ScreenCaptureDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCaptureDetector.swift; sourceTree = "<group>"; };
 		E9A07DAD26774AF900096202 /* Other.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Other.storyboard; sourceTree = "<group>"; };
 		E9A07DAF26774B2C00096202 /* BannerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerListViewController.swift; sourceTree = "<group>"; };
@@ -751,7 +751,7 @@
 		E9C2CEDD25F23E47002A1F95 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				E9A033D72681DFB8007CAEAE /* launch.jpeg */,
+				E998C9F32684250900EB1F02 /* launcher.jpeg */,
 				E9563B2926663B790087CFB0 /* InfoPlist.strings */,
 				E9A7FF012664DFA30047A69E /* LocalizedImg */,
 				E99BA9CA264A482A00E3A66A /* loading.gif */,
@@ -876,7 +876,6 @@
 				E9D5C6B626623EA500ABBE8A /* banner_info_subscription.png in Resources */,
 				E9F49E99260470710087E68C /* CAlertViewController.xib in Resources */,
 				E9836FE425FF39DC0072F22F /* CameraOverlayView.xib in Resources */,
-				E9A033D82681DFB8007CAEAE /* launch.jpeg in Resources */,
 				E9C2CEE525F23E55002A1F95 /* img_back4.jpg in Resources */,
 				E9C2CE8525F21EF9002A1F95 /* Assets.xcassets in Resources */,
 				E9B12D9625F99C2A00FF7B11 /* TalkTblCell.xib in Resources */,
@@ -907,6 +906,7 @@
 				E99BA9CB264A482A00E3A66A /* loading.gif in Resources */,
 				E98F2E11267848BA00FB1E8F /* BannerView.xib in Resources */,
 				E9FD43712647EBCC00065189 /* ScoreView.xib in Resources */,
+				E998C9F42684250900EB1F02 /* launcher.jpeg in Resources */,
 				E99199F725FE165000D6128A /* NoticeCellView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1261,7 +1261,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.2.4;
+				CURRENT_PROJECT_VERSION = 1.0.2.6;
 				DEVELOPMENT_TEAM = KCYR65B299;
 				ENABLE_BITCODE = NO;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = NO;
@@ -1345,7 +1345,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.2.4;
+				CURRENT_PROJECT_VERSION = 1.0.2.6;
 				DEVELOPMENT_TEAM = KCYR65B299;
 				ENABLE_BITCODE = NO;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = NO;

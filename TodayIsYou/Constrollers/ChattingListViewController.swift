@@ -37,7 +37,7 @@ class ChattingListViewController: BaseViewController {
         super.viewWillAppear(animated)
         self.dataRest()
         appDelegate.mainViewCtrl.updateUnReadMessageCount()
-        appDelegate.mainViewCtrl.updateNaviPoint()
+        self.requestGetPoint()
         NotificationCenter.default.addObserver(self, selector: #selector(notificationHandler(_:)), name: Notification.Name(PUSH_DATA), object: nil)
     }
     

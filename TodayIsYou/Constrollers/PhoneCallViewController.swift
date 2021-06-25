@@ -52,23 +52,10 @@ class PhoneCallViewController: MainActionViewController {
     var baseStartPoint = 0
     var baseLivePoint = 0
     var phoneOutStartPoint = 0 // 최소 포인트
-    var nowPoint:Int = 0 {
-        didSet {
-            if nowPoint < 0 && ShareData.ins.mySex == .mail {
-                if let timer = self.timer {
-                    timer.invalidate()
-                    timer.fire()
-                    self.timer = nil
-                }
-                self.signalClient.disconnect()
-                self.webRtcClient.close()
-                self.navigationController?.popViewController(animated: false)
-                self.showPointLakePopup()
-            }
-        }
-    }
     
+    var billPoint = 0
     var timer:Timer?
+    var exitTime = Int.max
     var second: TimeInterval = 0.0 {
         didSet {
             if second == 0.0 {
@@ -83,22 +70,56 @@ class PhoneCallViewController: MainActionViewController {
             
             lbTakeTime.text = String(format: "%02ld:%02ld:%02ld", hour, min, sec)
           
-            var checkPoint:Int = Int(second - 60) //처음 1분은 빼고 계산
-            if checkPoint < 0 {
-                checkPoint = 0
+            
+            let oldBillPoint = billPoint
+            
+            var checkSec = Int(second - 60) //처음 1분은 빼고 계산
+            if checkSec < 0 {
+                checkSec = 0
             }
-            checkPoint = Int(checkPoint/10)
-            self.nowPoint = nowPoint - checkPoint*self.baseLivePoint
+            
+            if checkSec > exitTime {
+                self.forceExit()
+            }
+            else {
+                billPoint = Int(checkSec/10)*self.baseLivePoint
+                if oldBillPoint != billPoint {
+                    self.nowPoint = ShareData.ins.myPoint!.intValue - billPoint
+                }
+            }
+            print("== sec: \(second), now point => \(nowPoint), bill point => \(billPoint)")
+            
         }
     }
     
+    var nowPoint:Int = 0 {
+        didSet {
+            if nowPoint < 0 {
+                self.forceExit()
+            }
+        }
+    }
     private var signalingConnected: Bool = false
     private var hasLocalSdp: Bool = false
     private var localCandidateCount: Int = 0
     private var hasRemoteSdp: Bool = false
     private var remoteCandidateCount: Int = 0
+    var lessBasePoint = false
     
-    
+    func forceExit() {
+//        self.sendMessage("Room Out")
+        if let timer = self.timer {
+            timer.invalidate()
+            timer.fire()
+            self.timer = nil
+        }
+        
+        self.signalClient.disconnect()
+        self.webRtcClient.close()
+        self.requestPaymentEndPoint()
+        self.navigationController?.popViewController(animated: false)
+        self.showPointLakePopup()
+    }
     ///Mark life cycle
     static func initWithType(_ type:ConnectionType, _ roomKey:String, _ toUserId:String, _ toUserName:String?, _ info:JSON? = nil, _ completion:(() ->Void)? = nil) -> PhoneCallViewController {
         let vc = PhoneCallViewController.instantiateFromStoryboard(.call)!
@@ -116,24 +137,32 @@ class PhoneCallViewController: MainActionViewController {
 
         ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
         btnOut.imageView?.contentMode = .scaleAspectFit
-        
-        nowPoint = ShareData.ins.myPoint?.intValue ?? 0
 //        #if DEBUG
-//        nowPoint = 100
+//        ShareData.ins.myPoint = NSNumber(integerLiteral: 1300)
 //        #endif
+        nowPoint = ShareData.ins.myPoint?.intValue ?? 0
         lbTakMsg.text = ""
         lbUserName.text = ""
         lbGender.text = ShareData.ins.mySex.transGender().rawValue
         lbAge.text = ""
         lbGoodCnt.text = "0"
+        
+        //시작시 차감 포인트 600
         if let startPoint = ShareData.ins.dfsGet(DfsKey.phoneOutStartPoint) as? NSNumber, startPoint.intValue > 0 {
             baseStartPoint = startPoint.intValue
         }
+        //1분후 10초당 100포인트 차감
         if let livePoint = ShareData.ins.dfsGet(DfsKey.phoneOutUserPoint) as? NSNumber, livePoint.intValue > 0 {
             baseLivePoint = livePoint.intValue
         }
+        //시작시 차감 포인트 600
         if let outStartPoint = ShareData.ins.dfsGet(DfsKey.phoneOutStartPoint) as? NSNumber, outStartPoint.intValue > 0 {
             phoneOutStartPoint = outStartPoint.intValue
+        }
+        
+        //600 포인트 보다 작다면
+        if nowPoint < baseStartPoint {
+            lessBasePoint = true
         }
         
         if let info = info {
@@ -234,17 +263,25 @@ class PhoneCallViewController: MainActionViewController {
     }
     
     func requestPaymentStartPoint() {
+        
+        var point = baseStartPoint
+        if lessBasePoint == true {
+            point = 0
+        }
+        
         var param = [String:Any]()
         param["from_user_id"] = ShareData.ins.myId
         param["from_user_sex"] = ShareData.ins.mySex.rawValue
         param["to_user_id"] = toUserId!
-        param["out_point"] = baseStartPoint
+        param["out_point"] = "\(point)"
         param["room_key"] = roomKey!
         
         ApiManager.ins.requestPhoneCallPaymentStartPoint(param: param) { response in
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
                 self.nowPoint -= self.baseStartPoint
+                ShareData.ins.myPoint = NSNumber(integerLiteral: self.nowPoint)
+                self.exitTime = Int(self.nowPoint/self.baseLivePoint)*10
                 print("==== 1차 차감 완료: \(response)");
             }
             else {
@@ -255,20 +292,19 @@ class PhoneCallViewController: MainActionViewController {
             print("==== 오류: 1차 차감: \(error)");
         }
     }
+    
     func requestPaymentEndPoint() {
         var param = [String:Any]()
-        
+//        영상채팅 최초 연결 시
+//        1분간 600포인트 차감
+//        이후 10초당 100포인트 차감
+
         param["from_user_id"] = ShareData.ins.myId
         param["from_user_sex"] = ShareData.ins.mySex.rawValue
         param["to_user_id"] = toUserId!
-        
-        var checkPoint:Int = Int(second - 60) //처음 1분은 빼고 계산
-        if checkPoint < 0 {
-            checkPoint = 0
-        }
-        checkPoint = Int(checkPoint/10)
-        param["out_point_time"] = checkPoint*baseLivePoint
+        param["out_point_time"] = "\(billPoint*1000)"
         param["room_key"] = roomKey!
+        
         ApiManager.ins.requestPhoneCallPaymentEndPoint(param: param) { response in
             let isSuccess = response["isSuccess"].stringValue
             if isSuccess == "01" {
