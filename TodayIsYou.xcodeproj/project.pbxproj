@@ -114,7 +114,6 @@
 		E99CFF42260B81D5009985F8 /* MemberInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99CFF41260B81D5009985F8 /* MemberInfoViewController.swift */; };
 		E99CFF45260B8888009985F8 /* JoinTermsAgreeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99CFF44260B8888009985F8 /* JoinTermsAgreeViewController.swift */; };
 		E99E51B4260AC0D400A5F5AE /* KeychainItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99E51B3260AC0D400A5F5AE /* KeychainItem.swift */; };
-		E9A033D62681DEAA007CAEAE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9A033D52681DEAA007CAEAE /* LaunchScreen.storyboard */; };
 		E9A07DAC2677169F00096202 /* ScreenCaptureDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A07DAB2677169F00096202 /* ScreenCaptureDetector.swift */; };
 		E9A07DAE26774AF900096202 /* Other.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9A07DAD26774AF900096202 /* Other.storyboard */; };
 		E9A07DB026774B2C00096202 /* BannerListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A07DAF26774B2C00096202 /* BannerListViewController.swift */; };
@@ -130,6 +129,8 @@
 		E9B12DE325FA03CB00FF7B11 /* RankTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B12DE125FA03CB00FF7B11 /* RankTblCell.swift */; };
 		E9B12DE425FA03CB00FF7B11 /* RankTblCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B12DE225FA03CB00FF7B11 /* RankTblCell.xib */; };
 		E9B27617266862EF000F2784 /* AdbrixEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B27616266862EF000F2784 /* AdbrixEvent.swift */; };
+		E9B953FB268C108B0028006A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9B953FD268C108B0028006A /* LaunchScreen.storyboard */; };
+		E9B95403268C28AE0028006A /* icon_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E9B95402268C28AE0028006A /* icon_logo.png */; };
 		E9B97C292600FA0200F8D805 /* ContactusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B97C272600FA0200F8D805 /* ContactusCell.swift */; };
 		E9B97C2A2600FA0200F8D805 /* ContactusCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E9B97C282600FA0200F8D805 /* ContactusCell.xib */; };
 		E9BF08992645B2620000F3A5 /* Configuration.storekit in Resources */ = {isa = PBXBuildFile; fileRef = E9BF08982645B2620000F3A5 /* Configuration.storekit */; };
@@ -311,7 +312,6 @@
 		E99CFF44260B8888009985F8 /* JoinTermsAgreeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinTermsAgreeViewController.swift; sourceTree = "<group>"; };
 		E99E51B3260AC0D400A5F5AE /* KeychainItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainItem.swift; sourceTree = "<group>"; };
 		E9A0338B2681C28E007CAEAE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E9A033D52681DEAA007CAEAE /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E9A07DAB2677169F00096202 /* ScreenCaptureDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCaptureDetector.swift; sourceTree = "<group>"; };
 		E9A07DAD26774AF900096202 /* Other.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Other.storyboard; sourceTree = "<group>"; };
 		E9A07DAF26774B2C00096202 /* BannerListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerListViewController.swift; sourceTree = "<group>"; };
@@ -329,6 +329,8 @@
 		E9B12DE225FA03CB00FF7B11 /* RankTblCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RankTblCell.xib; sourceTree = "<group>"; };
 		E9B27616266862EF000F2784 /* AdbrixEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdbrixEvent.swift; sourceTree = "<group>"; };
 		E9B544CB260A137C00EF6C2D /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX11.1.sdk/System/iOSSupport/System/Library/Frameworks/AuthenticationServices.framework; sourceTree = DEVELOPER_DIR; };
+		E9B953FC268C108B0028006A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		E9B95402268C28AE0028006A /* icon_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_logo.png; sourceTree = "<group>"; };
 		E9B97C272600FA0200F8D805 /* ContactusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactusCell.swift; sourceTree = "<group>"; };
 		E9B97C282600FA0200F8D805 /* ContactusCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactusCell.xib; sourceTree = "<group>"; };
 		E9BF08982645B2620000F3A5 /* Configuration.storekit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Configuration.storekit; sourceTree = "<group>"; };
@@ -660,7 +662,7 @@
 		E9C2CE7A25F21EF9002A1F95 /* TodayIsYou */ = {
 			isa = PBXGroup;
 			children = (
-				E9A033D52681DEAA007CAEAE /* LaunchScreen.storyboard */,
+				E9B953FD268C108B0028006A /* LaunchScreen.storyboard */,
 				E9A0338B2681C28E007CAEAE /* Info.plist */,
 				E9ABAA4E267B4AFC0004A399 /* Login.storyboard */,
 				E9A7FF1E266514F50047A69E /* Main.storyboard */,
@@ -751,6 +753,7 @@
 		E9C2CEDD25F23E47002A1F95 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				E9B95402268C28AE0028006A /* icon_logo.png */,
 				E998C9F32684250900EB1F02 /* launcher.jpeg */,
 				E9563B2926663B790087CFB0 /* InfoPlist.strings */,
 				E9A7FF012664DFA30047A69E /* LocalizedImg */,
@@ -866,12 +869,13 @@
 				E92B5CE92632BAC9002A504C /* Call.storyboard in Resources */,
 				E98DB514264838E500E04584 /* box_loading_150.gif in Resources */,
 				E9BF08992645B2620000F3A5 /* Configuration.storekit in Resources */,
+				E9B95403268C28AE0028006A /* icon_logo.png in Resources */,
 				E9C2CEEB25F23E55002A1F95 /* img_back3.jpg in Resources */,
 				E99C321226122659002E73CD /* PhotoDetailReusableView.xib in Resources */,
 				E9C2CEEA25F23E55002A1F95 /* img_back6.jpg in Resources */,
 				E9ABAA4F267B4AFC0004A399 /* Login.storyboard in Resources */,
 				E9C2CEE625F23E55002A1F95 /* img_back5.jpg in Resources */,
-				E9A033D62681DEAA007CAEAE /* LaunchScreen.storyboard in Resources */,
+				E9B953FB268C108B0028006A /* LaunchScreen.storyboard in Resources */,
 				E9522B8A26058EC1002DD056 /* CamTalkAlertView.xib in Resources */,
 				E9D5C6B626623EA500ABBE8A /* banner_info_subscription.png in Resources */,
 				E9F49E99260470710087E68C /* CAlertViewController.xib in Resources */,
@@ -1120,6 +1124,14 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
+		E9B953FD268C108B0028006A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				E9B953FC268C108B0028006A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
 		E9D5C6B026623E2800ABBE8A /* banner_info_subscription.png */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1255,13 +1267,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CD4357957F34010CB6650CBD /* Pods-TodayIsYou.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon1;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TodayIsYou/TodayIsYou.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.2.6;
+				CURRENT_PROJECT_VERSION = 1.0.2.9;
 				DEVELOPMENT_TEAM = KCYR65B299;
 				ENABLE_BITCODE = NO;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = NO;
@@ -1339,13 +1351,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 68CFA7F3F833A79F1AF1D66A /* Pods-TodayIsYou.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon1;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TodayIsYou/TodayIsYouRelease.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1.0.2.6;
+				CURRENT_PROJECT_VERSION = 1.0.2.9;
 				DEVELOPMENT_TEAM = KCYR65B299;
 				ENABLE_BITCODE = NO;
 				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = NO;

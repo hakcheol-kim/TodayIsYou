@@ -163,7 +163,21 @@ class ApiManager: NSObject {
             }
         }
     }
-    
+    func requestSubscriptionTerm(success: ResSuccess?, failure:ResFailure?) {
+        var url = "http://todayisyou.co.kr/app/subs/subs_terms.php?language="
+        if ShareData.ins.languageCode == "ko" {
+            url.append("kr")
+        }
+        else {
+            url.append("en")
+        }
+        
+        NetworkManager.ins.request(.get, url, nil) { res in
+            success?(res)
+        } failure: { error in
+            failure?(error)
+        }
+    }
     /// 공지사항 리스트
     ///- user_id
     func requestNoticeList(param:[String:Any], success:ResSuccess?, failure:ResFailure?) {

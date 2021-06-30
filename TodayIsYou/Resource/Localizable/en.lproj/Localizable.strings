@@ -234,7 +234,7 @@
 "activity_txt110" = "User has logged in" ;
 "activity_txt112" = "A new user has logged in" ;
 "activity_txt113" = "Arrival" ;
-"activity_txt114" = "If you Video Chat for longer than 10 seconds, you will earn a star." ;
+"activity_txt114" = "※ If you Video Chat for longer than 10 seconds, you will earn a star." ;
 "activity_txt118" = "Request Quick Video Chat" ;
 "activity_txt119" = "Points will be deducted." ;
 "activity_txt120" = "Yes" ;
@@ -247,10 +247,10 @@
 "activity_txt139" = "Selected conversation deleted!!" ;
 "activity_txt140" = "All conversations deleted!!" ;
 "activity_txt142" = "All conversations will be deleted" ;
-"activity_txt149" = "You may view photos with list of all photos.available in Pick Photos" ;
+"activity_txt149" = "※ You may view photos with list of all photos.available in Pick Photos" ;
 "activity_txt150" = "Picked Photo List." ;
 "activity_txt151" = "List of all photos." ;
-"activity_txt157" = "Soliciting and arranging prostitution is illegal. Please report if you see it." ;
+"activity_txt157" = "※ Soliciting and arranging prostitution is illegal. Please report if you see it." ;
 "activity_txt159" = "Send issue to administrator" ;
 "activity_txt160" = "You have no blocked users!!" ;
 "activity_txt162" = "Unblocked" ;

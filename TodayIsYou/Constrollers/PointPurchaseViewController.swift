@@ -15,7 +15,7 @@ class PointPurchaseViewController: BaseViewController {
     @IBOutlet weak var btnContactus: CButton!
     @IBOutlet weak var lbCurPoint: UILabel!
     @IBOutlet var arrBtnSubscript: [CButton]!
-    
+    @IBOutlet weak var btnTerm: UIButton!
     
     var points = [PointModel]()
     override func viewDidLoad() {
@@ -39,6 +39,9 @@ class PointPurchaseViewController: BaseViewController {
         refreshUi()
         CNavigationBar.drawBackButton(self, "point_activity01".localized, #selector(actionNaviBack))
         lbPointTitle.isHidden = false
+        
+        let attr = NSAttributedString.init(string: NSLocalizedString("join_activity42", comment: ""), attributes: [.underlineStyle : NSUnderlineStyle.single.rawValue])
+        btnTerm.setAttributedTitle(attr, for: .normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -170,7 +173,7 @@ class PointPurchaseViewController: BaseViewController {
             let vc = ContactusViewController.instantiateFromStoryboard(.main)!
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        else if arrBtnPoint.contains(sender as! CButton) {
+        else if let sender = sender as? CButton, arrBtnPoint.contains(sender) {
             switch sender.tag {
             case 0:
                 self.requestPayloadId(.point_000)
@@ -194,7 +197,7 @@ class PointPurchaseViewController: BaseViewController {
                 break
             }
         }
-        else if arrBtnSubscript.contains(sender as! CButton) {
+        else if let sender = sender as? CButton, arrBtnSubscript.contains(sender) {
             switch sender.tag {
                 case 0:
                     print("구독 1")
@@ -214,6 +217,23 @@ class PointPurchaseViewController: BaseViewController {
                     break
                 default:
                     break
+            }
+        }
+        else if sender == btnTerm {
+            ApiManager.ins.requestSubscriptionTerm { res in
+                var terms = res["terms"].stringValue
+                if terms.isEmpty == false {
+                    let vc = TermsViewController.init()
+                    terms = terms.replacingOccurrences(of: "<br />", with: "")
+                    vc.vcTitle = NSLocalizedString("join_activity42", comment: "")
+                    vc.content = terms
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+                else {
+                    
+                }
+            } failure: { error in
+                self.showErrorToast(error)
             }
         }
     }

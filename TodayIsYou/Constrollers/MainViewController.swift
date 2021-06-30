@@ -9,6 +9,16 @@ import UIKit
 import SideMenu
 import SwiftyJSON
 class MainViewController: BaseViewController {
+    @IBOutlet weak var naviView: UIView!
+    @IBOutlet weak var heightNaviView: NSLayoutConstraint!
+    @IBOutlet weak var btnMenu: UIButton!
+    @IBOutlet weak var btnPoint: UIButton!
+    @IBOutlet weak var lbPoint: UILabel!
+    @IBOutlet weak var lbPointS: UILabel!
+    @IBOutlet weak var bannerBgView: UIView!
+    @IBOutlet weak var ivBanner: UIImageView!
+    @IBOutlet weak var notiView: UIView!
+    @IBOutlet weak var lbNoti: UILabel!
     
     @IBOutlet weak var tabView: UIView!
     @IBOutlet var btnTabs: [UIButton]!
@@ -143,15 +153,33 @@ class MainViewController: BaseViewController {
             }
             
             svItems.isHidden = true
+            notiView.isHidden = true
             if selIndex == 0 {
                 svItems.isHidden = false
                 floatRocket.isHidden = false
                 floatPlus.isHidden = false
+                if ShareData.ins.mySex == .femail {
+                    notiView.isHidden = false
+                    lbNoti.text = NSLocalizedString("activity_txt114", comment: "")
+                }
             }
-            else if selIndex == 1 || selIndex == 2 {
+            else if selIndex == 1 {
                 svItems.isHidden = false
                 floatRocket.isHidden = true
                 floatPlus.isHidden = false
+                if ShareData.ins.mySex == .femail {
+                    notiView.isHidden = false
+                    lbNoti.text = NSLocalizedString("activity_txt157", comment: "")
+                }
+            }
+            else if selIndex == 2 {
+                svItems.isHidden = false
+                floatRocket.isHidden = true
+                floatPlus.isHidden = false
+                if ShareData.ins.mySex == .femail {
+                    notiView.isHidden = false
+                    lbNoti.text = NSLocalizedString("activity_txt149", comment: "")
+                }
             }
             
             oldSelIndex = selIndex
@@ -161,14 +189,17 @@ class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        CNavigationBar.drawLeftBarItem(self, UIImage(systemName: "text.justify"), "activity_txt299".localized, TAG_NAVI_TITLE, #selector(onclickedBtnActions(_ :)))
-        
-        CNavigationBar.drawRight(self, nil, "0 P", TAG_NAVI_P_COINT, nil)
-        CNavigationBar.drawRight(self, nil, "0 S", TAG_NAVI_S_COINT, nil)
-        CNavigationBar.drawRight(self, UIImage(named: "point"), nil, TAG_NAVI_POINT, #selector(onclickedBtnActions(_:)))
-       
-        tabView.addShadow(offset: CGSize(width: 1, height: 1), color: RGBA(0, 0, 0, 0.3), raduius: 3, opacity: 0.3)
-        
+//        CNavigationBar.drawLeftBarItem(self, UIImage(systemName: "text.justify"), "activity_txt299".localized, TAG_NAVI_TITLE, #selector(onclickedBtnActions(_ :)))
+//
+//        CNavigationBar.drawRight(self, nil, "0 P", TAG_NAVI_P_COINT, nil)
+//        CNavigationBar.drawRight(self, nil, "0 S", TAG_NAVI_S_COINT, nil)
+//        CNavigationBar.drawRight(self, UIImage(named: "point"), nil, TAG_NAVI_POINT, #selector(onclickedBtnActions(_:)))
+//
+        naviView.addShadow(offset: CGSize(width: 1, height: 1), color: RGBA(0, 0, 0, 0.3), raduius: 3, opacity: 0.3)
+        if Utility.isEdgePhone() == false {
+            heightNaviView.constant = heightNaviView.constant - 24
+        }
+ 
         btnTabs = btnTabs.sorted(by: { (btn1, btn2) -> Bool in
             return btn1.tag < btn2.tag
         })
@@ -187,11 +218,13 @@ class MainViewController: BaseViewController {
         AdbrixEvent.addEventLog(.login, ["user_id": ShareData.ins.myId, "user_name":ShareData.ins.myName, "user_sex":ShareData.ins.mySex.rawValue])
         
 //        self.requestEventList()
+        let tap = UITapGestureRecognizer.init(target: self, action: #selector(tapGestureHandler(_:)))
+        ivBanner.addGestureRecognizer(tap)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateUnReadMessageCount()
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
 //        self.updateNaviPoint()
         self.requestMyInfo()
     }
@@ -199,6 +232,12 @@ class MainViewController: BaseViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let sideMenuNavigationController = segue.destination as? SideMenuNavigationController else { return }
         sideMenuNavigationController.settings = makeSettings()
+    }
+    
+    override func tapGestureHandler(_ gesture: UITapGestureRecognizer) {
+        if gesture.view == ivBanner {
+            btnPoint.sendActions(for: .touchUpInside)
+        }
     }
     
     private func setupSideMenu() {
@@ -231,12 +270,12 @@ class MainViewController: BaseViewController {
         self.present(vc, animated: false, completion: nil)
     }
     @IBAction func onclickedBtnActions(_ sender:UIButton) {
-        if sender.tag == TAG_NAVI_TITLE {
+        if sender == btnMenu {
             guard let left = SideMenuManager.default.leftMenuNavigationController else { return }
             SideMenuManager.default.addScreenEdgePanGesturesToPresent(toView: (self.navigationController?.view)!, forMenu: .right)
             self.present(left, animated: true, completion: nil)
         }
-        else if sender.tag == TAG_NAVI_POINT {
+        else if sender == btnPoint {
             let vc = PointPurchaseViewController.instantiateFromStoryboard(.main)!
             appDelegate.mainNavigationCtrl.pushViewController(vc, animated: true)
         }
@@ -316,13 +355,17 @@ class MainViewController: BaseViewController {
         if let myPoint = ShareData.ins.myPoint {
             pointP = "\(myPoint.stringValue.addComma()) P"
         }
-        CNavigationBar.drawRight(self, nil, pointP, TAG_NAVI_P_COINT, nil)
-
+//        CNavigationBar.drawRight(self, nil, pointP, TAG_NAVI_P_COINT, nil)
+        let attr = NSAttributedString.init(string: pointP, attributes: [.underlineStyle : NSUnderlineStyle.single.rawValue])
+        lbPoint.attributedText = attr
+        
         var pointS = "0 S"
         if let sPoint = ShareData.ins.dfsGet(DfsKey.userR) as? NSNumber {
             pointS = "\(sPoint.stringValue.addComma()) S"
         }
-        CNavigationBar.drawRight(self, nil, pointS, TAG_NAVI_S_COINT, nil)
+        let attrs = NSAttributedString.init(string: pointS, attributes: [.underlineStyle: NSUnderlineStyle.single.rawValue])
+        lbPointS.attributedText = attrs
+//        CNavigationBar.drawRight(self, nil, pointS, TAG_NAVI_S_COINT, nil)
     }
     
     func updateUnReadMessageCount() {

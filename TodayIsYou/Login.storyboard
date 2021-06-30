@@ -378,35 +378,6 @@
             </objects>
             <point key="canvasLocation" x="-462" y="131"/>
         </scene>
-        <!--Intro View Controller-->
-        <scene sceneID="ULx-RQ-2Wj">
-            <objects>
-                <viewController storyboardIdentifier="IntroViewController" id="vDa-B3-ZVZ" customClass="IntroViewController" customModule="TodayIsYou" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="TCD-tL-7vm">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" image="launcher.jpeg" translatesAutoresizingMaskIntoConstraints="NO" id="fJr-Cr-NBc">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="0Ql-Qy-PyI"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="fJr-Cr-NBc" firstAttribute="leading" secondItem="TCD-tL-7vm" secondAttribute="leading" id="LJJ-HI-I0V"/>
-                            <constraint firstItem="fJr-Cr-NBc" firstAttribute="top" secondItem="TCD-tL-7vm" secondAttribute="top" id="dGl-3r-UZz"/>
-                            <constraint firstAttribute="trailing" secondItem="fJr-Cr-NBc" secondAttribute="trailing" id="suf-IW-iCE"/>
-                            <constraint firstAttribute="bottom" secondItem="fJr-Cr-NBc" secondAttribute="bottom" id="yki-m8-HSm"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="ivBg" destination="fJr-Cr-NBc" id="Hhi-Fj-d79"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="llH-Zi-Sg1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1830" y="128"/>
-        </scene>
         <!--App Permission View Ctroller-->
         <scene sceneID="yZ5-Rk-J8O">
             <objects>
@@ -1472,6 +1443,59 @@
             </objects>
             <point key="canvasLocation" x="924" y="136"/>
         </scene>
+        <!--Intro View Controller-->
+        <scene sceneID="CTb-SN-5cL">
+            <objects>
+                <viewController storyboardIdentifier="IntroViewController" id="k2n-2G-zHp" customClass="IntroViewController" customModule="TodayIsYou" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="UTN-93-fTz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Zjw-zg-zYz">
+                                <rect key="frame" x="28" y="292" width="319" height="106.33333333333331"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="YFQ-58-8y8">
+                                        <rect key="frame" x="64" y="0.0" width="191" height="47.333333333333336"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="YFQ-58-8y8" secondAttribute="height" multiplier="178:44" id="4J5-Ae-nSx"/>
+                                        </constraints>
+                                    </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="276-fX-46e">
+                                        <rect key="frame" x="0.0" y="55.333333333333314" width="319" height="51"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Real-time meeting with new people every day!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="vG4-AA-n2c">
+                                                <rect key="frame" x="0.0" y="0.0" width="319" height="24"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <color key="textColor" white="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="High definition video chat!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="E0I-LF-y2R">
+                                                <rect key="frame" x="36.333333333333329" y="27" width="246.66666666666669" height="24"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="YFQ-58-8y8" firstAttribute="width" secondItem="Zjw-zg-zYz" secondAttribute="width" multiplier="0.6" id="Gv4-h7-p7o"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="dZe-sV-VDn"/>
+                        <color key="backgroundColor" name="AccentColor2"/>
+                        <constraints>
+                            <constraint firstItem="Zjw-zg-zYz" firstAttribute="centerX" secondItem="dZe-sV-VDn" secondAttribute="centerX" id="VVP-td-IDz"/>
+                            <constraint firstItem="Zjw-zg-zYz" firstAttribute="centerY" secondItem="UTN-93-fTz" secondAttribute="centerY" multiplier="0.85" id="gd6-cp-7kQ"/>
+                            <constraint firstItem="Zjw-zg-zYz" firstAttribute="width" relation="lessThanOrEqual" secondItem="UTN-93-fTz" secondAttribute="width" multiplier="0.85" id="jbd-dQ-zAr"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tCb-Ds-Aae" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1881" y="130"/>
+        </scene>
     </scenes>
     <designables>
         <designable name="145-F6-6UZ">
@@ -1571,12 +1595,15 @@
         <image name="checkmark.square" catalog="system" width="128" height="114"/>
         <image name="chevron.down" catalog="system" width="128" height="72"/>
         <image name="ico_apple" width="14" height="18"/>
-        <image name="launcher.jpeg" width="720" height="1280"/>
+        <image name="icon_logo.png" width="534" height="132"/>
         <image name="mic" catalog="system" width="108" height="128"/>
         <image name="photo" catalog="system" width="128" height="93"/>
         <image name="squareshape" catalog="system" width="128" height="114"/>
         <namedColor name="AccentColor">
             <color red="0.90200001001358032" green="0.3919999897480011" blue="0.3919999897480011" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="AccentColor2">
+            <color red="0.92900002002716064" green="0.18799999356269836" blue="0.34900000691413879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

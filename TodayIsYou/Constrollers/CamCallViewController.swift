@@ -315,11 +315,11 @@ class CamCallViewController: BaseViewController {
 //        영상채팅 최초 연결 시
 //        1분간 1200포인트 차감
 //        이후 10초당 200포인트 차감
-
+        
         param["from_user_id"] = ShareData.ins.myId
         param["from_user_sex"] = ShareData.ins.mySex.rawValue
         param["to_user_id"] = toUserId!
-        param["out_point_time"] = "\(billPoint*1000)"
+        param["out_point_time"] = "\(Int(second*1000))" //"\(billPoint*1000)"
         param["room_key"] = roomKey!
         
         ApiManager.ins.requestCamCallPaymentEndPoint(param: param) { response in

@@ -234,7 +234,7 @@
 "activity_txt110" = "유저님이 접속 했습니다" ;
 "activity_txt112" = "새로운 유저가 접속했습니다" ;
 "activity_txt113" = "도착" ;
-"activity_txt114" = "10초이상 영상 채팅시 별이 적립됩니다." ;
+"activity_txt114" = "※ 10초이상 영상 채팅시 별이 적립됩니다." ;
 "activity_txt118" = "빠른 영상채팅 신청" ;
 "activity_txt119" = "포인트가 소모됩니다." ;
 "activity_txt120" = "예" ;
@@ -247,10 +247,10 @@
 "activity_txt139" = "선택한 대화가 삭제됨!!" ;
 "activity_txt140" = "전체 대화가 삭제됨!!" ;
 "activity_txt142" = "모든 대화가 삭제 됩니다" ;
-"activity_txt149" = "전체 사진 목록.기간이 남은 사진은 찜포토에서 볼 수 있습니다" ;
+"activity_txt149" = "※ 전체 사진 목록.기간이 남은 사진은 찜포토에서 볼 수 있습니다" ;
 "activity_txt150" = "찜한 사진 목록 입니다." ;
 "activity_txt151" = "전체 사진 목록 입니다." ;
-"activity_txt157" = "성매매 조장 및 알선은 불법입니다. 발견 시 신고 바랍니다." ;
+"activity_txt157" = "※ 성매매 조장 및 알선은 불법입니다. 발견 시 신고 바랍니다." ;
 "activity_txt159" = "관리자 전달 사항" ;
 "activity_txt160" = "차단한 유저가 없습니다!!" ;
 "activity_txt162" = "차단을 해제 했습니다" ;

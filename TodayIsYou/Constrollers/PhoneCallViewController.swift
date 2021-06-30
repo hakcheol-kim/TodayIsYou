@@ -302,7 +302,7 @@ class PhoneCallViewController: MainActionViewController {
         param["from_user_id"] = ShareData.ins.myId
         param["from_user_sex"] = ShareData.ins.mySex.rawValue
         param["to_user_id"] = toUserId!
-        param["out_point_time"] = "\(billPoint*1000)"
+        param["out_point_time"] = "\(Int(second*1000))"// "\(billPoint*1000)"
         param["room_key"] = roomKey!
         
         ApiManager.ins.requestPhoneCallPaymentEndPoint(param: param) { response in

@@ -36,12 +36,12 @@ class LeftSideMenuViewController: UIViewController {
     @IBOutlet weak var lbNickName: UILabel!
     @IBOutlet weak var lbUserInfo: UILabel!
     
-    let listData:[[String:String]] = [["title": NSLocalizedString("point_activity01", comment: "포인트 충전"), "imgName": "pesetasign.circle"],
-                                      ["title": NSLocalizedString("layout_txt23", comment: "공지사항"), "imgName": "bell"],
-                                      ["title": NSLocalizedString("activity_txt291", comment: "찜 목록"), "imgName": "hand.tap"],
-                                      ["title": NSLocalizedString("activity_txt165", comment: "차단목록"), "imgName": "xmark.circle"],
-                                      ["title": NSLocalizedString("activity_txt284", comment: "사용자 접속목록"), "imgName": "person"]]
-//                                      ["title": NSLocalizedString("log_out", comment: "로그아웃"), "imgName": "arrow.backward.square"]]
+    let listData:[[String:String]] = [["title": NSLocalizedString("point_activity01", comment: "포인트 충전"), "imgName": "pesetasign.circle.fill"],
+                                      ["title": NSLocalizedString("layout_txt23", comment: "공지사항"), "imgName": "bell.circle.fill"],
+                                      ["title": NSLocalizedString("activity_txt291", comment: "찜 목록"), "imgName": "arrow.up.left.circle.fill"],
+                                      ["title": NSLocalizedString("activity_txt165", comment: "차단목록"), "imgName": "xmark.circle.fill"],
+                                      ["title": NSLocalizedString("activity_txt284", comment: "사용자 접속목록"), "imgName": "person.circle.fill"]]
+//                                      ["title": NSLocalizedString("log_out", comment: "로그아웃"), "imgName": "arrow.backward.square.fill"]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,9 +52,9 @@ class LeftSideMenuViewController: UIViewController {
 //        if let img = UIImage(named: "img_back2.jpg") {
 //            headerView.backgroundColor = UIColor(patternImage: img)
 //        }
-        headerView.addGradient(RGB(230, 50, 70), end: UIColor.white, sPoint: CGPoint(x: 1, y:0), ePoint: CGPoint(x: 1, y: 1))
-        headerView.clipsToBounds = true
-        
+//        headerView.addGradient(RGB(230, 50, 70), end: UIColor.white, sPoint: CGPoint(x: 1, y:0), ePoint: CGPoint(x: 1, y: 1))
+        ivProfile.clipsToBounds = true
+        ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -70,10 +70,10 @@ class LeftSideMenuViewController: UIViewController {
         guard let headerView = tblView.tableHeaderView else {
             return
         }
-        lbNickName.translatesAutoresizingMaskIntoConstraints = false
-        let fitHeight = lbNickName.sizeThatFits(CGSize(width: lbNickName.bounds.width, height: CGFloat.greatestFiniteMagnitude)).height
-        heightHeight.constant = fitHeight
-        
+//        lbNickName.translatesAutoresizingMaskIntoConstraints = false
+//        let fitHeight = lbNickName.sizeThatFits(CGSize(width: lbNickName.bounds.width, height: CGFloat.greatestFiniteMagnitude)).height
+//        heightHeight.constant = fitHeight
+
         let height = headerView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         headerView.frame = CGRect(x: headerView.frame.origin.x, y: headerView.frame.origin.y, width: headerView.frame.size.width, height: height)
     }
@@ -121,6 +121,7 @@ class LeftSideMenuViewController: UIViewController {
                 ShareData.ins.setUserInfo(response)
                 self.decorationUi()
                 print("myinfo : \(response)")
+                self.tblView.reloadData()
             }
         } failure: { (error) in
             self.showErrorToast(error)
