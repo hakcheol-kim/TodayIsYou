@@ -147,23 +147,35 @@ enum Gender: String {
     
     func avatar() -> UIImage? {
         if self == .mail {
-            return UIImage(named: "icon_man")
+            return UIImage(named: "ico_male")
         }
         else {
-            return UIImage(named: "icon_female")
+            return UIImage(named: "ico_female")
         }
     }
     
+    static func defaultImgSquare(_ gender:String?) -> UIImage? {
+        guard let gender = gender else {
+            return nil
+        }
+        
+        if gender == Gender.mail.rawValue {
+            return UIImage(named: "ico_male")
+        }
+        else {
+            return UIImage(named: "ico_female")
+        }
+    }
     static func defaultImg(_ gender:String?) -> UIImage? {
         guard let gender = gender else {
             return nil
         }
         
         if gender == Gender.mail.rawValue {
-            return UIImage(named: "icon_man")
+            return UIImage(named: "ico_male_round")
         }
         else {
-            return UIImage(named: "icon_female")
+            return UIImage(named: "ico_female_round")
         }
     }
     static func localizedString(_ gedner:String) ->String {

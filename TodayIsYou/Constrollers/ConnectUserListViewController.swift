@@ -81,7 +81,7 @@ class ConnectUserCell: UITableViewCell {
         attr2.addAttribute(.foregroundColor, value: UIColor.systemBlue, range: (result2 as NSString).range(of: user_sex))
         lbSubTitle.attributedText = attr2
         
-        ivProfile.image = Gender.defaultImg(user_sex)
+        ivProfile.image = Gender.defaultImgSquare(user_sex)
         if let url = Utility.thumbnailUrl(user_id, user_img) {
             ivProfile.setImageCache(url)
         }

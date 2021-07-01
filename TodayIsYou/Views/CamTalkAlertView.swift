@@ -38,9 +38,9 @@ class CamTalkAlertView: UIView {
         let user_id = data["user_id"].stringValue
         let user_sex = data["user_sex"].stringValue
         
-        var imgUrl = "icon_man"
+        var imgUrl = "ico_male_round"
         if user_sex == Gender.femail.rawValue {
-            imgUrl = "icon_female"
+            imgUrl = "ico_female_round"
         }
         
         let keys:[String] = ["cam_user_img"]// ["file_name", "user_img", "cam_user_img", "talk_user_img"]

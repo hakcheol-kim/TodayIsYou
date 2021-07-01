@@ -35,6 +35,7 @@ class LeftSideMenuViewController: UIViewController {
     @IBOutlet weak var ivProfile: UIImageView!
     @IBOutlet weak var lbNickName: UILabel!
     @IBOutlet weak var lbUserInfo: UILabel!
+    @IBOutlet weak var ivSubscripion: UIImageView!
     
     let listData:[[String:String]] = [["title": NSLocalizedString("point_activity01", comment: "포인트 충전"), "imgName": "pesetasign.circle.fill"],
                                       ["title": NSLocalizedString("layout_txt23", comment: "공지사항"), "imgName": "bell.circle.fill"],
@@ -55,6 +56,9 @@ class LeftSideMenuViewController: UIViewController {
 //        headerView.addGradient(RGB(230, 50, 70), end: UIColor.white, sPoint: CGPoint(x: 1, y:0), ePoint: CGPoint(x: 1, y: 1))
         ivProfile.clipsToBounds = true
         ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
+        ivSubscripion.layer.cornerRadius = 4.0
+        ivSubscripion.clipsToBounds = true
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

@@ -269,10 +269,7 @@ extension PhotoManagerViewController: UICollectionViewDelegate, UICollectionView
         let user_img = item["user_img"].stringValue
         let view_yn = item["view_yn"].stringValue
         
-        var imgName = "icon_man"
-        if ShareData.ins.mySex.rawValue == "여" {
-            imgName = "icon_femail"
-        }
+        cell.ivThumb.image = Gender.defaultImg(ShareData.ins.mySex.rawValue)
         if let url = Utility.thumbnailUrl(user_id, user_img) {
             cell.ivThumb.setImageCache(url)
         }

@@ -59,15 +59,14 @@ class SettingViewController: BaseViewController {
         lbUserInfo.text = "\(userName), \(Gender.localizedString(user_sex)), \(Age.localizedString(user_age))"
         
         let ivProfile = btnProfile.viewWithTag(100) as! UIImageViewAligned
+        ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
+        ivProfile.clipsToBounds = true
+
         if let url = Utility.thumbnailUrl(user_id, user_img) {
             ivProfile.setImageCache(url)
-            ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
-            ivProfile.clipsToBounds = true
         }
         else {
             ivProfile.image = Gender.defaultImg(user_sex)
-            ivProfile.layer.cornerRadius = 0
-            ivProfile.clipsToBounds = true
         }
     }
     

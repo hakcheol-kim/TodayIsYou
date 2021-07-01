@@ -32,10 +32,12 @@ class ProfileManagerViewController: BaseViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.addKeyboardNotification()
         requestMyInfo()
     }
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         super.removeKeyboardNotification()
     }
     
@@ -68,15 +70,13 @@ class ProfileManagerViewController: BaseViewController {
         }
         
         let ivProfile = btnProfile.viewWithTag(100) as! UIImageViewAligned
+        ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
+        ivProfile.clipsToBounds = true
         if let url = Utility.thumbnailUrl(user_id, user_img) {
             ivProfile.setImageCache(url)
-            ivProfile.layer.cornerRadius = ivProfile.bounds.height/2
-            ivProfile.clipsToBounds = true
         }
         else {
             ivProfile.image = Gender.defaultImg(user_sex)
-            ivProfile.layer.cornerRadius = 0
-            ivProfile.clipsToBounds = true
         }
         
     }

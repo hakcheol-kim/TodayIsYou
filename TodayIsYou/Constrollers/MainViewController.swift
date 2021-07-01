@@ -197,7 +197,7 @@ class MainViewController: BaseViewController {
 //
         naviView.addShadow(offset: CGSize(width: 1, height: 1), color: RGBA(0, 0, 0, 0.3), raduius: 3, opacity: 0.3)
         if Utility.isEdgePhone() == false {
-            heightNaviView.constant = heightNaviView.constant - 24
+            heightNaviView.constant = heightNaviView.constant - 34
         }
  
         btnTabs = btnTabs.sorted(by: { (btn1, btn2) -> Bool in
@@ -224,7 +224,7 @@ class MainViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.updateUnReadMessageCount()
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
 //        self.updateNaviPoint()
         self.requestMyInfo()
     }

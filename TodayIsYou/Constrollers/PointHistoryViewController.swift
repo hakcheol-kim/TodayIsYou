@@ -199,7 +199,7 @@ extension PointHistoryViewController: UITableViewDataSource, UITableViewDelegate
 //            let seq = item["seq"].stringValue  //" : 64833
             
             let point = "\(user_point)".addComma()
-            let msg = "\(user_memo)"+" (\(user_name)) 별\(point)개"
+            let msg = "\(user_memo)"+" (\(user_name)) 포인트\(point)개"
             
             cell.lbTitle.text = msg
             cell.lbSubTitle.text = reg_date
