@@ -33,9 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var mainNavigationCtrl: BaseNavigationController {
         return appDelegate.window?.rootViewController as! BaseNavigationController
     }
+    
     var mainViewCtrl: MainViewController {
         return appDelegate.mainNavigationCtrl.viewControllers.first as! MainViewController
     }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         currentLanguage = Locale.current.languageCode.localizedLowercase
@@ -46,7 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Bundle.swizzleLocalization()
         ShareData.ins.dfsSet(lanCode, DfsKey.languageCode)
         ShareData.ins.languageCode = lanCode
-        
         
         FirebaseApp.configure()
         self.registApnsPushKey()
