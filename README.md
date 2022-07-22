@@ -6,6 +6,10 @@
 <video src="https://github.com/iruri2010/TodayIsYou/blob/master/video.mp4"  width="270" height="480">
 </video> 
 
+<video width="480" controls poster="https://archive.org/download/WebmVp8Vorbis/webmvp8.gif" >
+  <source src="https://github.com/iruri2010/TodayIsYou/blob/master/video.mp4" type="video/mp4">
+</video>
+
 ### 앱스크린샷
 <table>
 <tr>
