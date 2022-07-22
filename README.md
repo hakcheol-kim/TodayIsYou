@@ -12,12 +12,11 @@
 <td>포인트 충전</td>
 <td>영상채팅</td>
 </tr>
-<td><img src="" width=270, height=720></td>
-<td><img src="" width=270, height=720></td>
-<td><img src="" width=270, height=720></td>
-<td><img src="" width=270, height=720></td>
-<td><img src="" width=270, height=720></td>
+<td><img src="", width=270, height=720></td>
+<td><img src="", width=270, height=720></td>
+<td><img src="", width=270, height=720></td>
+<td><img src="", width=270, height=720></td>
+<td><img src="", width=270, height=720></td>
 <tr>
-
 </tr>
 <table>
