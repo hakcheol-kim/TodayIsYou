@@ -1,6 +1,6 @@
 # TodayIsYou
 #### 이앱은 화상채팅, 채팅, 앱니디다.
-#### 주요기술 googleweb RTC를 이용한 화상채팅, 음성채팅을 구현하다.
+#### 주요기술 GoogleWebRTC를 이용한 화상채팅, 음성채팅을 구현하다.
 
 
 ### 앱스크린샷
@@ -11,16 +11,16 @@
   <td>채팅</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/iruri2010/TodayIsYou/blob/master/permission.PNG", width=270, height=720></td>
-  <td><img src="https://github.com/iruri2010/TodayIsYou/blob/master/imagetalk.PNG", width=270, height=720></td>
-  <td><img src="https://github.com/iruri2010/TodayIsYou/blob/master/chatting.PNG", width=270, height=720></td>
+  <td><img src="https://github.com/iruri2010/TodayIsYou/blob/master/permission.PNG" width=270, height=480></td>
+  <td><img src="https://github.com/iruri2010/TodayIsYou/blob/master/imagetalk.PNG" width=270, height=480></td>
+  <td><img src="https://github.com/iruri2010/TodayIsYou/blob/master/chatting.PNG" width=270, height=480></td>
 </tr>
 <tr>
   <td>포인트 충전</td> 
   <td>영상채팅</td>
 </tr>
 <tr>
-  <td><img src="https://github.com/iruri2010/TodayIsYou/blob/master/purchase.PNG", width=270, height=720></td>
-  <td><img src="https://github.com/iruri2010/TodayIsYou/blob/master/webrtc.PNG", width=270, height=720></td>
+  <td><img src="https://github.com/iruri2010/TodayIsYou/blob/master/purchase.PNG" width=270, height=480></td>
+  <td><img src="https://github.com/iruri2010/TodayIsYou/blob/master/webrtc.PNG" width=270, height=480></td>
 </tr>
 <table>
