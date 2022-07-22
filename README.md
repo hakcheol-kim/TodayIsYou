@@ -5,7 +5,7 @@
 ### 화상채팅
 <table>
 <tr>
-  <td><img src="https://github.com/iruri2010/TodayIsYou/blob/master/video.mp4" width=270, height=480></td>
+  <td><video width="270" height="480" src="https://github.com/iruri2010/TodayIsYou/blob/master/video.mp4" type="video/quicktime" controls></video>
 </tr>
 <table>
 
