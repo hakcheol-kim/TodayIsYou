@@ -1,0 +1,6 @@
+CFBundleDisplayName = "今天是你了" ;
+NSCameraUsageDescription = "您需要授权访问相机，以添加和更改视频通话、配置文件。";
+NSphotoLibraryUsageDescription = "在添加、更改、聊天时需要传达图像。";
+NSMicrophoneUsageDescription = "在视频聊天中，您需要访问麦克风以将您的声音传递给对方" ;
+NSPeechRecognitionUsageDescription = "在视频聊天中，您需要访问麦克风以将您的声音传递给对方。";
+NSUserTrackingUsageDescription = "用于提供符合关注的信息和广告，切断不恰当的广告" ;

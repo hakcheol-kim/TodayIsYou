@@ -1,0 +1,138 @@
+{
+  "identifier" : "F1433087",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "3.99",
+      "familyShareable" : false,
+      "internalID" : "26F0D7BE",
+      "localizations" : [
+        {
+          "description" : "영상 채팅, 포인트 선물을 할 수 있습니다.",
+          "displayName" : "2,200 Point",
+          "locale" : "ko"
+        },
+        {
+          "description" : "You can video chat and give points.",
+          "displayName" : "2,200 Point",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "point_000",
+      "referenceName" : "2200P",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "8.99",
+      "familyShareable" : false,
+      "internalID" : "5AD1E367",
+      "localizations" : [
+        {
+          "description" : "영상 채팅, 포인트 선물을 할 수 있습니다.",
+          "displayName" : "4,400 Point",
+          "locale" : "ko"
+        },
+        {
+          "description" : "You can video chat and give points.",
+          "displayName" : "4,400 Point",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "point_001",
+      "referenceName" : "4400P",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "26.99",
+      "familyShareable" : false,
+      "internalID" : "5240926E",
+      "localizations" : [
+        {
+          "description" : "영상 채팅, 포인트 선물을 할 수 있습니다.",
+          "displayName" : "13,200 Point",
+          "locale" : "ko"
+        },
+        {
+          "description" : "You can video chat and give points.",
+          "displayName" : "13,200 Point",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "point_002",
+      "referenceName" : "13200P",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "44.99",
+      "familyShareable" : false,
+      "internalID" : "E012432E",
+      "localizations" : [
+        {
+          "description" : "영상 채팅, 포인트 선물을 할 수 있습니다.",
+          "displayName" : "22,000 Point",
+          "locale" : "ko"
+        },
+        {
+          "description" : "You can video chat and give points.",
+          "displayName" : "22,000 Point",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "point_003",
+      "referenceName" : "22,000P",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "89.99",
+      "familyShareable" : false,
+      "internalID" : "3641D08D",
+      "localizations" : [
+        {
+          "description" : "영상 채팅, 포인트 선물을 할 수 있습니다.",
+          "displayName" : "44,000 Point",
+          "locale" : "ko"
+        },
+        {
+          "description" : "You can video chat and give points.",
+          "displayName" : "44,000 Point",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "point_004",
+      "referenceName" : "44,000P",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "174.99",
+      "familyShareable" : false,
+      "internalID" : "303627E1",
+      "localizations" : [
+        {
+          "description" : "영상 채팅, 포인트 선물을 할 수 있습니다.",
+          "displayName" : "88,000 Point",
+          "locale" : "ko"
+        },
+        {
+          "description" : "You can video chat and give points.",
+          "displayName" : "88,000 Point",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "point_005",
+      "referenceName" : "88,000P",
+      "type" : "Consumable"
+    }
+  ],
+  "settings" : {
+
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 1,
+    "minor" : 1
+  }
+}

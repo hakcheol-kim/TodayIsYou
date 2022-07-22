@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PictureAddVideoView" customModule="TodayIsYou" customModuleProvider="target">
+            <connections>
+                <outlet property="btnThumb" destination="Ap8-04-d6W" id="M2X-3T-7w1"/>
+                <outlet property="btnVideo" destination="1As-U2-f3Y" id="mwZ-vK-yxf"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="587" height="153"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="ASt-LZ-b8Z">
+                    <rect key="frame" x="0.0" y="0.0" width="587" height="132"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="nnc-7X-FfG">
+                            <rect key="frame" x="8" y="16" width="208" height="100"/>
+                            <subviews>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1As-U2-f3Y" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                    <subviews>
+                                        <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="ssF-dZ-Rhc">
+                                            <rect key="frame" x="0.0" y="31.5" width="100" height="37.5"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="video.badge.plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="WKa-J3-d8Y">
+                                                    <rect key="frame" x="37" y="1.5" width="25.5" height="18.5"/>
+                                                    <color key="tintColor" name="blackText"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="영상추가" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eBt-D2-yVH" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                                    <rect key="frame" x="29" y="23" width="42" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" name="gray125"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="picture_regist_btn_video"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="100" id="6Qa-0W-aCy"/>
+                                        <constraint firstAttribute="width" secondItem="1As-U2-f3Y" secondAttribute="height" multiplier="1:1" id="Ag4-Qq-fBr"/>
+                                        <constraint firstItem="ssF-dZ-Rhc" firstAttribute="leading" secondItem="1As-U2-f3Y" secondAttribute="leading" id="GUW-tI-P5A"/>
+                                        <constraint firstItem="ssF-dZ-Rhc" firstAttribute="top" relation="greaterThanOrEqual" secondItem="1As-U2-f3Y" secondAttribute="top" id="R02-pe-LLF"/>
+                                        <constraint firstItem="ssF-dZ-Rhc" firstAttribute="centerY" secondItem="1As-U2-f3Y" secondAttribute="centerY" id="epQ-c4-fBn"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="ssF-dZ-Rhc" secondAttribute="bottom" id="fdL-tY-8yZ"/>
+                                        <constraint firstAttribute="trailing" secondItem="ssF-dZ-Rhc" secondAttribute="trailing" id="rRD-dZ-VXv"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="4"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" name="grayBg241"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="onClickedBtnAction:" destination="-1" eventType="touchUpInside" id="Vd4-ZI-nlT"/>
+                                    </connections>
+                                </view>
+                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ap8-04-d6W" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
+                                    <rect key="frame" x="108" y="0.0" width="100" height="100"/>
+                                    <subviews>
+                                        <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="KU4-mh-cml">
+                                            <rect key="frame" x="0.0" y="31.5" width="100" height="37.5"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="101" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="photo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="np0-ti-avD">
+                                                    <rect key="frame" x="38" y="1" width="24" height="17.5"/>
+                                                    <color key="tintColor" name="blackText"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="100" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="썸네일추가" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DAr-ph-fAC" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                                    <rect key="frame" x="24" y="23" width="52" height="14.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" name="gray125"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="picture_regist_btn_thumb"/>
+                                                    </userDefinedRuntimeAttributes>
+                                                </label>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="Ap8-04-d6W" secondAttribute="height" multiplier="1:1" id="5SM-MY-X4T"/>
+                                        <constraint firstItem="KU4-mh-cml" firstAttribute="leading" secondItem="Ap8-04-d6W" secondAttribute="leading" id="AxE-JM-Rdc"/>
+                                        <constraint firstItem="KU4-mh-cml" firstAttribute="centerY" secondItem="Ap8-04-d6W" secondAttribute="centerY" id="bdF-MA-73X"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="KU4-mh-cml" secondAttribute="bottom" id="ilw-6h-OHU"/>
+                                        <constraint firstItem="KU4-mh-cml" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Ap8-04-d6W" secondAttribute="top" id="j60-xx-yQx"/>
+                                        <constraint firstAttribute="trailing" secondItem="KU4-mh-cml" secondAttribute="trailing" id="oZb-1s-Epk"/>
+                                        <constraint firstAttribute="height" constant="100" id="tIb-9y-OR1"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                            <real key="value" value="4"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" name="grayBg241"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="onClickedBtnAction:" destination="-1" eventType="touchUpInside" id="2os-gs-64d"/>
+                                    </connections>
+                                </view>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="Ap8-04-d6W" firstAttribute="width" secondItem="Ap8-04-d6W" secondAttribute="height" multiplier="1:1" id="Ha9-F1-VH8"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <edgeInsets key="layoutMargins" top="16" left="8" bottom="16" right="8"/>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="ASt-LZ-b8Z" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="0ec-s0-Ddd"/>
+                <constraint firstAttribute="trailing" secondItem="ASt-LZ-b8Z" secondAttribute="trailing" id="3cV-eV-aH0"/>
+                <constraint firstAttribute="bottom" secondItem="ASt-LZ-b8Z" secondAttribute="bottom" priority="900" id="XNL-UW-vcq"/>
+                <constraint firstItem="ASt-LZ-b8Z" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="hQp-qW-UD9"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="487.68115942028987" y="-136.94196428571428"/>
+        </view>
+    </objects>
+    <designables>
+        <designable name="DAr-ph-fAC">
+            <size key="intrinsicContentSize" width="52" height="14.5"/>
+        </designable>
+        <designable name="eBt-D2-yVH">
+            <size key="intrinsicContentSize" width="42" height="14.5"/>
+        </designable>
+    </designables>
+    <resources>
+        <image name="photo" catalog="system" width="128" height="93"/>
+        <image name="video.badge.plus" catalog="system" width="128" height="92"/>
+        <namedColor name="blackText">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="gray125">
+            <color red="0.49000000953674316" green="0.49000000953674316" blue="0.49000000953674316" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="grayBg241">
+            <color red="0.94499999284744263" green="0.94499999284744263" blue="0.94499999284744263" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

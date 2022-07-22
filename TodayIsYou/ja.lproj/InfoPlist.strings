@@ -1,0 +1,6 @@
+CFBundleDisplayName = "今日は君だよ" ;
+NSCameraUsageDescription="映像通話、プロファイルの追加、変更のためカメラアクセス権限が必要です";
+NSPhotoLibraryUsageDescription = "プロファイルの追加、変更、チャット時にイメージを伝えるために必要です。";
+NSMicrophoneUsageDescription = "映像チャット中にあなたの声を相手に伝えるためにマイクにアクセス権限が必要です。";
+NSSpeechRecognitionUsageDescription="映像チャット中にあなたの声を相手に伝えるためにマイクにアクセス権限が必要です。";
+NSUserTrackingUsageDescription = "関心事に合った情報と広告を提供し、不適切な広告を遮断することに使用します。";

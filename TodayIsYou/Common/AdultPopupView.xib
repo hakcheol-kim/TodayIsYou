@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AdultPopupView" customModule="TodayIsYou" customModuleProvider="target">
+            <connections>
+                <outlet property="btnExit" destination="Rcc-H7-6hE" id="SlT-IZ-JKd"/>
+                <outlet property="btnExit2" destination="I75-A8-D0M" id="B2V-gF-a4c"/>
+                <outlet property="btnOk" destination="uV9-Ia-6q5" id="SsG-pd-TLh"/>
+                <outlet property="btnRegist" destination="ipd-X7-irY" id="BKl-xf-SYt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" restorationIdentifier="regist" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="441" height="300"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="P3e-rc-m36">
+                    <rect key="frame" x="0.0" y="0.0" width="441" height="256.5"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="kap-dz-tG8">
+                            <rect key="frame" x="24" y="24" width="393" height="139.5"/>
+                            <subviews>
+                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ab-X6-vcQ" customClass="CView" customModule="TodayIsYou" customModuleProvider="target">
+                                    <rect key="frame" x="164" y="0.0" width="65" height="65"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="19" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cz1-L7-FgO">
+                                            <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
+                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="30"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" name="whiteBg"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="Cz1-L7-FgO" secondAttribute="bottom" id="04x-IY-mej"/>
+                                        <constraint firstAttribute="trailing" secondItem="Cz1-L7-FgO" secondAttribute="trailing" id="1er-uj-btp"/>
+                                        <constraint firstItem="Cz1-L7-FgO" firstAttribute="leading" secondItem="5ab-X6-vcQ" secondAttribute="leading" id="EGm-D4-2Pr"/>
+                                        <constraint firstItem="Cz1-L7-FgO" firstAttribute="top" secondItem="5ab-X6-vcQ" secondAttribute="top" id="bxf-H2-aI1"/>
+                                        <constraint firstAttribute="height" constant="65" id="jsh-eA-Bjq"/>
+                                        <constraint firstAttribute="width" secondItem="5ab-X6-vcQ" secondAttribute="height" multiplier="1:1" id="yRF-yg-O9b"/>
+                                    </constraints>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="halfCornerRadius" value="YES"/>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="3"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" name="redMiddle"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </view>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이 정보내용은 청소년 유해매체물로서 「정보통신망 이용촉진 및 정보보호 등에 관한 법률」 및 「청소년 보호법」에 따라 19세 미만의 청소년이 이용할 수 없습니다." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YH9-Q1-0J0" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                    <rect key="frame" x="13" y="89" width="367.5" height="50.5"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="dialog_kcb_1"/>
+                                    </userDefinedRuntimeAttributes>
+                                </label>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="5ab-X6-vcQ" firstAttribute="width" secondItem="5ab-X6-vcQ" secondAttribute="height" multiplier="1:1" id="OGM-eC-rph"/>
+                            </constraints>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="07e-Vl-cJP">
+                            <rect key="frame" x="24" y="187.5" width="393" height="45"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rcc-H7-6hE" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="192.5" height="45"/>
+                                    <color key="backgroundColor" name="gray224"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="19세 미만 나가기">
+                                        <color key="titleColor" name="gray125"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="dialog_kcb_5"/>
+                                    </userDefinedRuntimeAttributes>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ipd-X7-irY" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
+                                    <rect key="frame" x="200.5" y="0.0" width="192.5" height="45"/>
+                                    <color key="backgroundColor" name="gray125"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="19세 이상 가입하기"/>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="dialog_kcb_6"/>
+                                    </userDefinedRuntimeAttributes>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="45" id="2K0-8k-Txo"/>
+                            </constraints>
+                        </stackView>
+                    </subviews>
+                    <edgeInsets key="layoutMargins" top="24" left="24" bottom="24" right="24"/>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" name="whiteBg"/>
+            <constraints>
+                <constraint firstItem="P3e-rc-m36" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="LS2-jv-HQg"/>
+                <constraint firstAttribute="trailing" secondItem="P3e-rc-m36" secondAttribute="trailing" id="N3F-Fe-sat"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="P3e-rc-m36" secondAttribute="bottom" id="h4u-Yz-Pck"/>
+                <constraint firstItem="P3e-rc-m36" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="mUk-vp-Vip"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="359" y="-306"/>
+        </view>
+        <view contentMode="scaleToFill" restorationIdentifier="check" id="8lA-JV-6bQ">
+            <rect key="frame" x="0.0" y="0.0" width="441" height="594"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="eg4-iG-9Zc">
+                    <rect key="frame" x="0.0" y="0.0" width="441" height="523.5"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5tn-6p-Mnb">
+                            <rect key="frame" x="0.0" y="0.0" width="441" height="108.5"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="YQb-Rs-YcN">
+                                    <rect key="frame" x="0.0" y="0.0" width="441" height="108.5"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="19" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BpK-34-1vn" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                            <rect key="frame" x="24" y="24.5" width="60" height="60"/>
+                                            <color key="backgroundColor" name="whiteText"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="BpK-34-1vn" secondAttribute="height" multiplier="1:1" id="FUV-fk-quZ"/>
+                                                <constraint firstAttribute="height" constant="60" id="VrO-qd-Efg"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="34"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                    <color key="value" name="redMiddle"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                    <real key="value" value="2"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="halfCornerRadius" value="YES"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이 정보내용은 청소년 유해매체물로서 「정보통신망 이용촉진 및 정보보호 등에 관한 법률」 및 「청소년 보호법」에 따라 19세 미만의 청소년이 이용할 수 없습니다." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B7C-g1-JKJ" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                            <rect key="frame" x="100" y="16" width="317" height="76.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" name="whiteText"/>
+                                            <nil key="highlightedColor"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="dialog_kcb_1"/>
+                                            </userDefinedRuntimeAttributes>
+                                        </label>
+                                    </subviews>
+                                    <edgeInsets key="layoutMargins" top="16" left="24" bottom="16" right="24"/>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" name="appColor"/>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="YQb-Rs-YcN" secondAttribute="bottom" id="Zi3-Rc-t4c"/>
+                                <constraint firstItem="YQb-Rs-YcN" firstAttribute="top" secondItem="5tn-6p-Mnb" secondAttribute="top" id="lTU-mQ-mKO"/>
+                                <constraint firstItem="YQb-Rs-YcN" firstAttribute="leading" secondItem="5tn-6p-Mnb" secondAttribute="leading" id="s1t-Yc-IYB"/>
+                                <constraint firstAttribute="trailing" secondItem="YQb-Rs-YcN" secondAttribute="trailing" id="zD8-m3-92U"/>
+                            </constraints>
+                        </view>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="LWf-ni-XrN">
+                            <rect key="frame" x="0.0" y="108.5" width="441" height="261"/>
+                            <subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="254" verticalCompressionResistancePriority="751" text="가. 19세 미만 이용자 나가기 기능" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Awz-4i-9nY" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                    <rect key="frame" x="24" y="24" width="393" height="18"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Opa-TS-eVL">
+                                    <rect key="frame" x="24" y="60" width="393" height="141"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="나. 「청소년 보호법 시행령」 제17조에 따른 나이 및 본인여부 확인기능" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a1v-Z0-9OG" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="36"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="1) 신분증 또는 신분증 사본" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BPk-WT-uJp" userLabel="•••" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="39" width="393" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="2) 공인인증서" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vwR-Ho-ZIs" userLabel="•••" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="60" width="393" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="3) 아이핀" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="l0C-kg-zsR" userLabel="•••" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="81" width="393" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="4) 신용카드" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W9y-Rb-aYF" userLabel="•••" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="102" width="393" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5) 휴대전화(문자, 음성 자동응답 등)" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BNg-OX-kzZ" userLabel="•••" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                            <rect key="frame" x="0.0" y="123" width="393" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </stackView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="다. 청소년유해매체물로 고시된 인터넷 URL" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ba1-aS-qHE" customClass="Clabel" customModule="TodayIsYou" customModuleProvider="target">
+                                    <rect key="frame" x="24" y="219" width="393" height="18"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                            </subviews>
+                            <edgeInsets key="layoutMargins" top="24" left="24" bottom="24" right="24"/>
+                        </stackView>
+                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="ki8-lt-U90">
+                            <rect key="frame" x="0.0" y="369.5" width="441" height="154"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I75-A8-D0M" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
+                                    <rect key="frame" x="24" y="0.0" width="393" height="50"/>
+                                    <color key="backgroundColor" name="gray125"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="nOA-JP-T5f"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="19세 미만 나가기">
+                                        <color key="titleColor" name="whiteText"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="dialog_kcb_5"/>
+                                    </userDefinedRuntimeAttributes>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV9-Ia-6q5" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
+                                    <rect key="frame" x="24" y="66" width="393" height="64"/>
+                                    <color key="backgroundColor" name="whiteBg"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="64" id="OcU-4N-ecP"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    <state key="normal" title="나이 및 본인 여부 확인 기능 추가">
+                                        <color key="titleColor" name="blackText"/>
+                                    </state>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="dialog_kcb_6"/>
+                                        <userDefinedRuntimeAttribute type="boolean" keyPath="isBoderAll" value="YES"/>
+                                        <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                            <color key="value" name="gray221"/>
+                                        </userDefinedRuntimeAttribute>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                            <real key="value" value="1"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                </button>
+                            </subviews>
+                            <edgeInsets key="layoutMargins" top="0.0" left="24" bottom="24" right="24"/>
+                        </stackView>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" name="whiteBg"/>
+            <constraints>
+                <constraint firstItem="eg4-iG-9Zc" firstAttribute="leading" secondItem="8lA-JV-6bQ" secondAttribute="leading" id="3BX-w4-Oj8"/>
+                <constraint firstItem="eg4-iG-9Zc" firstAttribute="top" secondItem="8lA-JV-6bQ" secondAttribute="top" id="U6J-Xb-1dO"/>
+                <constraint firstAttribute="trailing" secondItem="eg4-iG-9Zc" secondAttribute="trailing" id="hQo-rL-mEO"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="eg4-iG-9Zc" secondAttribute="bottom" id="tQa-CI-gTO"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="1319.5652173913045" y="-265.17857142857144"/>
+        </view>
+    </objects>
+    <designables>
+        <designable name="Awz-4i-9nY">
+            <size key="intrinsicContentSize" width="196" height="18"/>
+        </designable>
+        <designable name="B7C-g1-JKJ">
+            <size key="intrinsicContentSize" width="1006.5" height="19.5"/>
+        </designable>
+        <designable name="BNg-OX-kzZ">
+            <size key="intrinsicContentSize" width="214.5" height="18"/>
+        </designable>
+        <designable name="BPk-WT-uJp">
+            <size key="intrinsicContentSize" width="158" height="18"/>
+        </designable>
+        <designable name="BpK-34-1vn">
+            <size key="intrinsicContentSize" width="38" height="41"/>
+        </designable>
+        <designable name="W9y-Rb-aYF">
+            <size key="intrinsicContentSize" width="71" height="18"/>
+        </designable>
+        <designable name="YH9-Q1-0J0">
+            <size key="intrinsicContentSize" width="883.5" height="17"/>
+        </designable>
+        <designable name="a1v-Z0-9OG">
+            <size key="intrinsicContentSize" width="413" height="18"/>
+        </designable>
+        <designable name="ba1-aS-qHE">
+            <size key="intrinsicContentSize" width="256.5" height="18"/>
+        </designable>
+        <designable name="l0C-kg-zsR">
+            <size key="intrinsicContentSize" width="58" height="18"/>
+        </designable>
+        <designable name="vwR-Ho-ZIs">
+            <size key="intrinsicContentSize" width="83.5" height="18"/>
+        </designable>
+    </designables>
+    <resources>
+        <namedColor name="appColor">
+            <color red="0.74699997901916504" green="0.25200000405311584" blue="0.24699999392032623" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="blackText">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="gray125">
+            <color red="0.49000000953674316" green="0.49000000953674316" blue="0.49000000953674316" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="gray221">
+            <color red="0.86699998378753662" green="0.86699998378753662" blue="0.86699998378753662" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="gray224">
+            <color red="0.87699997425079346" green="0.87699997425079346" blue="0.87699997425079346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="redMiddle">
+            <color red="0.83300000429153442" green="0.28400000929832458" blue="0.21199999749660492" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="whiteBg">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="whiteText">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

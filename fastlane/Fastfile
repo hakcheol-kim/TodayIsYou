@@ -1,0 +1,31 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    increment_build_number(xcodeproj: "TodayIsYou.xcodeproj")
+    build_app(workspace: "TodayIsYou.xcworkspace", scheme: "TodayIsYou")
+    upload_to_testflight(
+	changelog: "- 오류수정 스코어 점수 팝업 뜬 상태에서 영상채팅 받을시 스코어 팝업 안닫히는 문제",
+	distribute_external: true,
+	groups: ["배포버전 테스터"],
+	skip_submission: false,
+	skip_waiting_for_build_processing: false
+	)
+  end
+end

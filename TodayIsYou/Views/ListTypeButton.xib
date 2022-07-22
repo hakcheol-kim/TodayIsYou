@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ListTypeButton" customModule="TodayIsYou" customModuleProvider="target">
+            <connections>
+                <outlet property="ivLeft" destination="8Lg-bW-LgC" id="yvR-Ph-HEj"/>
+                <outlet property="ivRight" destination="eTS-2m-2TA" id="qER-bL-6Iv"/>
+                <outlet property="selectionBg" destination="HV5-48-wGk" id="dfx-36-8fh"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kSw-Dc-ZyK">
+            <rect key="frame" x="0.0" y="0.0" width="278" height="67"/>
+            <subviews>
+                <view userInteractionEnabled="NO" tag="300" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HV5-48-wGk">
+                    <rect key="frame" x="125" y="0.0" width="167" height="67"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <color key="backgroundColor" name="redText"/>
+                </view>
+                <stackView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" distribution="fillEqually" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="D1R-YV-BeR">
+                    <rect key="frame" x="0.0" y="0.0" width="278" height="67"/>
+                    <subviews>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="100" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Lg-bW-LgC">
+                            <rect key="frame" x="4" y="7.5" width="131" height="52.5"/>
+                            <color key="tintColor" name="whiteText"/>
+                            <imageReference key="image" image="rectangle.grid.1x2.fill" catalog="system" symbolScale="small"/>
+                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small" weight="ultraLight"/>
+                        </imageView>
+                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" tag="200" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eTS-2m-2TA">
+                            <rect key="frame" x="143" y="7.5" width="131" height="52.5"/>
+                            <color key="tintColor" name="redText"/>
+                            <imageReference key="image" image="rectangle.grid.2x2.fill" catalog="system" symbolScale="small"/>
+                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small" weight="ultraLight"/>
+                        </imageView>
+                    </subviews>
+                    <edgeInsets key="layoutMargins" top="4" left="4" bottom="4" right="4"/>
+                </stackView>
+            </subviews>
+            <color key="backgroundColor" name="grayButtonBg"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="D1R-YV-BeR" secondAttribute="bottom" id="LVX-Rr-XG8"/>
+                <constraint firstItem="D1R-YV-BeR" firstAttribute="top" secondItem="kSw-Dc-ZyK" secondAttribute="top" id="bOX-jO-U4X"/>
+                <constraint firstItem="D1R-YV-BeR" firstAttribute="leading" secondItem="kSw-Dc-ZyK" secondAttribute="leading" id="gvO-DL-oeq"/>
+                <constraint firstAttribute="trailing" secondItem="D1R-YV-BeR" secondAttribute="trailing" id="l7Q-Xd-0yV"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="190" y="-18"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="rectangle.grid.1x2.fill" catalog="system" width="128" height="101"/>
+        <image name="rectangle.grid.2x2.fill" catalog="system" width="128" height="99"/>
+        <namedColor name="grayButtonBg">
+            <color red="0.93000000715255737" green="0.93699997663497925" blue="0.94900000095367432" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="redText">
+            <color red="0.74699997901916504" green="0.23600000143051147" blue="0.23499999940395355" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="whiteText">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

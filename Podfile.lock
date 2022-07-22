@@ -1,0 +1,198 @@
+PODS:
+  - Alamofire (5.5.0)
+  - AlamofireImage (4.2.0):
+    - Alamofire (~> 5.4)
+  - AppsFlyerFramework (6.5.3):
+    - AppsFlyerFramework/Main (= 6.5.3)
+  - AppsFlyerFramework/Main (6.5.3)
+  - BSImagePicker (3.3.1)
+  - Cache (6.0.0)
+  - CRRefresh (1.1.3)
+  - CryptoSwift (1.4.2)
+  - Firebase/Auth (8.11.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 8.11.0)
+  - Firebase/CoreOnly (8.11.0):
+    - FirebaseCore (= 8.11.0)
+  - Firebase/Crashlytics (8.11.0):
+    - Firebase/CoreOnly
+    - FirebaseCrashlytics (~> 8.11.0)
+  - Firebase/Messaging (8.11.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (~> 8.11.0)
+  - FirebaseAuth (8.11.0):
+    - FirebaseCore (~> 8.0)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GTMSessionFetcher/Core (~> 1.5)
+  - FirebaseCore (8.11.0):
+    - FirebaseCoreDiagnostics (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/Logger (~> 7.7)
+  - FirebaseCoreDiagnostics (8.11.0):
+    - GoogleDataTransport (~> 9.1)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/Logger (~> 7.7)
+    - nanopb (~> 2.30908.0)
+  - FirebaseCrashlytics (8.11.0):
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleDataTransport (~> 9.1)
+    - GoogleUtilities/Environment (~> 7.7)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - FirebaseInstallations (8.11.0):
+    - FirebaseCore (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/UserDefaults (~> 7.7)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - FirebaseMessaging (8.11.0):
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GoogleDataTransport (~> 9.1)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/Reachability (~> 7.7)
+    - GoogleUtilities/UserDefaults (~> 7.7)
+    - nanopb (~> 2.30908.0)
+  - GoogleDataTransport (9.1.2):
+    - GoogleUtilities/Environment (~> 7.2)
+    - nanopb (~> 2.30908.0)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/AppDelegateSwizzler (7.7.0):
+    - GoogleUtilities/Environment
+    - GoogleUtilities/Logger
+    - GoogleUtilities/Network
+  - GoogleUtilities/Environment (7.7.0):
+    - PromisesObjC (< 3.0, >= 1.2)
+  - GoogleUtilities/Logger (7.7.0):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/Network (7.7.0):
+    - GoogleUtilities/Logger
+    - "GoogleUtilities/NSData+zlib"
+    - GoogleUtilities/Reachability
+  - "GoogleUtilities/NSData+zlib (7.7.0)"
+  - GoogleUtilities/Reachability (7.7.0):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (7.7.0):
+    - GoogleUtilities/Logger
+  - GoogleWebRTC (1.1.31999)
+  - GTMSessionFetcher/Core (1.7.0)
+  - Imaginary (5.0.0):
+    - Cache (~> 6.0.0)
+  - Lightbox (2.5.0):
+    - Imaginary (~> 5.0.0)
+  - Mantis (1.9.0)
+  - Moya (15.0.0):
+    - Moya/Core (= 15.0.0)
+  - Moya/Core (15.0.0):
+    - Alamofire (~> 5.0)
+  - nanopb (2.30908.0):
+    - nanopb/decode (= 2.30908.0)
+    - nanopb/encode (= 2.30908.0)
+  - nanopb/decode (2.30908.0)
+  - nanopb/encode (2.30908.0)
+  - PanModal (1.2.7)
+  - PromisesObjC (2.0.0)
+  - SideMenu (6.5.0)
+  - Socket.IO-Client-Swift (15.2.0):
+    - Starscream (~> 3.1)
+  - Starscream (3.1.1)
+  - SwiftDate (6.3.1)
+  - SwiftyGif (5.4.3)
+  - SwiftyJSON (4.3.0)
+  - UIImageViewAlignedSwift (0.8.2)
+
+DEPENDENCIES:
+  - AlamofireImage (~> 4.1)
+  - AppsFlyerFramework
+  - BSImagePicker (~> 3.1)
+  - CRRefresh
+  - CryptoSwift
+  - Firebase/Auth
+  - Firebase/Crashlytics
+  - Firebase/Messaging
+  - GoogleWebRTC
+  - Lightbox
+  - Mantis (~> 1.9.0)
+  - Moya
+  - PanModal
+  - SideMenu (~> 6.0)
+  - Socket.IO-Client-Swift (~> 15.2.0)
+  - SwiftDate
+  - SwiftyGif
+  - SwiftyJSON (~> 4.0)
+  - UIImageViewAlignedSwift
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - AlamofireImage
+    - AppsFlyerFramework
+    - BSImagePicker
+    - Cache
+    - CRRefresh
+    - CryptoSwift
+    - Firebase
+    - FirebaseAuth
+    - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseCrashlytics
+    - FirebaseInstallations
+    - FirebaseMessaging
+    - GoogleDataTransport
+    - GoogleUtilities
+    - GoogleWebRTC
+    - GTMSessionFetcher
+    - Imaginary
+    - Lightbox
+    - Mantis
+    - Moya
+    - nanopb
+    - PanModal
+    - PromisesObjC
+    - SideMenu
+    - Socket.IO-Client-Swift
+    - Starscream
+    - SwiftDate
+    - SwiftyGif
+    - SwiftyJSON
+    - UIImageViewAlignedSwift
+
+SPEC CHECKSUMS:
+  Alamofire: 1c4fb5369c3fe93d2857c780d8bbe09f06f97e7c
+  AlamofireImage: 34a2d90b0e5fe6a5605f85ae4b7b01e784c60192
+  AppsFlyerFramework: daff1a8ac502cef2c9408794bac68c852e3483d4
+  BSImagePicker: 0fe04b574d4d6b81093785d2af6c26227efc8428
+  Cache: 4ca7e00363fca5455f26534e5607634c820ffc2d
+  CRRefresh: 1415d4ae06837fa7bb064c44f2e102f3ef517044
+  CryptoSwift: a532e74ed010f8c95f611d00b8bbae42e9fe7c17
+  Firebase: 44dd9724c84df18b486639e874f31436eaa9a20c
+  FirebaseAuth: d96d73aba85d192d7a7aa0b86dd6d7f8ec170b4b
+  FirebaseCore: 2f4f85b453cc8fea4bb2b37e370007d2bcafe3f0
+  FirebaseCoreDiagnostics: 64d9709d804a6c25bd77841371c1fcfd909d5601
+  FirebaseCrashlytics: 62268addefae79601057818156e8bc69d71fee41
+  FirebaseInstallations: 044eede8a049bce71c4541ee68d6e4364fcbe774
+  FirebaseMessaging: 02e248e8997f71fa8cc9d78e9d49ec1a701ba14a
+  GoogleDataTransport: 629c20a4d363167143f30ea78320d5a7eb8bd940
+  GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  GoogleWebRTC: b39a78c4f5cc6b0323415b9233db03a2faa7b0f0
+  GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
+  Imaginary: cf5e3a7dd6ab1dcbd47ba8ce5edf2307c4e99eb3
+  Lightbox: cc3d5124f024fa8197fd23f913160db1c61a1852
+  Mantis: 5dea32ad49addabb3247112f5b1282a6e0964bb0
+  Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
+  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  PanModal: 3e16ead1a907fb06f4df3f13492fd00149fa4974
+  PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
+  Socket.IO-Client-Swift: 1e3e3a1f09f3312a167f0d781eb2f383d477357c
+  Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
+  SwiftDate: 72d28954e8e1c6c1c0f917ccc8005e4f83c7d4b2
+  SwiftyGif: 6c3eafd0ce693cad58bb63d2b2fb9bacb8552780
+  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
+  UIImageViewAlignedSwift: 12b0b06da988015e6d5dec09ee29d5ae1a244848
+
+PODFILE CHECKSUM: 2076ab9a848ff1a1c136a3f5e1a35ce6fa65d164
+
+COCOAPODS: 1.11.3

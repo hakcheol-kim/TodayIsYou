@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PhotoView" customModule="TodayIsYou" customModuleProvider="target">
+            <connections>
+                <outlet property="btnClose" destination="6NJ-tO-tWb" id="mXH-oX-2mT"/>
+                <outlet property="ivPhoto" destination="saM-al-OQu" id="k6h-e0-pds"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="294" height="297"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="saM-al-OQu" customClass="UIImageViewAligned" customModule="UIImageViewAlignedSwift">
+                    <rect key="frame" x="0.0" y="0.0" width="294" height="297"/>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="boolean" keyPath="alignTop" value="YES"/>
+                    </userDefinedRuntimeAttributes>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6NJ-tO-tWb">
+                    <rect key="frame" x="250" y="4" width="40" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="6NJ-tO-tWb" secondAttribute="height" multiplier="1:1" id="L55-IG-4A3"/>
+                        <constraint firstAttribute="height" constant="40" id="SJi-fs-Yzx"/>
+                    </constraints>
+                    <color key="tintColor" name="appColor"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal">
+                        <imageReference key="image" image="xmark.octagon" catalog="system" symbolScale="large"/>
+                    </state>
+                    <connections>
+                        <action selector="onClickedBtnAction:" destination="-1" eventType="touchUpInside" id="Ynl-na-0XI"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="6NJ-tO-tWb" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="4" id="Cwt-y3-dWa"/>
+                <constraint firstAttribute="trailing" secondItem="saM-al-OQu" secondAttribute="trailing" id="J9q-S3-0er"/>
+                <constraint firstItem="saM-al-OQu" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="KDN-OE-dlW"/>
+                <constraint firstAttribute="trailing" secondItem="6NJ-tO-tWb" secondAttribute="trailing" constant="4" id="Toc-oc-CRl"/>
+                <constraint firstItem="saM-al-OQu" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="dUg-b2-eV7"/>
+                <constraint firstAttribute="bottom" secondItem="saM-al-OQu" secondAttribute="bottom" id="tZ0-Sq-G2m"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="50.724637681159422" y="302.34375"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="xmark.octagon" catalog="system" width="128" height="112"/>
+        <namedColor name="appColor">
+            <color red="0.74699997901916504" green="0.25200000405311584" blue="0.24699999392032623" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

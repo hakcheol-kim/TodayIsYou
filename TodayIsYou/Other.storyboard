@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Banner List View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="BannerListViewController" id="Y6W-OH-hqX" customClass="BannerListViewController" customModule="TodayIsYou" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VBs-Rh-R1o">
+                                <rect key="frame" x="33" y="246" width="348" height="404"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="THD-fI-sM9">
+                                        <rect key="frame" x="0.0" y="0.0" width="348" height="404"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="atk-cH-ITC">
+                                                <rect key="frame" x="0.0" y="0.0" width="348" height="348"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="atk-cH-ITC" secondAttribute="height" multiplier="1:1" id="uy3-WM-7Ww"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5IP-Vc-18D">
+                                                <rect key="frame" x="0.0" y="348" width="348" height="56"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kug-ZV-nqt">
+                                                        <rect key="frame" x="0.0" y="0.0" width="348" height="56"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QWc-E4-Uat" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="0.0" width="226" height="56"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                                <state key="normal" title="오늘하루 보지않기">
+                                                                    <color key="titleColor" systemColor="systemRedColor"/>
+                                                                </state>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="do_not_see_today"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <action selector="onClickedButtonAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="PZv-oA-BOy"/>
+                                                                </connections>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HFR-Kr-PvY" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
+                                                                <rect key="frame" x="226" y="0.0" width="122" height="56"/>
+                                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                                                <state key="normal" title="닫기">
+                                                                    <color key="titleColor" systemColor="labelColor"/>
+                                                                </state>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="activity_txt527"/>
+                                                                </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <action selector="onClickedButtonAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="X9f-fU-o6Y"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                                <constraints>
+                                                    <constraint firstItem="QWc-E4-Uat" firstAttribute="width" secondItem="5IP-Vc-18D" secondAttribute="width" multiplier="0.65" id="1mH-3X-wKT"/>
+                                                    <constraint firstAttribute="height" constant="56" id="46U-Qr-QCP"/>
+                                                    <constraint firstAttribute="trailing" secondItem="kug-ZV-nqt" secondAttribute="trailing" id="CJX-0A-ifX"/>
+                                                    <constraint firstItem="kug-ZV-nqt" firstAttribute="top" secondItem="5IP-Vc-18D" secondAttribute="top" id="GNo-NE-q7g"/>
+                                                    <constraint firstAttribute="bottom" secondItem="kug-ZV-nqt" secondAttribute="bottom" id="Wgs-mC-qBF"/>
+                                                    <constraint firstItem="kug-ZV-nqt" firstAttribute="leading" secondItem="5IP-Vc-18D" secondAttribute="leading" id="Xzv-cv-xMK"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="THD-fI-sM9" firstAttribute="top" secondItem="VBs-Rh-R1o" secondAttribute="top" id="94I-hn-Llv"/>
+                                    <constraint firstAttribute="trailing" secondItem="THD-fI-sM9" secondAttribute="trailing" id="L3q-Te-69p"/>
+                                    <constraint firstItem="THD-fI-sM9" firstAttribute="leading" secondItem="VBs-Rh-R1o" secondAttribute="leading" id="Ngt-Y4-fg3"/>
+                                    <constraint firstAttribute="bottom" secondItem="THD-fI-sM9" secondAttribute="bottom" id="zg6-e9-UQo"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.20000000000000001" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="VBs-Rh-R1o" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="8of-au-3ig"/>
+                            <constraint firstItem="VBs-Rh-R1o" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="fGm-Km-dgN"/>
+                            <constraint firstItem="VBs-Rh-R1o" firstAttribute="width" secondItem="5EZ-qb-Rvc" secondAttribute="width" multiplier="0.84" id="gPp-Fm-vid"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="bannerView" destination="atk-cH-ITC" id="3hK-QZ-tZs"/>
+                        <outlet property="btnClose" destination="HFR-Kr-PvY" id="TDl-n2-j3J"/>
+                        <outlet property="btnNotSee" destination="QWc-E4-Uat" id="W5S-f2-HlX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="132" y="60"/>
+        </scene>
+        <!--Certification Web View Controller-->
+        <scene sceneID="1l7-Gi-wH0">
+            <objects>
+                <viewController storyboardIdentifier="CertificationWebViewController" id="LMw-Up-cgZ" customClass="CertificationWebViewController" customModule="TodayIsYou" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nz9-dR-eXq">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cZm-wI-D0h">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="88"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="838-vw-tce" customClass="CButton" customModule="TodayIsYou" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="44" width="150" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="5hc-7R-nKf"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="uhU-07-QeJ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                        <color key="tintColor" name="whiteText"/>
+                                        <inset key="contentEdgeInsets" minX="16" minY="0.0" maxX="16" maxY="0.0"/>
+                                        <inset key="titleEdgeInsets" minX="8" minY="0.0" maxX="-8" maxY="0.0"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="KCB 본인인증" image="chevron.backward" catalog="system">
+                                            <color key="titleColor" name="whiteText"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="localizedKey" value="dialog_kcb_7"/>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="onClickedBtnActions:" destination="LMw-Up-cgZ" eventType="touchUpInside" id="QFN-Ic-1LX"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" name="appColor"/>
+                                <constraints>
+                                    <constraint firstItem="838-vw-tce" firstAttribute="leading" secondItem="cZm-wI-D0h" secondAttribute="leading" id="Lso-zE-gk4"/>
+                                    <constraint firstAttribute="bottom" secondItem="838-vw-tce" secondAttribute="bottom" id="wJT-dK-hgp"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dvq-bT-Nk0">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="ucr-TP-mRq"/>
+                        <color key="backgroundColor" name="whiteBg"/>
+                        <constraints>
+                            <constraint firstItem="cZm-wI-D0h" firstAttribute="top" secondItem="nz9-dR-eXq" secondAttribute="top" id="D22-UI-u03"/>
+                            <constraint firstItem="ucr-TP-mRq" firstAttribute="bottom" secondItem="Dvq-bT-Nk0" secondAttribute="bottom" id="GvB-gW-zLR"/>
+                            <constraint firstItem="Dvq-bT-Nk0" firstAttribute="top" secondItem="cZm-wI-D0h" secondAttribute="bottom" id="JZ7-8z-drD"/>
+                            <constraint firstItem="Dvq-bT-Nk0" firstAttribute="leading" secondItem="ucr-TP-mRq" secondAttribute="leading" id="dKG-Ws-E8D"/>
+                            <constraint firstItem="ucr-TP-mRq" firstAttribute="trailing" secondItem="Dvq-bT-Nk0" secondAttribute="trailing" id="g5t-SA-YVZ"/>
+                            <constraint firstItem="cZm-wI-D0h" firstAttribute="leading" secondItem="nz9-dR-eXq" secondAttribute="leading" id="hf3-CQ-00w"/>
+                            <constraint firstItem="ucr-TP-mRq" firstAttribute="top" secondItem="838-vw-tce" secondAttribute="top" id="qbA-Oh-bNj"/>
+                            <constraint firstAttribute="trailing" secondItem="cZm-wI-D0h" secondAttribute="trailing" id="sCb-YR-UvA"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="baseView" destination="Dvq-bT-Nk0" id="IhL-9a-eTJ"/>
+                        <outlet property="btnBack" destination="838-vw-tce" id="V8P-9U-4mW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qPT-DN-pen" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="984" y="72"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="chevron.backward" catalog="system" width="96" height="128"/>
+        <namedColor name="appColor">
+            <color red="0.74699997901916504" green="0.25200000405311584" blue="0.24699999392032623" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="whiteBg">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="whiteText">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
