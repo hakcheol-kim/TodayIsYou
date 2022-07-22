@@ -6,17 +6,21 @@
 ### 앱스크린샷
 <table>
 <tr>
-<td>권한설정</td>
-<td>리스트</td>
-<td>채팅</td>
-<td>포인트 충전</td>
-<td>영상채팅</td>
+  <td>권한설정</td>
+  <td>리스트</td>
+  <td>채팅</td>
 </tr>
-<td><img src="", width=270, height=720></td>
-<td><img src="", width=270, height=720></td>
-<td><img src="", width=270, height=720></td>
-<td><img src="", width=270, height=720></td>
-<td><img src="", width=270, height=720></td>
 <tr>
+  <td><img src="", width=270, height=720></td>
+  <td><img src="", width=270, height=720></td>
+  <td><img src="", width=270, height=720></td>
+</tr>
+<tr>
+  <td>포인트 충전</td> 
+  <td>영상채팅</td>
+</tr>
+<tr>
+  <td><img src="", width=270, height=720></td>
+  <td><img src="", width=270, height=720></td>
 </tr>
 <table>
