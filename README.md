@@ -3,7 +3,8 @@
 #### 주요기술 GoogleWebRTC를 이용한 화상채팅, 음성채팅을 구현하다.
 
 ### 화상채팅
-[![asciicast](https://github.com/iruri2010/TodayIsYou/blob/master/webrtc.PNG)](https://github.com/iruri2010/TodayIsYou/blob/master/video.mp4)
+<video src="https://github.com/iruri2010/TodayIsYou/blob/master/video.mp4"  width="270" height="480">
+</video> 
 
 ### 앱스크린샷
 <table>
