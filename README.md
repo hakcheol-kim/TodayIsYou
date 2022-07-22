@@ -3,12 +3,7 @@
 #### 주요기술 GoogleWebRTC를 이용한 화상채팅, 음성채팅을 구현하다.
 
 ### 화상채팅
-<video src="https://github.com/iruri2010/TodayIsYou/blob/master/video.mp4"  width="270" height="480">
-</video> 
-
-<video width="480" controls poster="https://archive.org/download/WebmVp8Vorbis/webmvp8.gif" >
-  <source src="https://github.com/iruri2010/TodayIsYou/blob/master/video.mp4" type="video/mp4">
-</video>
+[<img src="https://github.com/iruri2010/TodayIsYou/blob/master/webrtc.PNG" width="50%">](https://github.com/iruri2010/TodayIsYou/blob/master/video.mp4 "Now in iOS: 55")
 
 ### 앱스크린샷
 <table>
