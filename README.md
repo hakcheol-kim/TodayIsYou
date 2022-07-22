@@ -6,7 +6,7 @@
 <table>
 <tr>
   <td>
-    <video width="270" height="480" src="https://github.com/iruri2010/TodayIsYou/blob/master/video.mp4" type="video/quicktime" controls></video>
+    [![Watch the video](https://github.com/iruri2010/TodayIsYou/blob/master/video.mp4)
   <td>
 </tr>
 <table>
